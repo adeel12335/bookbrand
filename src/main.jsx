@@ -1,46 +1,30 @@
-import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import {
-  IconArrow, IconArrowUpRight, IconBook, IconChart, IconCheck, IconClose,
-  IconMail, IconMenu, IconPhone, IconPlus, IconQuote, IconStar, IconWriters,
+  IconArrow, IconArrowUpRight, IconBook, IconCheck, IconClose,
+  IconMail, IconMenu, IconPhone, IconPlus, IconStar,
+  IconWriting, IconWriters, IconPublishing,
+  IconCoins, IconCalendar, IconLeaf, IconEditing, IconFormatting, IconBranding,
   serviceIcons,
 } from './icons.jsx';
 import {
-  books, faqs, footerLinks, heroTrust, navigation, plans, platforms,
-  services, stats, steps, testimonials, values,
+  books, faqs, footerLinks, navigation, plans,
+  services, testimonials, testimonialsIntro, hero,
+  siteContact,
+  portfolioIntro, servicesIntro, benefits, pathBand, dualOffer,
 } from './data.js';
 import './fonts.css';
 import './styles.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const heroTrustIcons = { book: IconBook, writers: IconWriters, chart: IconChart };
-
 const reduceMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ------------------------------------------------------------------ helpers */
-
-function useInView(options = {}) {
-  const ref = useRef(null);
-  const [seen, setSeen] = useState(false);
-  useEffect(() => {
-    const node = ref.current;
-    if (!node || seen) return undefined;
-    const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setSeen(true);
-        io.disconnect();
-      }
-    }, { threshold: 0.2, rootMargin: '0px 0px -6% 0px', ...options });
-    io.observe(node);
-    return () => io.disconnect();
-  }, [seen, options.threshold, options.rootMargin]);
-  return [ref, seen];
-}
 
 /** Scroll-reveal wrapper. Adds .is-in once the element enters the viewport. */
 function Reveal({ as: Tag = 'div', className = '', delay = 0, children, ...rest }) {
@@ -168,7 +152,7 @@ function Header() {
         onClick={() => setOpen(false)}
       />
       <div className="shell header-inner">
-        <Wordmark />
+        <Wordmark light />
         <nav id="primary-nav" className="primary-nav" aria-label="Primary">
           <ul>
             {navigation.map(item => (
@@ -184,7 +168,7 @@ function Header() {
             ))}
           </ul>
           <a className="nav-cta" href="#contact" onClick={() => setOpen(false)}>
-            Start Your Project <IconArrowUpRight />
+            Start Your Project
           </a>
         </nav>
         <button
@@ -213,126 +197,126 @@ function Hero() {
     const root = rootRef.current;
     if (!root || reduceMotion()) return undefined;
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      tl.from('.hero-line > span', { yPercent: 108, duration: 1.05, stagger: 0.11 }, 0.1)
-        .from('.hero .eyebrow', { opacity: 0, x: -14, duration: 0.7 }, 0.1)
-        .from('.hero-lead', { opacity: 0, y: 18, duration: 0.8 }, 0.55)
-        .from('.hero-actions > *', { opacity: 0, y: 18, duration: 0.7, stagger: 0.08 }, 0.68)
-        .from('.hero-trust li', { opacity: 0, y: 16, duration: 0.7, stagger: 0.08 }, 0.82)
-        .from('.hero-media', { clipPath: 'inset(0 0 0 100%)', duration: 1.25, ease: 'power4.inOut' }, 0)
-        .from(imageRef.current, { scale: 1.16, duration: 1.6, ease: 'power3.out' }, 0);
+      gsap.timeline({ defaults: { ease: 'power3.out' } })
+        .from('.hx-live .hx-visual', { opacity: 0, duration: 1.15, ease: 'power2.out' }, 0)
+        .from(imageRef.current, { scale: 1.08, duration: 1.7 }, 0)
+        .from('.hx-live .hx-kicker', { opacity: 0, y: 12, duration: 0.65 }, 0.18)
+        .from('.hx-live .hx-line > span', { yPercent: 110, duration: 1.05, stagger: 0.1 }, 0.22)
+        .from('.hx-live .hx-lead', { opacity: 0, y: 16, duration: 0.75 }, 0.55)
+        .from('.hx-live .hx-actions > *', { opacity: 0, y: 12, duration: 0.65, stagger: 0.08 }, 0.68)
+        .from('.hx-live .hx-proof, .hx-live .hx-trust', { opacity: 0, y: 10, duration: 0.55 }, 0.88)
+        .from('.hx-live .hx-rim', { opacity: 0, duration: 1.2 }, 0.35);
 
-      gsap.to(imageRef.current, {
-        yPercent: 8,
-        ease: 'none',
-        scrollTrigger: { trigger: root, start: 'top top', end: 'bottom top', scrub: true },
-      });
+      if (imageRef.current) {
+        gsap.to(imageRef.current, {
+          yPercent: 4,
+          ease: 'none',
+          scrollTrigger: { trigger: root, start: 'top top', end: 'bottom top', scrub: true },
+        });
+      }
     }, root);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section className="hero" id="top" ref={rootRef}>
-      <div className="hero-grid">
-        <div className="hero-copy">
-          <Eyebrow>Ideas become impact</Eyebrow>
-          <h1>
-            <span className="hero-line"><span>Turn Your Ideas</span></span>
-            <span className="hero-line"><span>Into a <em>Published Book.</em></span></span>
-          </h1>
-          <p className="hero-lead">
-            We help experts, entrepreneurs and aspiring authors bring their ideas to life through
-            professional ebook writing, ghostwriting, editing, formatting and publishing support.
-          </p>
-          <div className="hero-actions">
-            <Cta variant="gold">Start Your Project</Cta>
-            <Cta href="#services" variant="ghost">View Services</Cta>
+    <section className="hx" id="top" ref={rootRef} aria-labelledby="hero-title">
+      {/* Desktop: pixel-matched to the approved concept art */}
+      <div className="hx-exact">
+        <img
+          src="/assets/brand/hero-v2-exact.png"
+          alt=""
+          width="1586"
+          height="888"
+          fetchPriority="high"
+          decoding="async"
+        />
+        <h1 id="hero-title" className="sr-only">
+          Turn Your Ideas Into a Published Book.
+        </h1>
+        <p className="sr-only">{hero.lead}</p>
+        <a className="hx-exact-hit hx-exact-hit--cta" href="#contact">
+          Start Your Project
+        </a>
+        <a className="hx-exact-hit hx-exact-hit--link" href={hero.link.href}>
+          Explore our services
+        </a>
+      </div>
+
+      {/* Mobile / tablet: live HTML layout */}
+      <div className="hx-live">
+        <svg className="hx-clip-defs" width="0" height="0" aria-hidden="true" focusable="false">
+          <defs>
+            <clipPath id="hx-arch" clipPathUnits="objectBoundingBox">
+              <path d="M0,1 C0,0.72 0.01,0.52 0.04,0.38 C0.09,0.18 0.22,0.05 0.42,0 L1,0 L1,1 Z" />
+            </clipPath>
+          </defs>
+        </svg>
+
+        <div className="hx-stage">
+          <div className="hx-visual" aria-hidden="true">
+            <div className="hx-photo">
+              <picture>
+                <source media="(min-width: 861px)" srcSet="/assets/brand/hero-study-wide.jpg" />
+                <img
+                  ref={imageRef}
+                  src="/assets/brand/hero-study.jpg"
+                  alt=""
+                  width="920"
+                  height="992"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </picture>
+            </div>
+            <svg className="hx-rim" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path
+                d="M0,100 C0,72 1,52 4,38 C9,18 22,5 42,0"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="0.45"
+                vectorEffect="non-scaling-stroke"
+              />
+            </svg>
           </div>
-          <ul className="hero-trust">
-            {heroTrust.map(item => {
-              const Icon = heroTrustIcons[item.icon];
-              return (
-                <li key={item.title}>
-                  <Icon className="hero-trust-icon" />
-                  <span><strong>{item.title}</strong>{item.sub}</span>
-                </li>
-              );
-            })}
-          </ul>
+
+          <div className="hx-inner">
+            <div className="hx-copy">
+              <p className="hx-kicker">{hero.kicker}</p>
+              <h2 className="hx-title">
+                {hero.lines.map((line, i) => (
+                  <span className="hx-line" key={line}>
+                    <span>{i === hero.lines.length - 1 ? <em>{line}</em> : line}</span>
+                  </span>
+                ))}
+              </h2>
+              <p className="hx-lead hx-lead--desk">{hero.lead}</p>
+              <p className="hx-lead hx-lead--mob">{hero.leadMobile}</p>
+              <div className="hx-glass">
+                <div className="hx-actions">
+                  <a className="hx-cta" href="#contact">{hero.cta}</a>
+                  <a className="hx-link" href={hero.link.href}>
+                    {hero.link.label}
+                    <IconArrow aria-hidden="true" />
+                  </a>
+                </div>
+                <p className="hx-proof">{hero.trust.join(' · ')}</p>
+              </div>
+              <ul className="hx-trust" aria-hidden="true">
+                {hero.trust.map(item => <li key={item}>{item}</li>)}
+              </ul>
+            </div>
+          </div>
         </div>
-        <div className="hero-media">
-          <img
-            ref={imageRef}
-            src="/assets/brand/hero-desk.jpg"
-            alt="A dark green hardback reading “A Brighter Story Awaits” resting on a stack of cream books labelled Ideas, Strategy, Writing and Publishing, beside a fountain pen and a mug."
-            width="1313"
-            height="1179"
-            fetchPriority="high"
-            decoding="async"
-          />
-          <div className="hero-media-veil" aria-hidden="true" />
+
+        <div className="hx-fold" aria-hidden="true">
+          <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path
+              className="hx-fold-fill"
+              d="M0,80 L0,36 C320,36 520,36 720,8 C920,36 1120,36 1440,36 L1440,80 Z"
+            />
+          </svg>
+          <span className="hx-fold-tick" />
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------------------------------------------------------- platforms */
-
-function PlatformStrip() {
-  const row = useMemo(() => [...platforms, ...platforms], []);
-  return (
-    <section className="platforms" aria-label="Publishing platforms we work with">
-      <div className="shell platforms-head">
-        <p>We publish to every major store</p>
-      </div>
-      <div className="marquee" aria-hidden="true">
-        <div className="marquee-track">
-          {row.map((name, i) => (
-            <span key={`${name}-${i}`} className="marquee-item">
-              {name}<i />
-            </span>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* -------------------------------------------------------------------- stats */
-
-function Counter({ to, suffix }) {
-  const [ref, seen] = useInView({ threshold: 0.45 });
-  const [value, setValue] = useState(0);
-  useEffect(() => {
-    if (!seen) return undefined;
-    if (reduceMotion()) {
-      setValue(to);
-      return undefined;
-    }
-    const box = { n: 0 };
-    const tween = gsap.to(box, {
-      n: to,
-      duration: 1.6,
-      ease: 'power2.out',
-      onUpdate: () => setValue(Math.round(box.n)),
-    });
-    return () => tween.kill();
-  }, [seen, to]);
-  return <span ref={ref} className="stat-value">{value.toLocaleString('en-US')}<i>{suffix}</i></span>;
-}
-
-function Stats() {
-  return (
-    <section className="stats" aria-label="Studio at a glance">
-      <div className="shell stats-grid">
-        {stats.map((stat, i) => (
-          <Reveal as="div" className="stat" key={stat.label} delay={i * 80}>
-            <Counter to={stat.value} suffix={stat.suffix} />
-            <p className="stat-label">{stat.label}</p>
-            <p className="stat-note">{stat.note}</p>
-          </Reveal>
-        ))}
       </div>
     </section>
   );
@@ -340,150 +324,134 @@ function Stats() {
 
 /* ----------------------------------------------------------------- services */
 
+const benefitIcons = {
+  ownership: IconBook,
+  fees: IconCoins,
+  specialists: IconWriters,
+  time: IconCalendar,
+};
+
+const journeyIcons = [
+  IconWriting,
+  IconEditing,
+  IconFormatting,
+  IconPublishing,
+  IconBranding,
+  IconLeaf,
+];
+
+function TrustBar() {
+  return (
+    <section className="ed-trust" aria-label="Why authors trust us">
+      <div className="shell">
+        <ul className="ed-trust-grid">
+          {benefits.map((item, i) => {
+            const Icon = benefitIcons[item.key] || IconCheck;
+            return (
+              <Reveal as="li" className="ed-trust-item" key={item.title} delay={i * 60}>
+                <span className="ed-trust-icon" aria-hidden="true"><Icon /></span>
+                <h3>{item.title}</h3>
+                <p>{item.copy}</p>
+              </Reveal>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+function PathBand() {
+  return (
+    <section className="ed-path" id="why" aria-labelledby="why-title">
+      <div className="ed-path-split">
+        <Reveal className="ed-path-copy">
+          <Eyebrow tone="light">{pathBand.eyebrow}</Eyebrow>
+          <h2 id="why-title">
+            {pathBand.title}{' '}
+            <em>{pathBand.titleEm}</em>
+          </h2>
+          <p>{pathBand.lead}</p>
+          <a className="ed-path-cta" href="#contact">
+            <span>{pathBand.cta}</span>
+            <span className="ed-path-cta-orb" aria-hidden="true"><IconArrow /></span>
+          </a>
+          <ol className="ed-path-journey">
+            {pathBand.journey.map((label, i) => {
+              const Icon = journeyIcons[i] || IconCheck;
+              return (
+                <li key={label}>
+                  <span className="ed-path-dot" aria-hidden="true"><Icon /></span>
+                  <span>{label}</span>
+                </li>
+              );
+            })}
+          </ol>
+        </Reveal>
+        <Reveal className="ed-path-visual" delay={100}>
+          <img
+            src={pathBand.image}
+            alt={pathBand.imageAlt}
+            width="900"
+            height="1100"
+            loading="lazy"
+          />
+          <aside className="ed-path-card">
+            <div className="ed-path-card-head">
+              <IconLeaf aria-hidden="true" />
+              <h3>{pathBand.roadmap.title}</h3>
+            </div>
+            <ol>
+              {pathBand.roadmap.steps.map((step, i) => (
+                <li key={step}>
+                  <span aria-hidden="true">{i + 1}</span>
+                  {step}
+                </li>
+              ))}
+            </ol>
+          </aside>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 function Services() {
   return (
-    <section className="section services" id="services">
+    <section className="ed-svc" id="services" aria-labelledby="services-title">
       <div className="shell">
-        <div className="services-intro">
-          <Reveal className="section-head">
-            <Eyebrow>What we do</Eyebrow>
-            <h2>Everything your book needs,<br /><em>under one roof.</em></h2>
-            <p className="section-lead">
-              Six services that cover the whole journey, from the first outline to the day your book
-              goes live. Take one, or hand us the lot.
-            </p>
-          </Reveal>
-          <Reveal className="services-editorial" delay={120}>
-            <img
-              src="/assets/brand/why-stack.jpg"
-              alt="Ivory books labelled Ideas, Strategy, Writing and Publishing beside a fountain pen"
-              loading="lazy"
-              width="1200"
-              height="594"
-            />
-            <span>From first thought<br />to finished book.</span>
-          </Reveal>
-        </div>
-        <div className="service-grid">
+        <Reveal className="ed-svc-head ed-svc-head--split">
+          <div>
+            <Eyebrow>{servicesIntro.eyebrow}</Eyebrow>
+            <h2 id="services-title">
+              {servicesIntro.title}
+              <br />
+              <em>{servicesIntro.titleEm}</em>
+            </h2>
+          </div>
+          <p>{servicesIntro.lead}</p>
+        </Reveal>
+        <ul className="ed-svc-cards">
           {services.map((service, i) => {
-            const Icon = serviceIcons[service.key];
+            const Icon = serviceIcons[service.key] || IconWriting;
             return (
-              <Reveal as="article" className={`service-card${i === 0 ? ' is-featured' : ''}`} key={service.title} delay={(i % 3) * 90}>
-                <span className="service-n">{service.n}</span>
-                <span className="service-icon"><Icon /></span>
-                <h3>{service.title}</h3>
-                <p>{service.copy}</p>
-                <ul>
-                  {service.points.map(point => (
-                    <li key={point}><IconCheck className="tick" />{point}</li>
-                  ))}
-                </ul>
-                <a className="service-link" href="#contact">
-                  Discuss this service <IconArrowUpRight />
+              <Reveal as="li" className="ed-svc-card" key={service.title} delay={(i % 3) * 70}>
+                <span className="ed-svc-icon" aria-hidden="true"><Icon /></span>
+                <div className="ed-svc-body">
+                  <h3>{service.title}</h3>
+                  <p>{service.copy}</p>
+                </div>
+                <a
+                  className="ed-svc-orb"
+                  href="#contact"
+                  aria-label={`Inquire about ${service.title}`}
+                >
+                  <IconArrow aria-hidden="true" />
                 </a>
               </Reveal>
             );
           })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ process */
-
-function Process() {
-  const railRef = useRef(null);
-  useEffect(() => {
-    const rail = railRef.current;
-    if (!rail || reduceMotion()) return undefined;
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.process-rail-fill',
-        { scaleX: 0 },
-        {
-          scaleX: 1,
-          ease: 'none',
-          scrollTrigger: { trigger: rail, start: 'top 72%', end: 'bottom 65%', scrub: 0.6 },
-        });
-    }, rail);
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <section className="section process" id="process">
-      <div className="shell">
-        <Reveal className="section-head section-head-split">
-          <div>
-            <Eyebrow>How it works</Eyebrow>
-            <h2>Four steps.<br /><em>No guesswork.</em></h2>
-          </div>
-          <p className="section-lead">
-            You always know what is happening, what comes next and when it lands. Here is the
-            whole process, start to finish.
-          </p>
-        </Reveal>
-        <div className="process-rail" ref={railRef}>
-          <div className="process-rail-line" aria-hidden="true">
-            <span className="process-rail-fill" />
-          </div>
-          <ol className="process-grid">
-            {steps.map((step, i) => (
-              <Reveal as="li" className="process-step" key={step.n} delay={i * 110}>
-                <span className="process-badge" aria-hidden="true">{step.n}</span>
-                <h3>{step.title}</h3>
-                <p>{step.copy}</p>
-              </Reveal>
-            ))}
-          </ol>
-        </div>
-        <Reveal className="process-foot">
-          <p>Not sure which step you are on? That is what the discovery call is for.</p>
-          <Cta variant="line">Book a free call</Cta>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-/* ----------------------------------------------------------------- why / us */
-
-function WhyUs() {
-  return (
-    <section className="section why" id="why">
-      <div className="why-wash" aria-hidden="true" />
-      <div className="shell why-inner">
-        <Reveal className="why-copy">
-          <Eyebrow tone="light">Our manifesto</Eyebrow>
-          <h2>A publisher&rsquo;s standard,<br /><em>without the publisher.</em></h2>
-          <p className="section-lead">
-            You keep the rights, the royalties and the final say. We bring the editorial team,
-            the production quality and twelve years of knowing what actually sells.
-          </p>
-          <p className="why-signoff"><span>Your story matters</span>A thoughtful partner at every chapter.</p>
-        </Reveal>
-        <Reveal className="why-media" delay={100}>
-          <img
-            src="/assets/brand/manifesto-books.png"
-            alt="A forest-green hardback on ivory books beside a black-and-gold fountain pen"
-            loading="lazy"
-            width="1122"
-            height="1402"
-          />
-          <span className="why-media-caption">Ideas today.<br />A brighter tomorrow.</span>
-        </Reveal>
-        <ol className="why-list">
-          {values.map((value, i) => {
-            return (
-              <Reveal as="li" className="why-item" key={value.title} delay={i * 90}>
-                <span className="why-number">{i + 1}</span>
-                <div>
-                  <h3>{value.title}</h3>
-                  <p>{value.copy}</p>
-                </div>
-              </Reveal>
-            );
-          })}
-        </ol>
+        </ul>
       </div>
     </section>
   );
@@ -492,33 +460,124 @@ function WhyUs() {
 /* ---------------------------------------------------------------- portfolio */
 
 function Portfolio() {
+  const shelf = books.slice(0, 6);
   return (
-    <section className="section portfolio" id="portfolio">
+    <section className="ed-folio" id="portfolio" aria-labelledby="portfolio-title">
       <div className="shell">
-        <Reveal className="section-head section-head-split">
-          <div>
-            <Eyebrow>Recent work</Eyebrow>
-            <h2>Books we helped<br /><em>bring into the world.</em></h2>
+        <Reveal className="ed-folio-head">
+          <Eyebrow>{portfolioIntro.eyebrow}</Eyebrow>
+          <div className="ed-folio-head-row">
+            <h2 id="portfolio-title">{portfolioIntro.title}</h2>
+            <div className="ed-folio-meta">
+              <p>{portfolioIntro.meta}</p>
+              <a className="ed-folio-link" href={portfolioIntro.linkHref}>
+                {portfolioIntro.linkLabel}
+                <span className="ed-folio-link-orb" aria-hidden="true"><IconArrow /></span>
+              </a>
+            </div>
           </div>
-          <p className="section-lead">
-            Different authors, different genres, the same standard of finish. A small selection
-            of recent titles and cover work.
-          </p>
         </Reveal>
-        <div className="book-grid">
-          {books.map((book, i) => (
-            <Reveal as="article" className="book-card" key={book.title} delay={i * 110}>
-              <div className="book-visual">
-                <img src={book.image} alt={`Cover concept for ${book.title}`} loading="lazy" />
-              </div>
-              <div className="book-meta">
-                <span className="book-genre">{book.genre}</span>
-                <h3>{book.title}</h3>
-                <p>{book.note}</p>
-              </div>
+
+        {/* Desktop: art-directed shelf photograph */}
+        <Reveal className="ed-folio-stage">
+          <img
+            src={portfolioIntro.image}
+            alt={portfolioIntro.imageAlt}
+            width="2172"
+            height="724"
+            loading="lazy"
+          />
+          <ul className="ed-folio-genres" aria-hidden="true">
+            {shelf.map(book => <li key={book.title}>{book.genre}</li>)}
+          </ul>
+        </Reveal>
+
+        {/* Mobile: individual covers (readable + no crop issues) */}
+        <ul className="ed-folio-mob" aria-label="Recently published titles">
+          {shelf.map((book, i) => (
+            <Reveal as="li" key={book.title} delay={i * 50}>
+              <figure>
+                <img
+                  src={book.image}
+                  alt={`Cover for ${book.title}`}
+                  width="240"
+                  height="360"
+                  loading="lazy"
+                />
+                <figcaption>{book.genre}</figcaption>
+              </figure>
             </Reveal>
           ))}
-        </div>
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------------------------------------------------------- dual offer */
+
+function DualOffer() {
+  const { publish, market } = dualOffer;
+  return (
+    <section className="ed-dual" id="publish" aria-label="Publishing and marketing services">
+      <div className="ed-dual-split">
+        <Reveal className="ed-dual-pane ed-dual-pane--dark">
+          <div className="ed-dual-copy">
+            <Eyebrow tone="light">{publish.eyebrow}</Eyebrow>
+            <h2>{publish.title}</h2>
+            <p>{publish.lead}</p>
+            <ul className="ed-dual-list">
+              {publish.checklist.map(item => (
+                <li key={item}>
+                  <span className="ed-dual-check" aria-hidden="true"><IconCheck /></span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <a className="ed-dual-cta ed-dual-cta--solid" href={publish.href}>
+              <span>{publish.cta}</span>
+              <span className="ed-dual-cta-orb" aria-hidden="true"><IconArrow /></span>
+            </a>
+          </div>
+          <figure className="ed-dual-visual">
+            <img
+              src={publish.image}
+              alt={publish.imageAlt}
+              width="420"
+              height="560"
+              loading="lazy"
+            />
+          </figure>
+        </Reveal>
+
+        <Reveal className="ed-dual-pane ed-dual-pane--light" delay={80}>
+          <div className="ed-dual-copy">
+            <Eyebrow>{market.eyebrow}</Eyebrow>
+            <h2>{market.title}</h2>
+            <p>{market.lead}</p>
+            <ul className="ed-dual-list">
+              {market.checklist.map(item => (
+                <li key={item}>
+                  <span className="ed-dual-check" aria-hidden="true"><IconCheck /></span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <a className="ed-dual-cta ed-dual-cta--solid" href={market.href}>
+              <span>{market.cta}</span>
+              <span className="ed-dual-cta-orb" aria-hidden="true"><IconArrow /></span>
+            </a>
+          </div>
+          <figure className="ed-dual-visual ed-dual-visual--desk">
+            <img
+              src={market.image}
+              alt={market.imageAlt}
+              width="640"
+              height="480"
+              loading="lazy"
+            />
+          </figure>
+        </Reveal>
       </div>
     </section>
   );
@@ -527,67 +586,45 @@ function Portfolio() {
 /* ------------------------------------------------------------- testimonials */
 
 function Testimonials() {
-  const [index, setIndex] = useState(0);
-  const count = testimonials.length;
-  const go = useCallback(next => setIndex(((next % count) + count) % count), [count]);
-  const current = testimonials[index];
-
   return (
-    <section className="section quotes" aria-label="What our authors say">
-      <div className="shell quotes-inner">
-        <Reveal className="quotes-head">
-          <Eyebrow tone="light">Author stories</Eyebrow>
-          <h2>Real books.<br /><em>Real results.</em></h2>
-          <div className="quotes-rating">
-            <span className="stars" aria-hidden="true">
-              {Array.from({ length: 5 }, (_, i) => <IconStar key={i} />)}
-            </span>
-            <p>4.9 out of 5 &mdash; across 210 reviews</p>
-          </div>
+    <section className="ed-voices" aria-labelledby="voices-title">
+      <div className="shell">
+        <Reveal className="ed-voices-head">
+          <Eyebrow tone="light">{testimonialsIntro.eyebrow}</Eyebrow>
+          <h2 id="voices-title">{testimonialsIntro.title}</h2>
         </Reveal>
-        <Reveal className="quotes-stage" delay={120}>
-          <IconQuote className="quotes-mark" />
-          <blockquote key={current.name}>
-            <p>{current.quote}</p>
-            <footer>
-              <span className="quote-avatar">
+        <ul className="ed-voices-grid">
+          {testimonials.slice(0, 3).map((item, i) => (
+            <Reveal as="li" className="ed-voice" key={item.name} delay={i * 90}>
+              {item.avatar ? (
                 <img
-                  src={current.avatar}
-                  alt={`Portrait of ${current.name}`}
-                  width="240"
-                  height="236"
+                  className="ed-voice-avatar"
+                  src={item.avatar}
+                  alt=""
+                  width="72"
+                  height="72"
                   loading="lazy"
-                  decoding="async"
                 />
-              </span>
-              <span className="quote-who">
-                <strong>{current.name}</strong>
-                <span>{current.role}</span>
-              </span>
-            </footer>
-          </blockquote>
-          <div className="quotes-controls">
-            <button type="button" onClick={() => go(index - 1)} aria-label="Previous testimonial">
-              <IconArrow className="flip" />
-            </button>
-            <div className="quotes-dots" role="tablist" aria-label="Choose a testimonial">
-              {testimonials.map((item, i) => (
-                <button
-                  key={item.name}
-                  type="button"
-                  role="tab"
-                  aria-selected={i === index}
-                  aria-label={`Testimonial from ${item.name}`}
-                  className={i === index ? 'is-on' : ''}
-                  onClick={() => go(i)}
-                />
-              ))}
-            </div>
-            <button type="button" onClick={() => go(index + 1)} aria-label="Next testimonial">
-              <IconArrow />
-            </button>
-          </div>
-        </Reveal>
+              ) : (
+                <span className="ed-voice-avatar ed-voice-avatar--mono" aria-hidden="true">
+                  {item.initials}
+                </span>
+              )}
+              <div className="ed-voice-stars" aria-label="5 out of 5 stars">
+                {Array.from({ length: 5 }, (_, s) => (
+                  <IconStar key={s} aria-hidden="true" />
+                ))}
+              </div>
+              <blockquote>
+                <p>{item.quote}</p>
+              </blockquote>
+              <footer>
+                <strong>— {item.name}</strong>
+                <span>{item.role}</span>
+              </footer>
+            </Reveal>
+          ))}
+        </ul>
       </div>
     </section>
   );
@@ -597,46 +634,48 @@ function Testimonials() {
 
 function Pricing({ onSelect }) {
   return (
-    <section className="section pricing" id="pricing">
+    <section className="ed-price" id="pricing" aria-labelledby="pricing-title">
       <div className="shell">
-        <Reveal className="section-head">
-          <Eyebrow>Packages</Eyebrow>
-          <h2>Clear pricing.<br /><em>No surprise invoices.</em></h2>
-          <p className="section-lead">
-            One fixed price per package, agreed before we start. Everything below includes the
-            writing, the editing, the cover and the files.
+        <Reveal className="ed-price-head">
+          <div>
+            <Eyebrow>Investment</Eyebrow>
+            <h2 id="pricing-title">
+              One price. <em>Agreed up front.</em>
+            </h2>
+          </div>
+          <p>
+            Writing, editing, cover, and files included. No surprise invoices —
+            choose the chapter that matches your manuscript.
           </p>
         </Reveal>
-        <div className="plan-grid">
+        <div className="ed-price-sheet" aria-label="Publishing packages">
           {plans.map((plan, i) => (
-            <Reveal as="article" className={`plan${plan.featured ? ' is-featured' : ''}`} key={plan.name} delay={i * 80}>
-              {plan.featured ? <span className="plan-flag">Most chosen</span> : null}
-              <header className="plan-head">
-                <h3>{plan.name}</h3>
-                <p>{plan.copy}</p>
-              </header>
-              <p className="plan-price"><i>$</i>{plan.price}</p>
-              <dl className="plan-specs">
+            <Reveal
+              as="article"
+              className={`ed-price-card${plan.featured ? ' is-featured' : ''}`}
+              key={plan.name}
+              delay={i * 70}
+            >
+              {plan.featured ? <span className="ed-price-flag">Most popular</span> : null}
+              <h3>{plan.name}</h3>
+              <p className="ed-price-amt"><i>$</i>{plan.price}</p>
+              <p className="ed-price-copy">{plan.copy}</p>
+              <dl className="ed-price-meta">
                 <div><dt>Length</dt><dd>{plan.words}</dd></div>
                 <div><dt>Timeline</dt><dd>{plan.timeline}</dd></div>
               </dl>
-              <ul className="plan-features">
-                {plan.features.map(feature => (
-                  <li key={feature}><IconCheck className="tick" />{feature}</li>
+              <ul className="ed-price-features">
+                {plan.features.slice(0, 3).map(feature => (
+                  <li key={feature}><IconCheck className="tick" aria-hidden="true" />{feature}</li>
                 ))}
               </ul>
-              <a className="plan-cta" href="#contact" onClick={() => onSelect(plan.name)}>
-                Choose {plan.name} <IconArrowUpRight />
+              <a className="ed-price-cta" href="#contact" onClick={() => onSelect(plan.name)}>
+                <span>{plan.featured ? 'Get started' : `Choose ${plan.name}`}</span>
+                <IconArrow aria-hidden="true" />
               </a>
             </Reveal>
           ))}
         </div>
-        <Reveal className="pricing-note">
-          <p>
-            Working on something larger, or a series? <a href="#contact">Ask for a bespoke quote</a>
-            {' '}&mdash; most custom projects are scoped within two working days.
-          </p>
-        </Reveal>
       </div>
     </section>
   );
@@ -647,9 +686,8 @@ function Pricing({ onSelect }) {
 function FaqItem({ item, open, onToggle }) {
   const panelId = useId();
   const buttonId = useId();
-  const panelRef = useRef(null);
   return (
-    <div className={`faq-item${open ? ' is-open' : ''}`}>
+    <div className={`fq-item${open ? ' is-open' : ''}`}>
       <h3>
         <button
           type="button"
@@ -666,8 +704,7 @@ function FaqItem({ item, open, onToggle }) {
         id={panelId}
         role="region"
         aria-labelledby={buttonId}
-        className="faq-panel"
-        ref={panelRef}
+        className="fq-panel"
         style={{ gridTemplateRows: open ? '1fr' : '0fr' }}
       >
         <div><p>{item.a}</p></div>
@@ -679,18 +716,21 @@ function FaqItem({ item, open, onToggle }) {
 function Faq() {
   const [open, setOpen] = useState(0);
   return (
-    <section className="section faq" id="faq">
-      <div className="shell faq-inner">
-        <Reveal className="faq-head">
-          <Eyebrow>Questions</Eyebrow>
-          <h2>Everything authors<br /><em>ask us first.</em></h2>
-          <p className="section-lead">
+    <section className="section faq fq" id="faq" aria-labelledby="faq-title">
+      <div className="shell fq-grid">
+        <Reveal className="fq-copy">
+          <Eyebrow>Frequently asked questions</Eyebrow>
+          <h2 id="faq-title">
+            Straight answers
+            <br />
+            <em>for your next chapter.</em>
+          </h2>
+          <p>
             Still unsure about something? Send it over and we will answer plainly, without a
             sales pitch attached.
           </p>
-          <Cta variant="line">Ask us directly</Cta>
         </Reveal>
-        <Reveal className="faq-list" delay={100}>
+        <Reveal className="fq-list" delay={100}>
           {faqs.map((item, i) => (
             <FaqItem
               key={item.q}
@@ -699,27 +739,6 @@ function Faq() {
               onToggle={() => setOpen(open === i ? -1 : i)}
             />
           ))}
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------------------------------------------------------- cta strip */
-
-function CtaBanner() {
-  return (
-    <section className="cta-banner" aria-label="Start your project">
-      <div className="cta-banner-wash" aria-hidden="true" />
-      <div className="shell cta-banner-inner">
-        <Reveal className="cta-banner-copy">
-          <Eyebrow tone="light">Your story matters</Eyebrow>
-          <h2>Ready to build your next book?</h2>
-          <p>Let us turn your ideas into a published work you are proud of.</p>
-        </Reveal>
-        <Reveal className="cta-banner-action" delay={120}>
-          <Cta variant="gold">Start Your Project</Cta>
-          <p className="cta-banner-tag">Write &middot; Publish &middot; Grow</p>
         </Reveal>
       </div>
     </section>
@@ -770,27 +789,39 @@ function Contact({ selectedPlan, onSelect }) {
   }
 
   return (
-    <section className="section contact" id="contact">
-      <div className="shell contact-grid">
-        <Reveal className="contact-copy">
-          <Eyebrow>Let us talk</Eyebrow>
-          <h2>Every great book<br /><em>starts with a conversation.</em></h2>
-          <p className="section-lead">
-            Tell us what you want to write and who it is for. You will hear back from a real
-            editor within one working day, with a straight answer on scope, price and timing.
-          </p>
-          <ul className="contact-points">
-            <li><IconCheck className="tick" />Free 30-minute discovery call</li>
-            <li><IconCheck className="tick" />NDA signed before you share anything</li>
-            <li><IconCheck className="tick" />Fixed quote, no hourly billing</li>
-          </ul>
-          <div className="contact-direct">
-            <a href="mailto:hello@ebookwriters.us"><IconMail /> hello@ebookwriters.us</a>
-            <a href="tel:+18005550142"><IconPhone /> +1 (800) 555-0142</a>
+    <section className="section contact ct" id="contact" aria-labelledby="contact-title">
+      <div className="ct-shell">
+        <Reveal className="ct-aside">
+          <img
+            className="ct-photo"
+            src="/assets/brand/contact-consultation-v2.png"
+            alt=""
+            loading="lazy"
+          />
+          <div className="ct-aside-copy">
+            <Eyebrow tone="light">Let&rsquo;s bring your story to life</Eyebrow>
+            <h2 id="contact-title">
+              Every great book
+              <br />
+              <em>starts with a conversation.</em>
+            </h2>
+            <p>
+              Tell us what you want to write and who it is for. You will hear back within one
+              working day with a clear answer on scope, price and timing.
+            </p>
+            <ul className="ct-points">
+              <li><IconCheck className="tick" />Free 30-minute discovery call</li>
+              <li><IconCheck className="tick" />NDA before you share anything</li>
+              <li><IconCheck className="tick" />Fixed quote, no hourly billing</li>
+            </ul>
+            <div className="ct-direct">
+              <a href={`mailto:${siteContact.email}`}><IconMail /> {siteContact.email}</a>
+              <a href={siteContact.phoneHref}><IconPhone /> {siteContact.phone}</a>
+            </div>
           </div>
         </Reveal>
 
-        <Reveal className="contact-panel" delay={120}>
+        <Reveal className="ct-panel" delay={120}>
           {brief ? (
             <div className="brief" ref={resultRef} tabIndex={-1}>
               <h3>Your brief is ready</h3>
@@ -810,39 +841,27 @@ function Contact({ selectedPlan, onSelect }) {
               <p role="status" className="brief-status">{copied}</p>
             </div>
           ) : (
-            <form className="contact-form" onSubmit={handleSubmit} noValidate={false}>
-              <div className="field-row">
-                <label className="field">
-                  <span>Your name</span>
-                  <input name="name" autoComplete="name" required maxLength={120} placeholder="Alex Morgan" />
-                </label>
-                <label className="field">
-                  <span>Email address</span>
-                  <input name="email" type="email" autoComplete="email" required maxLength={254} placeholder="alex@company.com" />
-                </label>
-              </div>
-              <div className="field-row">
-                <label className="field">
-                  <span>Package of interest</span>
-                  <select name="interest" value={selectedPlan} onChange={e => onSelect(e.target.value)}>
-                    <option value="">Help me choose</option>
-                    {plans.map(plan => (
-                      <option key={plan.name} value={plan.name}>{plan.name} — ${plan.price}</option>
-                    ))}
-                  </select>
-                </label>
-                <label className="field">
-                  <span>Ideal timeline</span>
-                  <select name="timeline" defaultValue="Within 3 months">
-                    <option>As soon as possible</option>
-                    <option>Within 3 months</option>
-                    <option>Within 6 months</option>
-                    <option>Just exploring</option>
-                  </select>
-                </label>
-              </div>
+            <form className="ct-form" onSubmit={handleSubmit}>
               <label className="field">
-                <span>Tell us about your book</span>
+                <span>Your name</span>
+                <input name="name" autoComplete="name" required maxLength={120} placeholder="Alex Morgan" />
+              </label>
+              <label className="field">
+                <span>Your email</span>
+                <input name="email" type="email" autoComplete="email" required maxLength={254} placeholder="alex@company.com" />
+              </label>
+              <label className="field">
+                <span>What service are you interested in?</span>
+                <select name="interest" value={selectedPlan} onChange={e => onSelect(e.target.value)}>
+                  <option value="">Help me choose</option>
+                  {plans.map(plan => (
+                    <option key={plan.name} value={plan.name}>{plan.name} — ${plan.price}</option>
+                  ))}
+                </select>
+              </label>
+              <input type="hidden" name="timeline" value="Within 3 months" />
+              <label className="field">
+                <span>Tell us about your book or project</span>
                 <textarea
                   name="message"
                   rows={5}
@@ -852,12 +871,10 @@ function Contact({ selectedPlan, onSelect }) {
                   onInput={e => e.target.setCustomValidity('')}
                 />
               </label>
-              <div className="form-foot">
-                <button type="submit" className="cta cta-solid">
-                  <span>Prepare my brief</span><IconArrow className="cta-arrow" />
-                </button>
-                <p>Builds a brief you can copy. No message is sent from this demo form.</p>
-              </div>
+              <button type="submit" className="ct-submit">
+                Prepare inquiry <IconArrow aria-hidden="true" />
+              </button>
+              <p className="ct-note">We typically respond within 1–2 business days.</p>
             </form>
           )}
         </Reveal>
@@ -880,8 +897,8 @@ function Footer() {
               design and publish books that earn their place on a shelf.
             </p>
             <div className="footer-contact">
-              <a href="mailto:hello@ebookwriters.us"><IconMail /> hello@ebookwriters.us</a>
-              <a href="tel:+18005550142"><IconPhone /> +1 (800) 555-0142</a>
+              <a href={`mailto:${siteContact.email}`}><IconMail /> {siteContact.email}</a>
+              <a href={siteContact.phoneHref}><IconPhone /> {siteContact.phone}</a>
             </div>
           </div>
           {footerLinks.map(column => (
@@ -910,7 +927,58 @@ function Footer() {
   );
 }
 
-/* ---------------------------------------------------------------------- app */
+/* Phone sticky CTA: hidden while the hero CTA (or nav drawer / contact / footer)
+   is on screen so we never stack two “Start” buttons or cover the form. */
+function MobileBar() {
+  const [hidden, setHidden] = useState(true);
+  useEffect(() => {
+    const heroCta = document.querySelector('.hx-live .hx-cta');
+    const contact = document.getElementById('contact');
+    const footer = document.querySelector('.footer');
+    const state = { hero: Boolean(heroCta), contact: false, footer: false };
+
+    const sync = () => {
+      const navOpen = document.body.classList.contains('nav-open');
+      setHidden(navOpen || state.hero || state.contact || state.footer);
+    };
+
+    const observers = [];
+    const watch = (el, key, options) => {
+      if (!el) return;
+      const io = new IntersectionObserver(([entry]) => {
+        state[key] = entry.isIntersecting;
+        sync();
+      }, options);
+      io.observe(el);
+      observers.push(io);
+    };
+
+    watch(heroCta, 'hero', { threshold: 0.2, rootMargin: '0px 0px 0px 0px' });
+    watch(contact, 'contact', { rootMargin: '0px 0px -20% 0px' });
+    watch(footer, 'footer', { threshold: 0.02 });
+
+    const mo = new MutationObserver(sync);
+    mo.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    sync();
+
+    return () => {
+      observers.forEach(io => io.disconnect());
+      mo.disconnect();
+    };
+  }, []);
+
+  return (
+    <div className={`mobile-bar${hidden ? ' is-away' : ''}`} aria-hidden={hidden}>
+      <p className="mobile-bar-price">
+        <strong>From $699</strong>
+        <span>Fixed fee, 100% royalties yours</span>
+      </p>
+      <a className="mobile-bar-cta" href="#contact" tabIndex={hidden ? -1 : 0}>
+        Start Your Project
+      </a>
+    </div>
+  );
+}
 
 function App() {
   const [selectedPlan, setSelectedPlan] = useState('');
@@ -925,13 +993,11 @@ function App() {
     });
     if (reduceMotion()) return () => progress.kill();
 
-    // `anchors` is required: without it Lenis animates back to its own target and
-    // every in-page nav link snaps straight back to the top of the document.
     const lenis = new Lenis({
       autoRaf: false,
       lerp: 0.085,
       wheelMultiplier: 0.95,
-      anchors: true,  // gap under the sticky header comes from `scroll-padding-top`
+      anchors: true,
     });
     const tick = time => lenis.raf(time * 1000);
     lenis.on('scroll', ScrollTrigger.update);
@@ -952,19 +1018,18 @@ function App() {
       <Header />
       <main id="main">
         <Hero />
-        <PlatformStrip />
-        <Stats />
+        <TrustBar />
+        <PathBand />
         <Services />
-        <Process />
-        <WhyUs />
         <Portfolio />
+        <DualOffer />
         <Testimonials />
         <Pricing onSelect={setSelectedPlan} />
         <Faq />
-        <CtaBanner />
         <Contact selectedPlan={selectedPlan} onSelect={setSelectedPlan} />
       </main>
       <Footer />
+      <MobileBar />
     </>
   );
 }

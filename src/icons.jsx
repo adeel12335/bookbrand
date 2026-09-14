@@ -108,6 +108,13 @@ export const IconCheck = props => (
   <Svg {...props} strokeWidth={2.4}><path d="m10 25 9 9 19-20" /></Svg>
 );
 
+export const IconShield = props => (
+  <Svg {...props}>
+    <path d="M24 6 38 11v10.5C38 30.7 32.4 38 24 42c-8.4-4-14-11.3-14-20.5V11z" />
+    <path d="m17.5 24 4.2 4.2 8.8-9" />
+  </Svg>
+);
+
 export const IconPlus = props => (
   <Svg {...props} strokeWidth={2}><path d="M24 12v24M12 24h24" /></Svg>
 );
@@ -139,6 +146,23 @@ export const IconBook = props => (
   </Svg>
 );
 
+export const IconCoins = props => (
+  <Svg {...props}>
+    <ellipse cx="18" cy="28" rx="10" ry="6" />
+    <path d="M8 28v4c0 3.3 4.5 6 10 6s10-2.7 10-6v-4" />
+    <ellipse cx="30" cy="18" rx="10" ry="6" />
+    <path d="M20 18v4c0 3.3 4.5 6 10 6s10-2.7 10-6v-4" />
+  </Svg>
+);
+
+export const IconCalendar = props => (
+  <Svg {...props}>
+    <rect x="9" y="12" width="30" height="26" rx="2.5" />
+    <path d="M9 20h30M17 8v8M31 8v8" />
+    <path d="M17 27h4M24 27h4M31 27h4M17 33h4M24 33h4" />
+  </Svg>
+);
+
 export const IconGlobe = props => (
   <Svg {...props}>
     <circle cx="24" cy="24" r="16" />
@@ -162,6 +186,27 @@ export const IconPhone = props => (
   <Svg {...props}><path d="M17.6 9h-5A3.6 3.6 0 0 0 9 12.9C9.9 27 21 38.1 35.1 39a3.6 3.6 0 0 0 3.9-3.6v-5l-8-3-3.4 4.1a25 25 0 0 1-11.1-11.1L20.6 17z" /></Svg>
 );
 
+export const IconBriefcase = props => (
+  <Svg {...props}>
+    <rect x="7" y="14" width="34" height="25" rx="2.5" />
+    <path d="M17 14v-4h14v4M7 23h34M20 23v4h8v-4" />
+  </Svg>
+);
+
+export const IconLeaf = props => (
+  <Svg {...props}>
+    <path d="M38.5 8.5C25 9.8 13.2 18.1 10.5 34.5c8.3 1.4 16.4-1.4 21.5-8.4 4.2-5.8 5.4-12.3 6.5-17.6Z" />
+    <path d="M10 40c4.3-10 11.2-17.2 21-22" />
+  </Svg>
+);
+
+export const IconFeather = props => (
+  <Svg {...props}>
+    <path d="M39.5 7.5C25.2 8 13.2 16.5 10 33.5l8.5 4.5c10.8-6.2 17.3-16.4 21-30.5Z" />
+    <path d="M8 41c5.5-10.5 13.1-18.5 23-25M13.5 31.5l9.5 1M18 24l9 1M22.5 17.5l6.5.8" />
+  </Svg>
+);
+
 export const serviceIcons = {
   writing: IconWriting,
   ghostwriting: IconGhostwriting,
@@ -176,4 +221,11 @@ export const valueIcons = {
   quality: IconQuality,
   confidential: IconConfidential,
   fast: IconFast,
+};
+
+export const specialtyIcons = {
+  business: IconBriefcase,
+  memoir: IconBook,
+  wellness: IconLeaf,
+  fiction: IconFeather,
 };

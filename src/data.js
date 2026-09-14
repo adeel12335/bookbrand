@@ -1,98 +1,175 @@
 export const navigation = [
-  { label: 'Services', href: '#services' },
-  { label: 'Process', href: '#process' },
   { label: 'Why Us', href: '#why' },
-  { label: 'Portfolio', href: '#portfolio' },
+  { label: 'Services', href: '#services' },
+  { label: 'Work', href: '#portfolio' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'FAQ', href: '#faq' },
 ];
 
-export const heroTrust = [
-  { icon: 'book', title: 'Professional', sub: 'Writers' },
-  { icon: 'writers', title: 'Publishing', sub: 'Expertise' },
-  { icon: 'chart', title: 'Real Impact', sub: 'For Your Brand' },
-];
-
-export const platforms = [
-  'Amazon KDP', 'Apple Books', 'Kobo Writing Life', 'Barnes & Noble Press',
-  'Google Play Books', 'IngramSpark', 'Draft2Digital', 'Smashwords',
-];
-
-export const stats = [
-  { value: 850, suffix: '+', label: 'Books delivered', note: 'Across 30+ genres' },
-  { value: 98, suffix: '%', label: 'Client satisfaction', note: 'Based on 2024–25 reviews' },
-  { value: 40, suffix: '+', label: 'Specialist writers', note: 'Vetted, in-house team' },
-  { value: 12, suffix: ' yrs', label: 'In publishing', note: 'Since 2013' },
-];
-
 export const services = [
   {
-    n: '01', key: 'writing', title: 'eBook Writing',
-    copy: 'From a blank page to a finished manuscript. We shape your idea into a structured, readable book your audience will actually finish.',
+    n: '01', key: 'writing', title: 'Book Writing',
+    copy: 'Work with professional ghostwriters who bring your ideas to life in your voice.',
     points: ['Chapter-by-chapter outline', 'Original research', 'Two revision rounds'],
   },
   {
-    n: '02', key: 'ghostwriting', title: 'Ghostwriting',
-    copy: 'Your vision, your voice, our words. You keep full authorship and every right — we simply do the writing.',
-    points: ['Voice-matching interviews', '100% confidential', 'Full rights transfer'],
-  },
-  {
-    n: '03', key: 'editing', title: 'Editing & Proofreading',
-    copy: 'A careful second pair of eyes. Developmental, line and copy editing that sharpens clarity without flattening your voice.',
+    n: '02', key: 'editing', title: 'Editing & Proofreading',
+    copy: 'Refine your manuscript with expert editors for clarity, flow, and impact.',
     points: ['Developmental edit', 'Line & copy edit', 'Final proofread'],
   },
   {
-    n: '04', key: 'formatting', title: 'Formatting & Design',
-    copy: 'Beautiful, reader-friendly interiors built to every retailer spec, plus a cover that earns the click.',
-    points: ['EPUB, MOBI & print PDF', 'Custom cover design', 'Retailer-ready files'],
+    n: '03', key: 'formatting', title: 'Cover Design',
+    copy: 'Stunning, market-ready covers that capture your story and attract readers.',
+    points: ['Custom cover design', 'Front, spine & back', 'Genre-matched art direction'],
   },
   {
-    n: '05', key: 'publishing', title: 'Publishing Support',
-    copy: 'We handle the fiddly parts — metadata, categories, keywords, pricing — and get your book live on the right shelves.',
-    points: ['KDP & IngramSpark setup', 'Category & keyword research', 'ISBN guidance'],
+    n: '04', key: 'publishing', title: 'Publishing & Formatting',
+    copy: 'Professional print, ebook, and audiobook formatting with platform-ready files.',
+    points: ['EPUB & print PDF', 'KDP & IngramSpark setup', 'Retailer-ready files'],
   },
   {
-    n: '06', key: 'branding', title: 'Author Branding',
-    copy: 'A book is a beginning. We help you build the author platform that turns readers into clients and clients into advocates.',
-    points: ['Author bio & website copy', 'Launch messaging', 'Lead-magnet strategy'],
+    n: '05', key: 'ghostwriting', title: 'ISBN & Copyright Support',
+    copy: 'Secure your rights, set up publishing essentials, and protect your work properly.',
+    points: ['ISBN guidance', 'Copyright setup', 'Rights documentation'],
+  },
+  {
+    n: '06', key: 'branding', title: 'Book Marketing',
+    copy: 'Launch strategy, author platform support, and audience-building promotion plans.',
+    points: ['Launch messaging', 'Amazon optimization', 'Author brand visibility'],
   },
 ];
 
-export const steps = [
-  { n: '01', title: 'Share Your Idea', copy: 'A free discovery call. We listen to your idea, your audience and what you want the book to do for you.' },
-  { n: '02', title: 'Plan & Outline', copy: 'You receive a full chapter outline and a sample chapter before a single word of the manuscript is written.' },
-  { n: '03', title: 'Write & Refine', copy: 'Your dedicated writer drafts chapter by chapter. You review as we go, so nothing is a surprise at the end.' },
-  { n: '04', title: 'Design & Publish', copy: 'Editing, cover, formatting and retailer setup. We hand you a finished book and every file that goes with it.' },
+export const benefits = [
+  {
+    key: 'ownership',
+    title: '100% Author Ownership',
+    copy: 'You keep all rights to your work.',
+  },
+  {
+    key: 'fees',
+    title: 'No Hidden Fees',
+    copy: 'Transparent pricing, always.',
+  },
+  {
+    key: 'specialists',
+    title: 'Named Genre Specialists',
+    copy: 'Work with experts in your category.',
+  },
+  {
+    key: 'time',
+    title: 'Milestone Delivery',
+    copy: 'Clear timelines and regular updates.',
+  },
 ];
 
-export const values = [
-  { key: 'writers', title: 'Experienced Writers', copy: 'Every project is matched to a writer who has already published in your genre. Never a generalist, never an algorithm.' },
-  { key: 'quality', title: 'Publishing Quality', copy: 'Three editorial passes, a professional cover and retailer-spec files as standard. The book reads like a book, not a document.' },
-  { key: 'confidential', title: 'Confidential Process', copy: 'NDA-backed from the first call. Your name stays on the cover and your idea never leaves the team.' },
-  { key: 'fast', title: 'Fast Turnaround', copy: 'A 20,000-word eBook in about four weeks, with weekly drafts so you always know exactly where the project stands.' },
-];
+export const pathBand = {
+  eyebrow: 'A clearer path to publishing',
+  title: 'Publishing your book shouldn\'t feel',
+  titleEm: 'confusing.',
+  lead:
+    'From the first outline to retailer-ready files, we map every step so you always know what comes next — and who is doing the work.',
+  cta: 'Talk to a Publishing Specialist',
+  journey: ['Write', 'Edit', 'Design', 'Publish', 'Market', 'Grow'],
+  roadmap: {
+    title: 'Your publishing roadmap',
+    steps: [
+      'Plan your project',
+      'Work with our team',
+      'See your book in the world',
+    ],
+  },
+  image: '/assets/brand/contact-writing-desk.png',
+  imageAlt: 'Writing desk with manuscript, fountain pen, and finished books',
+};
+
+export const portfolioIntro = {
+  eyebrow: 'Recently Published',
+  title: 'Books we’ve helped bring to life.',
+  meta: '850+ books delivered across 20+ genres.',
+  linkLabel: 'View the portfolio',
+  linkHref: '#contact',
+  image: '/assets/brand/portfolio-shelf-v2.png',
+  imageAlt: 'Six professionally designed books displayed on a warm stone shelf',
+};
+
+export const servicesIntro = {
+  eyebrow: 'Our services',
+  title: 'Everything your book needs,',
+  titleEm: 'under one roof.',
+  lead: 'Writing, editing, design, and launch support — coordinated by one studio so nothing falls between freelancers.',
+};
+
+export const dualOffer = {
+  publish: {
+    eyebrow: 'Our publishing services',
+    title: 'Publish with confidence.',
+    lead:
+      'From final manuscript to global distribution, we handle the details so you can focus on what you do best — your writing.',
+    checklist: [
+      'Print, ebook & hardcover',
+      'Metadata & platform setup',
+      'Global distribution support',
+    ],
+    cta: 'Plan your publication',
+    href: '#contact',
+    image: '/assets/brand/publishing-craft-v2.png',
+    imageAlt: 'Forest-green clothbound hardcover displayed in an editorial studio',
+  },
+  market: {
+    eyebrow: 'Our marketing services',
+    title: 'Reach readers who need your story.',
+    lead:
+      'Strategic marketing to help your book stand out, build your audience, and create lasting impact beyond launch day.',
+    checklist: [
+      'Launch positioning',
+      'Author platform strategy',
+      'Visibility-focused campaigns',
+    ],
+    cta: 'Build your launch plan',
+    href: '#contact',
+    image: '/assets/brand/marketing-strategy-v2.png',
+    imageAlt: 'Author marketing notebook, books, fountain pen, and green mug',
+  },
+};
 
 export const books = [
-  { title: 'The Leadership Code', genre: 'Business & Leadership', image: '/assets/brand/cover-leadership.jpg', note: 'No.1 New Release in Business Mentoring' },
-  { title: 'The Wealth Blueprint', genre: 'Personal Finance', image: '/assets/brand/cover-wealth.jpg', note: '40,000 copies in the first year' },
-  { title: 'A Brighter Story', genre: 'Memoir & Non-fiction', image: '/assets/brand/cover-brighter.jpg', note: 'Translated into four languages' },
+  { title: 'Higher Ground', author: 'Daniel Brooks', genre: 'Self-Development', image: '/assets/brand/portfolio-1.png' },
+  { title: 'The Kindness Effect', author: 'Elena Martin', genre: 'Personal Growth', image: '/assets/brand/portfolio-2.png' },
+  { title: 'Beyond the Stars', author: 'Marcus Hill', genre: 'Parenting', image: '/assets/brand/portfolio-3.png' },
+  { title: 'The Second Chapter', author: 'Olivia Reese', genre: 'Memoir', image: '/assets/brand/portfolio-4.png' },
+  { title: 'Wealth with Purpose', author: 'Jonathan Blake', genre: 'Business & Finance', image: '/assets/brand/portfolio-5.png' },
+  { title: 'A Healthier You', author: 'Dr. Amanda Lewis', genre: 'Health & Wellness', image: '/assets/brand/portfolio-6.png' },
 ];
+
+export const testimonialsIntro = {
+  eyebrow: 'Real stories · Brighter tomorrows',
+  title: 'What authors say about working with us.',
+};
 
 export const testimonials = [
   {
-    name: 'Daniel Whitmore', role: 'Founder, Northgate Advisory', initials: 'DW',
-    avatar: '/assets/brand/testimonial-daniel.png',
-    quote: 'I had eleven years of material and no idea how to shape it. They built the outline in a week and the finished book reads exactly the way I talk. It has become the best lead source in the business.',
-  },
-  {
-    name: 'Melissa Reyes', role: 'Executive Coach and Speaker', initials: 'MR',
+    name: 'Sarah L.',
+    role: 'Memoir Author',
+    initials: 'SL',
     avatar: '/assets/brand/testimonial-melissa.png',
-    quote: 'What impressed me was the discipline. A draft chapter every Friday, honest feedback when an idea was not working, and a cover that finally looked like the brand I had built. No chasing, no surprises.',
+    quote:
+      'Professional, supportive, and truly invested in my success. They made the publishing process feel effortless.',
   },
   {
-    name: 'James Okonkwo', role: 'Author, The Quiet Advantage', initials: 'JO',
+    name: 'Michael R.',
+    role: 'Business Author',
+    initials: 'MR',
+    avatar: '/assets/brand/testimonial-daniel.png',
+    quote:
+      'An exceptional team from start to finish. My book looks beautiful, and it’s reaching readers around the world.',
+  },
+  {
+    name: 'Talia M.',
+    role: 'Health & Wellness Author',
+    initials: 'TM',
     avatar: '/assets/brand/testimonial-james.png',
-    quote: 'They took a messy eighty-page document and turned it into something I am genuinely proud to hand a client. The publishing side alone saved me weeks of guessing at retailer settings.',
+    quote:
+      'They brought my vision to life with care and expertise. I always felt heard, and the results exceeded my expectations.',
   },
 ];
 
@@ -161,12 +238,30 @@ export const footerLinks = [
   {
     title: 'Company',
     links: [
-      { label: 'Our Process', href: '#process' },
-      { label: 'Why Choose Us', href: '#why' },
-      { label: 'Portfolio', href: '#portfolio' },
+      { label: 'Why Us', href: '#why' },
+      { label: 'Selected Work', href: '#portfolio' },
       { label: 'Pricing', href: '#pricing' },
       { label: 'FAQ', href: '#faq' },
       { label: 'Contact', href: '#contact' },
     ],
   },
 ];
+
+/* --------------------------------------------------------------- hero copy */
+
+export const hero = {
+  lines: ['Turn Your Ideas', 'Into a Published', 'Book.'],
+  lead: 'End-to-end publishing support that turns your manuscript into a polished, publication-ready book — writing, editing, cover design, formatting, publishing, and book marketing.',
+  leadMobile: 'Manuscript to published book — one studio.',
+  kicker: 'Book publishing studio',
+  cta: 'Start Your Project',
+  link: { label: 'Explore our services', href: '#services' },
+  trust: ['1,000+ authors', '4.9/5 satisfaction', '100% ownership'],
+};
+
+export const siteContact = {
+  email: 'marketing@ebookwriterusa.com',
+  phone: '+1 307-219-9122',
+  phoneHref: 'tel:+13072199122',
+  address: '545 Brandon Road, Conroe, TX 77302 USA',
+};
