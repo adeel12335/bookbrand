@@ -1,7 +1,21 @@
 import { chromium } from 'playwright';
+import { existsSync, mkdirSync } from 'node:fs';
+import { join } from 'node:path';
 
 const errors = [];
-const baseUrl = process.env.QA_BASE_URL || 'http://localhost:5174/';
+const baseUrl = process.env.QA_BASE_URL || 'http://127.0.0.1:5173/';
+const captureDir = process.env.QA_CAPTURE_DIR;
+
+async function captureSection(page, selector, filename) {
+  const section = page.locator(selector);
+  await section.scrollIntoViewIfNeeded();
+  await page.evaluate(() => document.activeElement?.blur());
+  if (await page.evaluate(() => window.innerWidth <= 760)) {
+    await page.waitForFunction(() => document.querySelector('.mobile-bar')?.classList.contains('is-away'));
+  }
+  await page.waitForTimeout(1100);
+  await section.screenshot({ path: join(captureDir, filename) });
+}
 
 async function check(page, label) {
   const r = await page.evaluate(() => {
@@ -75,7 +89,13 @@ async function check(page, label) {
   return r;
 }
 
-const browser = await chromium.launch();
+const localChrome = [
+  process.env.PLAYWRIGHT_CHROME_PATH,
+  'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+  'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+].find((candidate) => candidate && existsSync(candidate));
+
+const browser = await chromium.launch(localChrome ? { executablePath: localChrome } : {});
 const desktop = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 desktop.on('pageerror', (e) => errors.push(String(e)));
 desktop.on('console', (m) => {
@@ -84,12 +104,21 @@ desktop.on('console', (m) => {
 await desktop.goto(baseUrl, { waitUntil: 'networkidle' });
 await desktop.waitForTimeout(1000);
 await check(desktop, 'desktop');
+if (captureDir) {
+  mkdirSync(captureDir, { recursive: true });
+  await captureSection(desktop, '#portfolio', 'portfolio-desktop.png');
+  await captureSection(desktop, '#faq', 'faq-desktop.png');
+}
 
 const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
 mobile.on('pageerror', (e) => errors.push(String(e)));
 await mobile.goto(baseUrl, { waitUntil: 'networkidle' });
 await mobile.waitForTimeout(800);
 await check(mobile, 'mobile');
+if (captureDir) {
+  await captureSection(mobile, '#portfolio', 'portfolio-mobile.png');
+  await captureSection(mobile, '#faq', 'faq-mobile.png');
+}
 
 console.log('pageErrors', errors);
 await browser.close();

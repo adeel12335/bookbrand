@@ -100,7 +100,17 @@ export const servicesIntro = {
 };
 
 export const dualOffer = {
+  intro: {
+    eyebrow: 'What we do',
+    title: 'Two disciplines,',
+    titleEm: 'one published book.',
+    lead:
+      'Every title we take on moves through both halves of the studio — a production desk that makes the book, and a launch desk that makes sure readers find it.',
+    note: 'Both desks are included in every full-service plan.',
+  },
   publish: {
+    index: '01',
+    tag: 'Production desk',
     eyebrow: 'Our publishing services',
     title: 'Publish with confidence.',
     lead:
@@ -114,8 +124,11 @@ export const dualOffer = {
     href: '#contact',
     image: '/assets/brand/publishing-craft-v2.png',
     imageAlt: 'Forest-green clothbound hardcover displayed in an editorial studio',
+    caption: 'Fig. 01 — Cloth-bound first edition',
   },
   market: {
+    index: '02',
+    tag: 'Launch desk',
     eyebrow: 'Our marketing services',
     title: 'Reach readers who need your story.',
     lead:
@@ -129,6 +142,7 @@ export const dualOffer = {
     href: '#contact',
     image: '/assets/brand/marketing-strategy-v2.png',
     imageAlt: 'Author marketing notebook, books, fountain pen, and green mug',
+    caption: 'Fig. 02 — Twelve-week launch map',
   },
 };
 
