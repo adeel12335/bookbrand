@@ -1050,12 +1050,14 @@ function MobileBar() {
   const [hidden, setHidden] = useState(true);
   useEffect(() => {
     const heroCta = document.querySelector('.hx-exact-mob-hit--cta, .hx-live .hx-cta');
+    const pathCard = document.querySelector('.ed-path-card');
     const portfolio = document.getElementById('portfolio');
     const faq = document.getElementById('faq');
     const contact = document.getElementById('contact');
     const footer = document.querySelector('.footer');
     const state = {
       hero: Boolean(heroCta),
+      path: false,
       portfolio: false,
       faq: false,
       contact: false,
@@ -1065,7 +1067,13 @@ function MobileBar() {
     const sync = () => {
       const navOpen = document.body.classList.contains('nav-open');
       setHidden(
-        navOpen || state.hero || state.portfolio || state.faq || state.contact || state.footer,
+        navOpen
+        || state.hero
+        || state.path
+        || state.portfolio
+        || state.faq
+        || state.contact
+        || state.footer,
       );
     };
 
@@ -1081,6 +1089,7 @@ function MobileBar() {
     };
 
     watch(heroCta, 'hero', { threshold: 0.2, rootMargin: '0px 0px 0px 0px' });
+    watch(pathCard, 'path', { threshold: 0.15, rootMargin: '40px 0px 40px 0px' });
     watch(portfolio, 'portfolio', { threshold: 0.02 });
     watch(faq, 'faq', { threshold: 0.02 });
     watch(contact, 'contact', { rootMargin: '0px 0px -20% 0px' });

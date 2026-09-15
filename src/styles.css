@@ -16145,3 +16145,785 @@ body {
     background: #071b16 !important;
   }
 }
+
+/* ==========================================================================
+   PATH BAND mobile v3 — match reference: solid cream card over photo
+   ========================================================================== */
+
+@media (max-width: 860px) {
+  .ed-path {
+    overflow: visible !important;
+    background: #071b16 !important;
+    padding-bottom: 1.75rem !important;
+  }
+
+  .ed-path-split {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  .ed-path-copy {
+    padding: 2rem 1.2rem 1.25rem !important;
+  }
+
+  .ed-path-copy .eyebrow {
+    margin-bottom: 1rem !important;
+  }
+
+  .ed-path-copy h2 {
+    max-width: 15ch !important;
+    margin-bottom: 0.85rem !important;
+    font-size: clamp(1.85rem, 7.5vw, 2.25rem) !important;
+    line-height: 1.08 !important;
+    color: #f7f3ea !important;
+  }
+
+  .ed-path-copy h2 em {
+    color: #d4b483 !important;
+  }
+
+  .ed-path-copy > p {
+    margin-bottom: 1.15rem !important;
+    max-width: 36ch !important;
+    font-size: 0.9rem !important;
+    line-height: 1.55 !important;
+    color: rgba(247, 243, 234, 0.82) !important;
+  }
+
+  .ed-path-cta {
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-content: space-between !important;
+    margin-bottom: 1.75rem !important;
+    min-height: 3.1rem !important;
+  }
+
+  /* Journey — 3×2 editorial grid on dark field */
+  .ed-path-journey {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 1.1rem 0.4rem !important;
+    margin: 0 !important;
+    padding: 0.25rem 0 0.5rem !important;
+  }
+
+  .ed-path-journey::before {
+    display: none !important;
+  }
+
+  .ed-path-journey li {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.45rem !important;
+    text-align: center !important;
+  }
+
+  .ed-path-dot {
+    width: 2.65rem !important;
+    height: 2.65rem !important;
+    border: 1px solid rgba(212, 180, 131, 0.55) !important;
+    border-radius: 50% !important;
+    color: #d4b483 !important;
+    background: transparent !important;
+  }
+
+  .ed-path-dot svg {
+    width: 1.15rem !important;
+    height: 1.15rem !important;
+  }
+
+  .ed-path-journey span:last-child {
+    font-family: var(--sans) !important;
+    font-size: 0.62rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
+    color: rgba(212, 180, 131, 0.92) !important;
+  }
+
+  /* Photo + overlapping solid roadmap card */
+  .ed-path-visual {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    aspect-ratio: auto !important;
+    overflow: visible !important;
+    margin: 0.75rem 0 0 !important;
+    padding: 0 0 0 !important;
+    background: #071b16 !important;
+  }
+
+  .ed-path-visual > img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 4 / 3 !important;
+    max-height: none !important;
+    object-fit: cover !important;
+    object-position: center 55% !important;
+    border-radius: 0 !important;
+  }
+
+  /* Solid cream card — reference look, not glass */
+  .ed-path-card {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    z-index: 3 !important;
+    width: calc(100% - 2rem) !important;
+    max-width: 22rem !important;
+    margin: -3.25rem auto 0 !important;
+    padding: 1.25rem 1.15rem 1.2rem !important;
+    overflow: visible !important;
+    background: #f8f8f6 !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    border: 1px solid rgba(212, 180, 131, 0.28) !important;
+    border-radius: 4px !important;
+    box-shadow:
+      0 22px 48px rgba(0, 0, 0, 0.38),
+      0 2px 0 rgba(255, 255, 255, 0.65) inset !important;
+  }
+
+  .ed-path-card-head {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.6rem !important;
+    margin: 0 0 0.95rem !important;
+    padding: 0 0 0.85rem !important;
+    border-bottom: 1px solid rgba(15, 61, 50, 0.12) !important;
+  }
+
+  .ed-path-card-head svg {
+    width: 1.2rem !important;
+    height: 1.2rem !important;
+    color: #826a3c !important;
+    flex: none !important;
+  }
+
+  .ed-path-card-head h3 {
+    margin: 0 !important;
+    font-family: var(--display) !important;
+    font-size: 1.15rem !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    color: #071b16 !important;
+  }
+
+  .ed-path-card ol {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+  }
+
+  .ed-path-card li {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.7rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #3a443f !important;
+    font-family: var(--sans) !important;
+    font-size: 0.9rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .ed-path-card li span {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+    width: 1.6rem !important;
+    height: 1.6rem !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(130, 106, 60, 0.4) !important;
+    background: transparent !important;
+    color: #826a3c !important;
+    font-size: 0.72rem !important;
+    font-weight: 650 !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .ed-path-visual > img {
+    aspect-ratio: 5 / 4 !important;
+  }
+
+  .ed-path-card {
+    width: calc(100% - 1.6rem) !important;
+    margin-top: -2.85rem !important;
+    padding: 1.15rem 1rem 1.1rem !important;
+  }
+
+  .ed-path-card-head h3 {
+    font-size: 1.08rem !important;
+  }
+}
+
+/* Path mobile v3b — float card on photo like the reference mock */
+@media (max-width: 860px) {
+  .ed-path {
+    padding-bottom: 5.75rem !important;
+  }
+
+  .ed-path-visual {
+    position: relative !important;
+    display: block !important;
+    overflow: visible !important;
+    margin-top: 0.5rem !important;
+    padding-bottom: 5.5rem !important;
+  }
+
+  .ed-path-visual > img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 5 / 4 !important;
+    max-height: none !important;
+    object-fit: cover !important;
+    object-position: center 48% !important;
+  }
+
+  .ed-path-card {
+    position: absolute !important;
+    left: 50% !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: 0.35rem !important;
+    transform: translateX(-50%) !important;
+    width: calc(100% - 2rem) !important;
+    max-width: 21.5rem !important;
+    margin: 0 !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .ed-path-visual {
+    padding-bottom: 5.25rem !important;
+  }
+
+  .ed-path-card {
+    width: calc(100% - 1.6rem) !important;
+    bottom: 0.15rem !important;
+  }
+}
+
+/* Path mobile v3c — center cream card on photo; clear of sticky bar */
+@media (max-width: 860px) {
+  .ed-path {
+    padding-bottom: 2rem !important;
+  }
+
+  .ed-path-visual {
+    padding-bottom: 0 !important;
+    min-height: 22rem !important;
+  }
+
+  .ed-path-visual > img {
+    aspect-ratio: 4 / 5 !important;
+    min-height: 22rem !important;
+    object-position: center 42% !important;
+  }
+
+  .ed-path-card {
+    top: 54% !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+    width: calc(100% - 2.2rem) !important;
+    max-width: 20.5rem !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .ed-path-card {
+    top: 48% !important;
+  }
+
+  .ed-path-visual > img {
+    aspect-ratio: 3 / 4 !important;
+    min-height: 24rem !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .ed-path-card {
+    top: 38% !important;
+    transform: translate(-50%, -42%) !important;
+  }
+}
+
+/* Path mobile v3d — compact height, less dead space around roadmap card */
+@media (max-width: 860px) {
+  .ed-path {
+    padding-bottom: 1.25rem !important;
+  }
+
+  .ed-path-visual {
+    position: relative !important;
+    display: block !important;
+    min-height: 0 !important;
+    margin-top: 0.35rem !important;
+    padding-bottom: 0 !important;
+    overflow: visible !important;
+  }
+
+  .ed-path-visual > img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 10 !important;
+    min-height: 0 !important;
+    max-height: 12.5rem !important;
+    object-fit: cover !important;
+    object-position: center 45% !important;
+  }
+
+  .ed-path-card {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    width: calc(100% - 1.8rem) !important;
+    max-width: 22rem !important;
+    margin: -2.6rem auto 0 !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .ed-path-visual > img {
+    max-height: 11.25rem !important;
+    aspect-ratio: 16 / 9 !important;
+  }
+
+  .ed-path-card {
+    width: calc(100% - 1.5rem) !important;
+    margin-top: -2.35rem !important;
+  }
+}
+
+/* Path mobile v3e — new desk BG + frosted glass roadmap card */
+@media (max-width: 860px) {
+  .ed-path-visual > img {
+    object-position: center 38% !important;
+  }
+
+  .ed-path-card {
+    background:
+      linear-gradient(165deg, rgba(255, 255, 255, 0.42), rgba(248, 248, 246, 0.22) 48%, rgba(248, 248, 246, 0.34)),
+      rgba(248, 248, 246, 0.28) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.55) !important;
+    backdrop-filter: blur(22px) saturate(1.55) !important;
+    border: 1px solid rgba(255, 255, 255, 0.55) !important;
+    box-shadow:
+      0 18px 42px rgba(0, 0, 0, 0.32),
+      inset 0 1px 0 rgba(255, 255, 255, 0.65),
+      inset 0 -1px 0 rgba(7, 27, 22, 0.08) !important;
+    transform: translateZ(0) !important;
+  }
+
+  .ed-path-card-head {
+    border-bottom-color: rgba(15, 61, 50, 0.14) !important;
+  }
+
+  .ed-path-card-head h3 {
+    color: #071b16 !important;
+  }
+
+  .ed-path-card-head svg {
+    color: #826a3c !important;
+  }
+
+  .ed-path-card li {
+    color: #24352f !important;
+  }
+
+  .ed-path-card li span {
+    border-color: rgba(130, 106, 60, 0.45) !important;
+    color: #826a3c !important;
+    background: rgba(255, 255, 255, 0.35) !important;
+  }
+}
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  @media (max-width: 860px) {
+    .ed-path-card {
+      background: rgba(248, 248, 246, 0.92) !important;
+    }
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  @media (max-width: 860px) {
+    .ed-path-card {
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      background: rgba(248, 248, 246, 0.94) !important;
+    }
+  }
+}
+
+/* Desktop path card — soft glass over the new desk photo */
+@media (min-width: 861px) {
+  .ed-path-card {
+    background:
+      linear-gradient(165deg, rgba(255, 255, 255, 0.5), rgba(248, 248, 246, 0.28) 50%, rgba(248, 248, 246, 0.4)),
+      rgba(248, 248, 246, 0.32) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+    backdrop-filter: blur(20px) saturate(1.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.55) !important;
+    box-shadow:
+      0 28px 60px -28px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .ed-path-visual > img {
+    object-position: center 72% !important;
+  }
+}
+
+/* Path mobile v3f — full desk BG visible + real frosted glass */
+@media (max-width: 860px) {
+  .ed-path-visual {
+    position: relative !important;
+    display: block !important;
+    min-height: 0 !important;
+    margin-top: 0.35rem !important;
+    padding-bottom: 0 !important;
+    overflow: visible !important;
+    background: #071b16 !important;
+  }
+
+  /* Square asset — show the whole desk scene */
+  .ed-path-visual > img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+
+  /* Card sits low so most of the photo stays open */
+  .ed-path-card {
+    position: absolute !important;
+    left: 50% !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: 0.85rem !important;
+    transform: translateX(-50%) translateZ(0) !important;
+    width: calc(100% - 1.6rem) !important;
+    max-width: 21rem !important;
+    margin: 0 !important;
+    padding: 0.95rem 0.95rem 0.9rem !important;
+    /* Real glass: see desk through it */
+    background: rgba(248, 248, 246, 0.18) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(1.65) !important;
+    backdrop-filter: blur(24px) saturate(1.65) !important;
+    border: 1px solid rgba(255, 255, 255, 0.55) !important;
+    border-radius: 4px !important;
+    box-shadow:
+      0 16px 36px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.55) !important;
+  }
+
+  .ed-path-card-head {
+    margin-bottom: 0.7rem !important;
+    padding-bottom: 0.65rem !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.28) !important;
+  }
+
+  .ed-path-card-head h3 {
+    color: #f7f3ea !important;
+    font-size: 1.05rem !important;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  .ed-path-card-head svg {
+    color: #d4b483 !important;
+  }
+
+  .ed-path-card ol {
+    gap: 0.55rem !important;
+  }
+
+  .ed-path-card li {
+    color: rgba(247, 243, 234, 0.92) !important;
+    font-size: 0.86rem !important;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .ed-path-card li span {
+    width: 1.45rem !important;
+    height: 1.45rem !important;
+    border: 1px solid rgba(212, 180, 131, 0.55) !important;
+    background: rgba(255, 255, 255, 0.14) !important;
+    color: #d4b483 !important;
+    font-size: 0.68rem !important;
+  }
+}
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  @media (max-width: 860px) {
+    .ed-path-card {
+      background: rgba(7, 27, 22, 0.88) !important;
+    }
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  @media (max-width: 860px) {
+    .ed-path-card {
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      background: rgba(7, 27, 22, 0.92) !important;
+    }
+  }
+}
+
+@media (max-width: 560px) {
+  .ed-path-card {
+    width: calc(100% - 1.35rem) !important;
+    bottom: 0.7rem !important;
+    padding: 0.85rem 0.85rem 0.8rem !important;
+  }
+}
+
+@media (min-width: 861px) {
+  .ed-path-card {
+    background: rgba(248, 248, 246, 0.2) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(1.6) !important;
+    backdrop-filter: blur(24px) saturate(1.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  }
+
+  .ed-path-card-head h3 {
+    color: #f7f3ea !important;
+  }
+
+  .ed-path-card li {
+    color: rgba(247, 243, 234, 0.92) !important;
+  }
+
+  .ed-path-card li span {
+    border-color: rgba(212, 180, 131, 0.55) !important;
+    color: #d4b483 !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .ed-path-card-head svg {
+    color: #d4b483 !important;
+  }
+
+  .ed-path-card-head {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25) !important;
+  }
+}
+
+/* Path mobile v3g — kill excess gaps; short photo strip + tight glass card */
+@media (max-width: 860px) {
+  .ed-path {
+    padding-bottom: 0.75rem !important;
+  }
+
+  .ed-path-copy {
+    padding: 1.6rem 1.15rem 0.85rem !important;
+  }
+
+  .ed-path-copy h2 {
+    margin-bottom: 0.55rem !important;
+  }
+
+  .ed-path-copy > p {
+    margin-bottom: 0.85rem !important;
+  }
+
+  .ed-path-cta {
+    margin-bottom: 1.1rem !important;
+  }
+
+  .ed-path-journey {
+    gap: 0.75rem 0.3rem !important;
+    padding: 0 !important;
+    margin: 0 0 0.35rem !important;
+  }
+
+  .ed-path-dot {
+    width: 2.35rem !important;
+    height: 2.35rem !important;
+  }
+
+  .ed-path-visual {
+    margin-top: 0.15rem !important;
+    padding-bottom: 0 !important;
+    min-height: 0 !important;
+  }
+
+  /* Short strip — desk subjects, not empty wall */
+  .ed-path-visual > img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 10 !important;
+    max-height: 11.5rem !important;
+    min-height: 0 !important;
+    object-fit: cover !important;
+    object-position: center 78% !important;
+  }
+
+  .ed-path-card {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    transform: translateZ(0) !important;
+    width: calc(100% - 1.5rem) !important;
+    max-width: 22rem !important;
+    margin: -2.35rem auto 0 !important;
+    padding: 0.8rem 0.85rem 0.75rem !important;
+    background: rgba(248, 248, 246, 0.2) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.6) !important;
+    backdrop-filter: blur(22px) saturate(1.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  }
+
+  .ed-path-card-head {
+    margin: 0 0 0.55rem !important;
+    padding: 0 0 0.5rem !important;
+    gap: 0.45rem !important;
+  }
+
+  .ed-path-card-head h3 {
+    font-size: 1rem !important;
+    color: #f7f3ea !important;
+  }
+
+  .ed-path-card-head svg {
+    width: 1.05rem !important;
+    height: 1.05rem !important;
+    color: #d4b483 !important;
+  }
+
+  .ed-path-card ol {
+    gap: 0.4rem !important;
+  }
+
+  .ed-path-card li {
+    gap: 0.55rem !important;
+    font-size: 0.84rem !important;
+    color: rgba(247, 243, 234, 0.92) !important;
+  }
+
+  .ed-path-card li span {
+    width: 1.35rem !important;
+    height: 1.35rem !important;
+    font-size: 0.65rem !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .ed-path-visual > img {
+    max-height: 10.25rem !important;
+    aspect-ratio: 16 / 9 !important;
+    object-position: center 80% !important;
+  }
+
+  .ed-path-card {
+    width: calc(100% - 1.25rem) !important;
+    margin-top: -2.1rem !important;
+    padding: 0.75rem 0.8rem 0.7rem !important;
+  }
+}
+
+/* Path mobile v3h — no green strip under photo; card sits ON the image */
+@media (max-width: 860px) {
+  .ed-path {
+    padding-bottom: 0 !important;
+  }
+
+  .ed-path-visual {
+    position: relative !important;
+    display: block !important;
+    margin: 0.15rem 0 0 !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important; /* clip anything past the photo */
+    background: transparent !important;
+  }
+
+  .ed-path-visual > img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 10 !important;
+    max-height: 12rem !important;
+    min-height: 0 !important;
+    object-fit: cover !important;
+    object-position: center 78% !important;
+  }
+
+  .ed-path-card {
+    position: absolute !important;
+    left: 50% !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: 0.7rem !important;
+    transform: translateX(-50%) translateZ(0) !important;
+    width: calc(100% - 1.4rem) !important;
+    max-width: 21rem !important;
+    margin: 0 !important;
+    padding: 0.75rem 0.8rem 0.7rem !important;
+    background: rgba(248, 248, 246, 0.2) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.6) !important;
+    backdrop-filter: blur(22px) saturate(1.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  }
+
+  .ed-path-card-head {
+    margin: 0 0 0.45rem !important;
+    padding: 0 0 0.45rem !important;
+  }
+
+  .ed-path-card ol {
+    gap: 0.35rem !important;
+  }
+
+  /* Services starts closer — kill white void under path */
+  .ed-svc {
+    padding-top: 2.25rem !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .ed-path-visual > img {
+    max-height: 10.5rem !important;
+    aspect-ratio: 16 / 9 !important;
+    object-position: center 80% !important;
+  }
+
+  .ed-path-card {
+    width: calc(100% - 1.15rem) !important;
+    bottom: 0.55rem !important;
+    padding: 0.7rem 0.75rem 0.65rem !important;
+  }
+
+  .ed-svc {
+    padding-top: 1.85rem !important;
+  }
+}

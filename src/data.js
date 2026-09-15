@@ -78,8 +78,8 @@ export const pathBand = {
       'See your book in the world',
     ],
   },
-  image: '/assets/brand/contact-writing-desk.png',
-  imageAlt: 'Writing desk with manuscript, fountain pen, and finished books',
+  image: '/assets/brand/path-roadmap-desk.png',
+  imageAlt: 'Writing desk with journal, fountain pen, and publishing stage books',
 };
 
 export const portfolioIntro = {
