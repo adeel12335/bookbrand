@@ -120,7 +120,7 @@ export const IconPlus = props => (
 );
 
 export const IconMenu = props => (
-  <Svg {...props} strokeWidth={1.8}><path d="M9 16h30M9 24h30M9 32h30" /></Svg>
+  <Svg {...props} strokeWidth={1.8}><path d="M9 18h30M9 30h30" /></Svg>
 );
 
 export const IconClose = props => (

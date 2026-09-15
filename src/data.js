@@ -263,8 +263,11 @@ export const footerLinks = [
 
 export const hero = {
   lines: ['Turn Your Ideas', 'Into a Published', 'Book.'],
+  /* Mobile reference: two-line headline, gold on the full second line */
+  linesMobile: ['Turn Your Ideas Into a', 'Published Book.'],
   lead: 'End-to-end publishing support that turns your manuscript into a polished, publication-ready book — writing, editing, cover design, formatting, publishing, and book marketing.',
-  leadMobile: 'Manuscript to published book — one studio.',
+  leadMobile:
+    'We help experts, entrepreneurs and aspiring authors bring their ideas to life through professional ebook writing, ghostwriting, editing, formatting and publishing support.',
   kicker: 'Book publishing studio',
   cta: 'Start Your Project',
   link: { label: 'Explore our services', href: '#services' },

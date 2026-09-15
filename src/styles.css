@@ -14169,3 +14169,1979 @@ body {
   }
 }
 
+/* ==========================================================================
+   MOBILE HERO v18 â€” stacked photo + solid panel (desktop hx-exact untouched)
+   No text-on-image. Phone: vertical stack. Tablet: photo | copy split.
+   ========================================================================== */
+
+.hx-live--v18 {
+  background: #071b16;
+}
+
+.hx-mob {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: calc(100dvh - 4.75rem);
+}
+
+.hx-mob-media {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: clamp(15.5rem, 46dvh, 22rem);
+  max-height: 48dvh;
+  overflow: hidden;
+  background: #071b16;
+}
+
+.hx-mob-media::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 28%;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(7, 27, 22, 0.72));
+}
+
+.hx-mob-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 14%;
+}
+
+.hx-mob-panel {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+  margin-top: -1.25rem;
+  padding: 1.35rem 1.15rem calc(1.45rem + env(safe-area-inset-bottom, 0px));
+  background:
+    linear-gradient(180deg, rgba(7, 27, 22, 0.0), #071b16 1.1rem),
+    #071b16;
+  color: #f7f3ea;
+}
+
+.hx-mob-panel .hx-brand {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: #f7f3ea;
+  line-height: 1;
+}
+
+.hx-mob-panel .hx-kicker {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #d4b483 !important;
+  font-family: var(--sans) !important;
+  font-size: 0.68rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  background: none !important;
+  border: 0 !important;
+}
+
+.hx-mob-panel .hx-kicker::before {
+  content: '';
+  display: block;
+  width: 1.1rem;
+  height: 1px;
+  background: #d4b483;
+}
+
+.hx-mob-panel .hx-title {
+  margin: 0.1rem 0 0 !important;
+  max-width: 11.5ch;
+  color: #f7f3ea !important;
+  font-size: clamp(1.85rem, 8.2vw, 2.35rem) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.035em !important;
+  text-shadow: none !important;
+}
+
+.hx-mob-panel .hx-title .hx-line {
+  display: block;
+  overflow: hidden;
+}
+
+.hx-mob-panel .hx-title .hx-line > span {
+  display: block;
+}
+
+.hx-mob-panel .hx-title em {
+  color: #d4b483 !important;
+  font-style: normal !important;
+}
+
+.hx-mob-panel .hx-lead {
+  display: block !important;
+  margin: 0 !important;
+  max-width: 28ch;
+  color: rgba(247, 243, 234, 0.72) !important;
+  font-family: var(--sans) !important;
+  font-size: 0.92rem !important;
+  line-height: 1.45 !important;
+}
+
+.hx-mob-panel .hx-cta {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 3.15rem;
+  margin-top: 0.35rem;
+  padding: 0.85rem 1.25rem;
+  border: 0;
+  border-radius: 4px;
+  background: #d4b483 !important;
+  color: #071b16 !important;
+  font-family: var(--sans) !important;
+  font-size: 0.95rem !important;
+  font-weight: 650 !important;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  box-shadow: none !important;
+}
+
+.hx-mob-panel .hx-proof {
+  display: block !important;
+  width: 100%;
+  margin: 0.15rem 0 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  text-align: center;
+  color: rgba(212, 180, 131, 0.78) !important;
+  font-family: var(--sans) !important;
+  font-size: 0.68rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.4 !important;
+}
+
+/* Kill leftover v17 overlay rules that targeted old markup */
+.hx-live--v18 .hx-stage,
+.hx-live--v18 .hx-fold,
+.hx-live--v18 .hx-glass,
+.hx-live--v18 .hx-rim,
+.hx-live--v18 .hx-visual,
+.hx-live--v18 .hx-inner {
+  display: none !important;
+}
+
+@media (max-width: 860px) {
+  .site-header {
+    background: #071b16 !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    border-bottom: 1px solid rgba(212, 180, 131, 0.2) !important;
+    box-shadow: none !important;
+  }
+
+  .site-header.is-stuck {
+    background: #071b16 !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .hx-mob-media {
+    min-height: clamp(14.5rem, 42dvh, 19rem);
+    max-height: 44dvh;
+  }
+
+  .hx-mob-panel {
+    padding: 1.2rem 1rem calc(1.25rem + env(safe-area-inset-bottom, 0px));
+    gap: 0.6rem;
+  }
+
+  .hx-mob-panel .hx-title {
+    font-size: clamp(1.75rem, 8vw, 2.15rem) !important;
+  }
+}
+
+/* Tablet â€” photo left, copy right (true separate layout from phone) */
+@media (min-width: 681px) and (max-width: 1020px) {
+  .hx-mob {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: calc(100dvh - 5rem);
+  }
+
+  .hx-mob-media {
+    flex: 1 1 52%;
+    min-height: 100%;
+    max-height: none;
+    margin: 0;
+  }
+
+  .hx-mob-media::after {
+    inset: 0 auto 0 0;
+    width: 35%;
+    height: auto;
+    background: linear-gradient(90deg, transparent, rgba(7, 27, 22, 0.55));
+  }
+
+  .hx-mob-panel {
+    flex: 1 1 48%;
+    justify-content: center;
+    margin-top: 0;
+    padding: 2.25rem 2rem;
+    gap: 0.85rem;
+    background: #071b16;
+  }
+
+  .hx-mob-panel .hx-title {
+    max-width: 10ch;
+    font-size: clamp(2.1rem, 4.2vw, 2.85rem) !important;
+  }
+
+  .hx-mob-panel .hx-lead {
+    max-width: 32ch;
+    font-size: 1rem !important;
+  }
+
+  .hx-mob-panel .hx-cta {
+    width: auto;
+    min-width: 12.5rem;
+    padding-inline: 1.5rem;
+  }
+
+  .hx-mob-panel .hx-proof {
+    text-align: left;
+    max-width: 34ch;
+  }
+}
+
+/* v18b — tighter phone fold, drop duplicate brand, taller photo */
+
+.hx-mob-panel .hx-brand { display: none !important; }
+
+@media (max-width: 680px) {
+  .hx-mob {
+    min-height: calc(100dvh - 4.5rem);
+  }
+
+  .hx-mob-media {
+    flex: 1 1 52%;
+    min-height: clamp(17rem, 48dvh, 24rem) !important;
+    max-height: 52dvh !important;
+  }
+
+  .hx-mob-panel {
+    margin-top: -1.5rem;
+    padding: 1.1rem 1.05rem calc(1.15rem + env(safe-area-inset-bottom, 0px)) !important;
+    gap: 0.55rem !important;
+  }
+
+  .hx-mob-panel .hx-title {
+    font-size: clamp(1.7rem, 7.6vw, 2.05rem) !important;
+    max-width: 12ch;
+  }
+
+  .hx-mob-panel .hx-lead {
+    font-size: 0.88rem !important;
+  }
+
+  .hx-mob-panel .hx-cta {
+    min-height: 3rem;
+    margin-top: 0.2rem;
+  }
+
+  .hx-mob-panel .hx-proof {
+    font-size: 0.64rem !important;
+  }
+}
+/* ==========================================================================
+   MOBILE HERO v18c — hard lock: zero overlay, opaque stack, kill v17 glass
+   ========================================================================== */
+
+.hx-live--v18,
+.hx-live--v18 * {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.hx-live--v18 {
+  display: block !important;
+  position: relative !important;
+  background: #071b16 !important;
+  overflow: visible !important;
+}
+
+.hx-live--v18 .hx-mob {
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative !important;
+  min-height: 0 !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.hx-live--v18 .hx-mob-media {
+  position: relative !important;
+  inset: auto !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  height: clamp(15rem, 42dvh, 20.5rem) !important;
+  min-height: clamp(15rem, 42dvh, 20.5rem) !important;
+  max-height: none !important;
+  margin: 0 !important;
+  z-index: 0 !important;
+}
+
+.hx-live--v18 .hx-mob-media::after {
+  display: none !important;
+}
+
+.hx-live--v18 .hx-mob-media img {
+  position: static !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center 16% !important;
+  transform: none !important;
+}
+
+.hx-live--v18 .hx-mob-panel {
+  position: relative !important;
+  inset: auto !important;
+  z-index: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 0.7rem !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 1.25rem 1.1rem 1.4rem !important;
+  background: #071b16 !important;
+  border-top: 1px solid rgba(212, 180, 131, 0.22) !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  transform: none !important;
+}
+
+.hx-live--v18 .hx-mob-panel .hx-kicker,
+.hx-live--v18 .hx-mob-panel .hx-title,
+.hx-live--v18 .hx-mob-panel .hx-lead,
+.hx-live--v18 .hx-mob-panel .hx-cta,
+.hx-live--v18 .hx-mob-panel .hx-proof {
+  position: static !important;
+  float: none !important;
+  transform: none !important;
+  text-shadow: none !important;
+}
+
+.hx-live--v18 .hx-mob-panel .hx-title {
+  margin: 0 !important;
+  max-width: 12ch !important;
+  font-size: clamp(1.65rem, 7.2vw, 2rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.03em !important;
+  color: #f7f3ea !important;
+}
+
+.hx-live--v18 .hx-mob-panel .hx-title .hx-line {
+  display: block !important;
+  overflow: visible !important;
+}
+
+.hx-live--v18 .hx-mob-panel .hx-title .hx-line > span {
+  display: inline !important;
+  transform: none !important;
+}
+
+.hx-live--v18 .hx-mob-panel .hx-lead {
+  margin: 0 !important;
+  max-width: 30ch !important;
+  color: rgba(247, 243, 234, 0.74) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.45 !important;
+}
+
+.hx-live--v18 .hx-mob-panel .hx-cta {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-height: 3.05rem !important;
+  margin: 0.25rem 0 0 !important;
+  padding: 0.85rem 1rem !important;
+  background: #d4b483 !important;
+  color: #071b16 !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+.hx-live--v18 .hx-mob-panel .hx-proof {
+  display: block !important;
+  margin: 0.15rem 0 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  text-align: center !important;
+  color: rgba(212, 180, 131, 0.8) !important;
+  font-size: 0.64rem !important;
+  line-height: 1.4 !important;
+  background: transparent !important;
+}
+
+/* Absolute kill of any leftover glass / overlay selectors */
+.hx-live--v18 .hx-glass,
+.hx-live--v18 .hx-stage,
+.hx-live--v18 .hx-inner,
+.hx-live--v18 .hx-visual,
+.hx-live--v18 .hx-photo,
+.hx-live--v18 .hx-fold,
+.hx-live--v18 .hx-rim,
+.hx-live--v18 .hx-link,
+.hx-live--v18 .hx-trust {
+  display: none !important;
+}
+
+@media (min-width: 681px) and (max-width: 1020px) {
+  .hx-live--v18 .hx-mob {
+    flex-direction: row !important;
+    min-height: calc(100dvh - 5rem) !important;
+  }
+
+  .hx-live--v18 .hx-mob-media {
+    flex: 1 1 52% !important;
+    height: auto !important;
+    min-height: 100% !important;
+  }
+
+  .hx-live--v18 .hx-mob-panel {
+    flex: 1 1 48% !important;
+    justify-content: center !important;
+    border-top: 0 !important;
+    border-left: 1px solid rgba(212, 180, 131, 0.22) !important;
+    padding: 2rem 1.75rem !important;
+  }
+
+  .hx-live--v18 .hx-mob-panel .hx-cta {
+    width: auto !important;
+    align-self: flex-start !important;
+    min-width: 12.5rem !important;
+  }
+
+  .hx-live--v18 .hx-mob-panel .hx-proof {
+    text-align: left !important;
+  }
+}
+
+@media (min-width: 1021px) {
+  .hx-exact { display: block !important; }
+  .hx-live,
+  .hx-live--v18 { display: none !important; }
+}
+
+/* v18d — title must keep author line breaks; no 12ch wrap squeeze */
+.hx-live--v18 .hx-mob-panel .hx-title {
+  max-width: none !important;
+  width: 100% !important;
+  font-size: clamp(1.7rem, 7vw, 2.05rem) !important;
+  line-height: 1.12 !important;
+}
+
+.hx-live--v18 .hx-mob-panel .hx-title .hx-line {
+  display: block !important;
+  white-space: nowrap !important;
+}
+
+.hx-live--v18 .hx-mob-panel .hx-title .hx-line > span {
+  display: inline-block !important;
+}
+
+@media (max-width: 360px) {
+  .hx-live--v18 .hx-mob-panel .hx-title {
+    font-size: 1.55rem !important;
+  }
+}
+/* ==========================================================================
+   MOBILE HERO v19 — full-bleed photo + frosted glass sheet
+   Glass only wraps copy (not free-floating title on the book face).
+   ========================================================================== */
+
+.hx-live--v19 {
+  display: block !important;
+  background: #071b16 !important;
+}
+
+.hx-mob--glass {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  min-height: calc(100dvh - 4.6rem) !important;
+  height: calc(100dvh - 4.6rem) !important;
+  overflow: hidden !important;
+}
+
+.hx-mob--glass .hx-mob-media {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+}
+
+.hx-mob--glass .hx-mob-media::after {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(180deg, rgba(7, 27, 22, 0.28) 0%, transparent 18%),
+    linear-gradient(180deg, transparent 42%, rgba(7, 27, 22, 0.45) 72%, rgba(7, 27, 22, 0.78) 100%) !important;
+}
+
+.hx-mob--glass .hx-mob-media img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center 12% !important;
+}
+
+.hx-mob-sheet {
+  position: relative !important;
+  z-index: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.65rem !important;
+  margin: 0 0.9rem max(1.05rem, env(safe-area-inset-bottom, 0px)) !important;
+  padding: 1.05rem 0.95rem 0.95rem !important;
+  border-radius: 4px !important;
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05) 42%, rgba(7, 27, 22, 0.28)),
+    rgba(7, 27, 22, 0.42) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.55) !important;
+  backdrop-filter: blur(22px) saturate(1.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.34) !important;
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    inset 0 -1px 0 rgba(7, 27, 22, 0.18) !important;
+  transform: translateZ(0) !important;
+}
+
+.hx-mob-sheet .hx-kicker {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  margin: 0 !important;
+  color: #d4b483 !important;
+  font-family: var(--sans) !important;
+  font-size: 0.66rem !important;
+  font-weight: 650 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+}
+
+.hx-mob-sheet .hx-kicker::before {
+  content: '' !important;
+  display: block !important;
+  width: 1rem !important;
+  height: 1px !important;
+  background: #d4b483 !important;
+}
+
+.hx-mob-sheet .hx-title {
+  margin: 0 !important;
+  color: #f7f3ea !important;
+  font-size: clamp(1.7rem, 7vw, 2.05rem) !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.03em !important;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35) !important;
+}
+
+.hx-mob-sheet .hx-title .hx-line {
+  display: block !important;
+  white-space: nowrap !important;
+}
+
+.hx-mob-sheet .hx-title em {
+  color: #d4b483 !important;
+  font-style: normal !important;
+}
+
+.hx-mob-sheet .hx-lead {
+  display: block !important;
+  margin: 0 !important;
+  max-width: 30ch !important;
+  color: rgba(247, 243, 234, 0.82) !important;
+  font-family: var(--sans) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.45 !important;
+}
+
+.hx-mob-sheet .hx-cta {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-height: 3.05rem !important;
+  margin-top: 0.2rem !important;
+  padding: 0.85rem 1rem !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  background: #d4b483 !important;
+  color: #071b16 !important;
+  font-family: var(--sans) !important;
+  font-size: 0.94rem !important;
+  font-weight: 650 !important;
+  text-decoration: none !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22) !important;
+}
+
+.hx-mob-sheet .hx-proof {
+  display: block !important;
+  margin: 0.1rem 0 0 !important;
+  text-align: center !important;
+  color: rgba(247, 243, 234, 0.72) !important;
+  font-family: var(--sans) !important;
+  font-size: 0.64rem !important;
+  line-height: 1.4 !important;
+}
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .hx-mob-sheet {
+    background: rgba(7, 27, 22, 0.92) !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .hx-mob-sheet {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: rgba(7, 27, 22, 0.94) !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .hx-mob--glass {
+    min-height: calc(100dvh - 4.4rem) !important;
+    height: calc(100dvh - 4.4rem) !important;
+  }
+
+  .hx-mob-sheet {
+    margin-inline: 0.75rem !important;
+    padding: 0.95rem 0.85rem 0.9rem !important;
+    gap: 0.55rem !important;
+  }
+
+  .hx-mob-sheet .hx-title {
+    font-size: clamp(1.6rem, 7.2vw, 1.95rem) !important;
+  }
+}
+
+/* Tablet — glass sheet still sits over the full stage */
+@media (min-width: 681px) and (max-width: 1020px) {
+  .hx-mob--glass {
+    min-height: calc(100dvh - 5rem) !important;
+    height: calc(100dvh - 5rem) !important;
+  }
+
+  .hx-mob--glass .hx-mob-media img {
+    object-position: center 18% !important;
+  }
+
+  .hx-mob-sheet {
+    max-width: 26rem !important;
+    margin: 0 1.5rem 1.75rem !important;
+    padding: 1.35rem 1.25rem 1.2rem !important;
+    gap: 0.75rem !important;
+  }
+
+  .hx-mob-sheet .hx-title {
+    font-size: clamp(2rem, 3.6vw, 2.55rem) !important;
+  }
+
+  .hx-mob-sheet .hx-cta {
+    width: auto !important;
+    align-self: flex-start !important;
+    min-width: 12.5rem !important;
+    padding-inline: 1.4rem !important;
+  }
+
+  .hx-mob-sheet .hx-proof {
+    text-align: left !important;
+  }
+}
+
+@media (min-width: 1021px) {
+  .hx-live--v19 { display: none !important; }
+}
+
+/* v19b — punchier frost, keep book title above the glass sheet */
+.hx-mob--glass .hx-mob-media img {
+  object-position: center 6% !important;
+}
+
+.hx-mob--glass .hx-mob-media::after {
+  background:
+    linear-gradient(180deg, rgba(7, 27, 22, 0.2) 0%, transparent 16%),
+    linear-gradient(180deg, transparent 48%, rgba(7, 27, 22, 0.35) 70%, rgba(7, 27, 22, 0.62) 100%) !important;
+}
+
+.hx-mob-sheet {
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08) 45%, rgba(7, 27, 22, 0.2)),
+    rgba(248, 248, 246, 0.14) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(1.7) !important;
+  backdrop-filter: blur(28px) saturate(1.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.48) !important;
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(7, 27, 22, 0.12) !important;
+}
+
+.hx-mob-sheet .hx-title {
+  color: #f7f3ea !important;
+  text-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.55),
+    0 1px 2px rgba(0, 0, 0, 0.4) !important;
+}
+
+.hx-mob-sheet .hx-lead {
+  color: rgba(247, 243, 234, 0.9) !important;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+.hx-mob-sheet .hx-proof {
+  color: rgba(247, 243, 234, 0.82) !important;
+}
+/* ==========================================================================
+   PATH BAND mobile v2 — unclip roadmap card + frosted glass
+   ========================================================================== */
+
+@media (max-width: 860px) {
+  .ed-path {
+    overflow: visible !important;
+  }
+
+  .ed-path-split {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  .ed-path-copy {
+    padding: 2.25rem 1.1rem 1.5rem !important;
+  }
+
+  .ed-path-copy h2 {
+    max-width: 14ch !important;
+    font-size: clamp(1.75rem, 7vw, 2.15rem) !important;
+    line-height: 1.1 !important;
+  }
+
+  .ed-path-copy > p {
+    margin-bottom: 1.25rem !important;
+    font-size: 0.92rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .ed-path-cta {
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-content: space-between !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Journey: compact 3x2, no clipped line */
+  .ed-path-journey {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 0.85rem 0.35rem !important;
+    row-gap: 1rem !important;
+  }
+
+  .ed-path-journey::before {
+    display: none !important;
+  }
+
+  .ed-path-dot {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+
+  .ed-path-journey span:last-child {
+    font-size: 0.62rem !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  /* Photo band — allow card to hang out */
+  .ed-path-visual {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    aspect-ratio: 5 / 4 !important;
+    overflow: visible !important;
+    margin-bottom: 0 !important;
+  }
+
+  .ed-path-visual > img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center 40% !important;
+    border-radius: 0 !important;
+  }
+
+  /* Frosted glass roadmap — full steps visible, soft overlap */
+  .ed-path-card {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    width: calc(100% - 1.8rem) !important;
+    max-width: 22.5rem !important;
+    margin: -2.75rem auto 1.75rem !important;
+    padding: 1.15rem 1.05rem 1.05rem !important;
+    z-index: 3 !important;
+    overflow: visible !important;
+    background:
+      linear-gradient(165deg, rgba(255, 255, 255, 0.55), rgba(248, 248, 246, 0.78)),
+      rgba(248, 248, 246, 0.72) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.45) !important;
+    backdrop-filter: blur(18px) saturate(1.45) !important;
+    border: 1px solid rgba(255, 255, 255, 0.7) !important;
+    border-radius: 4px !important;
+    box-shadow:
+      0 18px 40px rgba(0, 0, 0, 0.32),
+      inset 0 1px 0 rgba(255, 255, 255, 0.75) !important;
+  }
+
+  .ed-path-card-head {
+    margin-bottom: 0.85rem !important;
+    padding-bottom: 0.7rem !important;
+  }
+
+  .ed-path-card-head h3 {
+    font-size: 1.05rem !important;
+    line-height: 1.2 !important;
+    color: #071b16 !important;
+  }
+
+  .ed-path-card ol {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.55rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+  }
+
+  .ed-path-card li {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.65rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #24352f !important;
+    font-size: 0.88rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .ed-path-card li span {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+    width: 1.55rem !important;
+    height: 1.55rem !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(130, 106, 60, 0.45) !important;
+    color: #826A3C !important;
+    font-size: 0.72rem !important;
+    font-weight: 650 !important;
+  }
+}
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  @media (max-width: 860px) {
+    .ed-path-card {
+      background: rgba(248, 248, 246, 0.96) !important;
+    }
+  }
+}
+
+@media (max-width: 860px) {
+  .ed-path {
+    padding-bottom: 0.5rem !important;
+  }
+}
+
+/* Path mobile v2b — card stays in flow so it cannot cover Services */
+@media (max-width: 860px) {
+  .ed-path-visual {
+    display: flex !important;
+    flex-direction: column !important;
+    aspect-ratio: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    padding-bottom: 1.35rem !important;
+  }
+
+  .ed-path-visual > img {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 5 / 4 !important;
+    max-height: 18rem !important;
+    object-fit: cover !important;
+  }
+
+  .ed-path-card {
+    margin: -1.85rem auto 0 !important;
+    width: calc(100% - 1.8rem) !important;
+  }
+}
+
+/* ==========================================================================
+   MOBILE HERO v20 — cinematic full-bleed
+   One composition: photo fills the stage, soft bottom scrim, copy sits on
+   the image. No glass card, no stacked opaque panel.
+   ========================================================================== */
+
+.hx-live--v19 { display: none !important; }
+
+.hx-live--v20 {
+  display: block !important;
+  background: #071b16 !important;
+}
+
+.hx-mob--bleed {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  min-height: calc(100dvh - 4.5rem) !important;
+  height: calc(100dvh - 4.5rem) !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+}
+
+.hx-mob--bleed .hx-mob-media {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  aspect-ratio: auto !important;
+}
+
+/* Soft top veil + deep bottom lift — keeps book readable, text legible */
+.hx-mob--bleed .hx-mob-media::after {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+  background:
+    linear-gradient(180deg, rgba(7, 27, 22, 0.32) 0%, transparent 12%),
+    linear-gradient(
+      180deg,
+      transparent 46%,
+      rgba(7, 27, 22, 0.5) 66%,
+      rgba(7, 27, 22, 0.9) 86%,
+      rgba(7, 27, 22, 0.97) 100%
+    ) !important;
+}
+
+.hx-mob--bleed .hx-mob-media img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  /* Keep book title clear in the upper third */
+  object-position: center 2% !important;
+}
+
+.hx-mob-copy {
+  position: relative !important;
+  z-index: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 0.5rem !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 1.15rem max(1.2rem, env(safe-area-inset-bottom, 0px)) !important;
+  background: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.hx-mob-copy .hx-kicker {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.55rem !important;
+  margin: 0 !important;
+  color: var(--gold-300) !important;
+  font-family: var(--sans) !important;
+  font-size: 0.64rem !important;
+  font-weight: 650 !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+}
+
+.hx-mob-copy .hx-kicker::before {
+  content: '' !important;
+  display: block !important;
+  width: 1.15rem !important;
+  height: 1px !important;
+  background: var(--gold-300) !important;
+}
+
+.hx-mob-copy .hx-title {
+  margin: 0 !important;
+  color: #f7f3ea !important;
+  font-family: var(--display) !important;
+  font-size: clamp(1.85rem, 8.4vw, 2.3rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.035em !important;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45) !important;
+}
+
+.hx-mob-copy .hx-title .hx-line {
+  display: block !important;
+  white-space: nowrap !important;
+}
+
+.hx-mob-copy .hx-title .hx-line > span {
+  display: block !important;
+}
+
+.hx-mob-copy .hx-title em {
+  color: var(--gold-300) !important;
+  font-style: normal !important;
+}
+
+.hx-mob-copy .hx-lead {
+  display: block !important;
+  margin: 0 !important;
+  max-width: 28ch !important;
+  color: rgba(247, 243, 234, 0.86) !important;
+  font-family: var(--sans) !important;
+  font-size: 0.95rem !important;
+  line-height: 1.5 !important;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35) !important;
+}
+
+.hx-mob-copy .hx-cta {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-height: 3.15rem !important;
+  margin-top: 0.35rem !important;
+  padding: 0.9rem 1.1rem !important;
+  border: 0 !important;
+  border-radius: var(--radius) !important;
+  background: var(--gold-300) !important;
+  color: #071b16 !important;
+  font-family: var(--sans) !important;
+  font-size: 0.95rem !important;
+  font-weight: 650 !important;
+  letter-spacing: 0.01em !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+
+.hx-mob-copy .hx-cta:hover,
+.hx-mob-copy .hx-cta:focus-visible {
+  background: var(--gold-200, #e0c79a) !important;
+}
+
+.hx-mob-copy .hx-proof {
+  display: block !important;
+  margin: 0.15rem 0 0 !important;
+  text-align: center !important;
+  color: rgba(212, 180, 131, 0.88) !important;
+  font-family: var(--sans) !important;
+  font-size: 0.66rem !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.4 !important;
+}
+
+/* Narrow phones — tighter type, still one viewport */
+@media (max-width: 560px) {
+  .hx-mob--bleed {
+    min-height: calc(100dvh - 4.35rem) !important;
+    height: calc(100dvh - 4.35rem) !important;
+  }
+
+  .hx-mob--bleed .hx-mob-media img {
+    object-position: center 0% !important;
+  }
+
+  .hx-mob-copy {
+    gap: 0.45rem !important;
+    padding-inline: 1.05rem !important;
+    padding-bottom: max(1.05rem, env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .hx-mob-copy .hx-title {
+    font-size: clamp(1.75rem, 8vw, 2.1rem) !important;
+  }
+
+  .hx-mob-copy .hx-lead {
+    font-size: 0.88rem !important;
+  }
+
+  .hx-mob-copy .hx-cta {
+    min-height: 2.95rem !important;
+    margin-top: 0.25rem !important;
+  }
+}
+
+/* Very short viewports (landscape phone) — compress copy, keep CTA */
+@media (max-height: 700px) and (max-width: 1020px) {
+  .hx-mob--bleed {
+    min-height: calc(100dvh - 4.2rem) !important;
+    height: calc(100dvh - 4.2rem) !important;
+  }
+
+  .hx-mob-copy {
+    gap: 0.4rem !important;
+    padding-bottom: 0.85rem !important;
+  }
+
+  .hx-mob-copy .hx-title {
+    font-size: clamp(1.55rem, 6.5vw, 1.9rem) !important;
+  }
+
+  .hx-mob-copy .hx-lead {
+    display: none !important;
+  }
+
+  .hx-mob-copy .hx-proof {
+    font-size: 0.6rem !important;
+  }
+}
+
+/* Tablet portrait — still bleed, wider type, CTA not full-bleed */
+@media (min-width: 681px) and (max-width: 1020px) {
+  .hx-mob--bleed {
+    min-height: calc(100dvh - 5rem) !important;
+    height: calc(100dvh - 5rem) !important;
+  }
+
+  .hx-mob--bleed .hx-mob-media img {
+    object-position: center 18% !important;
+  }
+
+  .hx-mob--bleed .hx-mob-media::after {
+    background:
+      linear-gradient(180deg, rgba(7, 27, 22, 0.28) 0%, transparent 12%),
+      linear-gradient(
+        180deg,
+        transparent 45%,
+        rgba(7, 27, 22, 0.5) 68%,
+        rgba(7, 27, 22, 0.9) 100%
+      ) !important;
+  }
+
+  .hx-mob-copy {
+    max-width: 28rem !important;
+    padding: 0 2rem 2rem !important;
+    gap: 0.85rem !important;
+  }
+
+  .hx-mob-copy .hx-title {
+    font-size: clamp(2.4rem, 4.2vw, 3.1rem) !important;
+  }
+
+  .hx-mob-copy .hx-lead {
+    font-size: 1.05rem !important;
+    max-width: 34ch !important;
+  }
+
+  .hx-mob-copy .hx-cta {
+    width: auto !important;
+    align-self: flex-start !important;
+    min-width: 13rem !important;
+    padding-inline: 1.5rem !important;
+  }
+
+  .hx-mob-copy .hx-proof {
+    text-align: left !important;
+  }
+}
+
+@media (min-width: 1021px) {
+  .hx-live--v20 { display: none !important; }
+}
+
+/* ==========================================================================
+   MOBILE HERO v21 — editorial stack (matches mobile concept reference)
+   Copy on dark emerald, photo below, thin gold arc. No glass card.
+   ========================================================================== */
+
+.hx-live--v19,
+.hx-live--v20 {
+  display: none !important;
+}
+
+.hx-live--v21 {
+  display: block !important;
+  background: #071b16 !important;
+}
+
+.hx-mob--stack {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: calc(100dvh - 4.5rem) !important;
+  min-height: calc(100dvh - 4.5rem) !important;
+  max-height: calc(100dvh - 4.5rem) !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  background: #071b16 !important;
+}
+
+.hx-mob--stack .hx-mob-copy {
+  position: relative !important;
+  z-index: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  flex: 0 0 auto !important;
+  gap: 1rem !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 1.35rem 1.25rem 1.15rem !important;
+  background: #071b16 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.hx-mob--stack .hx-mob-copy .hx-title {
+  margin: 0 !important;
+  color: #f7f3ea !important;
+  font-family: var(--display) !important;
+  font-size: clamp(2.15rem, 9.5vw, 2.7rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.06 !important;
+  letter-spacing: -0.03em !important;
+  text-shadow: none !important;
+}
+
+.hx-mob--stack .hx-mob-copy .hx-title .hx-line {
+  display: block !important;
+  white-space: normal !important;
+}
+
+.hx-mob--stack .hx-mob-copy .hx-title .hx-line > span {
+  display: block !important;
+}
+
+.hx-mob--stack .hx-mob-copy .hx-title em {
+  color: var(--gold-300) !important;
+  font-style: normal !important;
+}
+
+.hx-mob--stack .hx-mob-copy .hx-lead {
+  display: block !important;
+  margin: 0 !important;
+  max-width: 36ch !important;
+  color: rgba(247, 243, 234, 0.88) !important;
+  font-family: var(--sans) !important;
+  font-size: 0.92rem !important;
+  font-weight: 400 !important;
+  line-height: 1.55 !important;
+  text-shadow: none !important;
+}
+
+.hx-mob--stack .hx-mob-copy .hx-cta {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-height: 3.2rem !important;
+  margin-top: 0.35rem !important;
+  padding: 0.95rem 1.15rem !important;
+  border: 0 !important;
+  border-radius: var(--radius) !important;
+  background: var(--gold-300) !important;
+  color: #071b16 !important;
+  font-family: var(--sans) !important;
+  font-size: 0.98rem !important;
+  font-weight: 650 !important;
+  letter-spacing: 0.01em !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+
+.hx-mob--stack .hx-mob-copy .hx-cta:hover,
+.hx-mob--stack .hx-mob-copy .hx-cta:focus-visible {
+  background: var(--gold-200, #e0c79a) !important;
+}
+
+.hx-mob--stack .hx-mob-copy .hx-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  align-self: flex-start !important;
+  margin-top: 0.15rem !important;
+  padding-bottom: 0.2rem !important;
+  color: #f7f3ea !important;
+  font-family: var(--sans) !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  line-height: 1.3 !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid var(--gold-300) !important;
+}
+
+.hx-mob--stack .hx-mob-copy .hx-link:hover,
+.hx-mob--stack .hx-mob-copy .hx-link:focus-visible {
+  color: var(--gold-300) !important;
+}
+
+.hx-mob--stack .hx-mob-copy .hx-kicker,
+.hx-mob--stack .hx-mob-copy .hx-proof {
+  display: none !important;
+}
+
+.hx-mob--stack .hx-mob-media {
+  position: relative !important;
+  z-index: 1 !important;
+  flex: 1 1 0 !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  margin: 0 !important;
+  aspect-ratio: auto !important;
+  overflow: hidden !important;
+}
+
+.hx-mob--stack .hx-mob-media::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  height: 3.5rem !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  background: linear-gradient(180deg, #071b16 0%, transparent 100%) !important;
+}
+
+.hx-mob--stack .hx-mob-media::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+}
+
+.hx-mob--stack .hx-mob-media img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  object-fit: cover !important;
+  object-position: center 18% !important;
+}
+
+.hx-mob-arc {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 3 !important;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none !important;
+  color: rgba(212, 180, 131, 0.72) !important;
+  overflow: visible !important;
+}
+
+@media (max-width: 560px) {
+  .hx-mob--stack {
+    height: calc(100dvh - 4.35rem) !important;
+    min-height: calc(100dvh - 4.35rem) !important;
+    max-height: calc(100dvh - 4.35rem) !important;
+  }
+
+  .hx-mob--stack .hx-mob-copy {
+    gap: 0.85rem !important;
+    padding: 1.15rem 1.1rem 1rem !important;
+  }
+
+  .hx-mob--stack .hx-mob-copy .hx-title {
+    font-size: clamp(1.95rem, 9vw, 2.4rem) !important;
+  }
+
+  .hx-mob--stack .hx-mob-copy .hx-lead {
+    font-size: 0.88rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .hx-mob--stack .hx-mob-media img {
+    object-position: center 12% !important;
+  }
+}
+
+@media (max-height: 720px) and (max-width: 1020px) {
+  .hx-mob--stack .hx-mob-copy {
+    gap: 0.65rem !important;
+    padding-top: 0.9rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+
+  .hx-mob--stack .hx-mob-copy .hx-title {
+    font-size: clamp(1.7rem, 7.5vw, 2.05rem) !important;
+  }
+
+  .hx-mob--stack .hx-mob-copy .hx-lead {
+    font-size: 0.82rem !important;
+    line-height: 1.45 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 4 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  .hx-mob--stack .hx-mob-copy .hx-cta {
+    min-height: 2.9rem !important;
+  }
+}
+
+@media (min-width: 681px) and (max-width: 1020px) {
+  .hx-mob--stack {
+    height: calc(100dvh - 5rem) !important;
+    min-height: calc(100dvh - 5rem) !important;
+    max-height: calc(100dvh - 5rem) !important;
+  }
+
+  .hx-mob--stack .hx-mob-copy {
+    max-width: 32rem !important;
+    padding: 2rem 2rem 1.5rem !important;
+    gap: 1.15rem !important;
+  }
+
+  .hx-mob--stack .hx-mob-copy .hx-title {
+    font-size: clamp(2.6rem, 4.5vw, 3.3rem) !important;
+  }
+
+  .hx-mob--stack .hx-mob-copy .hx-lead {
+    font-size: 1.05rem !important;
+    max-width: 42ch !important;
+  }
+
+  .hx-mob--stack .hx-mob-copy .hx-cta {
+    width: auto !important;
+    align-self: flex-start !important;
+    min-width: 14rem !important;
+    padding-inline: 1.6rem !important;
+  }
+
+  .hx-mob--stack .hx-mob-media img {
+    object-position: center 28% !important;
+  }
+}
+
+@media (min-width: 1021px) {
+  .hx-live--v21 { display: none !important; }
+}
+
+/* ==========================================================================
+   MOBILE HERO v21b — close the gap vs reference mock
+   ========================================================================== */
+
+@media (max-width: 1020px) {
+  .site-header .nav-toggle {
+    color: #d4b483 !important;
+  }
+}
+
+.hx-mob--stack .hx-mob-copy {
+  gap: 0.9rem !important;
+  padding: 1rem 1.35rem 0.75rem !important;
+}
+
+.hx-mob--stack .hx-mob-copy .hx-title {
+  font-size: clamp(2.35rem, 10.5vw, 2.95rem) !important;
+  font-weight: 600 !important;
+  line-height: 1.02 !important;
+}
+
+.hx-mob--stack .hx-mob-copy .hx-title em {
+  color: #d4b483 !important;
+  font-weight: 600 !important;
+}
+
+.hx-mob--stack .hx-mob-copy .hx-lead {
+  max-width: 34ch !important;
+  font-size: 0.9rem !important;
+  line-height: 1.58 !important;
+  color: rgba(247, 243, 234, 0.86) !important;
+}
+
+.hx-mob--stack .hx-mob-copy .hx-cta {
+  min-height: 3.25rem !important;
+  margin-top: 0.4rem !important;
+  border-radius: 3px !important;
+  background: #d4b483 !important;
+}
+
+.hx-mob--stack .hx-mob-copy .hx-link {
+  border-bottom-color: #d4b483 !important;
+}
+
+.hx-mob--stack .hx-mob-media {
+  margin-top: -0.5rem !important;
+}
+
+.hx-mob--stack .hx-mob-media::before {
+  height: 2rem !important;
+}
+
+.hx-mob--stack .hx-mob-media img {
+  object-position: center top !important;
+}
+
+/* Arch only over photo band — curved frame like desktop rim */
+.hx-mob-arc {
+  inset: auto 0 0 0 !important;
+  top: auto !important;
+  height: 58% !important;
+  color: rgba(212, 180, 131, 0.8) !important;
+}
+
+@media (max-width: 560px) {
+  .hx-mob--stack .hx-mob-copy {
+    gap: 0.75rem !important;
+    padding: 0.9rem 1.2rem 0.65rem !important;
+  }
+
+  .hx-mob--stack .hx-mob-copy .hx-title {
+    font-size: clamp(2.15rem, 10vw, 2.65rem) !important;
+  }
+
+  .hx-mob--stack .hx-mob-copy .hx-lead {
+    font-size: 0.86rem !important;
+  }
+}
+
+/* ==========================================================================
+   MOBILE HERO v22 — pixel-closer to user reference mock
+   Uses concept photo plate (pen + IDEAS/PEOPLE/PROGRESS + lamp).
+   ========================================================================== */
+
+.hx-live--v19,
+.hx-live--v20,
+.hx-live--v21 {
+  display: none !important;
+}
+
+.hx-live--v22 {
+  display: block !important;
+  background: #071b16 !important;
+}
+
+@media (max-width: 1020px) {
+  .site-header .nav-toggle {
+    color: #d4b483 !important;
+  }
+}
+
+.hx-mob--ref {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: calc(100dvh - 4.5rem) !important;
+  min-height: calc(100dvh - 4.5rem) !important;
+  max-height: calc(100dvh - 4.5rem) !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  background: #071b16 !important;
+}
+
+.hx-mob--ref .hx-mob-copy {
+  position: relative !important;
+  z-index: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  flex: 0 0 auto !important;
+  gap: 0.85rem !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 1.05rem 1.35rem 0.7rem !important;
+  background: #071b16 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.hx-mob--ref .hx-mob-copy .hx-title {
+  margin: 0 !important;
+  color: #f7f3ea !important;
+  font-family: var(--display) !important;
+  font-size: clamp(2.4rem, 11vw, 3rem) !important;
+  font-weight: 600 !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.03em !important;
+  text-shadow: none !important;
+}
+
+.hx-mob--ref .hx-mob-copy .hx-title .hx-line {
+  display: block !important;
+  white-space: normal !important;
+}
+
+.hx-mob--ref .hx-mob-copy .hx-title .hx-line > span {
+  display: block !important;
+}
+
+.hx-mob--ref .hx-mob-copy .hx-title em {
+  color: #d4b483 !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+}
+
+.hx-mob--ref .hx-mob-copy .hx-lead {
+  display: block !important;
+  margin: 0 !important;
+  max-width: 33ch !important;
+  color: rgba(247, 243, 234, 0.88) !important;
+  font-family: var(--sans) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.55 !important;
+  text-shadow: none !important;
+}
+
+.hx-mob--ref .hx-mob-copy .hx-cta {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-height: 3.2rem !important;
+  margin-top: 0.35rem !important;
+  padding: 0.9rem 1.1rem !important;
+  border: 0 !important;
+  border-radius: 3px !important;
+  background: #d4b483 !important;
+  color: #071b16 !important;
+  font-family: var(--sans) !important;
+  font-size: 0.98rem !important;
+  font-weight: 650 !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+
+.hx-mob--ref .hx-mob-copy .hx-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  align-self: flex-start !important;
+  margin-top: 0.15rem !important;
+  padding-bottom: 0.15rem !important;
+  color: #f7f3ea !important;
+  font-family: var(--sans) !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid #d4b483 !important;
+}
+
+.hx-mob--ref .hx-mob-media {
+  position: relative !important;
+  z-index: 1 !important;
+  flex: 1 1 0 !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  margin: -0.75rem 0 0 !important;
+  overflow: hidden !important;
+}
+
+.hx-mob--ref .hx-mob-media::before,
+.hx-mob--ref .hx-mob-media::after {
+  display: none !important;
+  content: none !important;
+}
+
+.hx-mob--ref .hx-mob-media img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+.hx-mob--ref .hx-mob-arc {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 3 !important;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none !important;
+  color: rgba(212, 180, 131, 0.75) !important;
+}
+
+@media (max-width: 560px) {
+  .hx-mob--ref {
+    height: calc(100dvh - 4.35rem) !important;
+    min-height: calc(100dvh - 4.35rem) !important;
+    max-height: calc(100dvh - 4.35rem) !important;
+  }
+
+  .hx-mob--ref .hx-mob-copy {
+    padding: 0.9rem 1.2rem 0.55rem !important;
+    gap: 0.7rem !important;
+  }
+
+  .hx-mob--ref .hx-mob-copy .hx-title {
+    font-size: clamp(2.2rem, 10.5vw, 2.75rem) !important;
+  }
+
+  .hx-mob--ref .hx-mob-copy .hx-lead {
+    font-size: 0.86rem !important;
+  }
+}
+
+@media (min-width: 681px) and (max-width: 1020px) {
+  .hx-mob--ref {
+    height: calc(100dvh - 5rem) !important;
+    min-height: calc(100dvh - 5rem) !important;
+    max-height: calc(100dvh - 5rem) !important;
+  }
+
+  .hx-mob--ref .hx-mob-copy {
+    max-width: 34rem !important;
+    padding: 1.75rem 2rem 1rem !important;
+    gap: 1rem !important;
+  }
+
+  .hx-mob--ref .hx-mob-copy .hx-title {
+    font-size: clamp(2.8rem, 5vw, 3.4rem) !important;
+  }
+
+  .hx-mob--ref .hx-mob-copy .hx-lead {
+    font-size: 1.05rem !important;
+    max-width: 42ch !important;
+  }
+
+  .hx-mob--ref .hx-mob-copy .hx-cta {
+    width: auto !important;
+    align-self: flex-start !important;
+    min-width: 14rem !important;
+  }
+}
+
+@media (min-width: 1021px) {
+  .hx-live--v22 { display: none !important; }
+}
+
+/* ==========================================================================
+   MOBILE HERO — pixel-exact reference (same strategy as desktop hx-exact)
+   ========================================================================== */
+
+.hx-live--v19,
+.hx-live--v20,
+.hx-live--v21,
+.hx-live--v22 {
+  display: none !important;
+}
+
+.hx-exact-mob {
+  display: none;
+  position: relative;
+  line-height: 0;
+  background: #071b16;
+}
+
+.hx-exact-mob > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hx-exact-mob-hit {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  color: transparent;
+  font-size: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Tuned against the reference body plate */
+.hx-exact-mob-hit--cta {
+  left: 6.5%;
+  top: 40.8%;
+  width: 87%;
+  height: 5.2%;
+  border-radius: 3px;
+}
+
+.hx-exact-mob-hit--link {
+  left: 6.5%;
+  top: 47.2%;
+  width: 48%;
+  height: 3.2%;
+}
+
+@media (max-width: 1020px) {
+  .hx-exact { display: none !important; }
+  .hx-live { display: none !important; }
+  .hx-exact-mob { display: block !important; }
+
+  .site-header .nav-toggle {
+    color: #d4b483 !important;
+  }
+}
+
+@media (min-width: 1021px) {
+  .hx-exact-mob { display: none !important; }
+}
+
+/* ==========================================================================
+   MOBILE HERO exact FINAL — full reference PNG, transparent header overlay
+   ========================================================================== */
+
+@media (max-width: 1020px) {
+  .site-header {
+    position: absolute !important;
+    inset: 0 0 auto 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+  }
+
+  .site-header::before {
+    opacity: 0 !important;
+    background: transparent !important;
+  }
+
+  .site-header .wordmark,
+  .site-header .wordmark * {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .site-header .nav-toggle {
+    color: #d4b483 !important;
+  }
+
+  .site-header.is-stuck {
+    position: fixed !important;
+    background: #071b16 !important;
+  }
+
+  .site-header.is-stuck::before {
+    opacity: 1 !important;
+    background: rgba(7, 27, 22, 0.94) !important;
+  }
+
+  .site-header.is-stuck .wordmark,
+  .site-header.is-stuck .wordmark * {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .hx-exact-mob {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .hx-exact-mob > img {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100dvh !important;
+    object-fit: cover !important;
+    object-position: center top !important;
+  }
+
+  /* Hit areas relative to full reference mock (includes header band) */
+  .hx-exact-mob-hit--cta {
+    left: 6.5% !important;
+    top: 38.5% !important;
+    width: 87% !important;
+    height: 4.8% !important;
+  }
+
+  .hx-exact-mob-hit--link {
+    left: 6.5% !important;
+    top: 44.5% !important;
+    width: 48% !important;
+    height: 2.8% !important;
+  }
+
+  .hx-live,
+  .hx-live--v19,
+  .hx-live--v20,
+  .hx-live--v21,
+  .hx-live--v22 {
+    display: none !important;
+  }
+}
+
+/* Exact mobile — no cover-crop, show the full reference as-is */
+@media (max-width: 1020px) {
+  .hx-exact-mob > img {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    object-fit: fill !important;
+    object-position: center top !important;
+  }
+}
+
+/* Hide real chrome over the exact mock (logo+menu already in the PNG) */
+@media (max-width: 1020px) {
+  .site-header:not(.is-stuck):not(.is-open) .nav-toggle {
+    opacity: 0 !important;
+  }
+
+  /* Invisible but clickable hit over the mock hamburger */
+  .site-header:not(.is-stuck):not(.is-open) .nav-toggle {
+    position: relative !important;
+    z-index: 5 !important;
+  }
+
+  .hx-exact-mob {
+    background: #071b16 !important;
+  }
+}

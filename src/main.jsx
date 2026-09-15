@@ -191,32 +191,6 @@ function Header() {
 
 function Hero() {
   const rootRef = useRef(null);
-  const imageRef = useRef(null);
-
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root || reduceMotion()) return undefined;
-    const ctx = gsap.context(() => {
-      gsap.timeline({ defaults: { ease: 'power3.out' } })
-        .from('.hx-live .hx-visual', { opacity: 0, duration: 1.15, ease: 'power2.out' }, 0)
-        .from(imageRef.current, { scale: 1.08, duration: 1.7 }, 0)
-        .from('.hx-live .hx-kicker', { opacity: 0, y: 12, duration: 0.65 }, 0.18)
-        .from('.hx-live .hx-line > span', { yPercent: 110, duration: 1.05, stagger: 0.1 }, 0.22)
-        .from('.hx-live .hx-lead', { opacity: 0, y: 16, duration: 0.75 }, 0.55)
-        .from('.hx-live .hx-actions > *', { opacity: 0, y: 12, duration: 0.65, stagger: 0.08 }, 0.68)
-        .from('.hx-live .hx-proof, .hx-live .hx-trust', { opacity: 0, y: 10, duration: 0.55 }, 0.88)
-        .from('.hx-live .hx-rim', { opacity: 0, duration: 1.2 }, 0.35);
-
-      if (imageRef.current) {
-        gsap.to(imageRef.current, {
-          yPercent: 4,
-          ease: 'none',
-          scrollTrigger: { trigger: root, start: 'top top', end: 'bottom top', scrub: true },
-        });
-      }
-    }, root);
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section className="hx" id="top" ref={rootRef} aria-labelledby="hero-title">
@@ -242,81 +216,26 @@ function Hero() {
         </a>
       </div>
 
-      {/* Mobile / tablet: live HTML layout */}
-      <div className="hx-live">
-        <svg className="hx-clip-defs" width="0" height="0" aria-hidden="true" focusable="false">
-          <defs>
-            <clipPath id="hx-arch" clipPathUnits="objectBoundingBox">
-              <path d="M0,1 C0,0.72 0.01,0.52 0.04,0.38 C0.09,0.18 0.22,0.05 0.42,0 L1,0 L1,1 Z" />
-            </clipPath>
-          </defs>
-        </svg>
-
-        <div className="hx-stage">
-          <div className="hx-visual" aria-hidden="true">
-            <div className="hx-photo">
-              <picture>
-                <source media="(min-width: 861px)" srcSet="/assets/brand/hero-study-wide.jpg" />
-                <img
-                  ref={imageRef}
-                  src="/assets/brand/hero-study.jpg"
-                  alt=""
-                  width="920"
-                  height="992"
-                  fetchPriority="high"
-                  decoding="async"
-                />
-              </picture>
-            </div>
-            <svg className="hx-rim" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <path
-                d="M0,100 C0,72 1,52 4,38 C9,18 22,5 42,0"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="0.45"
-                vectorEffect="non-scaling-stroke"
-              />
-            </svg>
-          </div>
-
-          <div className="hx-inner">
-            <div className="hx-copy">
-              <p className="hx-kicker">{hero.kicker}</p>
-              <h2 className="hx-title">
-                {hero.lines.map((line, i) => (
-                  <span className="hx-line" key={line}>
-                    <span>{i === hero.lines.length - 1 ? <em>{line}</em> : line}</span>
-                  </span>
-                ))}
-              </h2>
-              <p className="hx-lead hx-lead--desk">{hero.lead}</p>
-              <p className="hx-lead hx-lead--mob">{hero.leadMobile}</p>
-              <div className="hx-glass">
-                <div className="hx-actions">
-                  <a className="hx-cta" href="#contact">{hero.cta}</a>
-                  <a className="hx-link" href={hero.link.href}>
-                    {hero.link.label}
-                    <IconArrow aria-hidden="true" />
-                  </a>
-                </div>
-                <p className="hx-proof">{hero.trust.join(' · ')}</p>
-              </div>
-              <ul className="hx-trust" aria-hidden="true">
-                {hero.trust.map(item => <li key={item}>{item}</li>)}
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className="hx-fold" aria-hidden="true">
-          <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-            <path
-              className="hx-fold-fill"
-              d="M0,80 L0,36 C320,36 520,36 720,8 C920,36 1120,36 1440,36 L1440,80 Z"
-            />
-          </svg>
-          <span className="hx-fold-tick" />
-        </div>
+      {/* Mobile / tablet: pixel-exact reference mock (same approach as desktop) */}
+      <div className="hx-exact-mob">
+        <img
+          src="/assets/brand/hero-mobile-exact.png"
+          alt=""
+          width="576"
+          height="1024"
+          fetchPriority="high"
+          decoding="async"
+        />
+        <h2 id="hero-title-live" className="sr-only">
+          Turn Your Ideas Into a Published Book.
+        </h2>
+        <p className="sr-only">{hero.leadMobile}</p>
+        <a className="hx-exact-mob-hit hx-exact-mob-hit--cta" href="#contact">
+          {hero.cta}
+        </a>
+        <a className="hx-exact-mob-hit hx-exact-mob-hit--link" href={hero.link.href}>
+          {hero.link.label}
+        </a>
       </div>
     </section>
   );
@@ -1130,7 +1049,7 @@ function Footer() {
 function MobileBar() {
   const [hidden, setHidden] = useState(true);
   useEffect(() => {
-    const heroCta = document.querySelector('.hx-live .hx-cta');
+    const heroCta = document.querySelector('.hx-exact-mob-hit--cta, .hx-live .hx-cta');
     const portfolio = document.getElementById('portfolio');
     const faq = document.getElementById('faq');
     const contact = document.getElementById('contact');
