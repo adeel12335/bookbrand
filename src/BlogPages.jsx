@@ -1,10 +1,18 @@
 import React, { useEffect } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { IconArrow } from './icons.jsx';
-import { blogIndex, blogPosts, getPostBySlug } from './blogPosts.js';
+import { IconArrow, IconCheck } from './icons.jsx';
+import {
+  blogArticle,
+  blogIndex,
+  blogPosts,
+  getNeighborPosts,
+  getPostBySlug,
+  getRelatedPosts,
+  headingId,
+} from './blogPosts.js';
 
 const SITE = 'https://ebookwriters.us';
-const OG_IMAGE = `${SITE}/assets/brand/hero-desk.jpg`;
+const FALLBACK_OG = `${SITE}/assets/brand/faq-editorial-v2.png`;
 
 function ensureMeta(selector, create) {
   let node = document.querySelector(selector);
@@ -15,8 +23,9 @@ function ensureMeta(selector, create) {
   return node;
 }
 
-function setPageMeta({ title, description, path, type = 'article' }) {
+function setPageMeta({ title, description, path, type = 'article', image }) {
   document.title = title;
+  const ogImage = image ? `${SITE}${image}` : FALLBACK_OG;
 
   ensureMeta('meta[name="description"]', () => {
     const el = document.createElement('meta');
@@ -35,10 +44,10 @@ function setPageMeta({ title, description, path, type = 'article' }) {
     ['property', 'og:description', description],
     ['property', 'og:url', `${SITE}${path}`],
     ['property', 'og:type', type],
-    ['property', 'og:image', OG_IMAGE],
+    ['property', 'og:image', ogImage],
     ['name', 'twitter:title', title],
     ['name', 'twitter:description', description],
-    ['name', 'twitter:image', OG_IMAGE],
+    ['name', 'twitter:image', ogImage],
     ['name', 'twitter:card', 'summary_large_image'],
   ];
 
@@ -60,8 +69,33 @@ function upsertJsonLd(id, data) {
   document.head.appendChild(script);
 }
 
-function relatedPosts(post, limit = 3) {
-  return blogPosts.filter(p => p.slug !== post.slug).slice(0, limit);
+function BlogCard({ post, heading: Heading = 'h2' }) {
+  return (
+    <article className="blog-card">
+      {post.image ? (
+        <Link className="blog-card-media" to={`/blog/${post.slug}`} tabIndex={-1} aria-hidden="true">
+          <img src={post.image} alt="" width="720" height="450" loading="lazy" />
+        </Link>
+      ) : null}
+      <div className="blog-card-body">
+        <p className="blog-card-meta">
+          <span>{post.category}</span>
+          <span aria-hidden="true">·</span>
+          <time dateTime={post.date}>{post.dateLabel}</time>
+        </p>
+        <Heading>
+          <Link to={`/blog/${post.slug}`}>{post.title}</Link>
+        </Heading>
+        <p>{post.description}</p>
+        <div className="blog-card-foot">
+          <span>{post.readTime}</span>
+          <Link className="blog-card-link" to={`/blog/${post.slug}`}>
+            Read article <IconArrow aria-hidden="true" />
+          </Link>
+        </div>
+      </div>
+    </article>
+  );
 }
 
 export function BlogIndexPage() {
@@ -90,6 +124,7 @@ export function BlogIndexPage() {
         description: post.description,
         datePublished: post.date,
         url: `${SITE}/blog/${post.slug}`,
+        image: post.image ? `${SITE}${post.image}` : undefined,
       })),
     });
 
@@ -128,23 +163,7 @@ export function BlogIndexPage() {
           <ul className="blog-grid">
             {blogPosts.map(post => (
               <li key={post.slug}>
-                <article className="blog-card">
-                  <p className="blog-card-meta">
-                    <span>{post.category}</span>
-                    <span aria-hidden="true">·</span>
-                    <time dateTime={post.date}>{post.dateLabel}</time>
-                  </p>
-                  <h2>
-                    <Link to={`/blog/${post.slug}`}>{post.title}</Link>
-                  </h2>
-                  <p>{post.description}</p>
-                  <div className="blog-card-foot">
-                    <span>{post.readTime}</span>
-                    <Link className="blog-card-link" to={`/blog/${post.slug}`}>
-                      Read article <IconArrow aria-hidden="true" />
-                    </Link>
-                  </div>
-                </article>
+                <BlogCard post={post} />
               </li>
             ))}
           </ul>
@@ -157,7 +176,8 @@ export function BlogIndexPage() {
 export function BlogPostPage() {
   const { slug } = useParams();
   const post = getPostBySlug(slug);
-  const related = post ? relatedPosts(post) : [];
+  const related = post ? getRelatedPosts(post) : [];
+  const neighbors = post ? getNeighborPosts(post) : { newer: null, older: null };
 
   useEffect(() => {
     if (!post) return undefined;
@@ -166,6 +186,7 @@ export function BlogPostPage() {
       description: post.description,
       path: `/blog/${post.slug}`,
       type: 'article',
+      image: post.image,
     });
 
     upsertJsonLd('blog-article-jsonld', {
@@ -175,7 +196,7 @@ export function BlogPostPage() {
       description: post.description,
       datePublished: post.date,
       dateModified: post.date,
-      image: OG_IMAGE,
+      image: post.image ? `${SITE}${post.image}` : FALLBACK_OG,
       author: { '@type': 'Organization', name: 'ebookwriters.us', url: SITE },
       publisher: {
         '@type': 'Organization',
@@ -215,80 +236,162 @@ export function BlogPostPage() {
   if (!post) return <Navigate to="/blog" replace />;
 
   return (
-    <div className="blog-page">
+    <div className="blog-page" key={post.slug}>
       <article className="blog-article">
         <header className="blog-article-head">
-          <div className="shell blog-article-head-inner">
-            <nav className="blog-crumbs" aria-label="Breadcrumb">
-              <Link to="/">Home</Link>
-              <span aria-hidden="true">/</span>
-              <Link to="/blog">Blog</Link>
-              <span aria-hidden="true">/</span>
-              <span aria-current="page">{post.category}</span>
-            </nav>
-            <p className="eyebrow"><span>{post.eyebrow}</span><i aria-hidden="true" /></p>
-            <h1>{post.title}</h1>
-            <p className="blog-article-lead">{post.lead}</p>
-            <p className="blog-card-meta">
-              <span>{post.category}</span>
-              <span aria-hidden="true">·</span>
-              <time dateTime={post.date}>{post.dateLabel}</time>
-              <span aria-hidden="true">·</span>
-              <span>{post.readTime}</span>
-            </p>
+          <div className="shell blog-article-head-grid">
+            <div className="blog-article-copy">
+              <nav className="blog-crumbs" aria-label="Breadcrumb">
+                <Link to="/">Home</Link>
+                <span aria-hidden="true">/</span>
+                <Link to="/blog">Blog</Link>
+                <span aria-hidden="true">/</span>
+                <span aria-current="page">{post.category}</span>
+              </nav>
+              <p className="eyebrow"><span>{post.eyebrow}</span><i aria-hidden="true" /></p>
+              <h1>{post.title}</h1>
+              <p className="blog-article-lead">{post.lead}</p>
+              <p className="blog-article-meta">
+                <span>{blogArticle.authorRole}</span>
+                <span aria-hidden="true">·</span>
+                <span>{post.category}</span>
+                <span aria-hidden="true">·</span>
+                <time dateTime={post.date}>{post.dateLabel}</time>
+                <span aria-hidden="true">·</span>
+                <span>{post.readTime}</span>
+              </p>
+            </div>
+            {post.image ? (
+              <figure className="blog-article-photo">
+                <img
+                  src={post.image}
+                  alt={post.imageAlt || ''}
+                  width="960"
+                  height="720"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </figure>
+            ) : null}
           </div>
         </header>
 
-        <div className="shell blog-article-body">
-          {post.sections.map(section => (
-            <section key={section.heading} className="blog-section">
-              <h2>{section.heading}</h2>
-              {section.paragraphs.map(paragraph => (
-                <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+        <div className="shell blog-article-layout">
+          <aside className="blog-toc" aria-label={blogArticle.tocLabel}>
+            <p className="blog-toc-label">{blogArticle.tocLabel}</p>
+            <ol>
+              {post.sections.map((section, index) => (
+                <li key={section.heading}>
+                  <a href={`#${headingId(section.heading)}`}>
+                    <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                    {section.heading}
+                  </a>
+                </li>
               ))}
-              {section.bullets ? (
-                <ul>
-                  {section.bullets.map(item => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              ) : null}
-            </section>
-          ))}
-
-          <aside className="blog-cta-band">
-            <h2>Ready for a clear quote?</h2>
-            <p>
-              Tell us your idea, target length, and timeline. We will come back with a fixed
-              ebook writing package — no hourly surprises.
-            </p>
-            <Link className="cta cta-solid" to="/contact">
-              <span>{post.cta}</span>
-              <IconArrow className="cta-arrow" />
-            </Link>
+            </ol>
           </aside>
 
-          {related.length ? (
-            <section className="blog-related" aria-labelledby="related-title">
-              <h2 id="related-title">Related guides</h2>
-              <ul className="blog-related-grid">
-                {related.map(item => (
-                  <li key={item.slug}>
-                    <Link to={`/blog/${item.slug}`}>
-                      <span className="blog-related-cat">{item.category}</span>
-                      <strong>{item.title}</strong>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ) : null}
+          <div className="blog-article-body">
+            {post.takeaways?.length ? (
+              <div className="blog-takeaways">
+                <p className="blog-takeaways-label">{blogArticle.takeawaysLabel}</p>
+                <ul>
+                  {post.takeaways.map(item => (
+                    <li key={item}>
+                      <IconCheck className="tick" aria-hidden="true" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
 
-          <p className="blog-back">
-            <Link to="/blog"><IconArrow className="blog-back-arrow" /> All articles</Link>
-          </p>
+            {post.sections.map((section, index) => (
+              <section
+                key={section.heading}
+                id={headingId(section.heading)}
+                className="blog-section"
+              >
+                <h2>
+                  <span className="blog-section-n" aria-hidden="true">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  {section.heading}
+                </h2>
+                {section.paragraphs.map(paragraph => (
+                  <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                ))}
+                {section.bullets ? (
+                  <ul>
+                    {section.bullets.map(item => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                ) : null}
+              </section>
+            ))}
+
+            {(neighbors.older || neighbors.newer) ? (
+              <nav className="blog-pager" aria-label="More articles">
+                {neighbors.older ? (
+                  <Link className="blog-pager-item" to={`/blog/${neighbors.older.slug}`}>
+                    <span>{blogArticle.prevLabel}</span>
+                    <strong>{neighbors.older.title}</strong>
+                  </Link>
+                ) : null}
+                {neighbors.newer ? (
+                  <Link className="blog-pager-item blog-pager-item--next" to={`/blog/${neighbors.newer.slug}`}>
+                    <span>{blogArticle.nextLabel}</span>
+                    <strong>{neighbors.newer.title}</strong>
+                  </Link>
+                ) : null}
+              </nav>
+            ) : null}
+          </div>
         </div>
       </article>
+
+      <section className="blog-close" aria-labelledby="blog-close-title">
+        <div className="shell blog-close-inner">
+          <p className="eyebrow eyebrow-light"><span>{blogArticle.ctaEyebrow}</span><i aria-hidden="true" /></p>
+          <h2 id="blog-close-title">
+            {blogArticle.ctaTitle}
+            {' '}
+            <em>{blogArticle.ctaTitleEm}</em>
+          </h2>
+          <p>{blogArticle.ctaLead}</p>
+          <Link className="cta cta-solid" to="/contact">
+            <span>{post.cta}</span>
+            <IconArrow className="cta-arrow" />
+          </Link>
+        </div>
+      </section>
+
+      {related.length ? (
+        <section className="blog-related" aria-labelledby="related-title">
+          <div className="shell">
+            <header className="blog-related-head">
+              <p className="eyebrow"><span>{blogArticle.relatedEyebrow}</span><i aria-hidden="true" /></p>
+              <h2 id="related-title">
+                {blogArticle.relatedTitle} <em>{blogArticle.relatedTitleEm}</em>
+              </h2>
+              <p>{blogArticle.relatedLead}</p>
+            </header>
+            <ul className="blog-grid">
+              {related.map(item => (
+                <li key={item.slug}>
+                  <BlogCard post={item} heading="h3" />
+                </li>
+              ))}
+            </ul>
+            <p className="blog-back">
+              <Link to="/blog">
+                <IconArrow className="blog-back-arrow" /> {blogArticle.allArticles}
+              </Link>
+            </p>
+          </div>
+        </section>
+      ) : null}
     </div>
   );
 }

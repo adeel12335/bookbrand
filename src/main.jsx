@@ -19,6 +19,7 @@ import {
   pricingIntro, faqIntro, contactIntro, footerBrand,
 } from './data.js';
 import { BlogIndexPage, BlogPostPage } from './BlogPages.jsx';
+import { PortfolioPage } from './PortfolioPage.jsx';
 import './fonts.css';
 import './styles.css';
 
@@ -1149,6 +1150,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/blog" element={<BlogShell><BlogIndexPage /></BlogShell>} />
         <Route path="/blog/:slug" element={<BlogShell><BlogPostPage /></BlogShell>} />
+        <Route path="/portfolio" element={<BlogShell><PortfolioPage /></BlogShell>} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

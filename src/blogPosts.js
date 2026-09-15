@@ -10,6 +10,25 @@ export const blogIndex = {
     'Guides on hiring ebook writers, ghostwriting vs freelancers, package pricing, and how long it takes to write and publish a book.',
 };
 
+export const blogArticle = {
+  tocLabel: 'In this guide',
+  takeawaysLabel: 'Key takeaways',
+  authorRole: 'Studio editorial',
+  relatedEyebrow: 'Keep reading',
+  relatedTitle: 'Related',
+  relatedTitleEm: 'guides.',
+  relatedLead:
+    'More on hiring writers, costs, timelines, and what belongs in a complete ebook writing package.',
+  allArticles: 'All articles',
+  prevLabel: 'Previous article',
+  nextLabel: 'Next article',
+  ctaEyebrow: 'Next step',
+  ctaTitle: 'Ready for a clear',
+  ctaTitleEm: 'quote?',
+  ctaLead:
+    'Tell us your idea, target length, and timeline. We will come back with a fixed ebook writing package — no hourly surprises.',
+};
+
 export const blogPosts = [
   {
     slug: 'what-is-included-in-a-professional-ebook-writing-package',
@@ -25,6 +44,14 @@ export const blogPosts = [
     lead:
       '“Writing included” is not enough. Before you hire ebook writers or a ghostwriting studio, use this checklist to see what a complete package should cover — and what usually gets left out of cheap quotes.',
     cta: 'Choose a writing package',
+    image: '/assets/brand/faq-editorial-v2.png',
+    imageAlt: 'Stack of clothbound books and a fountain pen on a marble desk',
+    takeaways: [
+      'A complete package covers writing, editing, cover, retailer files, and rights — not only a first draft.',
+      'Named revision rounds and a rights-transfer agreement belong in writing, before work starts.',
+      'EPUB and print-ready files are publishing deliverables; a Word document is not.',
+      'You should keep the retailer accounts and 100% of royalties.',
+    ],
     sections: [
       {
         heading: 'The core: manuscript production',
@@ -84,6 +111,14 @@ export const blogPosts = [
     lead:
       'Authors often ask how long ghostwriting takes before they hire an ebook writing studio. The honest answer depends on length, research, feedback speed, and whether publishing setup is included. Here are practical ranges you can plan around.',
     cta: 'Get a dated project schedule',
+    image: '/assets/brand/path-roadmap-desk.png',
+    imageAlt: 'Writing desk with a notebook, pen, and books labelled write, edit, publish, market, and grow',
+    takeaways: [
+      'A 15,000-word guide is roughly three weeks; a 50,000-word book is about eight.',
+      'Outlining, a sample chapter, and weekly drafts keep the calendar honest.',
+      'Slow feedback and mid-draft audience changes stretch delivery more than writing speed does.',
+      'Ask for outline, sample, and final-files dates in writing before you hire.',
+    ],
     sections: [
       {
         heading: 'Typical timelines by manuscript length',
@@ -139,6 +174,14 @@ export const blogPosts = [
     lead:
       'Both paths can produce a manuscript. They are not the same product. If you are choosing between a ghostwriting studio and a solo freelancer, compare process, accountability, and what you receive after the draft — not only the headline price.',
     cta: 'Talk to a ghostwriting specialist',
+    image: '/assets/brand/hero-concept-photo.png',
+    imageAlt: 'Clothbound hardcover standing on a writer’s desk beside manuscript pages and a fountain pen',
+    takeaways: [
+      'A studio coordinates writing, editing, design, and often publishing under one agreement.',
+      'A freelancer fits when you already have an editor, designer, and publishing plan.',
+      'Compare rights paperwork, revision rules, and files — not only the headline fee.',
+      'A sample chapter, rights language, and a dated schedule protect you more than a portfolio screenshot.',
+    ],
     sections: [
       {
         heading: 'What a ghostwriting studio is built to do',
@@ -197,6 +240,14 @@ export const blogPosts = [
     lead:
       'If you are searching for professional ebook writers or a ghostwriter, price is usually the first question. Here is a clear breakdown of what ebook writing costs in 2026, what you should expect in a package, and how to choose the right budget for your manuscript.',
     cta: 'Get a fixed writing quote',
+    image: '/assets/brand/portfolio-hero-bg.png',
+    imageAlt: 'Sunlit desk with a notebook, mug, and books labelled ideas, manuscripts, publish, and grow',
+    takeaways: [
+      'Professional nonfiction packages typically run from $699 to $3,999 depending on length and extras.',
+      'Word count, research depth, edits, cover, and KDP setup drive the price more than an hourly rate.',
+      'A cheap draft without editing, files, or rights is not a cheaper book — it is unfinished work.',
+      'Budget to the job the book must do, then insist on a fixed total and written ownership.',
+    ],
     sections: [
       {
         heading: 'Quick answer: typical ebook writing costs',
@@ -257,4 +308,37 @@ export const blogPosts = [
 
 export function getPostBySlug(slug) {
   return blogPosts.find(post => post.slug === slug) || null;
+}
+
+export function headingId(heading) {
+  return heading
+    .toLowerCase()
+    .replace(/['’]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+export function getRelatedPosts(post, limit = 3) {
+  const others = blogPosts.filter(item => item.slug !== post.slug);
+  const ranked = others
+    .map(item => {
+      let score = 0;
+      if (item.category === post.category) score += 5;
+      const shared = (item.keywords || []).filter(keyword =>
+        (post.keywords || []).includes(keyword),
+      );
+      score += shared.length * 2;
+      return { item, score };
+    })
+    .sort((a, b) => b.score - a.score || new Date(b.item.date) - new Date(a.item.date));
+  return ranked.map(entry => entry.item).slice(0, limit);
+}
+
+export function getNeighborPosts(post) {
+  const index = blogPosts.findIndex(item => item.slug === post.slug);
+  if (index < 0) return { newer: null, older: null };
+  return {
+    newer: index > 0 ? blogPosts[index - 1] : null,
+    older: index < blogPosts.length - 1 ? blogPosts[index + 1] : null,
+  };
 }

@@ -1,7 +1,7 @@
 export const navigation = [
   { label: 'Why Us', href: '#why' },
   { label: 'Services', href: '#services' },
-  { label: 'Work', href: '#portfolio' },
+  { label: 'Portfolio', href: '/portfolio' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'FAQ', href: '#faq' },
   { label: 'Blog', href: '/blog' },
@@ -87,8 +87,8 @@ export const portfolioIntro = {
   eyebrow: 'Recently Published',
   title: 'Published books from our ghostwriting studio.',
   meta: 'Selected titles across business, memoir, health, and more.',
-  linkLabel: 'Start your book project',
-  linkHref: '/contact',
+  linkLabel: 'View full portfolio',
+  linkHref: '/portfolio',
   image: '/assets/brand/portfolio-shelf-v2.png',
   imageAlt: 'Six professionally designed books displayed on a warm stone shelf',
 };
@@ -146,14 +146,100 @@ export const dualOffer = {
 };
 
 export const books = [
-  { title: 'Higher Ground', author: 'Daniel Brooks', genre: 'Self-Development', image: '/assets/brand/portfolio-1.png' },
-  { title: 'The Kindness Effect', author: 'Elena Martin', genre: 'Personal Growth', image: '/assets/brand/portfolio-2.png' },
-  { title: 'Beyond the Stars', author: 'Marcus Hill', genre: 'Parenting', image: '/assets/brand/portfolio-3.png' },
-  { title: 'The Second Chapter', author: 'Olivia Reese', genre: 'Memoir', image: '/assets/brand/portfolio-4.png' },
-  { title: 'Wealth with Purpose', author: 'Jonathan Blake', genre: 'Business & Finance', image: '/assets/brand/portfolio-5.png' },
-  { title: 'A Healthier You', author: 'Dr. Amanda Lewis', genre: 'Health & Wellness', image: '/assets/brand/portfolio-6.png' },
+  { title: 'Higher Ground', author: 'Daniel Brooks', genre: 'Self-Development', image: '/assets/brand/portfolio-shelf-book-1.png' },
+  { title: 'The Kindness Effect', author: 'Elena Martin', genre: 'Personal Growth', image: '/assets/brand/portfolio-shelf-book-2.png' },
+  { title: 'Beyond the Stars', author: 'Marcus Hill', genre: 'Parenting', image: '/assets/brand/portfolio-shelf-book-3.png' },
+  { title: 'The Second Chapter', author: 'Olivia Reese', genre: 'Memoir', image: '/assets/brand/portfolio-shelf-book-4.png' },
+  { title: 'Wealth with Purpose', author: 'Jonathan Blake', genre: 'Business & Finance', image: '/assets/brand/portfolio-shelf-book-5.png' },
+  { title: 'A Healthier You', author: 'Dr. Amanda Lewis', genre: 'Health & Wellness', image: '/assets/brand/portfolio-shelf-book-6.png' },
 ];
 
+export const portfolioPage = {
+  metaTitle: 'Book Writing Portfolio — Published Covers & Projects | ebookwriters.us',
+  metaDescription:
+    'Browse books our ghostwriting studio has helped authors bring to life — fiction, memoir, business, self-help, and more. Writing, editing, design, and publishing support.',
+  heroImage: '/assets/brand/portfolio-hero-bg.png',
+  heroImageAlt: 'Sunlit writing desk with books labeled Ideas, Manuscripts, Publish, and Grow',
+  eyebrow: 'Our portfolio',
+  title: 'Books we’ve helped authors',
+  titleEm: 'bring to life.',
+  lead:
+    'Every book has a story behind it. This portfolio highlights covers and projects we have helped shape for authors across genres — from memoir and business to self-help, wellness, and personal development.',
+  cta: 'Start your book journey',
+  trustNote: 'Trusted by authors who want professional guidance, creative support, and reader-ready results.',
+  pillars: [
+    {
+      title: '100% Author Ownership',
+      copy: 'Your book remains yours. We respect your ideas, your voice, and your intellectual property.',
+    },
+    {
+      title: 'Complete Publishing Support',
+      copy: 'From writing and editing to cover design, formatting, publishing, and marketing — key steps in one studio.',
+    },
+    {
+      title: 'Professional Quality',
+      copy: 'High standards for polished books that feel organized, market-ready, and clear to readers.',
+    },
+    {
+      title: 'On-Time Delivery',
+      copy: 'Clear timelines and milestone updates so every project moves forward with confidence.',
+    },
+  ],
+  work: {
+    eyebrow: 'Our work',
+    title: 'A glimpse of our',
+    titleEm: 'recent projects.',
+    lead:
+      'Each book we support has its own purpose — to inspire, educate, entertain, or build authority. Our role is to help each project look polished, feel complete, and speak clearly to the right readers.',
+    genres: ['Fiction', 'Non-Fiction', 'Memoir', 'Self-Help', 'Business', 'Health & Wellness'],
+  },
+  offer: {
+    eyebrow: 'What we offer',
+    title: 'Services that bring',
+    titleEm: 'every book together.',
+    lead: 'From the first word to the final launch, we handle each step with care, clarity, and experience.',
+  },
+  process: {
+    eyebrow: 'Our process',
+    title: 'Simple process.',
+    titleEm: 'Professional results.',
+    lead: 'A clear path that keeps your publishing journey organized and stress-free.',
+    steps: [
+      {
+        n: '01',
+        title: 'Consultation',
+        copy: 'We learn about your book idea, goals, genre, audience, current stage, and requirements.',
+      },
+      {
+        n: '02',
+        title: 'Planning',
+        copy: 'We create a customized plan for writing, editing, design, publishing, or marketing.',
+      },
+      {
+        n: '03',
+        title: 'Creation',
+        copy: 'Our team works on writing, editing, design, and formatting with attention to quality and detail.',
+      },
+      {
+        n: '04',
+        title: 'Publishing',
+        copy: 'We prepare retailer-ready files and help you set up KDP, IngramSpark, and launch essentials.',
+      },
+    ],
+  },
+  voices: {
+    eyebrow: 'Testimonials',
+    title: 'What authors say about',
+    titleEm: 'working with us.',
+    lead: 'Strategy, craftsmanship, and clear communication — so authors publish books that look professional and support long-term goals.',
+  },
+  closing: {
+    title: 'Ready to see your book',
+    titleEm: 'in our portfolio?',
+    lead: 'Tell us what you want to write. We will help you create, publish, and share a book that makes a lasting impact.',
+    cta: 'Get a free publishing consultation',
+  },
+};
 export const testimonialsIntro = {
   eyebrow: 'Author reviews',
   title: 'What authors say about our book writing service.',
@@ -295,7 +381,7 @@ export const footerLinks = [
     title: 'Company',
     links: [
       { label: 'Why Us', href: '#why' },
-      { label: 'Selected Work', href: '#portfolio' },
+      { label: 'Portfolio', href: '/portfolio' },
       { label: 'Pricing', href: '#pricing' },
       { label: 'FAQ', href: '#faq' },
       { label: 'Blog', href: '/blog' },
