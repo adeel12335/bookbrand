@@ -3,9 +3,6 @@ dist/
 .DS_Store
 Thumbs.db
 *.log
-.env
-.env.*
-!.env.example
 .vite/
 .claude/
 backups/
@@ -14,3 +11,5 @@ backups/
 # Rebuilt from Neon before every build, but committed so a fresh
 # clone builds without database access.
 #src/generated/
+.env*
+!.env.example
