@@ -5,12 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/fetch-posts.mjs",
     "build": "vite build",
     "seo:stamp": "node scripts/stamp-html.mjs",
     "preview": "vite preview",
+    "posts:pull": "node scripts/fetch-posts.mjs",
+    "db:migrate": "node scripts/db-migrate.mjs",
+    "db:seed": "node scripts/db-seed-posts.mjs",
     "qa:smoke": "node scripts/qa-smoke.mjs"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "@vitejs/plugin-react": "latest",
     "framer-motion": "latest",
     "gsap": "latest",
@@ -19,6 +24,7 @@
     "react": "latest",
     "react-dom": "latest",
     "react-router-dom": "^7.18.4",
+    "resend": "^6.28.1",
     "swiper": "latest",
     "vite": "latest"
   },

@@ -1,6 +1,6 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useSearchParams } from 'react-router-dom';
+import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
@@ -32,6 +32,7 @@ import {
   TermsPage,
 } from './ContentPages.jsx';
 import { SeoHead } from './SeoHead.jsx';
+import AdminPage from './AdminPage.jsx';
 import './fonts.css';
 import './styles.css';
 
@@ -707,7 +708,7 @@ function Testimonials() {
 
 /* ------------------------------------------------------------------ pricing */
 
-function Pricing({ onSelect }) {
+function Pricing() {
   return (
     <section className="ed-price" id="pricing" aria-labelledby="pricing-title">
       <div className="shell">
@@ -741,7 +742,7 @@ function Pricing({ onSelect }) {
                   <li key={feature}><IconCheck className="tick" aria-hidden="true" />{feature}</li>
                 ))}
               </ul>
-              <a className="ed-price-cta" href={`/contact?plan=${encodeURIComponent(plan.name)}`}>
+              <a className="ed-price-cta" href="/contact">
                 <span>{plan.featured ? 'Get started' : `Choose ${plan.name}`}</span>
                 <IconArrow aria-hidden="true" />
               </a>
@@ -895,45 +896,95 @@ function Faq() {
 
 /* ------------------------------------------------------------------ contact */
 
-function Contact({ selectedPlan, onSelect, asPage = false }) {
-  const [brief, setBrief] = useState(null);
-  const [copied, setCopied] = useState('');
+/**
+ * reCAPTCHA v3 — invisible, scored. The script is only pulled in on pages that
+ * actually carry the form, so Google is not loaded across the whole site. With
+ * no site key configured the hook returns an empty token and the server skips
+ * verification, so the form still works before the keys are in place.
+ */
+function useRecaptcha() {
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '';
+
+  useEffect(() => {
+    if (!siteKey || document.querySelector('script[data-recaptcha]')) return undefined;
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(siteKey)}`;
+    script.async = true;
+    script.defer = true;
+    script.setAttribute('data-recaptcha', '1');
+    document.head.appendChild(script);
+    return undefined;
+  }, [siteKey]);
+
+  return async function getToken(action) {
+    if (!siteKey || !window.grecaptcha) return '';
+    try {
+      await new Promise(resolve => window.grecaptcha.ready(resolve));
+      return await window.grecaptcha.execute(siteKey, { action });
+    } catch {
+      // A blocked or failed challenge must not stop the submit; the server
+      // decides what to do with a missing token.
+      return '';
+    }
+  };
+}
+
+function Contact({ asPage = false }) {
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [failure, setFailure] = useState('');
   const resultRef = useRef(null);
+  const formRef = useRef(null);
+  const getRecaptchaToken = useRecaptcha();
   const TitleTag = asPage ? 'h1' : 'h2';
 
-  useEffect(() => { if (brief) resultRef.current?.focus(); }, [brief]);
+  useEffect(() => { if (status === 'sent') resultRef.current?.focus(); }, [status]);
 
-  function handleSubmit(event) {
+  // Send the caret to whatever the server rejected, rather than leaving the
+  // visitor to hunt for the red text.
+  useEffect(() => {
+    const first = Object.keys(fieldErrors)[0];
+    if (first) formRef.current?.elements[first]?.focus();
+  }, [fieldErrors]);
+
+  async function handleSubmit(event) {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
-    const message = String(data.get('message') || '').trim();
-    if (!message) {
-      form.elements.message.setCustomValidity('Please tell us a little about your book.');
-      form.elements.message.reportValidity();
-      return;
-    }
-    setBrief([
-      'ebookwriters.us — project brief',
-      '',
-      `Name:      ${String(data.get('name')).trim()}`,
-      `Email:     ${String(data.get('email')).trim()}`,
-      `Package:   ${data.get('interest') || 'Help me choose'}`,
-      `Timeline:  ${data.get('timeline')}`,
-      '',
-      'About the book',
-      '--------------',
-      message,
-    ].join('\n'));
-    setCopied('');
-  }
 
-  async function copyBrief() {
+    setStatus('sending');
+    setFieldErrors({});
+    setFailure('');
+
     try {
-      await navigator.clipboard.writeText(brief);
-      setCopied('Brief copied to your clipboard.');
+      const recaptchaToken = await getRecaptchaToken('contact');
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.get('name'),
+          email: data.get('email'),
+          message: data.get('message'),
+          timeline: data.get('timeline'),
+          company: data.get('company'),
+          recaptchaToken,
+          sourcePath: `${window.location.pathname}${window.location.search}`,
+        }),
+      });
+      const payload = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        setFieldErrors(payload.errors || {});
+        setFailure(payload.error || 'Something went wrong on our side.');
+        setStatus('error');
+        return;
+      }
+
+      form.reset();
+      setStatus('sent');
     } catch {
-      setCopied('Clipboard unavailable — select the text above and copy it manually.');
+      setFailure('We could not reach the server.');
+      setStatus('error');
     }
   }
 
@@ -969,44 +1020,60 @@ function Contact({ selectedPlan, onSelect, asPage = false }) {
         </Reveal>
 
         <Reveal className="ct-panel" delay={120}>
-          {brief ? (
+          {status === 'sent' ? (
             <div className="brief" ref={resultRef} tabIndex={-1}>
-              <h3>Your brief is ready</h3>
+              <h3>Thank you — your enquiry is with us</h3>
               <p className="brief-note">
-                Nothing has been sent. Copy this and email it to us, or connect the form to your
-                own endpoint before launch.
+                We have your project details and typically reply within 1–2 business days.
+                If it is urgent, email <a href={`mailto:${siteContact.email}`}>{siteContact.email}</a> directly.
               </p>
-              <pre>{brief}</pre>
               <div className="brief-actions">
-                <button type="button" className="cta cta-solid" onClick={copyBrief}>
-                  <span>Copy brief</span><IconArrow className="cta-arrow" />
-                </button>
-                <button type="button" className="link-button" onClick={() => setBrief(null)}>
-                  Edit details
+                <button type="button" className="link-button" onClick={() => setStatus('idle')}>
+                  Send another enquiry
                 </button>
               </div>
-              <p role="status" className="brief-status">{copied}</p>
             </div>
           ) : (
-            <form className="ct-form" onSubmit={handleSubmit}>
+            <form className="ct-form" ref={formRef} onSubmit={handleSubmit}>
               <label className="field">
                 <span>Your name</span>
-                <input name="name" autoComplete="name" required maxLength={120} placeholder="Alex Morgan" />
+                <input
+                  name="name"
+                  autoComplete="name"
+                  required
+                  maxLength={120}
+                  placeholder="Alex Morgan"
+                  aria-invalid={fieldErrors.name ? 'true' : undefined}
+                  aria-describedby={fieldErrors.name ? 'name-error' : undefined}
+                />
+                {fieldErrors.name
+                  ? <em className="field-error" id="name-error">{fieldErrors.name}</em>
+                  : null}
               </label>
               <label className="field">
                 <span>Your email</span>
-                <input name="email" type="email" autoComplete="email" required maxLength={254} placeholder="alex@company.com" />
-              </label>
-              <label className="field">
-                <span>What service are you interested in?</span>
-                <select name="interest" value={selectedPlan} onChange={e => onSelect(e.target.value)}>
-                  <option value="">Help me choose</option>
-                  {plans.map(plan => (
-                    <option key={plan.name} value={plan.name}>{plan.name} — ${plan.price}</option>
-                  ))}
-                </select>
+                <input
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  maxLength={254}
+                  placeholder="alex@company.com"
+                  aria-invalid={fieldErrors.email ? 'true' : undefined}
+                  aria-describedby={fieldErrors.email ? 'email-error' : undefined}
+                />
+                {fieldErrors.email
+                  ? <em className="field-error" id="email-error">{fieldErrors.email}</em>
+                  : null}
               </label>
               <input type="hidden" name="timeline" value="Within 3 months" />
+              {/* Left empty by people, filled by bots. */}
+              <div className="ct-trap" aria-hidden="true">
+                <label>
+                  Company
+                  <input name="company" tabIndex={-1} autoComplete="off" />
+                </label>
+              </div>
               <label className="field">
                 <span>Tell us about your book or project</span>
                 <textarea
@@ -1015,13 +1082,32 @@ function Contact({ selectedPlan, onSelect, asPage = false }) {
                   required
                   maxLength={4000}
                   placeholder="The idea, who it is for, and what you want it to do for you."
+                  aria-invalid={fieldErrors.message ? 'true' : undefined}
+                  aria-describedby={fieldErrors.message ? 'message-error' : undefined}
                   onInput={e => e.target.setCustomValidity('')}
                 />
+                {fieldErrors.message
+                  ? <em className="field-error" id="message-error">{fieldErrors.message}</em>
+                  : null}
               </label>
-              <button type="submit" className="ct-submit">
-                Prepare inquiry <IconArrow aria-hidden="true" />
+              <button type="submit" className="ct-submit" disabled={status === 'sending'}>
+                {status === 'sending' ? 'Sending…' : 'Send enquiry'}
+                <IconArrow aria-hidden="true" />
               </button>
-              <p className="ct-note">We typically respond within 1–2 business days.</p>
+              <p className="ct-note" role="status">
+                {status === 'error'
+                  ? `${failure} Please try again, or email ${siteContact.email}.`
+                  : 'We typically respond within 1–2 business days.'}
+              </p>
+              {import.meta.env.VITE_RECAPTCHA_SITE_KEY ? (
+                <p className="ct-recaptcha">
+                  Protected by reCAPTCHA — the Google{' '}
+                  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                  {' '}and{' '}
+                  <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a>
+                  {' '}apply.
+                </p>
+              ) : null}
             </form>
           )}
         </Reveal>
@@ -1169,6 +1255,7 @@ function App() {
         <Route path="/blog/:slug" element={<BlogShell><BlogPostPage /></BlogShell>} />
         <Route path="/portfolio" element={<BlogShell><PortfolioPage /></BlogShell>} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/about" element={<BlogShell><AboutPage /></BlogShell>} />
         <Route path="/pricing" element={<BlogShell><PricingPage /></BlogShell>} />
         <Route path="/services" element={<BlogShell><ServicesPage /></BlogShell>} />
@@ -1197,14 +1284,6 @@ function BlogShell({ children }) {
 }
 
 function ContactPage() {
-  const [searchParams] = useSearchParams();
-  const planFromUrl = searchParams.get('plan') || '';
-  const [selectedPlan, setSelectedPlan] = useState(planFromUrl);
-
-  useEffect(() => {
-    setSelectedPlan(planFromUrl);
-  }, [planFromUrl]);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -1215,7 +1294,7 @@ function ContactPage() {
       <div className="grain" aria-hidden="true" />
       <Header />
       <main id="main">
-        <Contact selectedPlan={selectedPlan} onSelect={setSelectedPlan} asPage />
+        <Contact asPage />
       </main>
       <Footer />
     </div>
@@ -1223,7 +1302,6 @@ function ContactPage() {
 }
 
 function HomePage() {
-  const [selectedPlan, setSelectedPlan] = useState('');
   const progressRef = useRef(null);
 
   useEffect(() => {
@@ -1266,9 +1344,9 @@ function HomePage() {
         <Portfolio />
         <DualOffer />
         <Testimonials />
-        <Pricing onSelect={setSelectedPlan} />
+        <Pricing />
         <Faq />
-        <Contact selectedPlan={selectedPlan} onSelect={setSelectedPlan} />
+        <Contact />
       </main>
       <Footer />
       <MobileBar />

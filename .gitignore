@@ -5,7 +5,12 @@ Thumbs.db
 *.log
 .env
 .env.*
+!.env.example
 .vite/
 .claude/
 backups/
 .vercel
+
+# Rebuilt from Neon before every build, but committed so a fresh
+# clone builds without database access.
+#src/generated/

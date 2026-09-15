@@ -5,7 +5,8 @@ deep emerald, gold foil and warm paper, Cormorant Garamond over DM Sans.
 
 ## Stack
 
-React + Vite · GSAP/ScrollTrigger · Lenis smooth scroll
+React + Vite · React Router · GSAP/ScrollTrigger · Lenis smooth scroll
+Neon (Postgres) + Resend behind Vercel serverless functions in `api/`
 
 ## Run
 
@@ -17,6 +18,82 @@ npm run dev
 ```bash
 npm run build
 ```
+
+## Backend
+
+Enquiries and blog articles live in Neon; the studio is notified by Resend. The API is
+plain Vercel functions under `api/`, and `npm run dev` runs those same files through a
+Vite middleware, so local and production hit identical code.
+
+```text
+api/leads.js            POST  save an enquiry + email it   · GET (admin) list enquiries
+api/posts/index.js      GET   published articles           · POST (admin) create
+api/posts/[slug].js     GET   one article                  · PUT/DELETE (admin)
+api/admin/session.js    password sign-in, signed HttpOnly cookie
+api/_lib/               db, auth, validation, error guard
+db/schema.sql           the whole schema, idempotent
+```
+
+### Setup
+
+1. `cp .env.example .env` and fill in the blanks. **Never commit `.env`.**
+   - `DATABASE_URL` — Neon dashboard → your project → pooled connection string
+   - `RESEND_API_KEY` — resend.com/api-keys
+   - `LEAD_NOTIFY_FROM` — must be on a domain verified in Resend
+   - `ADMIN_PASSWORD` — anything long and random; it gates `/admin`
+   - `SESSION_SECRET` — already generated in `.env`
+2. `npm run db:migrate` — creates the `leads` and `posts` tables.
+3. `npm run db:seed` — copies the four seed articles into Neon.
+4. Add the same variables in Vercel → Project Settings → Environment Variables.
+
+### How the blog stays indexable
+
+Articles are stored in Neon but still ship as prerendered HTML, because that is what
+crawlers read. `npm run build` runs `scripts/fetch-posts.mjs` first, which pulls the
+published rows into `src/generated/posts.js`; everything downstream imports from there.
+Without `DATABASE_URL` it falls back to `src/blogPosts.static.js`, so a build never
+depends on the database being up.
+
+The consequence: **writing an article is not enough — the site has to rebuild.** Set
+`DEPLOY_HOOK_URL` to a Vercel deploy hook and publishing does that automatically;
+without it, redeploy by hand after publishing.
+
+### Spam protection
+
+Three layers, cheapest first: an off-screen honeypot field, a per-IP rate limit
+(5 enquiries per 10 minutes), and reCAPTCHA v3.
+
+reCAPTCHA is scored rather than pass/fail, so `RECAPTCHA_MIN_SCORE` (default
+0.5) is the threshold — raise it if spam still lands, lower it if real authors
+get turned away. Two deliberate behaviours: with no `RECAPTCHA_SECRET_KEY` the
+check is skipped so the form works before the keys are added, and if Google
+itself is unreachable the submission is allowed through and logged rather than
+taking the only enquiry form down during an outage.
+
+The floating badge is hidden in CSS; Google's terms allow that as long as the
+disclosure under the form names them, which it does.
+
+
+### Security notes
+
+- `/admin` is one shared password, not user accounts. Rotating `ADMIN_PASSWORD`
+  does **not** sign existing sessions out — rotate `SESSION_SECRET` for that.
+- Sign-in and the enquiry form are rate limited per IP (8 sign-ins and 5
+  enquiries per 10 minutes). The counter lives in the function instance, so a
+  burst spread across cold starts gets a fresh budget; move it to Neon if you
+  ever need a hard global limit.
+- Article text is escaped before it reaches the prerendered JSON-LD. Do not
+  reintroduce raw `JSON.stringify` into a `<script>` block — a `</script>` in a
+  title would otherwise ship as live markup on every blog page.
+- Security headers (HSTS, nosniff, Referrer-Policy, frame-ancestors) are set in
+  `vercel.json` and only take effect on Vercel, not in `vite preview`.
+
+
+### Admin
+
+`/admin` — sign in with `ADMIN_PASSWORD` to write articles and read enquiries. It is
+`noindex` and disallowed in `robots.txt`. There is one shared password, no user accounts.
+
 
 ## Structure
 
@@ -63,8 +140,11 @@ logo (`theebookstudio.com`) on the mug and tablet in shot. Do not put those back
 
 ## Before launch
 
-- The contact form is frontend-only: it builds a brief the visitor can copy, and sends
-  nothing. Point `handleSubmit` in `src/main.jsx` at Formspree, HubSpot or your own endpoint.
+- Set the environment variables in Vercel, then run `npm run db:migrate` and
+  `npm run db:seed` against the production database — the contact form returns a
+  generic error until `DATABASE_URL` is set.
+- Verify a sending domain in Resend and point `LEAD_NOTIFY_FROM` at it. The default
+  `onboarding@resend.dev` only delivers to the address that owns the Resend account.
 - Placeholder details to replace: `hello@ebookwriters.us`, `+1 (800) 555-0142`, the
   stat figures, the three testimonials and the three portfolio titles.
 - `index.html` carries the JSON-LD `ProfessionalService` block — update the rating and

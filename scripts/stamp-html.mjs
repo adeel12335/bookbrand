@@ -28,9 +28,31 @@ function setCanonical(html, href) {
   return html.replace('</head>', `    ${tag} />\n  </head>`);
 }
 
+/**
+ * JSON inside a <script> block is HTML, not JSON: a literal `</script>` in any
+ * value closes the block early and everything after it becomes live markup.
+ * Article titles come from the admin panel now, so escape the characters that
+ * can break out, plus the two line separators that are legal in JSON but not
+ * in a JavaScript string literal.
+ */
+function jsonLdPayload(data) {
+  // Built with fromCharCode so no raw U+2028/U+2029 ever sits in this file:
+  // U+2028 is itself a JavaScript line terminator and would break the source.
+  const SEPARATORS = String.fromCharCode(0x2028, 0x2029);
+  const unsafe = new RegExp('[<>&' + SEPARATORS + ']', 'g');
+  const escapes = {
+    '<': '\\u003c',
+    '>': '\\u003e',
+    '&': '\\u0026',
+    [SEPARATORS[0]]: '\\u2028',
+    [SEPARATORS[1]]: '\\u2029',
+  };
+  return JSON.stringify(data, null, 6).replace(unsafe, ch => escapes[ch]);
+}
+
 function replaceJsonLd(html, blocks) {
   const scripts = blocks
-    .map(data => `    <script type="application/ld+json">\n${JSON.stringify(data, null, 6)}\n    </script>`)
+    .map(data => `    <script type="application/ld+json">\n${jsonLdPayload(data)}\n    </script>`)
     .join('\n');
   const stripped = html.replace(/\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/g, '');
   if (!scripts) return stripped;

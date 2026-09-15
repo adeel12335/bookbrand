@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { stampHtml } from './scripts/stamp-html.mjs';
+import { apiPlugin } from './scripts/vite-api-plugin.mjs';
 
 function seoStampPlugin() {
   return {
@@ -43,7 +44,7 @@ function servePrerenderedRoutes() {
 }
 
 export default defineConfig({
-  plugins: [react(), seoStampPlugin(), servePrerenderedRoutes()],
+  plugins: [react(), apiPlugin(), seoStampPlugin(), servePrerenderedRoutes()],
   server: {
     host: '0.0.0.0',
     port: 5173
