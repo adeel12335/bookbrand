@@ -18610,6 +18610,32 @@ body {
   line-height: 1.6;
 }
 
+@media (max-width: 1020px) {
+  /* Homepage keeps a transparent overlay header (logo is in the hero PNG).
+     Inner pages need a solid sticky bar so the wordmark stays visible. */
+  .blog-shell .site-header,
+  .contact-page .site-header {
+    position: sticky !important;
+    inset: auto !important;
+    background: #071b16 !important;
+    border-bottom: 1px solid rgba(212, 180, 131, 0.18) !important;
+  }
+
+  .blog-shell .site-header::before,
+  .contact-page .site-header::before {
+    opacity: 1 !important;
+    background: rgba(7, 27, 22, 0.96) !important;
+  }
+
+  .blog-shell .site-header .wordmark,
+  .blog-shell .site-header .wordmark *,
+  .contact-page .site-header .wordmark,
+  .contact-page .site-header .wordmark * {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+}
+
 @media (max-width: 860px) {
   .content-hero {
     min-height: 0;
