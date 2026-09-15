@@ -1,9 +1,12 @@
 export const navigation = [
-  { label: 'Why Us', href: '#why' },
-  { label: 'Services', href: '#services' },
+  { label: 'About', href: '/about' },
+  {
+    label: 'Services',
+    href: '/services',
+    match: ['/services', '/ebook-ghostwriting-services', '/hire-ebook-writer', '/amazon-kdp-ebook-writing'],
+  },
   { label: 'Portfolio', href: '/portfolio' },
-  { label: 'Pricing', href: '#pricing' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'Pricing', href: '/pricing' },
   { label: 'Blog', href: '/blog' },
 ];
 
@@ -12,31 +15,37 @@ export const services = [
     n: '01', key: 'writing', title: 'Ebook & Book Ghostwriting',
     copy: 'Work with professional ghostwriters who bring your ideas to life in your voice — research, outline, and full manuscript.',
     points: ['Chapter-by-chapter outline', 'Original research', 'Two revision rounds'],
+    href: '/ebook-ghostwriting-services',
   },
   {
     n: '02', key: 'editing', title: 'Editing & Proofreading',
     copy: 'Refine your manuscript with expert editors for clarity, flow, and impact before it goes to press.',
     points: ['Developmental edit', 'Line & copy edit', 'Final proofread'],
+    href: '/services',
   },
   {
     n: '03', key: 'formatting', title: 'Cover Design',
     copy: 'Market-ready covers that capture your story, fit your genre, and stand out on Amazon and bookstore shelves.',
     points: ['Custom cover design', 'Front, spine & back', 'Genre-matched art direction'],
+    href: '/services',
   },
   {
     n: '04', key: 'publishing', title: 'Publishing & Formatting',
     copy: 'Print, ebook, and audiobook formatting with KDP and IngramSpark setup and retailer-ready files.',
     points: ['EPUB & print PDF', 'KDP & IngramSpark setup', 'Retailer-ready files'],
+    href: '/amazon-kdp-ebook-writing',
   },
   {
     n: '05', key: 'ghostwriting', title: 'ISBN & Copyright Support',
     copy: 'Secure your rights, set up publishing essentials, and protect your work properly from day one.',
     points: ['ISBN guidance', 'Copyright setup', 'Rights documentation'],
+    href: '/services',
   },
   {
     n: '06', key: 'branding', title: 'Book Marketing',
     copy: 'Launch strategy, Amazon optimization, and author-platform support so the right readers find your book.',
     points: ['Launch messaging', 'Amazon optimization', 'Author brand visibility'],
+    href: '/services',
   },
 ];
 
@@ -369,23 +378,24 @@ export const footerLinks = [
   {
     title: 'Services',
     links: [
-      { label: 'Ebook & Book Ghostwriting', href: '#services' },
-      { label: 'Editing & Proofreading', href: '#services' },
-      { label: 'Cover Design', href: '#services' },
-      { label: 'Publishing & Formatting', href: '#services' },
-      { label: 'ISBN & Copyright Support', href: '#services' },
-      { label: 'Book Marketing', href: '#services' },
+      { label: 'Ebook Ghostwriting', href: '/ebook-ghostwriting-services' },
+      { label: 'Hire an Ebook Writer', href: '/hire-ebook-writer' },
+      { label: 'Amazon KDP Publishing', href: '/amazon-kdp-ebook-writing' },
+      { label: 'Editing & Cover Design', href: '/services' },
+      { label: 'All Services', href: '/services' },
     ],
   },
   {
     title: 'Company',
     links: [
-      { label: 'Why Us', href: '#why' },
+      { label: 'About', href: '/about' },
       { label: 'Portfolio', href: '/portfolio' },
-      { label: 'Pricing', href: '#pricing' },
-      { label: 'FAQ', href: '#faq' },
+      { label: 'Pricing', href: '/pricing' },
+      { label: 'FAQ', href: '/#faq' },
       { label: 'Blog', href: '/blog' },
       { label: 'Contact', href: '/contact' },
+      { label: 'Privacy', href: '/privacy' },
+      { label: 'Terms', href: '/terms' },
     ],
   },
 ];
@@ -402,7 +412,7 @@ export const hero = {
     'We help experts, entrepreneurs, and aspiring authors publish through professional ebook writing, ghostwriting, editing, formatting, and KDP support.',
   kicker: 'Book writing & publishing studio',
   cta: 'Start Your Project',
-  link: { label: 'Explore our services', href: '#services' },
+  link: { label: 'Explore our services', href: '/services' },
   trust: ['100% author ownership', 'Fixed packages from $699', 'KDP & IngramSpark ready'],
   imageAlt: 'ebookwriters.us — professional ebook writers helping authors publish their books',
 };

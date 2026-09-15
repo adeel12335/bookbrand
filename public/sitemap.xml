@@ -1,45 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ebookwriters.us/</loc>
+    <loc>https://www.ebookwriters.us/</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://ebookwriters.us/portfolio</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://ebookwriters.us/contact</loc>
+    <loc>https://www.ebookwriters.us/contact</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://ebookwriters.us/blog</loc>
+    <loc>https://www.ebookwriters.us/portfolio</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ebookwriters.us/blog/what-is-included-in-a-professional-ebook-writing-package</loc>
+    <loc>https://www.ebookwriters.us/blog</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.ebookwriters.us/about</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.ebookwriters.us/pricing</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.ebookwriters.us/services</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.ebookwriters.us/ebook-ghostwriting-services</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.ebookwriters.us/hire-ebook-writer</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.ebookwriters.us/amazon-kdp-ebook-writing</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.ebookwriters.us/privacy</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.ebookwriters.us/terms</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.ebookwriters.us/blog/what-is-included-in-a-professional-ebook-writing-package</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ebookwriters.us/blog/how-long-does-it-take-to-write-and-publish-a-book</loc>
+    <loc>https://www.ebookwriters.us/blog/how-long-does-it-take-to-write-and-publish-a-book</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ebookwriters.us/blog/ghostwriting-vs-hiring-a-freelancer</loc>
+    <loc>https://www.ebookwriters.us/blog/ghostwriting-vs-hiring-a-freelancer</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ebookwriters.us/blog/how-much-does-it-cost-to-hire-an-ebook-writer</loc>
+    <loc>https://www.ebookwriters.us/blog/how-much-does-it-cost-to-hire-an-ebook-writer</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

@@ -8,50 +8,6 @@ import "swiper/css/pagination";
 import { IconArrow, IconCheck } from "./icons.jsx";
 import { books, portfolioPage, services, testimonials } from "./data.js";
 
-const SITE = "https://ebookwriters.us";
-const OG_IMAGE = `${SITE}/assets/brand/portfolio-hero-bg.png`;
-
-function ensureMeta(selector, create) {
-  let node = document.querySelector(selector);
-  if (!node) {
-    node = create();
-    document.head.appendChild(node);
-  }
-  return node;
-}
-
-function setPageMeta({ title, description, path }) {
-  document.title = title;
-  ensureMeta("meta[name=\"description\"]", () => {
-    const el = document.createElement("meta");
-    el.setAttribute("name", "description");
-    return el;
-  }).setAttribute("content", description);
-  ensureMeta("link[rel=\"canonical\"]", () => {
-    const el = document.createElement("link");
-    el.setAttribute("rel", "canonical");
-    return el;
-  }).setAttribute("href", `${SITE}${path}`);
-
-  [
-    ["property", "og:title", title],
-    ["property", "og:description", description],
-    ["property", "og:url", `${SITE}${path}`],
-    ["property", "og:type", "website"],
-    ["property", "og:image", OG_IMAGE],
-    ["name", "twitter:title", title],
-    ["name", "twitter:description", description],
-    ["name", "twitter:image", OG_IMAGE],
-    ["name", "twitter:card", "summary_large_image"],
-  ].forEach(([attr, key, value]) => {
-    ensureMeta(`meta[${attr}="${key}"]`, () => {
-      const meta = document.createElement("meta");
-      meta.setAttribute(attr, key);
-      return meta;
-    }).setAttribute("content", value);
-  });
-}
-
 function PortfolioCarousel() {
   const [active, setActive] = useState(0);
   const reduceMotion =
@@ -128,37 +84,8 @@ export function PortfolioPage() {
   const page = portfolioPage;
 
   useEffect(() => {
-    setPageMeta({
-      title: page.metaTitle,
-      description: page.metaDescription,
-      path: "/portfolio",
-    });
-
-    const script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.id = "portfolio-jsonld";
-    script.text = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      name: page.metaTitle,
-      description: page.metaDescription,
-      url: `${SITE}/portfolio`,
-      isPartOf: { "@type": "WebSite", name: "ebookwriters.us", url: SITE },
-      mainEntity: {
-        "@type": "ItemList",
-        itemListElement: books.map((book, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          name: `${book.title} by ${book.author}`,
-          url: `${SITE}/portfolio`,
-        })),
-      },
-    });
-    document.getElementById("portfolio-jsonld")?.remove();
-    document.head.appendChild(script);
     window.scrollTo(0, 0);
-    return () => document.getElementById("portfolio-jsonld")?.remove();
-  }, [page]);
+  }, []);
 
   return (
     <div className="pf-page">

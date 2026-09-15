@@ -18447,3 +18447,110 @@ body {
     transform: none;
   }
 }
+
+/* Indexable content, legal, and service landers — reuse blog/pricing chrome */
+.content-page .blog-hero h1 {
+  max-width: 22ch;
+}
+
+.content-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1rem;
+  margin-top: 1.5rem;
+}
+
+.content-updated {
+  margin: 0.35rem 0 0;
+  color: var(--ink-400);
+  font-size: 0.88rem;
+}
+
+.content-body {
+  max-width: 46rem;
+  margin-inline: auto;
+  padding-block: 0 clamp(2.5rem, 5vw, 4rem);
+  padding-inline: var(--gutter);
+}
+
+.content-body .blog-section ul {
+  list-style: none;
+  margin: 0.25rem 0 1rem;
+  padding: 0;
+}
+
+.content-body .blog-section li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  margin-top: 0.45rem;
+}
+
+.content-body .blog-section li .tick {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.2rem;
+  color: var(--emerald-700);
+}
+
+.content-related-wrap {
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.content-related {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.content-related a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--emerald-800);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.content-related a:hover {
+  text-decoration: underline;
+}
+
+.content-related svg {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.content-svc {
+  padding-top: 0;
+}
+
+.content-svc .ed-svc-body h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.2rem;
+  color: var(--emerald-ink);
+}
+
+.content-price .ed-price-card h2 {
+  margin: 0 0 0.3rem;
+  color: #f7f3ea;
+  font-family: var(--display);
+  font-size: clamp(1.55rem, 2vw, 2rem);
+  font-weight: 500;
+}
+
+.content-price-note {
+  max-width: 40rem;
+  margin: 1.5rem 0 0;
+  color: rgba(247, 243, 234, 0.78);
+  line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+  .content-page .blog-hero h1 {
+    max-width: none;
+  }
+}
