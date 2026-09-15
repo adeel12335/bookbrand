@@ -27,6 +27,18 @@ function safeEqual(a, b) {
   return timingSafeEqual(left, right);
 }
 
+/**
+ * A deployment missing these cannot sign anybody in. Saying so is not a leak —
+ * the request already fails visibly either way — and it saves the operator
+ * hunting through function logs to find a blank environment variable.
+ */
+export function adminConfigError() {
+  const missing = [];
+  if (!process.env.ADMIN_PASSWORD) missing.push('ADMIN_PASSWORD');
+  if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 24) missing.push('SESSION_SECRET');
+  return missing.length ? missing : null;
+}
+
 export function checkPassword(candidate) {
   const expected = process.env.ADMIN_PASSWORD;
   if (!expected) throw new Error('ADMIN_PASSWORD is not set.');

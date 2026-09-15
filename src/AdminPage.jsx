@@ -47,7 +47,7 @@ async function api(path, options = {}) {
 
 /* ------------------------------------------------------------------- login */
 
-function SignIn({ onDone }) {
+function SignIn({ onDone, missing }) {
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -71,6 +71,13 @@ function SignIn({ onDone }) {
     <form className="adm-login" onSubmit={submit}>
       <h1>Studio admin</h1>
       <p>Sign in to write articles and read enquiries.</p>
+      {missing?.length ? (
+        <p className="adm-error" role="alert">
+          This deployment is missing {missing.join(' and ')}. Add{' '}
+          {missing.length > 1 ? 'them' : 'it'} to the environment variables and redeploy —
+          sign-in cannot work until then.
+        </p>
+      ) : null}
       <p className="adm-error" role="alert" hidden={!error}>{error}</p>
       <label className="adm-field">
         <span>Password</span>
@@ -344,6 +351,7 @@ function LeadList({ leads }) {
 
 export default function AdminPage() {
   const [state, setState] = useState('checking'); // checking | out | in
+  const [missingConfig, setMissingConfig] = useState(null);
   const [tab, setTab] = useState('posts');
   const [posts, setPosts] = useState([]);
   const [leads, setLeads] = useState([]);
@@ -373,7 +381,8 @@ export default function AdminPage() {
 
   useEffect(() => {
     api('/api/admin/session')
-      .then(({ signedIn }) => {
+      .then(({ signedIn, missing }) => {
+        setMissingConfig(missing || null);
         setState(signedIn ? 'in' : 'out');
         if (signedIn) refresh();
       })
@@ -419,7 +428,7 @@ export default function AdminPage() {
     return (
       <div className="adm">
         <div className="adm-shell">
-          <SignIn onDone={() => { setState('in'); refresh(); }} />
+          <SignIn missing={missingConfig} onDone={() => { setState('in'); refresh(); }} />
         </div>
       </div>
     );

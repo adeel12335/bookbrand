@@ -1,16 +1,29 @@
 import { json, methodNotAllowed, readJsonBody, str, guard, clientIp } from '../_lib/http.js';
 import { enforceLimit } from '../_lib/ratelimit.js';
-import { checkPassword, clearCookie, issueCookie, isAuthed } from '../_lib/auth.js';
+import { adminConfigError, checkPassword, clearCookie, issueCookie, isAuthed } from '../_lib/auth.js';
 
 async function session(req, res) {
   if (req.method === 'GET') {
-    return json(res, 200, { signedIn: isAuthed(req) });
+    const missing = adminConfigError();
+    return json(res, 200, { signedIn: missing ? false : isAuthed(req), configured: !missing, missing });
   }
 
   if (req.method === 'POST') {
     // The per-request delay below slows one attacker down; it does nothing
     // about twenty requests in flight at once. This does.
     if (!enforceLimit(req, res, `login:${clientIp(req)}`, { limit: 8, windowMs: 10 * 60 * 1000 })) {
+      return undefined;
+    }
+
+    const missing = adminConfigError();
+    if (missing) {
+      res.statusCode = 503;
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+      res.end(JSON.stringify({
+        error: `Admin sign-in is not configured on this deployment — ${missing.join(' and ')} `
+          + `${missing.length > 1 ? 'are' : 'is'} missing from the environment.`,
+        missing,
+      }));
       return undefined;
     }
 
