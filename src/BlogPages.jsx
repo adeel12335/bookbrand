@@ -11,64 +11,6 @@ import {
   headingId,
 } from './blogPosts.js';
 
-const SITE = 'https://ebookwriters.us';
-const FALLBACK_OG = `${SITE}/assets/brand/faq-editorial-v2.png`;
-
-function ensureMeta(selector, create) {
-  let node = document.querySelector(selector);
-  if (!node) {
-    node = create();
-    document.head.appendChild(node);
-  }
-  return node;
-}
-
-function setPageMeta({ title, description, path, type = 'article', image }) {
-  document.title = title;
-  const ogImage = image ? `${SITE}${image}` : FALLBACK_OG;
-
-  ensureMeta('meta[name="description"]', () => {
-    const el = document.createElement('meta');
-    el.setAttribute('name', 'description');
-    return el;
-  }).setAttribute('content', description);
-
-  ensureMeta('link[rel="canonical"]', () => {
-    const el = document.createElement('link');
-    el.setAttribute('rel', 'canonical');
-    return el;
-  }).setAttribute('href', `${SITE}${path}`);
-
-  const pairs = [
-    ['property', 'og:title', title],
-    ['property', 'og:description', description],
-    ['property', 'og:url', `${SITE}${path}`],
-    ['property', 'og:type', type],
-    ['property', 'og:image', ogImage],
-    ['name', 'twitter:title', title],
-    ['name', 'twitter:description', description],
-    ['name', 'twitter:image', ogImage],
-    ['name', 'twitter:card', 'summary_large_image'],
-  ];
-
-  pairs.forEach(([attr, key, value]) => {
-    ensureMeta(`meta[${attr}="${key}"]`, () => {
-      const meta = document.createElement('meta');
-      meta.setAttribute(attr, key);
-      return meta;
-    }).setAttribute('content', value);
-  });
-}
-
-function upsertJsonLd(id, data) {
-  document.getElementById(id)?.remove();
-  const script = document.createElement('script');
-  script.type = 'application/ld+json';
-  script.id = id;
-  script.text = JSON.stringify(data);
-  document.head.appendChild(script);
-}
-
 function BlogCard({ post, heading: Heading = 'h2' }) {
   return (
     <article className="blog-card">
@@ -100,48 +42,7 @@ function BlogCard({ post, heading: Heading = 'h2' }) {
 
 export function BlogIndexPage() {
   useEffect(() => {
-    setPageMeta({
-      title: blogIndex.metaTitle,
-      description: blogIndex.metaDescription,
-      path: '/blog',
-      type: 'website',
-    });
-
-    upsertJsonLd('blog-index-jsonld', {
-      '@context': 'https://schema.org',
-      '@type': 'Blog',
-      name: 'ebookwriters.us Blog',
-      description: blogIndex.metaDescription,
-      url: `${SITE}/blog`,
-      publisher: {
-        '@type': 'Organization',
-        name: 'ebookwriters.us',
-        url: SITE,
-      },
-      blogPost: blogPosts.map(post => ({
-        '@type': 'BlogPosting',
-        headline: post.title,
-        description: post.description,
-        datePublished: post.date,
-        url: `${SITE}/blog/${post.slug}`,
-        image: post.image ? `${SITE}${post.image}` : undefined,
-      })),
-    });
-
-    upsertJsonLd('blog-breadcrumb-jsonld', {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE}/blog` },
-      ],
-    });
-
     window.scrollTo(0, 0);
-    return () => {
-      document.getElementById('blog-index-jsonld')?.remove();
-      document.getElementById('blog-breadcrumb-jsonld')?.remove();
-    };
   }, []);
 
   return (
@@ -181,56 +82,8 @@ export function BlogPostPage() {
 
   useEffect(() => {
     if (!post) return undefined;
-    setPageMeta({
-      title: `${post.title} | ebookwriters.us`,
-      description: post.description,
-      path: `/blog/${post.slug}`,
-      type: 'article',
-      image: post.image,
-    });
-
-    upsertJsonLd('blog-article-jsonld', {
-      '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: post.title,
-      description: post.description,
-      datePublished: post.date,
-      dateModified: post.date,
-      image: post.image ? `${SITE}${post.image}` : FALLBACK_OG,
-      author: { '@type': 'Organization', name: 'ebookwriters.us', url: SITE },
-      publisher: {
-        '@type': 'Organization',
-        name: 'ebookwriters.us',
-        url: SITE,
-        logo: {
-          '@type': 'ImageObject',
-          url: `${SITE}/assets/brand/logo-dark.png`,
-        },
-      },
-      mainEntityOfPage: `${SITE}/blog/${post.slug}`,
-      keywords: post.keywords?.join(', '),
-    });
-
-    upsertJsonLd('blog-breadcrumb-jsonld', {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE}/blog` },
-        {
-          '@type': 'ListItem',
-          position: 3,
-          name: post.title,
-          item: `${SITE}/blog/${post.slug}`,
-        },
-      ],
-    });
-
     window.scrollTo(0, 0);
-    return () => {
-      document.getElementById('blog-article-jsonld')?.remove();
-      document.getElementById('blog-breadcrumb-jsonld')?.remove();
-    };
+    return undefined;
   }, [post]);
 
   if (!post) return <Navigate to="/blog" replace />;

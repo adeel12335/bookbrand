@@ -20,6 +20,18 @@ import {
 } from './data.js';
 import { BlogIndexPage, BlogPostPage } from './BlogPages.jsx';
 import { PortfolioPage } from './PortfolioPage.jsx';
+import {
+  AboutPage,
+  GhostwritingPage,
+  HireWriterPage,
+  KdpPage,
+  NotFoundPage,
+  PricingPage,
+  PrivacyPage,
+  ServicesPage,
+  TermsPage,
+} from './ContentPages.jsx';
+import { SeoHead } from './SeoHead.jsx';
 import './fonts.css';
 import './styles.css';
 
@@ -169,7 +181,11 @@ function Header() {
             {navigation.map(item => {
               const href = onHome ? item.href : navHref(item.href);
               const isRoute = href.startsWith('/') && !href.startsWith('/#');
-              const isCurrent = isRoute && location.pathname.startsWith(href);
+              const prefixes = item.match || [href];
+              const isCurrent = isRoute && prefixes.some(prefix => (
+                location.pathname === prefix
+                || (prefix !== '/' && location.pathname.startsWith(`${prefix}/`))
+              ));
               return (
                 <li key={item.href}>
                   {isRoute ? (
@@ -381,13 +397,13 @@ function Services() {
                   <h3>{service.title}</h3>
                   <p>{service.copy}</p>
                 </div>
-                <a
+                <Link
                   className="ed-svc-orb"
-                  href="/contact"
-                  aria-label={`Inquire about ${service.title}`}
+                  to={service.href || '/contact'}
+                  aria-label={`Learn more about ${service.title}`}
                 >
                   <IconArrow aria-hidden="true" />
-                </a>
+                </Link>
               </Reveal>
             );
           })}
@@ -1146,13 +1162,23 @@ function MobileBar() {
 function App() {
   return (
     <BrowserRouter>
+      <SeoHead />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/blog" element={<BlogShell><BlogIndexPage /></BlogShell>} />
         <Route path="/blog/:slug" element={<BlogShell><BlogPostPage /></BlogShell>} />
         <Route path="/portfolio" element={<BlogShell><PortfolioPage /></BlogShell>} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/about" element={<BlogShell><AboutPage /></BlogShell>} />
+        <Route path="/pricing" element={<BlogShell><PricingPage /></BlogShell>} />
+        <Route path="/services" element={<BlogShell><ServicesPage /></BlogShell>} />
+        <Route path="/ebook-ghostwriting-services" element={<BlogShell><GhostwritingPage /></BlogShell>} />
+        <Route path="/ghostwriting" element={<Navigate to="/ebook-ghostwriting-services" replace />} />
+        <Route path="/hire-ebook-writer" element={<BlogShell><HireWriterPage /></BlogShell>} />
+        <Route path="/amazon-kdp-ebook-writing" element={<BlogShell><KdpPage /></BlogShell>} />
+        <Route path="/privacy" element={<BlogShell><PrivacyPage /></BlogShell>} />
+        <Route path="/terms" element={<BlogShell><TermsPage /></BlogShell>} />
+        <Route path="*" element={<BlogShell><NotFoundPage /></BlogShell>} />
       </Routes>
     </BrowserRouter>
   );
@@ -1180,16 +1206,6 @@ function ContactPage() {
   }, [planFromUrl]);
 
   useEffect(() => {
-    document.title = 'Contact — Book Writing Quote | ebookwriters.us';
-    const desc = document.querySelector('meta[name="description"]');
-    if (desc) {
-      desc.setAttribute(
-        'content',
-        'Contact ebookwriters.us for a fixed ebook writing or ghostwriting quote. Email info@ebookwriterusa.com or call +1 712-414-0542. Tennessee, USA.',
-      );
-    }
-    const canonical = document.querySelector('link[rel="canonical"]');
-    if (canonical) canonical.setAttribute('href', 'https://ebookwriters.us/contact');
     window.scrollTo(0, 0);
   }, []);
 
@@ -1209,19 +1225,6 @@ function ContactPage() {
 function HomePage() {
   const [selectedPlan, setSelectedPlan] = useState('');
   const progressRef = useRef(null);
-
-  useEffect(() => {
-    document.title = 'Ebook Writers & Ghostwriting Services | ebookwriters.us';
-    const desc = document.querySelector('meta[name="description"]');
-    if (desc) {
-      desc.setAttribute(
-        'content',
-        'Hire professional ebook writers and ghostwriters for writing, editing, cover design, formatting, and KDP publishing. Fixed packages from $699. 100% author ownership.',
-      );
-    }
-    const canonical = document.querySelector('link[rel="canonical"]');
-    if (canonical) canonical.setAttribute('href', 'https://ebookwriters.us/');
-  }, []);
 
   useEffect(() => {
     const bar = progressRef.current;

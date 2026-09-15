@@ -1,5 +1,17 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+  "trailingSlash": false,
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "ebookwriters.us" }],
+      "destination": "https://www.ebookwriters.us/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/ghostwriting",
+      "destination": "/ebook-ghostwriting-services",
+      "permanent": true
+    }
   ]
 }
