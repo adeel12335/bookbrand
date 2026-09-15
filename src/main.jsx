@@ -1,5 +1,6 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useSearchParams } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
@@ -15,7 +16,9 @@ import {
   services, testimonials, testimonialsIntro, hero,
   siteContact,
   portfolioIntro, servicesIntro, benefits, pathBand, dualOffer,
+  pricingIntro, faqIntro, contactIntro, footerBrand,
 } from './data.js';
+import { BlogIndexPage, BlogPostPage } from './BlogPages.jsx';
 import './fonts.css';
 import './styles.css';
 
@@ -77,7 +80,7 @@ function useMagnetic(strength = 0.28) {
   return ref;
 }
 
-function Cta({ href = '#contact', variant = 'solid', className = '', children, onClick }) {
+function Cta({ href = '/contact', variant = 'solid', className = '', children, onClick }) {
   const ref = useMagnetic(variant === 'solid' ? 0.24 : 0.16);
   return (
     <a ref={ref} className={`cta cta-${variant} ${className}`.trim()} href={href} onClick={onClick}>
@@ -98,24 +101,31 @@ function Eyebrow({ children, tone }) {
 
 function Wordmark({ light = false, className = '' }) {
   return (
-    <a className={`wordmark ${className}`.trim()} href="#top" aria-label="ebookwriters.us — home">
+    <Link className={`wordmark ${className}`.trim()} to="/" aria-label="ebookwriters.us — home">
       <img
         src={light ? '/assets/brand/logo-light.png' : '/assets/brand/logo-dark.png'}
         alt="ebookwriters.us — Write. Publish. Grow."
         width="970"
         height="189"
       />
-    </a>
+    </Link>
   );
 }
 
 /* ------------------------------------------------------------------- header */
+
+function navHref(href) {
+  if (href.startsWith('#')) return `/${href}`;
+  return href;
+}
 
 function Header() {
   const [open, setOpen] = useState(false);
   const [stuck, setStuck] = useState(false);
   const [active, setActive] = useState('');
   const toggleRef = useRef(null);
+  const location = useLocation();
+  const onHome = location.pathname === '/';
 
   useEffect(() => {
     const onScroll = () => setStuck(window.scrollY > 30);
@@ -129,7 +139,7 @@ function Header() {
       window.removeEventListener('scroll', onScroll);
       io.disconnect();
     };
-  }, []);
+  }, [location.pathname]);
 
   useEffect(() => {
     document.body.classList.toggle('nav-open', open);
@@ -155,21 +165,31 @@ function Header() {
         <Wordmark light />
         <nav id="primary-nav" className="primary-nav" aria-label="Primary">
           <ul>
-            {navigation.map(item => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  aria-current={active === item.href ? 'true' : undefined}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
+            {navigation.map(item => {
+              const href = onHome ? item.href : navHref(item.href);
+              const isRoute = href.startsWith('/') && !href.startsWith('/#');
+              return (
+                <li key={item.href}>
+                  {isRoute ? (
+                    <Link to={href} onClick={() => setOpen(false)}>
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={href}
+                      onClick={() => setOpen(false)}
+                      aria-current={onHome && active === item.href ? 'true' : undefined}
+                    >
+                      {item.label}
+                    </a>
+                  )}
+                </li>
+              );
+            })}
           </ul>
-          <a className="nav-cta" href="#contact" onClick={() => setOpen(false)}>
+          <Link className="nav-cta" to="/contact" onClick={() => setOpen(false)}>
             Start Your Project
-          </a>
+          </Link>
         </nav>
         <button
           ref={toggleRef}
@@ -194,25 +214,24 @@ function Hero() {
 
   return (
     <section className="hx" id="top" ref={rootRef} aria-labelledby="hero-title">
+      <h1 id="hero-title" className="sr-only">{hero.h1}</h1>
+      <p className="sr-only">{hero.lead}</p>
+
       {/* Desktop: pixel-matched to the approved concept art */}
       <div className="hx-exact">
         <img
           src="/assets/brand/hero-v2-exact.png"
-          alt=""
+          alt={hero.imageAlt}
           width="1586"
           height="888"
           fetchPriority="high"
           decoding="async"
         />
-        <h1 id="hero-title" className="sr-only">
-          Turn Your Ideas Into a Published Book.
-        </h1>
-        <p className="sr-only">{hero.lead}</p>
-        <a className="hx-exact-hit hx-exact-hit--cta" href="#contact">
-          Start Your Project
+        <a className="hx-exact-hit hx-exact-hit--cta" href="/contact">
+          {hero.cta}
         </a>
         <a className="hx-exact-hit hx-exact-hit--link" href={hero.link.href}>
-          Explore our services
+          {hero.link.label}
         </a>
       </div>
 
@@ -220,17 +239,13 @@ function Hero() {
       <div className="hx-exact-mob">
         <img
           src="/assets/brand/hero-mobile-exact.png"
-          alt=""
+          alt={hero.imageAlt}
           width="576"
           height="1024"
           fetchPriority="high"
           decoding="async"
         />
-        <h2 id="hero-title-live" className="sr-only">
-          Turn Your Ideas Into a Published Book.
-        </h2>
-        <p className="sr-only">{hero.leadMobile}</p>
-        <a className="hx-exact-mob-hit hx-exact-mob-hit--cta" href="#contact">
+        <a className="hx-exact-mob-hit hx-exact-mob-hit--cta" href="/contact">
           {hero.cta}
         </a>
         <a className="hx-exact-mob-hit hx-exact-mob-hit--link" href={hero.link.href}>
@@ -291,7 +306,7 @@ function PathBand() {
             <em>{pathBand.titleEm}</em>
           </h2>
           <p>{pathBand.lead}</p>
-          <a className="ed-path-cta" href="#contact">
+          <a className="ed-path-cta" href="/contact">
             <span>{pathBand.cta}</span>
             <span className="ed-path-cta-orb" aria-hidden="true"><IconArrow /></span>
           </a>
@@ -362,7 +377,7 @@ function Services() {
                 </div>
                 <a
                   className="ed-svc-orb"
-                  href="#contact"
+                  href="/contact"
                   aria-label={`Inquire about ${service.title}`}
                 >
                   <IconArrow aria-hidden="true" />
@@ -498,7 +513,7 @@ function Portfolio() {
                     <span className="ed-folio-book-spine" aria-hidden="true" />
                     <img
                       src={book.cover}
-                      alt=""
+                      alt={`${book.title} by ${book.author} — ${book.genre} book cover`}
                       width="320"
                       height="480"
                       loading={abs <= 1 ? 'eager' : 'lazy'}
@@ -540,7 +555,7 @@ function Portfolio() {
                     <IconArrow aria-hidden="true" />
                   </button>
                 </div>
-                <a href="#contact">
+                <a href="/contact">
                   Start a similar project
                   <IconArrow aria-hidden="true" />
                 </a>
@@ -590,7 +605,7 @@ function DualOffer() {
       <div className="ed-duo-stage" aria-hidden="true">
         <img
           src={stage.image}
-          alt=""
+          alt={stage.imageAlt}
           width="1600"
           height="1068"
           loading="lazy"
@@ -676,15 +691,12 @@ function Pricing({ onSelect }) {
       <div className="shell">
         <Reveal className="ed-price-head">
           <div>
-            <Eyebrow>Investment</Eyebrow>
+            <Eyebrow>{pricingIntro.eyebrow}</Eyebrow>
             <h2 id="pricing-title">
-              One price. <em>Agreed up front.</em>
+              {pricingIntro.title} <em>{pricingIntro.titleEm}</em>
             </h2>
           </div>
-          <p>
-            Writing, editing, cover, and files included. No surprise invoices —
-            choose the chapter that matches your manuscript.
-          </p>
+          <p>{pricingIntro.lead}</p>
         </Reveal>
         <div className="ed-price-sheet" aria-label="Publishing packages">
           {plans.map((plan, i) => (
@@ -707,7 +719,7 @@ function Pricing({ onSelect }) {
                   <li key={feature}><IconCheck className="tick" aria-hidden="true" />{feature}</li>
                 ))}
               </ul>
-              <a className="ed-price-cta" href="#contact" onClick={() => onSelect(plan.name)}>
+              <a className="ed-price-cta" href={`/contact?plan=${encodeURIComponent(plan.name)}`}>
                 <span>{plan.featured ? 'Get started' : `Choose ${plan.name}`}</span>
                 <IconArrow aria-hidden="true" />
               </a>
@@ -827,18 +839,15 @@ function Faq() {
       <div className="shell ed-faq-shell">
         <Reveal className="ed-faq-copy">
           <p className="ed-faq-volume" aria-hidden="true">Vol. VI · Answers</p>
-          <Eyebrow>Frequently asked questions</Eyebrow>
+          <Eyebrow>{faqIntro.eyebrow}</Eyebrow>
           <h2 id="faq-title">
-            Straight answers for
+            {faqIntro.title}
             <br />
-            <em>your next chapter.</em>
+            <em>{faqIntro.titleEm}</em>
           </h2>
-          <p>
-            The quiet objections authors ask before they begin. Open any row — or let the
-            index turn the page for you.
-          </p>
-          <a className="ed-faq-cta" href="#contact">
-            Still unsure? Ask us directly
+          <p>{faqIntro.lead}</p>
+          <a className="ed-faq-cta" href="/contact">
+            {faqIntro.cta}
             <IconArrow aria-hidden="true" />
           </a>
         </Reveal>
@@ -864,10 +873,11 @@ function Faq() {
 
 /* ------------------------------------------------------------------ contact */
 
-function Contact({ selectedPlan, onSelect }) {
+function Contact({ selectedPlan, onSelect, asPage = false }) {
   const [brief, setBrief] = useState(null);
   const [copied, setCopied] = useState('');
   const resultRef = useRef(null);
+  const TitleTag = asPage ? 'h1' : 'h2';
 
   useEffect(() => { if (brief) resultRef.current?.focus(); }, [brief]);
 
@@ -906,34 +916,32 @@ function Contact({ selectedPlan, onSelect }) {
   }
 
   return (
-    <section className="section contact ct" id="contact" aria-labelledby="contact-title">
+    <section className={`section contact ct${asPage ? ' ct--page' : ''}`} id="contact" aria-labelledby="contact-title">
       <div className="ct-shell">
         <Reveal className="ct-aside">
           <img
             className="ct-photo"
             src="/assets/brand/contact-consultation-v2.png"
-            alt=""
-            loading="lazy"
+            alt={contactIntro.photoAlt}
+            loading={asPage ? 'eager' : 'lazy'}
           />
           <div className="ct-aside-copy">
-            <Eyebrow tone="light">Let’s bring your story to life</Eyebrow>
-            <h2 id="contact-title">
-              Every great book
+            <Eyebrow tone="light">{contactIntro.eyebrow}</Eyebrow>
+            <TitleTag id="contact-title">
+              {contactIntro.title}
               <br />
-              <em>starts with a conversation.</em>
-            </h2>
-            <p>
-              Tell us what you want to write and who it is for. You will hear back within one
-              working day with a clear answer on scope, price and timing.
-            </p>
+              <em>{contactIntro.titleEm}</em>
+            </TitleTag>
+            <p>{contactIntro.lead}</p>
             <ul className="ct-points">
-              <li><IconCheck className="tick" />Free 30-minute discovery call</li>
-              <li><IconCheck className="tick" />NDA before you share anything</li>
-              <li><IconCheck className="tick" />Fixed quote, no hourly billing</li>
+              {contactIntro.points.map(point => (
+                <li key={point}><IconCheck className="tick" />{point}</li>
+              ))}
             </ul>
             <div className="ct-direct">
               <a href={`mailto:${siteContact.email}`}><IconMail /> {siteContact.email}</a>
               <a href={siteContact.phoneHref}><IconPhone /> {siteContact.phone}</a>
+              <p className="ct-address">{siteContact.address}</p>
             </div>
           </div>
         </Reveal>
@@ -1009,13 +1017,11 @@ function Footer() {
         <div className="footer-top">
           <div className="footer-brand">
             <Wordmark light />
-            <p>
-              A small publishing studio for people with something worth saying. We write, edit,
-              design and publish books that earn their place on a shelf.
-            </p>
+            <p>{footerBrand.blurb}</p>
             <div className="footer-contact">
               <a href={`mailto:${siteContact.email}`}><IconMail /> {siteContact.email}</a>
               <a href={siteContact.phoneHref}><IconPhone /> {siteContact.phone}</a>
+              <p className="footer-address">{siteContact.address}</p>
             </div>
           </div>
           {footerLinks.map(column => (
@@ -1023,15 +1029,21 @@ function Footer() {
               <h3>{column.title}</h3>
               <ul>
                 {column.links.map(link => (
-                  <li key={link.label}><a href={link.href}>{link.label}</a></li>
+                  <li key={link.label}>
+                    {link.href.startsWith('/') && !link.href.startsWith('/#') ? (
+                      <Link to={link.href}>{link.label}</Link>
+                    ) : (
+                      <a href={link.href}>{link.label}</a>
+                    )}
+                  </li>
                 ))}
               </ul>
             </nav>
           ))}
           <div className="footer-col footer-cta">
-            <h3>Start something</h3>
-            <p>Your first chapter is one conversation away.</p>
-            <Cta variant="gold">Start Your Project</Cta>
+            <h3>{footerBrand.ctaTitle}</h3>
+            <p>{footerBrand.ctaCopy}</p>
+            <Cta variant="gold">{footerBrand.ctaLabel}</Cta>
           </div>
         </div>
         <div className="footer-bottom">
@@ -1111,7 +1123,7 @@ function MobileBar() {
         <strong>From $699</strong>
         <span>Fixed fee, 100% royalties yours</span>
       </p>
-      <a className="mobile-bar-cta" href="#contact" tabIndex={hidden ? -1 : 0}>
+      <a className="mobile-bar-cta" href="/contact" tabIndex={hidden ? -1 : 0}>
         Start Your Project
       </a>
     </div>
@@ -1119,8 +1131,71 @@ function MobileBar() {
 }
 
 function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/blog" element={<BlogIndexPage />} />
+        <Route path="/blog/:slug" element={<BlogPostPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+function ContactPage() {
+  const [searchParams] = useSearchParams();
+  const planFromUrl = searchParams.get('plan') || '';
+  const [selectedPlan, setSelectedPlan] = useState(planFromUrl);
+
+  useEffect(() => {
+    setSelectedPlan(planFromUrl);
+  }, [planFromUrl]);
+
+  useEffect(() => {
+    document.title = 'Contact — Book Writing Quote | ebookwriters.us';
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc) {
+      desc.setAttribute(
+        'content',
+        'Contact ebookwriters.us for a fixed ebook writing or ghostwriting quote. Email info@ebookwriterusa.com or call +1 712-414-0542. Tennessee, USA.',
+      );
+    }
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', 'https://ebookwriters.us/contact');
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <div className="contact-page">
+      <a className="skip-link" href="#contact">Skip to content</a>
+      <div className="grain" aria-hidden="true" />
+      <Header />
+      <main id="main">
+        <Contact selectedPlan={selectedPlan} onSelect={setSelectedPlan} asPage />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+function HomePage() {
   const [selectedPlan, setSelectedPlan] = useState('');
   const progressRef = useRef(null);
+
+  useEffect(() => {
+    document.title = 'Ebook Writers & Ghostwriting Services | ebookwriters.us';
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc) {
+      desc.setAttribute(
+        'content',
+        'Hire professional ebook writers and ghostwriters for writing, editing, cover design, formatting, and KDP publishing. Fixed packages from $699. 100% author ownership.',
+      );
+    }
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', 'https://ebookwriters.us/');
+  }, []);
 
   useEffect(() => {
     const bar = progressRef.current;
