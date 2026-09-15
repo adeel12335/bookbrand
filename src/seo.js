@@ -407,6 +407,18 @@ const staticPages = [
       ]),
     ],
   }),
+  // The admin panel is a real prerendered file rather than a rewrite: with
+  // cleanUrls on, a rewrite to /index.html never resolved and /admin 404ed.
+  // A file also lets the served HTML carry its own noindex instead of the
+  // home page's meta.
+  page({
+    path: '/admin',
+    title: 'Studio admin — ebookwriters.us',
+    description: 'Private studio tools.',
+    robots: 'noindex, nofollow',
+    sitemap: false,
+    jsonLd: [],
+  }),
 ];
 
 function blogPostPage(post) {
