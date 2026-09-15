@@ -168,10 +168,15 @@ function Header() {
             {navigation.map(item => {
               const href = onHome ? item.href : navHref(item.href);
               const isRoute = href.startsWith('/') && !href.startsWith('/#');
+              const isCurrent = isRoute && location.pathname.startsWith(href);
               return (
                 <li key={item.href}>
                   {isRoute ? (
-                    <Link to={href} onClick={() => setOpen(false)}>
+                    <Link
+                      to={href}
+                      onClick={() => setOpen(false)}
+                      aria-current={isCurrent ? 'page' : undefined}
+                    >
                       {item.label}
                     </Link>
                   ) : (
@@ -1011,6 +1016,9 @@ function Contact({ selectedPlan, onSelect, asPage = false }) {
 /* ------------------------------------------------------------------- footer */
 
 function Footer() {
+  const location = useLocation();
+  const onHome = location.pathname === '/';
+
   return (
     <footer className="footer">
       <div className="shell">
@@ -1028,15 +1036,19 @@ function Footer() {
             <nav className="footer-col" key={column.title} aria-label={column.title}>
               <h3>{column.title}</h3>
               <ul>
-                {column.links.map(link => (
-                  <li key={link.label}>
-                    {link.href.startsWith('/') && !link.href.startsWith('/#') ? (
-                      <Link to={link.href}>{link.label}</Link>
-                    ) : (
-                      <a href={link.href}>{link.label}</a>
-                    )}
-                  </li>
-                ))}
+                {column.links.map(link => {
+                  const href = link.href.startsWith('#') && !onHome ? navHref(link.href) : link.href;
+                  const isRoute = href.startsWith('/') && !href.startsWith('/#');
+                  return (
+                    <li key={link.label}>
+                      {isRoute ? (
+                        <Link to={href}>{link.label}</Link>
+                      ) : (
+                        <a href={href}>{link.label}</a>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </nav>
           ))}
@@ -1049,7 +1061,7 @@ function Footer() {
         <div className="footer-bottom">
           <p>&copy; {new Date().getFullYear()} ebookwriters.us. All rights reserved.</p>
           <p className="footer-tag">Write &middot; Publish &middot; Grow</p>
-          <a className="footer-top-link" href="#top">Back to top <IconArrowUpRight /></a>
+          <a className="footer-top-link" href={onHome ? '#top' : '/'}>Back to top <IconArrowUpRight /></a>
         </div>
       </div>
     </footer>
@@ -1135,12 +1147,24 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/blog" element={<BlogIndexPage />} />
-        <Route path="/blog/:slug" element={<BlogPostPage />} />
+        <Route path="/blog" element={<BlogShell><BlogIndexPage /></BlogShell>} />
+        <Route path="/blog/:slug" element={<BlogShell><BlogPostPage /></BlogShell>} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
+  );
+}
+
+function BlogShell({ children }) {
+  return (
+    <div className="blog-shell">
+      <a className="skip-link" href="#main">Skip to content</a>
+      <div className="grain" aria-hidden="true" />
+      <Header />
+      <main id="main">{children}</main>
+      <Footer />
+    </div>
   );
 }
 

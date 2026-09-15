@@ -1,115 +1,120 @@
 import React, { useEffect } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { IconArrow, IconArrowUpRight, IconMail, IconPhone } from './icons.jsx';
+import { IconArrow } from './icons.jsx';
 import { blogIndex, blogPosts, getPostBySlug } from './blogPosts.js';
-import { siteContact, footerBrand } from './data.js';
 
 const SITE = 'https://ebookwriters.us';
+const OG_IMAGE = `${SITE}/assets/brand/hero-desk.jpg`;
+
+function ensureMeta(selector, create) {
+  let node = document.querySelector(selector);
+  if (!node) {
+    node = create();
+    document.head.appendChild(node);
+  }
+  return node;
+}
 
 function setPageMeta({ title, description, path, type = 'article' }) {
   document.title = title;
 
-  const ensure = (selector, create) => {
-    let node = document.querySelector(selector);
-    if (!node) {
-      node = create();
-      document.head.appendChild(node);
-    }
-    return node;
-  };
-
-  const desc = ensure('meta[name="description"]', () => {
+  ensureMeta('meta[name="description"]', () => {
     const el = document.createElement('meta');
     el.setAttribute('name', 'description');
     return el;
-  });
-  desc.setAttribute('content', description);
+  }).setAttribute('content', description);
 
-  const canonical = ensure('link[rel="canonical"]', () => {
+  ensureMeta('link[rel="canonical"]', () => {
     const el = document.createElement('link');
     el.setAttribute('rel', 'canonical');
     return el;
-  });
-  canonical.setAttribute('href', `${SITE}${path}`);
+  }).setAttribute('href', `${SITE}${path}`);
 
   const pairs = [
     ['property', 'og:title', title],
     ['property', 'og:description', description],
     ['property', 'og:url', `${SITE}${path}`],
     ['property', 'og:type', type],
+    ['property', 'og:image', OG_IMAGE],
     ['name', 'twitter:title', title],
     ['name', 'twitter:description', description],
+    ['name', 'twitter:image', OG_IMAGE],
+    ['name', 'twitter:card', 'summary_large_image'],
   ];
 
   pairs.forEach(([attr, key, value]) => {
-    const el = ensure(`meta[${attr}="${key}"]`, () => {
+    ensureMeta(`meta[${attr}="${key}"]`, () => {
       const meta = document.createElement('meta');
       meta.setAttribute(attr, key);
       return meta;
-    });
-    el.setAttribute('content', value);
+    }).setAttribute('content', value);
   });
 }
 
-function BlogChrome({ children }) {
-  return (
-    <div className="blog-page">
-      <a className="skip-link" href="#blog-main">Skip to content</a>
-      <header className="blog-top">
-        <div className="shell blog-top-inner">
-          <Link className="wordmark" to="/" aria-label="ebookwriters.us — home">
-            <img
-              src="/assets/brand/logo-dark.png"
-              alt="ebookwriters.us — Write. Publish. Grow."
-              width="970"
-              height="189"
-            />
-          </Link>
-          <nav className="blog-top-nav" aria-label="Blog">
-            <Link to="/">Home</Link>
-            <Link to="/blog">Blog</Link>
-            <Link className="blog-top-cta" to="/contact">Start Your Project</Link>
-          </nav>
-        </div>
-      </header>
-      <main id="blog-main">{children}</main>
-      <footer className="blog-foot">
-        <div className="shell blog-foot-inner">
-          <div>
-            <p className="blog-foot-brand">ebookwriters.us</p>
-            <p>{footerBrand.blurb}</p>
-          </div>
-          <div className="blog-foot-contact">
-            <a href={`mailto:${siteContact.email}`}><IconMail /> {siteContact.email}</a>
-            <a href={siteContact.phoneHref}><IconPhone /> {siteContact.phone}</a>
-            <p>{siteContact.address}</p>
-          </div>
-          <Link className="blog-foot-home" to="/">
-            Back to home <IconArrowUpRight />
-          </Link>
-        </div>
-      </footer>
-    </div>
-  );
+function upsertJsonLd(id, data) {
+  document.getElementById(id)?.remove();
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.id = id;
+  script.text = JSON.stringify(data);
+  document.head.appendChild(script);
+}
+
+function relatedPosts(post, limit = 3) {
+  return blogPosts.filter(p => p.slug !== post.slug).slice(0, limit);
 }
 
 export function BlogIndexPage() {
   useEffect(() => {
     setPageMeta({
-      title: 'Blog — Ebook Writing & Publishing Guides | ebookwriters.us',
-      description: blogIndex.lead,
+      title: blogIndex.metaTitle,
+      description: blogIndex.metaDescription,
       path: '/blog',
       type: 'website',
     });
+
+    upsertJsonLd('blog-index-jsonld', {
+      '@context': 'https://schema.org',
+      '@type': 'Blog',
+      name: 'ebookwriters.us Blog',
+      description: blogIndex.metaDescription,
+      url: `${SITE}/blog`,
+      publisher: {
+        '@type': 'Organization',
+        name: 'ebookwriters.us',
+        url: SITE,
+      },
+      blogPost: blogPosts.map(post => ({
+        '@type': 'BlogPosting',
+        headline: post.title,
+        description: post.description,
+        datePublished: post.date,
+        url: `${SITE}/blog/${post.slug}`,
+      })),
+    });
+
+    upsertJsonLd('blog-breadcrumb-jsonld', {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE}/blog` },
+      ],
+    });
+
     window.scrollTo(0, 0);
+    return () => {
+      document.getElementById('blog-index-jsonld')?.remove();
+      document.getElementById('blog-breadcrumb-jsonld')?.remove();
+    };
   }, []);
 
   return (
-    <BlogChrome>
-      <section className="blog-hero">
+    <div className="blog-page">
+      <section className="blog-hero" aria-labelledby="blog-index-title">
         <div className="shell">
           <p className="eyebrow"><span>Blog</span><i aria-hidden="true" /></p>
-          <h1>
+          <h1 id="blog-index-title">
             {blogIndex.title}
             <br />
             <em>{blogIndex.titleEm}</em>
@@ -118,9 +123,9 @@ export function BlogIndexPage() {
         </div>
       </section>
 
-      <section className="blog-list-section">
+      <section className="blog-list-section" aria-label="All articles">
         <div className="shell">
-          <ul className="blog-list">
+          <ul className="blog-grid">
             {blogPosts.map(post => (
               <li key={post.slug}>
                 <article className="blog-card">
@@ -128,29 +133,31 @@ export function BlogIndexPage() {
                     <span>{post.category}</span>
                     <span aria-hidden="true">·</span>
                     <time dateTime={post.date}>{post.dateLabel}</time>
-                    <span aria-hidden="true">·</span>
-                    <span>{post.readTime}</span>
                   </p>
                   <h2>
                     <Link to={`/blog/${post.slug}`}>{post.title}</Link>
                   </h2>
                   <p>{post.description}</p>
-                  <Link className="blog-card-link" to={`/blog/${post.slug}`}>
-                    Read article <IconArrow aria-hidden="true" />
-                  </Link>
+                  <div className="blog-card-foot">
+                    <span>{post.readTime}</span>
+                    <Link className="blog-card-link" to={`/blog/${post.slug}`}>
+                      Read article <IconArrow aria-hidden="true" />
+                    </Link>
+                  </div>
                 </article>
               </li>
             ))}
           </ul>
         </div>
       </section>
-    </BlogChrome>
+    </div>
   );
 }
 
 export function BlogPostPage() {
   const { slug } = useParams();
   const post = getPostBySlug(slug);
+  const related = post ? relatedPosts(post) : [];
 
   useEffect(() => {
     if (!post) return undefined;
@@ -161,40 +168,64 @@ export function BlogPostPage() {
       type: 'article',
     });
 
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.id = 'blog-article-jsonld';
-    script.text = JSON.stringify({
+    upsertJsonLd('blog-article-jsonld', {
       '@context': 'https://schema.org',
       '@type': 'Article',
       headline: post.title,
       description: post.description,
       datePublished: post.date,
       dateModified: post.date,
-      author: { '@type': 'Organization', name: 'ebookwriters.us' },
+      image: OG_IMAGE,
+      author: { '@type': 'Organization', name: 'ebookwriters.us', url: SITE },
       publisher: {
         '@type': 'Organization',
         name: 'ebookwriters.us',
         url: SITE,
+        logo: {
+          '@type': 'ImageObject',
+          url: `${SITE}/assets/brand/logo-dark.png`,
+        },
       },
       mainEntityOfPage: `${SITE}/blog/${post.slug}`,
+      keywords: post.keywords?.join(', '),
     });
-    document.getElementById('blog-article-jsonld')?.remove();
-    document.head.appendChild(script);
-    window.scrollTo(0, 0);
 
+    upsertJsonLd('blog-breadcrumb-jsonld', {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE}/blog` },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: post.title,
+          item: `${SITE}/blog/${post.slug}`,
+        },
+      ],
+    });
+
+    window.scrollTo(0, 0);
     return () => {
       document.getElementById('blog-article-jsonld')?.remove();
+      document.getElementById('blog-breadcrumb-jsonld')?.remove();
     };
   }, [post]);
 
   if (!post) return <Navigate to="/blog" replace />;
 
   return (
-    <BlogChrome>
+    <div className="blog-page">
       <article className="blog-article">
         <header className="blog-article-head">
           <div className="shell blog-article-head-inner">
+            <nav className="blog-crumbs" aria-label="Breadcrumb">
+              <Link to="/">Home</Link>
+              <span aria-hidden="true">/</span>
+              <Link to="/blog">Blog</Link>
+              <span aria-hidden="true">/</span>
+              <span aria-current="page">{post.category}</span>
+            </nav>
             <p className="eyebrow"><span>{post.eyebrow}</span><i aria-hidden="true" /></p>
             <h1>{post.title}</h1>
             <p className="blog-article-lead">{post.lead}</p>
@@ -237,11 +268,27 @@ export function BlogPostPage() {
             </Link>
           </aside>
 
+          {related.length ? (
+            <section className="blog-related" aria-labelledby="related-title">
+              <h2 id="related-title">Related guides</h2>
+              <ul className="blog-related-grid">
+                {related.map(item => (
+                  <li key={item.slug}>
+                    <Link to={`/blog/${item.slug}`}>
+                      <span className="blog-related-cat">{item.category}</span>
+                      <strong>{item.title}</strong>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+
           <p className="blog-back">
             <Link to="/blog"><IconArrow className="blog-back-arrow" /> All articles</Link>
           </p>
         </div>
       </article>
-    </BlogChrome>
+    </div>
   );
 }

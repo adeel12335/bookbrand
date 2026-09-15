@@ -1,10 +1,13 @@
 /** Blog posts — add one at a time. Newest first in the index. */
 
 export const blogIndex = {
-  title: 'Publishing insights',
-  titleEm: 'from the studio.',
+  title: 'Ebook writing & publishing',
+  titleEm: 'guides.',
   lead:
-    'Practical guides on ebook writing, ghostwriting, pricing, and KDP publishing — written for authors who want clear answers before they start.',
+    'Practical guides on ebook writing, ghostwriting costs, timelines, and KDP publishing — written for authors who want clear answers before they hire a writer.',
+  metaTitle: 'Ebook Writing & Ghostwriting Blog | ebookwriters.us',
+  metaDescription:
+    'Guides on hiring ebook writers, ghostwriting vs freelancers, package pricing, and how long it takes to write and publish a book.',
 };
 
 export const blogPosts = [
@@ -18,6 +21,7 @@ export const blogPosts = [
     readTime: '6 min read',
     category: 'Packages',
     eyebrow: 'Package guide',
+    keywords: ['ebook writing package', 'ghostwriting deliverables', 'KDP publishing package', 'book cover and formatting'],
     lead:
       '“Writing included” is not enough. Before you hire ebook writers or a ghostwriting studio, use this checklist to see what a complete package should cover — and what usually gets left out of cheap quotes.',
     cta: 'Choose a writing package',
@@ -76,6 +80,7 @@ export const blogPosts = [
     readTime: '6 min read',
     category: 'Process',
     eyebrow: 'Timeline guide',
+    keywords: ['how long to write a book', 'ghostwriting timeline', 'ebook publishing schedule', 'book writing process'],
     lead:
       'Authors often ask how long ghostwriting takes before they hire an ebook writing studio. The honest answer depends on length, research, feedback speed, and whether publishing setup is included. Here are practical ranges you can plan around.',
     cta: 'Get a dated project schedule',
@@ -130,6 +135,7 @@ export const blogPosts = [
     readTime: '8 min read',
     category: 'Ghostwriting',
     eyebrow: 'Hiring guide',
+    keywords: ['ghostwriting vs freelancer', 'hire a ghostwriter', 'ebook writers', 'book writing service'],
     lead:
       'Both paths can produce a manuscript. They are not the same product. If you are choosing between a ghostwriting studio and a solo freelancer, compare process, accountability, and what you receive after the draft — not only the headline price.',
     cta: 'Talk to a ghostwriting specialist',
@@ -187,6 +193,7 @@ export const blogPosts = [
     readTime: '7 min read',
     category: 'Pricing',
     eyebrow: 'Cost guide',
+    keywords: ['ebook writer cost', 'hire ebook writer', 'ghostwriting price', 'book writing packages'],
     lead:
       'If you are searching for professional ebook writers or a ghostwriter, price is usually the first question. Here is a clear breakdown of what ebook writing costs in 2026, what you should expect in a package, and how to choose the right budget for your manuscript.',
     cta: 'Get a fixed writing quote',
