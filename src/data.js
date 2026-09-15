@@ -108,10 +108,13 @@ export const dualOffer = {
       'Every title we take on moves through both halves of the studio — a production desk that makes the book, and a launch desk that makes sure readers find it.',
     note: 'Both desks are included in every full-service plan.',
   },
+  stage: {
+    image: '/assets/brand/publishing-craft-v2.png',
+    imageAlt: '',
+  },
   publish: {
     index: '01',
     tag: 'Production desk',
-    eyebrow: 'Our publishing services',
     title: 'Publish with confidence.',
     lead:
       'From final manuscript to global distribution, we handle the details so you can focus on what you do best — your writing.',
@@ -122,14 +125,11 @@ export const dualOffer = {
     ],
     cta: 'Plan your publication',
     href: '#contact',
-    image: '/assets/brand/publishing-craft-v2.png',
-    imageAlt: 'Forest-green clothbound hardcover displayed in an editorial studio',
-    caption: 'Fig. 01 — Cloth-bound first edition',
+    caption: 'Fig. 01 — A higher standard for bolder stories',
   },
   market: {
     index: '02',
     tag: 'Launch desk',
-    eyebrow: 'Our marketing services',
     title: 'Reach readers who need your story.',
     lead:
       'Strategic marketing to help your book stand out, build your audience, and create lasting impact beyond launch day.',
@@ -140,9 +140,7 @@ export const dualOffer = {
     ],
     cta: 'Build your launch plan',
     href: '#contact',
-    image: '/assets/brand/marketing-strategy-v2.png',
-    imageAlt: 'Author marketing notebook, books, fountain pen, and green mug',
-    caption: 'Fig. 02 — Twelve-week launch map',
+    caption: 'Fig. 02 — Ideas meet the readers who matter',
   },
 };
 
@@ -156,8 +154,8 @@ export const books = [
 ];
 
 export const testimonialsIntro = {
-  eyebrow: 'Real stories · Brighter tomorrows',
-  title: 'What authors say about working with us.',
+  eyebrow: 'Authors',
+  title: 'What authors say.',
 };
 
 export const testimonials = [
@@ -167,7 +165,7 @@ export const testimonials = [
     initials: 'SL',
     avatar: '/assets/brand/testimonial-melissa.png',
     quote:
-      'Professional, supportive, and truly invested in my success. They made the publishing process feel effortless.',
+      'Professional, supportive, and truly invested in my success. They made publishing feel effortless.',
   },
   {
     name: 'Michael R.',
@@ -175,7 +173,7 @@ export const testimonials = [
     initials: 'MR',
     avatar: '/assets/brand/testimonial-daniel.png',
     quote:
-      'An exceptional team from start to finish. My book looks beautiful, and it’s reaching readers around the world.',
+      'An exceptional team from start to finish. My book looks beautiful — and it’s reaching readers worldwide.',
   },
   {
     name: 'Talia M.',
@@ -183,7 +181,7 @@ export const testimonials = [
     initials: 'TM',
     avatar: '/assets/brand/testimonial-james.png',
     quote:
-      'They brought my vision to life with care and expertise. I always felt heard, and the results exceeded my expectations.',
+      'They brought my vision to life with care. I always felt heard, and the results exceeded expectations.',
   },
 ];
 

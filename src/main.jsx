@@ -3,11 +3,9 @@ import { createRoot } from 'react-dom/client';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { A11y, Autoplay, Pagination } from 'swiper/modules';
 import {
   IconArrow, IconArrowUpRight, IconBook, IconCheck, IconClose,
-  IconMail, IconMenu, IconPhone, IconPlus, IconStar,
+  IconMail, IconMenu, IconPhone, IconPlus,
   IconWriting, IconWriters, IconPublishing,
   IconCoins, IconCalendar, IconLeaf, IconEditing, IconFormatting, IconBranding,
   serviceIcons,
@@ -18,8 +16,6 @@ import {
   siteContact,
   portfolioIntro, servicesIntro, benefits, pathBand, dualOffer,
 } from './data.js';
-import 'swiper/css';
-import 'swiper/css/pagination';
 import './fonts.css';
 import './styles.css';
 
@@ -468,21 +464,21 @@ function Portfolio() {
     ...book,
     cover: `/assets/brand/portfolio-shelf-book-${index + 1}.png`,
   }));
-  const [activeBook, setActiveBook] = useState(0);
+  const [activeBook, setActiveBook] = useState(2);
   const [paused, setPaused] = useState(false);
   const stageRef = useRef(null);
-  const inViewRef = useRef(false);
+  const inViewRef = useRef(true);
   const holdUntilRef = useRef(0);
   const selected = shelf[activeBook];
-  const dwellMs = 4200;
+  const dwellMs = 3200;
 
   const moveSelection = direction => {
-    holdUntilRef.current = performance.now() + 6000;
+    holdUntilRef.current = performance.now() + 5000;
     setActiveBook(current => (current + direction + shelf.length) % shelf.length);
   };
 
   const selectBook = index => {
-    holdUntilRef.current = performance.now() + 6000;
+    holdUntilRef.current = performance.now() + 5000;
     setActiveBook(index);
   };
 
@@ -490,30 +486,20 @@ function Portfolio() {
     const node = stageRef.current;
     if (!node) return undefined;
     const io = new IntersectionObserver(([entry]) => {
-      inViewRef.current = entry.isIntersecting && entry.intersectionRatio >= 0.18;
-    }, { threshold: [0.12, 0.28, 0.45] });
+      inViewRef.current = entry.isIntersecting;
+    }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
     io.observe(node);
     return () => io.disconnect();
   }, []);
 
   useEffect(() => {
     if (reduceMotion() || paused) return undefined;
-    let start = performance.now();
-    let frame = 0;
-    const tick = now => {
-      if (!inViewRef.current || now < holdUntilRef.current) {
-        start = now;
-        frame = requestAnimationFrame(tick);
-        return;
-      }
-      if (now - start >= dwellMs) {
-        setActiveBook(current => (current + 1) % shelf.length);
-        start = now;
-      }
-      frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
+    const id = window.setInterval(() => {
+      if (!inViewRef.current) return;
+      if (performance.now() < holdUntilRef.current) return;
+      setActiveBook(current => (current + 1) % shelf.length);
+    }, dwellMs);
+    return () => window.clearInterval(id);
   }, [paused, shelf.length]);
 
   return (
@@ -543,8 +529,6 @@ function Portfolio() {
           }}
         >
           <div ref={stageRef} className="ed-folio-theater-inner">
-            <p className="ed-folio-volume" aria-hidden="true">Working volumes · Shelf 0{activeBook + 1}</p>
-
             <div
               className="ed-folio-coverflow"
               role="group"
@@ -561,9 +545,21 @@ function Portfolio() {
               }}
             >
               {shelf.map((book, index) => {
-                const offset = index - activeBook;
+                const n = shelf.length;
+                let offset = index - activeBook;
+                if (offset > n / 2) offset -= n;
+                if (offset < -n / 2) offset += n;
                 const abs = Math.abs(offset);
                 const far = abs > 2;
+                const x = reduceMotion()
+                  ? `calc(-50% + ${offset} * 8.1rem)`
+                  : `calc(-50% + ${offset} * clamp(5.8rem, 11.5vw, 9.25rem))`;
+                const y = abs === 0 ? '-1.1rem' : `${abs * 0.35}rem`;
+                const scale = reduceMotion()
+                  ? (activeBook === index ? 1.06 : 0.9)
+                  : Math.max(0.68, 1.08 - abs * 0.14);
+                const rot = reduceMotion() ? 0 : offset * -26;
+                const depth = reduceMotion() ? 0 : -abs * 110;
                 return (
                   <button
                     type="button"
@@ -572,10 +568,8 @@ function Portfolio() {
                     style={{
                       '--offset': offset,
                       zIndex: 40 - abs,
-                      transform: reduceMotion()
-                        ? `translate3d(calc(-50% + ${offset} * 7.25rem), ${abs === 0 ? '-0.4rem' : '0'}, 0) scale(${activeBook === index ? 1.04 : 0.88})`
-                        : `translate3d(calc(-50% + ${offset} * clamp(4.6rem, 9.2vw, 7.4rem)), ${abs === 0 ? '-0.85rem' : '0'}, ${-abs * 88}px) rotateY(${offset * -30}deg) scale(${Math.max(0.7, 1 - abs * 0.12)})`,
-                      opacity: far ? 0.28 : 1 - abs * 0.12,
+                      transform: `translate3d(${x}, ${y}, ${depth}px) rotateY(${rot}deg) scale(${scale})`,
+                      opacity: far ? 0.22 : 1 - abs * 0.14,
                     }}
                     aria-label={`${book.title} by ${book.author}`}
                     aria-pressed={activeBook === index}
@@ -597,35 +591,42 @@ function Portfolio() {
               })}
             </div>
 
-            <div className="ed-folio-plank" aria-hidden="true">
-              <i />
-            </div>
-          </div>
-        </Reveal>
+            <div className="ed-folio-stage-glow" aria-hidden="true" />
 
-        <Reveal className="ed-folio-inspector" delay={80}>
-          <div className="ed-folio-count" aria-hidden="true">
-            <strong>{String(activeBook + 1).padStart(2, '0')}</strong>
-            <span>/ {String(shelf.length).padStart(2, '0')}</span>
-          </div>
-          <div className="ed-folio-selected">
-            <span>{selected.genre}</span>
-            <h3>{selected.title}</h3>
-            <p>Written by {selected.author}</p>
-          </div>
-          <div className="ed-folio-actions">
-            <div className="ed-folio-arrows">
-              <button type="button" onClick={() => moveSelection(-1)} aria-label="Previous book">
-                <IconArrow aria-hidden="true" />
-              </button>
-              <button type="button" onClick={() => moveSelection(1)} aria-label="Next book">
-                <IconArrow aria-hidden="true" />
-              </button>
+            <div className="ed-folio-theater-foot">
+              <div className="ed-folio-dots" role="tablist" aria-label="Published titles">
+                {shelf.map((book, index) => (
+                  <button
+                    key={book.title}
+                    type="button"
+                    role="tab"
+                    aria-selected={activeBook === index}
+                    aria-label={`Show ${book.title}`}
+                    className={activeBook === index ? 'is-active' : undefined}
+                    onClick={() => selectBook(index)}
+                  />
+                ))}
+              </div>
+              <div className="ed-folio-selected">
+                <span>{selected.genre}</span>
+                <h3>{selected.title}</h3>
+                <p>Written by {selected.author}</p>
+              </div>
+              <div className="ed-folio-actions">
+                <div className="ed-folio-arrows">
+                  <button type="button" onClick={() => moveSelection(-1)} aria-label="Previous book">
+                    <IconArrow aria-hidden="true" />
+                  </button>
+                  <button type="button" onClick={() => moveSelection(1)} aria-label="Next book">
+                    <IconArrow aria-hidden="true" />
+                  </button>
+                </div>
+                <a href="#contact">
+                  Start a similar project
+                  <IconArrow aria-hidden="true" />
+                </a>
+              </div>
             </div>
-            <a href="#contact">
-              Start a similar project
-              <IconArrow aria-hidden="true" />
-            </a>
           </div>
         </Reveal>
       </div>
@@ -635,82 +636,57 @@ function Portfolio() {
 
 /* ---------------------------------------------------------------- dual offer */
 
-/** One half of the diptych: full-bleed plate with the copy set over a tonal veil. */
-function DualPlate({ offer, tone }) {
+function DualCard({ offer, tone }) {
   return (
-    <article className={`ed-duo-plate ed-duo-plate--${tone}`}>
-      <div className="ed-duo-frame">
-        <img
-          className="ed-duo-shot"
-          src={offer.image}
-          alt={offer.imageAlt}
-          width="1424"
-          height="1068"
-          loading="lazy"
-        />
-        <span className="ed-duo-veil" aria-hidden="true" />
-      </div>
-      <figcaption className="ed-duo-caption">{offer.caption}</figcaption>
-      <div className="ed-duo-body">
-        <p className="ed-duo-index">
-          <span className="ed-duo-num">{offer.index}</span>
-          <i aria-hidden="true" />
-          <span className="ed-duo-tag">{offer.tag}</span>
-        </p>
-        <h3 className="ed-duo-title">{offer.title}</h3>
-        <p className="ed-duo-lead">{offer.lead}</p>
-        <ul className="ed-duo-list">
-          {offer.checklist.map(item => (
-            <li key={item}>
-              <span className="ed-duo-tick" aria-hidden="true"><IconCheck /></span>
-              {item}
-            </li>
-          ))}
-        </ul>
-        <a className="ed-duo-cta" href={offer.href}>
-          <span>{offer.cta}</span>
-          <span className="ed-duo-orb" aria-hidden="true"><IconArrow /></span>
-        </a>
-      </div>
+    <article className={`ed-duo-card ed-duo-card--${tone}`}>
+      <p className="ed-duo-card-kicker">
+        <span>{offer.index}</span>
+        <i aria-hidden="true" />
+        <span>{offer.tag}</span>
+      </p>
+      <h3 className="ed-duo-card-title">{offer.title}</h3>
+      <p className="ed-duo-card-lead">{offer.lead}</p>
+      <ul className="ed-duo-card-list">
+        {offer.checklist.map(item => (
+          <li key={item}>
+            <span className="ed-duo-card-tick" aria-hidden="true"><IconCheck /></span>
+            {item}
+          </li>
+        ))}
+      </ul>
+      <a className="ed-duo-card-cta" href={offer.href}>
+        {offer.cta}
+        <IconArrow aria-hidden="true" />
+      </a>
+      <p className="ed-duo-card-fig">{offer.caption}</p>
     </article>
   );
 }
 
 function DualOffer() {
-  const { intro, publish, market } = dualOffer;
-  const diptychRef = useRef(null);
-
-  // Slow counter-drift on the two plates as the band crosses the viewport.
-  useEffect(() => {
-    const node = diptychRef.current;
-    if (!node || reduceMotion()) return undefined;
-    let frame = 0;
-    const draw = () => {
-      frame = 0;
-      const rect = node.getBoundingClientRect();
-      const span = window.innerHeight + rect.height;
-      const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / span));
-      node.style.setProperty('--duo-drift', `${(progress - 0.5) * 3.4}%`);
-    };
-    const onScroll = () => { if (!frame) frame = requestAnimationFrame(draw); };
-    draw();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    return () => {
-      if (frame) cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-    };
-  }, []);
+  const { intro, publish, market, stage } = dualOffer;
 
   return (
-    <section className="ed-duo" id="publish" aria-labelledby="ed-duo-title">
-      <div className="shell">
+    <section className="ed-duo ed-duo--stage" id="publish" aria-labelledby="ed-duo-title">
+      <div className="ed-duo-stage" aria-hidden="true">
+        <img
+          src={stage.image}
+          alt=""
+          width="1600"
+          height="1068"
+          loading="lazy"
+          decoding="async"
+        />
+        <span className="ed-duo-stage-veil" />
+      </div>
+
+      <div className="shell ed-duo-shell">
         <Reveal className="ed-duo-head">
           <div className="ed-duo-head-main">
             <Eyebrow tone="light">{intro.eyebrow}</Eyebrow>
             <h2 id="ed-duo-title">
               {intro.title}
+              {' '}
               <em>{intro.titleEm}</em>
             </h2>
           </div>
@@ -719,10 +695,26 @@ function DualOffer() {
             <p className="ed-duo-note">{intro.note}</p>
           </div>
         </Reveal>
-      </div>
-      <div className="ed-duo-diptych" ref={diptychRef}>
-        <Reveal><DualPlate offer={publish} tone="dark" /></Reveal>
-        <Reveal delay={120}><DualPlate offer={market} tone="light" /></Reveal>
+
+        <div className="ed-duo-board">
+          <svg className="ed-duo-arc" viewBox="0 0 640 120" preserveAspectRatio="none" aria-hidden="true">
+            <path
+              d="M40,96 C180,16 460,16 600,96"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.25"
+            />
+            <circle cx="40" cy="96" r="4.5" fill="currentColor" />
+            <circle cx="600" cy="96" r="4.5" fill="currentColor" />
+          </svg>
+
+          <Reveal className="ed-duo-board-col">
+            <DualCard offer={publish} tone="dark" />
+          </Reveal>
+          <Reveal className="ed-duo-board-col" delay={100}>
+            <DualCard offer={market} tone="light" />
+          </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -731,91 +723,28 @@ function DualOffer() {
 /* ------------------------------------------------------------- testimonials */
 
 function Testimonials() {
-  const paginateRef = useRef(null);
-  const [swiper, setSwiper] = useState(null);
-  const motionOff = reduceMotion();
-
-  useEffect(() => {
-    if (!swiper || !paginateRef.current) return undefined;
-    swiper.params.pagination.el = paginateRef.current;
-    swiper.pagination.destroy();
-    swiper.pagination.init();
-    swiper.pagination.render();
-    swiper.pagination.update();
-    return undefined;
-  }, [swiper]);
-
   return (
-    <section className="ed-voices" aria-labelledby="voices-title">
+    <section className="ed-voices ed-voices--min" aria-labelledby="voices-title">
       <div className="shell">
-        <Reveal className="ed-voices-head">
-          <Eyebrow>{testimonialsIntro.eyebrow}</Eyebrow>
-          <div className="ed-voices-head-row">
-            <h2 id="voices-title">{testimonialsIntro.title}</h2>
-            <div className="ed-voices-nav">
-              <button
-                type="button"
-                className="ed-voices-prev"
-                aria-label="Previous testimonial"
-                onClick={() => swiper?.slidePrev()}
-              >
-                <IconArrow aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                className="ed-voices-next"
-                aria-label="Next testimonial"
-                onClick={() => swiper?.slideNext()}
-              >
-                <IconArrow aria-hidden="true" />
-              </button>
-            </div>
-          </div>
-          <p>Real people. Real books. Real results.</p>
+        <Reveal className="ed-voices-min-head">
+          <Eyebrow tone="light">{testimonialsIntro.eyebrow}</Eyebrow>
+          <h2 id="voices-title">{testimonialsIntro.title}</h2>
         </Reveal>
-      </div>
 
-      <Reveal className="ed-voices-rail" delay={80}>
-        <Swiper
-          className="ed-voices-swiper"
-          modules={[Pagination, A11y, Autoplay]}
-          slidesPerView={1.12}
-          spaceBetween={18}
-          centeredSlides
-          rewind
-          speed={780}
-          autoplay={motionOff ? false : { delay: 5200, disableOnInteraction: false, pauseOnMouseEnter: true }}
-          breakpoints={{
-            720: { slidesPerView: 1.28, spaceBetween: 22 },
-            1100: { slidesPerView: 1.42, spaceBetween: 28 },
-          }}
-          onSwiper={setSwiper}
-          pagination={{ clickable: true }}
-          a11y={{ enabled: true }}
-        >
-          {testimonials.map(item => (
-            <SwiperSlide key={item.name}>
-              <article className="ed-voice-slide">
-                <span className="ed-voice-mark" aria-hidden="true">“</span>
-                <blockquote>
-                  <p>{item.quote}</p>
-                </blockquote>
-                <div className="ed-voice-stars" aria-label="5 out of 5 stars">
-                  {Array.from({ length: 5 }, (_, s) => <IconStar key={s} aria-hidden="true" />)}
-                </div>
-                <footer>
-                  <img className="ed-voice-avatar" src={item.avatar} alt="" width="64" height="64" loading="lazy" />
-                  <div>
-                    <strong>{item.name}</strong>
-                    <span>{item.role}</span>
-                  </div>
-                </footer>
-              </article>
-            </SwiperSlide>
+        <ul className="ed-voices-min-grid">
+          {testimonials.map((item, i) => (
+            <Reveal as="li" className="ed-voices-min-card" key={item.name} delay={i * 70}>
+              <blockquote>
+                <p>“{item.quote}”</p>
+              </blockquote>
+              <footer>
+                <strong>{item.name}</strong>
+                <span>{item.role}</span>
+              </footer>
+            </Reveal>
           ))}
-        </Swiper>
-        <div ref={paginateRef} className="ed-voices-pagination" />
-      </Reveal>
+        </ul>
+      </div>
     </section>
   );
 }
