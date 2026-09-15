@@ -4,6 +4,7 @@ import { IconArrow, IconCheck, serviceIcons } from './icons.jsx';
 import { plans, services } from './data.js';
 import {
   aboutPage,
+  DEFAULT_PAGE_HERO,
   landers,
   notFoundPage,
   pricingPage,
@@ -89,19 +90,50 @@ function Sections({ sections }) {
   );
 }
 
+export function PageHero({ page, children }) {
+  const image = page.heroImage || DEFAULT_PAGE_HERO;
+  return (
+    <section
+      className="content-hero"
+      style={page.heroPosition ? { '--hero-pos': page.heroPosition } : undefined}
+    >
+      <div className="content-hero-media" aria-hidden="true">
+        <img
+          src={image}
+          alt=""
+          width="1600"
+          height="900"
+          fetchPriority="high"
+          decoding="async"
+        />
+      </div>
+      <div className="shell content-hero-shell">
+        <div className="content-hero-copy">
+          <Eyebrow>{page.eyebrow}</Eyebrow>
+          <h1>
+            {page.title}
+            {page.titleEm ? (
+              <>
+                <br />
+                <em>{page.titleEm}</em>
+              </>
+            ) : null}
+          </h1>
+          {page.lead ? <p className="blog-hero-lead">{page.lead}</p> : null}
+          {page.updated ? <p className="content-updated">Last updated {page.updated}</p> : null}
+          <Actions actions={page.actions} />
+          {children}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ArticlePage({ page, children }) {
   return (
     <div className="blog-page content-page">
       <ScrollTop />
-      <section className="blog-hero">
-        <div className="shell">
-          <Eyebrow>{page.eyebrow}</Eyebrow>
-          <h1>{page.title}</h1>
-          <p className="blog-hero-lead">{page.lead}</p>
-          {page.updated ? <p className="content-updated">Last updated {page.updated}</p> : null}
-          <Actions actions={page.actions} />
-        </div>
-      </section>
+      <PageHero page={page} />
       {children}
       <Sections sections={page.sections} />
       {page.links ? (
@@ -144,14 +176,7 @@ export function PricingPage() {
   return (
     <div className="blog-page content-page">
       <ScrollTop />
-      <section className="blog-hero">
-        <div className="shell">
-          <Eyebrow>{pricingPage.eyebrow}</Eyebrow>
-          <h1>{pricingPage.title}</h1>
-          <p className="blog-hero-lead">{pricingPage.lead}</p>
-          <Actions actions={pricingPage.actions} />
-        </div>
-      </section>
+      <PageHero page={pricingPage} />
       <section className="ed-price content-price" aria-label="Publishing packages">
         <div className="shell">
           <div className="ed-price-sheet">
@@ -204,14 +229,7 @@ export function ServicesPage() {
   return (
     <div className="blog-page content-page">
       <ScrollTop />
-      <section className="blog-hero">
-        <div className="shell">
-          <Eyebrow>{servicesPage.eyebrow}</Eyebrow>
-          <h1>{servicesPage.title}</h1>
-          <p className="blog-hero-lead">{servicesPage.lead}</p>
-          <Actions actions={servicesPage.actions} />
-        </div>
-      </section>
+      <PageHero page={servicesPage} />
       <section className="ed-svc content-svc" aria-label="Service list">
         <div className="shell">
           <ul className="ed-svc-cards">
@@ -293,14 +311,9 @@ export function NotFoundPage() {
   return (
     <div className="blog-page content-page">
       <ScrollTop />
-      <section className="blog-hero">
-        <div className="shell">
-          <Eyebrow>{notFoundPage.eyebrow}</Eyebrow>
-          <h1>{notFoundPage.title}</h1>
-          <p className="blog-hero-lead">{notFoundPage.lead}</p>
-          <RelatedLinks links={notFoundPage.links} />
-        </div>
-      </section>
+      <PageHero page={notFoundPage}>
+        <RelatedLinks links={notFoundPage.links} />
+      </PageHero>
     </div>
   );
 }

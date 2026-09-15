@@ -8,6 +8,9 @@ export const blogIndex = {
   metaTitle: 'Ebook Writing & Ghostwriting Blog | ebookwriters.us',
   metaDescription:
     'Guides on hiring ebook writers, ghostwriting vs freelancers, package pricing, and how long it takes to write and publish a book.',
+  heroImage: '/assets/brand/faq-editorial-v2.png',
+  heroImageAlt: 'Stack of clothbound books and a fountain pen on a marble desk',
+  heroPosition: '78% center',
 };
 
 export const blogArticle = {

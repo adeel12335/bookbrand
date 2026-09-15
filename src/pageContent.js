@@ -1,10 +1,16 @@
 import { plans, siteContact } from './data.js';
 
+export const DEFAULT_PAGE_HERO = '/assets/brand/portfolio-hero-bg.png';
+export const DEFAULT_PAGE_HERO_ALT = 'Sunlit writing desk with books, a mug, and a fountain pen';
+
 export const aboutPage = {
   eyebrow: 'The studio',
   title: 'A US ebook writing studio built for authors who want the book done.',
   lead:
     'ebookwriters.us is a Tennessee ghostwriting and publishing studio. We write, edit, design, and prepare books for Amazon KDP and IngramSpark — so you are not coordinating a dozen freelancers.',
+  heroImage: '/assets/brand/path-roadmap-desk.png',
+  heroImageAlt: 'Writing desk with journal, fountain pen, and publishing stage books',
+  heroPosition: '62% center',
   actions: [
     { label: 'Request a quote', href: '/contact' },
     { label: 'See packages', href: '/pricing', variant: 'gold' },
@@ -49,6 +55,9 @@ export const pricingPage = {
     { label: 'Talk to a specialist', href: '/contact' },
     { label: 'What a package includes', href: '/blog/what-is-included-in-a-professional-ebook-writing-package', variant: 'gold' },
   ],
+  heroImage: '/assets/brand/hero-desk.jpg',
+  heroImageAlt: 'Stacked books labeled Ideas, Strategy, Writing, Publishing beside a studio mug',
+  heroPosition: '58% center',
   note:
     'Every quote is fixed for the length and scope we agree. Rush timelines and specialist research can change the fee — you will see that before work starts.',
   closing:
@@ -64,6 +73,9 @@ export const servicesPage = {
     { label: 'Get a writing quote', href: '/contact' },
     { label: 'View packages', href: '/pricing', variant: 'gold' },
   ],
+  heroImage: '/assets/brand/publishing-craft-v2.png',
+  heroImageAlt: 'Clothbound book on a marble desk in the publishing studio',
+  heroPosition: '70% center',
 };
 
 export const serviceHrefs = {
@@ -86,6 +98,9 @@ export const landers = {
       { label: 'Request a ghostwriting quote', href: '/contact' },
       { label: 'See ghostwriting packages', href: '/pricing', variant: 'gold' },
     ],
+    heroImage: '/assets/brand/contact-writing-desk.png',
+    heroImageAlt: 'Fountain pen on a clothbound notebook at a writing desk',
+    heroPosition: '78% center',
     sections: [
       {
         heading: 'What ebook ghostwriting includes',
@@ -133,6 +148,9 @@ export const landers = {
       { label: 'Hire an ebook writer', href: '/contact' },
       { label: 'Compare packages', href: '/pricing', variant: 'gold' },
     ],
+    heroImage: '/assets/brand/contact-consultation-v2.png',
+    heroImageAlt: 'Author consultation over a manuscript at a marble desk',
+    heroPosition: '68% center',
     sections: [
       {
         heading: 'What you get when you hire us',
@@ -179,6 +197,9 @@ export const landers = {
       { label: 'Plan KDP publishing', href: '/contact' },
       { label: 'See packages with KDP setup', href: '/pricing', variant: 'gold' },
     ],
+    heroImage: '/assets/brand/hero-study.jpg',
+    heroImageAlt: 'Finished clothbound book on a study desk with manuscript pages',
+    heroPosition: '55% center',
     sections: [
       {
         heading: 'Writing made for the Kindle store',
@@ -222,6 +243,9 @@ export const privacyPage = {
   title: 'Privacy policy',
   updated: 'September 15, 2026',
   lead: `This policy describes how ${siteContact.email} and the ebookwriters.us website handle information. It is written for a marketing site and quote form — not as a substitute for a signed project agreement.`,
+  heroImage: '/assets/brand/faq-editorial-v2.png',
+  heroImageAlt: 'Stack of clothbound books and a fountain pen on a marble desk',
+  heroPosition: '78% center',
   sections: [
     {
       heading: 'Who is responsible',
@@ -282,6 +306,9 @@ export const termsPage = {
   updated: 'September 15, 2026',
   lead:
     'These terms cover use of the ebookwriters.us website and quote requests. A paid writing project is governed by the statement of work and rights agreement you sign — those documents control if they conflict with this page.',
+  heroImage: '/assets/brand/faq-editorial-v2.png',
+  heroImageAlt: 'Stack of clothbound books and a fountain pen on a marble desk',
+  heroPosition: '78% center',
   sections: [
     {
       heading: 'The site',
@@ -345,6 +372,9 @@ export const notFoundPage = {
   eyebrow: '404',
   title: 'This page is not on ebookwriters.us.',
   lead: 'The address you opened is not a published route. These pages are a better next step:',
+  heroImage: '/assets/brand/portfolio-hero-bg.png',
+  heroImageAlt: 'Sunlit writing desk with books, a mug, and a fountain pen',
+  heroPosition: '72% center',
   links: [
     { label: 'Home', href: '/' },
     { label: 'Services', href: '/services' },
