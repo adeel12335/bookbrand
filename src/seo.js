@@ -480,7 +480,7 @@ export function resolveSeo(pathname) {
 }
 
 export function getPrerenderPages() {
-  return [...staticPages, ...blogPosts.map(blogPostPage)];
+  return [...staticPages, ...blogPosts.map(blogPostPage), notFoundSeo];
 }
 
 export function getSitemapEntries() {

@@ -77,6 +77,7 @@ function applyPage(html, page) {
 
 function outFileFor(path) {
   if (path === '/') return join(distDir, 'index.html');
+  if (path === '/404') return join(distDir, '404.html');
   return join(distDir, path.replace(/^\//, ''), 'index.html');
 }
 
@@ -110,6 +111,11 @@ export function stampHtml() {
     const file = outFileFor(page.path);
     mkdirSync(dirname(file), { recursive: true });
     writeFileSync(file, html);
+    if (page.path !== '/' && page.path !== '/404') {
+      const flat = join(distDir, `${page.path.replace(/^\//, '')}.html`);
+      mkdirSync(dirname(flat), { recursive: true });
+      writeFileSync(flat, html);
+    }
     const canonical = html.match(/<link rel="canonical" href="([^"]+)"/i)?.[1];
     const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
     if (!canonical || !canonical.startsWith('https://www.ebookwriters.us')) {
