@@ -14,8 +14,8 @@ export const blogIndex = {
   metaTitle: 'Ebook Writing & Ghostwriting Blog | ebookwriters.us',
   metaDescription:
     'Guides on hiring ebook writers, KDP publishing checklists, ghostwriting vs freelancers, package pricing, and how long it takes to write and publish a book.',
-  heroImage: '/assets/brand/portfolio-hero-bg.png',
-  heroImageAlt: 'Sunlit desk with books — ebook writing and publishing guides',
+  heroImage: '/assets/brand/page-hero-blog.png',
+  heroImageAlt: 'Emerald study desk with notebook and brass lamp — ebook writing guides',
 };
 
 export const blogArticle = {

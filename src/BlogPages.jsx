@@ -14,12 +14,7 @@ import {
 
 function BlogCard({ post, heading: Heading = 'h2' }) {
   return (
-    <article className="blog-card">
-      {post.image ? (
-        <Link className="blog-card-media" to={`/blog/${post.slug}`} tabIndex={-1} aria-hidden="true">
-          <img src={post.image} alt="" width="720" height="450" loading="lazy" />
-        </Link>
-      ) : null}
+    <article className="blog-card blog-card--text">
       <div className="blog-card-body">
         <p className="blog-card-meta">
           <span>{post.category}</span>
@@ -90,8 +85,8 @@ export function BlogPostPage() {
   return (
     <div className="blog-page" key={post.slug}>
       <article className="blog-article">
-        <header className="blog-article-head">
-          <div className="shell blog-article-head-grid">
+        <header className="blog-article-head blog-article-head--solo">
+          <div className="shell">
             <div className="blog-article-copy">
               <nav className="blog-crumbs" aria-label="Breadcrumb">
                 <Link to="/">Home</Link>
@@ -113,18 +108,6 @@ export function BlogPostPage() {
                 <span>{post.readTime}</span>
               </p>
             </div>
-            {post.image ? (
-              <figure className="blog-article-photo">
-                <img
-                  src={post.image}
-                  alt={post.imageAlt || ''}
-                  width="960"
-                  height="720"
-                  fetchPriority="high"
-                  decoding="async"
-                />
-              </figure>
-            ) : null}
           </div>
         </header>
 

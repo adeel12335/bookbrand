@@ -19062,3 +19062,125 @@ body {
   width: 0.95rem;
   height: 0.95rem;
 }
+
+/* Compact page heroes + text-first blog cards */
+.pf-hero.pf-hero--bg {
+  min-height: 0 !important;
+}
+
+.pf-hero--bg .pf-hero-shell {
+  min-height: 0 !important;
+  padding-block: 4.5rem 1.1rem !important;
+}
+
+.pf-hero--bg .pf-hero-media img {
+  object-position: 78% center !important;
+}
+
+.pf-hero--bg .pf-hero-copy {
+  max-width: min(28rem, 44%) !important;
+  padding: 0.85rem 1rem !important;
+  background: rgba(247, 244, 239, 0.92) !important;
+}
+
+.pf-hero--bg .pf-hero-copy h1 {
+  margin: 0.35rem 0 0.5rem !important;
+  font-size: clamp(1.65rem, 3.2vw, 2.25rem) !important;
+  line-height: 1.1 !important;
+  max-width: 16ch !important;
+}
+
+.pf-hero--bg .pf-hero-lead {
+  margin: 0 0 0.75rem !important;
+  font-size: 0.9rem !important;
+  line-height: 1.5 !important;
+  -webkit-line-clamp: 2 !important;
+}
+
+.pf-hero--bg .pf-hero-actions {
+  gap: 0.65rem 0.85rem !important;
+}
+
+.pf-hero--bg .cta {
+  min-height: 2.75rem !important;
+  padding-inline: 1rem !important;
+  font-size: 0.78rem !important;
+}
+
+@media (max-width: 860px) {
+  .pf-hero--bg .pf-hero-shell {
+    padding: 4.25rem var(--gutter) 1rem !important;
+  }
+
+  .pf-hero--bg .pf-hero-media {
+    min-height: 9.5rem !important;
+    max-height: 11rem !important;
+  }
+
+  .pf-hero--bg .pf-hero-media img {
+    min-height: 9.5rem !important;
+    max-height: 11rem !important;
+    object-position: 82% center !important;
+  }
+
+  .pf-hero--bg .pf-hero-copy {
+    max-width: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+  }
+}
+
+.blog-card--text {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.blog-card--text .blog-card-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.25rem 0 1.5rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.blog-card--text:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.blog-grid {
+  gap: 0 !important;
+}
+
+.blog-article-head--solo {
+  padding-block: clamp(4.5rem, 8vw, 5.5rem) 1.5rem;
+  background:
+    linear-gradient(180deg, rgba(15, 61, 50, 0.04), transparent 55%),
+    var(--paper);
+}
+
+.blog-article-head--solo .blog-article-copy {
+  max-width: 42rem;
+}
+
+.blog-article-head--solo h1 {
+  max-width: 18ch;
+}
+
+.ct--page {
+  padding-top: clamp(1.5rem, 3vw, 2.25rem) !important;
+}
+
+.ct--page .ct-aside {
+  justify-content: center;
+}
+
+.ct--page .ct-photo {
+  display: none;
+}

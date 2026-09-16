@@ -174,8 +174,8 @@ export const portfolioPage = {
   metaTitle: 'Book Writing Portfolio — Published Covers & Projects | ebookwriters.us',
   metaDescription:
     'Browse books our ghostwriting studio has helped authors bring to life — fiction, memoir, business, self-help, and more. Writing, editing, design, and publishing support.',
-  heroImage: '/assets/brand/portfolio-hero-bg.png',
-  heroImageAlt: 'Sunlit writing desk with books labeled Ideas, Manuscripts, Publish, and Grow',
+  heroImage: '/assets/brand/page-hero-covers.png',
+  heroImageAlt: 'Studio desk with laptop showing book covers and hardcover samples',
   eyebrow: 'Our portfolio',
   title: 'Books we’ve helped authors',
   titleEm: 'bring to life.',
@@ -376,7 +376,8 @@ export const contactIntro = {
     'NDA before you share anything',
     'Fixed quote, no hourly billing',
   ],
-  photoAlt: 'Author consultation — notebook and publishing notes on a warm desk',
+  photo: '/assets/brand/page-hero-contact.png',
+  photoAlt: 'Emerald writing desk with sealed correspondence — book writing consultation',
 };
 
 export const footerBrand = {

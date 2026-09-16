@@ -34,6 +34,7 @@ import {
   ServicesPage,
   TermsPage,
 } from './ContentPages.jsx';
+import { PageHero } from './PageHero.jsx';
 import { SeoHead } from './SeoHead.jsx';
 import AdminPage from './AdminPage.jsx';
 import './fonts.css';
@@ -945,7 +946,7 @@ function Contact({ asPage = false }) {
   const resultRef = useRef(null);
   const formRef = useRef(null);
   const getRecaptchaToken = useRecaptcha();
-  const TitleTag = asPage ? 'h1' : 'h2';
+  const TitleTag = 'h2';
 
   useEffect(() => { if (status === 'sent') resultRef.current?.focus(); }, [status]);
 
@@ -1001,12 +1002,14 @@ function Contact({ asPage = false }) {
     <section className={`section contact ct${asPage ? ' ct--page' : ''}`} id="contact" aria-labelledby="contact-title">
       <div className="ct-shell">
         <Reveal className="ct-aside">
-          <img
-            className="ct-photo"
-            src="/assets/brand/contact-consultation-v2.png"
-            alt={contactIntro.photoAlt}
-            loading={asPage ? 'eager' : 'lazy'}
-          />
+          {!asPage ? (
+            <img
+              className="ct-photo"
+              src={contactIntro.photo || '/assets/brand/page-hero-contact.png'}
+              alt={contactIntro.photoAlt}
+              loading="lazy"
+            />
+          ) : null}
           <div className="ct-aside-copy">
             <Eyebrow tone="light">{contactIntro.eyebrow}</Eyebrow>
             <TitleTag id="contact-title">
@@ -1306,6 +1309,14 @@ function ContactPage() {
       <div className="grain" aria-hidden="true" />
       <Header />
       <main id="main">
+        <PageHero
+          eyebrow="Contact"
+          title="Request a fixed writing quote."
+          lead={contactIntro.lead}
+          image="/assets/brand/page-hero-contact.png"
+          imageAlt={contactIntro.photoAlt}
+          id="contact-page-hero-title"
+        />
         <Contact asPage />
       </main>
       <Footer />
