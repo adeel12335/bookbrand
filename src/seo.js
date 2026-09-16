@@ -32,7 +32,7 @@ function organization() {
     areaServed: { '@type': 'Country', name: 'United States' },
     address: {
       '@type': 'PostalAddress',
-      addressRegion: 'TN',
+      addressRegion: 'IA',
       addressCountry: 'US',
     },
   };
@@ -195,7 +195,7 @@ const staticPages = [
     path: '/contact',
     title: 'Contact — Book Writing Quote | ebookwriters.us',
     description:
-      'Contact ebookwriters.us for a fixed ebook writing or ghostwriting quote. Email info@ebookwriters.us or call +1 712-414-0542. Tennessee, USA.',
+      'Contact ebookwriters.us for a fixed ebook writing or ghostwriting quote. Email info@ebookwriters.us or call +1 712-414-0542. Iowa, USA.',
     image: '/assets/brand/contact-consultation-v2.png',
     imageAlt: 'Author consultation — notebook and publishing notes on a warm desk',
     changefreq: 'monthly',
@@ -272,7 +272,7 @@ const staticPages = [
     path: '/about',
     title: 'About Our Ebook Writing Studio | ebookwriters.us',
     description:
-      'ebookwriters.us is a Tennessee ebook writing and ghostwriting studio. Named specialists, 100% author ownership, and fixed packages from writing through KDP publishing.',
+      'ebookwriters.us is an Iowa ebook writing and ghostwriting studio. Named specialists, 100% author ownership, and fixed packages from writing through KDP publishing.',
     priority: 0.8,
     jsonLd: [
       webPageSchema({

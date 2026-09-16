@@ -84,8 +84,7 @@ Or open `dist/pricing/index.html` and confirm package names appear without runni
    [`public/robots.txt`](public/robots.txt)).
 3. URL Inspection → Live Test on `/`, `/services`, `/pricing`, `/contact`, and one `/blog/…`
    URL — confirm **HTML** (not only screenshot) contains body copy.
-4. Phone/address NAP: keep current TN + `+1 712-414-0542` until the business confirms a
-   corrected NAP; do not invent a new number in code.
+4. Phone/address NAP: `+1 712-414-0542` with Iowa (`IA`) — aligned to the phone area code.
 
 ### Spam protection
 

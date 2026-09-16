@@ -8,7 +8,7 @@ export const aboutPage = {
   eyebrow: 'The studio',
   title: 'A US ebook writing studio built for authors who want the book done.',
   lead:
-    'ebookwriters.us is a Tennessee ghostwriting and publishing studio. We write, edit, design, and prepare books for Amazon KDP and IngramSpark — so you are not coordinating a dozen freelancers.',
+    'ebookwriters.us is an Iowa ghostwriting and publishing studio. We write, edit, design, and prepare books for Amazon KDP and IngramSpark — so you are not coordinating a dozen freelancers.',
   heroImage: '/assets/brand/page-hero-studio.png',
   heroImageAlt: 'Writing desk with manuscript pages and publishing tools',
   actions: [
@@ -607,7 +607,7 @@ export const termsPage = {
     {
       heading: 'Governing law',
       paragraphs: [
-        `These website terms are governed by the laws of the State of Tennessee, USA, without regard to conflict-of-law rules. Venue for disputes about the website is in Tennessee courts unless a signed project agreement says otherwise.`,
+        `These website terms are governed by the laws of the State of Iowa, USA, without regard to conflict-of-law rules. Venue for disputes about the website is in Iowa courts unless a signed project agreement says otherwise.`,
       ],
     },
     {

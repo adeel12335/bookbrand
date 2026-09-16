@@ -69,7 +69,7 @@ function faqBlock(items = faqs) {
 function contactBlock() {
   return `<section>
   <h2>Contact ebookwriters.us</h2>
-  <p>Tell us about your book or project. Email ${esc(SITE_EMAIL)} or call ${esc(SITE_PHONE_DISPLAY)}. Tennessee, USA.</p>
+  <p>Tell us about your book or project. Email ${esc(SITE_EMAIL)} or call ${esc(SITE_PHONE_DISPLAY)}. Iowa, USA.</p>
   <p>Send enquiry for a fixed ebook writing or ghostwriting quote. We typically reply within 1–2 business days.</p>
   <form action="/contact" method="get">
     <label>Your name <input name="name" /></label>

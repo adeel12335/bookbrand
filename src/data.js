@@ -418,9 +418,14 @@ export const footerLinks = [
 /* --------------------------------------------------------------- hero copy */
 
 export const hero = {
+  /* Visible hero copy, set live over the text-free plates
+     (hero-desk-plate.jpg / hero-mob-plate.jpg). The last line is the gold accent. */
   lines: ['Turn Your Ideas', 'Into a Published', 'Book.'],
-  linesMobile: ['Turn Your Ideas Into a', 'Published Book.'],
-  /* SEO H1 — visible headline stays image-baked; this is crawlable */
+  linesMobile: ['Turn Your Ideas', 'Into a', 'Published Book.'],
+  leadVisible:
+    'We help experts, entrepreneurs and aspiring authors bring their ideas to life through professional ebook writing, ghostwriting, editing, formatting and publishing support.',
+  strip: ['Professional writers', 'Publishing expertise', 'Full rights. Always.'],
+  /* SEO H1 — the visible headline above is aria-hidden; this is what is read and crawled */
   h1: 'Professional Ebook Writers & Ghostwriters — Publish Your Book with Confidence',
   lead: 'End-to-end ebook writing and publishing support — ghostwriting, editing, cover design, formatting, KDP publishing, and book marketing.',
   leadMobile:
@@ -436,5 +441,5 @@ export const siteContact = {
   email: 'info@ebookwriters.us',
   phone: '+1 712-414-0542',
   phoneHref: 'tel:+17124140542',
-  address: 'Tennessee, USA',
+  address: 'Iowa, USA',
 };
