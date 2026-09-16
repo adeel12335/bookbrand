@@ -64,6 +64,12 @@ export function BlogIndexPage() {
 
       <section className="blog-list-section" aria-label="All articles">
         <div className="shell">
+          <header className="blog-list-head">
+            <p className="eyebrow"><span>Latest writing</span><i aria-hidden="true" /></p>
+            <h2 className="blog-list-title">
+              Guides from the <em>studio</em>
+            </h2>
+          </header>
           {featured ? (
             <div className="blog-featured">
               <BlogCard post={featured} featured index={0} />
