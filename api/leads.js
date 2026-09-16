@@ -61,8 +61,14 @@ async function leads(req, res) {
   }
   if (!body) return json(res, 400, { error: 'Invalid request.' });
 
-  // Bots fill every field they find; real browsers leave this one empty.
-  if (str(body.company, 80)) return json(res, 200, { ok: true });
+  // Honeypot — bots fill it; real browsers leave it empty. Do not name this
+  // "company" / "website" / "url": password managers autofill those and silently
+  // discard real enquiries with a fake 200.
+  const honeypot = str(body.hp_trap, 80) || str(body.company, 80);
+  if (honeypot) {
+    console.warn('[leads] honeypot tripped — discarding without save');
+    return json(res, 200, { ok: true });
+  }
 
   const lead = {
     name: str(body.name, 120),

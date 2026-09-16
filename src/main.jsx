@@ -976,7 +976,7 @@ function Contact({ asPage = false }) {
           email: data.get('email'),
           message: data.get('message'),
           timeline: data.get('timeline'),
-          company: data.get('company'),
+          hp_trap: data.get('hp_trap'),
           recaptchaToken,
           sourcePath: `${window.location.pathname}${window.location.search}`,
         }),
@@ -1079,11 +1079,18 @@ function Contact({ asPage = false }) {
                   : null}
               </label>
               <input type="hidden" name="timeline" value="Within 3 months" />
-              {/* Left empty by people, filled by bots. */}
+              {/* Honeypot: off-screen. Avoid names like company/website — autofill traps humans. */}
               <div className="ct-trap" aria-hidden="true">
                 <label>
-                  Company
-                  <input name="company" tabIndex={-1} autoComplete="off" />
+                  Leave blank
+                  <input
+                    name="hp_trap"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    data-lpignore="true"
+                    data-1p-ignore="true"
+                    data-form-type="other"
+                  />
                 </label>
               </div>
               <label className="field">
