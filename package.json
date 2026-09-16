@@ -12,6 +12,7 @@
     "posts:pull": "node scripts/fetch-posts.mjs",
     "db:migrate": "node scripts/db-migrate.mjs",
     "db:seed": "node scripts/db-seed-posts.mjs",
+    "db:seed-admin": "node scripts/db-seed-admin.mjs",
     "qa:smoke": "node scripts/qa-smoke.mjs"
   },
   "dependencies": {

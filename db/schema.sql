@@ -41,6 +41,18 @@ create table if not exists posts (
 
 create index if not exists posts_published_idx on posts (published, published_on desc);
 
+-- Studio operators. Passwords are scrypt hashes (see api/_lib/auth.js).
+create table if not exists admin_users (
+  id            bigserial primary key,
+  email         text        not null unique,
+  name          text        not null default 'Studio admin',
+  password_hash text        not null,
+  created_at    timestamptz not null default now(),
+  last_login_at timestamptz
+);
+
+create index if not exists admin_users_email_idx on admin_users (lower(email));
+
 create or replace function set_updated_at() returns trigger as $$
 begin
   new.updated_at = now();

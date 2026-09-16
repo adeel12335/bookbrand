@@ -1,9 +1,6 @@
 /**
- * /admin — writing desk for the blog and a read-only view of the enquiries.
- *
- * Auth is a single shared password checked by api/admin/session.js, which sets
- * an HttpOnly signed cookie. Nothing here holds the password after sign-in, and
- * the route is noindex so it never reaches search results.
+ * /admin — studio dashboard: overview, articles, enquiries.
+ * Auth: Neon admin_users + signed HttpOnly cookie (api/admin/session.js).
  */
 import React, { useCallback, useEffect, useState } from 'react';
 
@@ -19,7 +16,7 @@ const EMPTY_POST = {
   eyebrow: '',
   lead: '',
   cta: 'Talk to the studio',
-  image: '/assets/brand/faq-editorial-v2.png',
+  image: '/assets/brand/page-hero-blog.png',
   imageAlt: '',
   keywords: [],
   takeaways: [],
@@ -45,9 +42,15 @@ async function api(path, options = {}) {
   return payload;
 }
 
+function formatWhen(value) {
+  if (!value) return '—';
+  return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value));
+}
+
 /* ------------------------------------------------------------------- login */
 
 function SignIn({ onDone, missing }) {
+  const [email, setEmail] = useState('admin@ebookwriters.us');
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -57,7 +60,10 @@ function SignIn({ onDone, missing }) {
     setBusy(true);
     setError('');
     try {
-      await api('/api/admin/session', { method: 'POST', body: JSON.stringify({ password }) });
+      await api('/api/admin/session', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+      });
       setPassword('');
       onDone();
     } catch (err) {
@@ -68,31 +74,43 @@ function SignIn({ onDone, missing }) {
   }
 
   return (
-    <form className="adm-login" onSubmit={submit}>
-      <h1>Studio admin</h1>
-      <p>Sign in to write articles and read enquiries.</p>
-      {missing?.length ? (
-        <p className="adm-error" role="alert">
-          This deployment is missing {missing.join(' and ')}. Add{' '}
-          {missing.length > 1 ? 'them' : 'it'} to the environment variables and redeploy —
-          sign-in cannot work until then.
-        </p>
-      ) : null}
-      <p className="adm-error" role="alert" hidden={!error}>{error}</p>
-      <label className="adm-field">
-        <span>Password</span>
-        <input
-          type="password"
-          value={password}
-          autoComplete="current-password"
-          onChange={e => setPassword(e.target.value)}
-          required
-        />
-      </label>
-      <button className="adm-btn" type="submit" disabled={busy}>
-        {busy ? 'Checking…' : 'Sign in'}
-      </button>
-    </form>
+    <div className="adm-login-wrap">
+      <form className="adm-login" onSubmit={submit}>
+        <p className="adm-login-kicker">ebookwriters.us</p>
+        <h1>Studio dashboard</h1>
+        <p>Sign in with your operator account to manage articles and enquiries.</p>
+        {missing?.length ? (
+          <p className="adm-error" role="alert">
+            Missing {missing.join(' and ')}. Add {missing.length > 1 ? 'them' : 'it'} to
+            environment variables and redeploy.
+          </p>
+        ) : null}
+        <p className="adm-error" role="alert" hidden={!error}>{error}</p>
+        <label className="adm-field">
+          <span>Email</span>
+          <input
+            type="email"
+            value={email}
+            autoComplete="username"
+            onChange={e => setEmail(e.target.value)}
+            required
+          />
+        </label>
+        <label className="adm-field">
+          <span>Password</span>
+          <input
+            type="password"
+            value={password}
+            autoComplete="current-password"
+            onChange={e => setPassword(e.target.value)}
+            required
+          />
+        </label>
+        <button className="adm-btn" type="submit" disabled={busy}>
+          {busy ? 'Signing in…' : 'Sign in'}
+        </button>
+      </form>
+    </div>
   );
 }
 
@@ -106,7 +124,6 @@ function PostEditor({ initial, onCancel, onSaved }) {
   const isNew = !initial.slug;
 
   const set = (key, value) => setPost(prev => ({ ...prev, [key]: value }));
-
   const setSection = (index, key, value) => setPost(prev => ({
     ...prev,
     sections: prev.sections.map((s, i) => (i === index ? { ...s, [key]: value } : s)),
@@ -131,9 +148,12 @@ function PostEditor({ initial, onCancel, onSaved }) {
   }
 
   return (
-    <div>
+    <div className="adm-panel">
       <div className="adm-bar">
-        <h1>{isNew ? 'New article' : `Editing — ${initial.title}`}</h1>
+        <div>
+          <p className="adm-eyebrow">{isNew ? 'New article' : 'Edit article'}</p>
+          <h1>{isNew ? 'Write an article' : initial.title}</h1>
+        </div>
         <span className="adm-bar-spacer" />
         <button className="adm-btn adm-btn--ghost" type="button" onClick={onCancel}>Back</button>
         <button className="adm-btn adm-btn--ghost" type="button" disabled={busy} onClick={() => save(false)}>
@@ -155,10 +175,9 @@ function PostEditor({ initial, onCancel, onSaved }) {
             value={post.title}
             autoComplete="off"
             aria-invalid={fields.title ? 'true' : undefined}
-            aria-describedby={fields.title ? 'post-title-error' : undefined}
             onChange={e => set('title', e.target.value)}
           />
-          {fields.title ? <em className="field-error" id="post-title-error">{fields.title}</em> : null}
+          {fields.title ? <em className="field-error">{fields.title}</em> : null}
         </label>
         <label className="adm-field">
           <span>Slug</span>
@@ -168,25 +187,18 @@ function PostEditor({ initial, onCancel, onSaved }) {
             autoComplete="off"
             spellCheck={false}
             aria-invalid={fields.slug ? 'true' : undefined}
-            aria-describedby={fields.slug ? 'post-slug-error' : undefined}
             onChange={e => set('slug', e.target.value)}
           />
-          {fields.slug ? <em className="field-error" id="post-slug-error">{fields.slug}</em> : null}
+          {fields.slug ? <em className="field-error">{fields.slug}</em> : null}
         </label>
       </div>
 
       <label className="adm-field">
         <span>Meta description</span>
-        <textarea
-          rows={2}
-          value={post.description}
-          aria-invalid={fields.description ? 'true' : undefined}
-          aria-describedby={fields.description ? 'post-description-error' : undefined}
-          onChange={e => set('description', e.target.value)}
-        />
-        {fields.description ? <em className="field-error" id="post-description-error">{fields.description}</em> : null}
+        <textarea rows={2} value={post.description} onChange={e => set('description', e.target.value)} />
+        {fields.description ? <em className="field-error">{fields.description}</em> : null}
       </label>
-      <p className="adm-hint">This is the sentence Google shows under the title. Around 150–160 characters.</p>
+      <p className="adm-hint">Google snippet — about 150–160 characters.</p>
 
       <div className="adm-row">
         <label className="adm-field">
@@ -214,7 +226,7 @@ function PostEditor({ initial, onCancel, onSaved }) {
 
       <div className="adm-row">
         <label className="adm-field">
-          <span>Hero image path</span>
+          <span>OG image path</span>
           <input value={post.image} autoComplete="off" spellCheck={false} onChange={e => set('image', e.target.value)} />
         </label>
         <label className="adm-field">
@@ -241,7 +253,6 @@ function PostEditor({ initial, onCancel, onSaved }) {
       {fields.sections ? <p className="adm-error">{fields.sections}</p> : null}
 
       {post.sections.map((section, index) => (
-        // Sections have no stable id of their own; position is the identity here.
         // eslint-disable-next-line react/no-array-index-key
         <div className="adm-section" key={index}>
           <div className="adm-section-head">
@@ -288,32 +299,111 @@ function PostEditor({ initial, onCancel, onSaved }) {
   );
 }
 
-/* ------------------------------------------------------------------- lists */
+/* ---------------------------------------------------------------- overview */
+
+function Overview({ stats, onOpenPosts, onOpenLeads, onNewPost }) {
+  if (!stats) return <p className="adm-empty">Loading overview…</p>;
+  const cards = [
+    { label: 'Published articles', value: stats.posts?.published ?? 0, hint: `${stats.posts?.drafts ?? 0} drafts` },
+    { label: 'Total articles', value: stats.posts?.total ?? 0, hint: 'In Neon' },
+    { label: 'Enquiries (7 days)', value: stats.leads?.week ?? 0, hint: `${stats.leads?.month ?? 0} this month` },
+    { label: 'All enquiries', value: stats.leads?.total ?? 0, hint: 'Contact form' },
+  ];
+
+  return (
+    <div className="adm-panel">
+      <div className="adm-bar">
+        <div>
+          <p className="adm-eyebrow">Overview</p>
+          <h1>Studio dashboard</h1>
+        </div>
+        <span className="adm-bar-spacer" />
+        <button className="adm-btn adm-btn--ghost" type="button" onClick={onOpenLeads}>View enquiries</button>
+        <button className="adm-btn" type="button" onClick={onNewPost}>New article</button>
+      </div>
+
+      <div className="adm-stat-grid">
+        {cards.map(card => (
+          <article className="adm-stat" key={card.label}>
+            <p>{card.label}</p>
+            <strong>{card.value}</strong>
+            <span>{card.hint}</span>
+          </article>
+        ))}
+      </div>
+
+      <div className="adm-split">
+        <section>
+          <div className="adm-section-head">
+            <h2>Recent articles</h2>
+            <button className="adm-btn adm-btn--ghost" type="button" onClick={onOpenPosts}>All</button>
+          </div>
+          <ul className="adm-list">
+            {(stats.recentPosts || []).map(post => (
+              <li key={post.slug}>
+                <span className="adm-title">{post.title}</span>
+                <span className={`adm-flag adm-flag--${post.published ? 'live' : 'draft'}`}>
+                  {post.published ? 'Live' : 'Draft'}
+                </span>
+                <span className="adm-meta">{formatWhen(post.updated_at)}</span>
+              </li>
+            ))}
+            {!stats.recentPosts?.length ? <li className="adm-empty">No articles yet.</li> : null}
+          </ul>
+        </section>
+        <section>
+          <div className="adm-section-head">
+            <h2>Latest enquiries</h2>
+            <button className="adm-btn adm-btn--ghost" type="button" onClick={onOpenLeads}>All</button>
+          </div>
+          <ul className="adm-list">
+            {(stats.recentLeads || []).map(lead => (
+              <li key={lead.id}>
+                <span className="adm-title">{lead.name}</span>
+                <span className="adm-meta">{lead.email}</span>
+                <span className="adm-meta">{formatWhen(lead.created_at)}</span>
+              </li>
+            ))}
+            {!stats.recentLeads?.length ? <li className="adm-empty">No enquiries yet.</li> : null}
+          </ul>
+        </section>
+      </div>
+    </div>
+  );
+}
 
 function PostList({ posts, onNew, onEdit, onDelete }) {
   return (
-    <div>
+    <div className="adm-panel">
       <div className="adm-bar">
-        <h1>Articles</h1>
+        <div>
+          <p className="adm-eyebrow">Content</p>
+          <h1>Articles</h1>
+        </div>
         <span className="adm-bar-spacer" />
         <button className="adm-btn" type="button" onClick={onNew}>New article</button>
       </div>
       {posts.length ? (
-        <ul className="adm-list">
+        <ul className="adm-list adm-list--table">
           {posts.map(post => (
             <li key={post.slug}>
-              <span className="adm-title">{post.title}</span>
+              <div className="adm-list-main">
+                <span className="adm-title">{post.title}</span>
+                <span className="adm-meta">/{post.slug}</span>
+              </div>
               <span className={`adm-flag adm-flag--${post.published ? 'live' : 'draft'}`}>
                 {post.published ? 'Live' : 'Draft'}
               </span>
               <span className="adm-meta">{post.dateLabel}</span>
-              <button className="adm-btn adm-btn--ghost" type="button" onClick={() => onEdit(post)}>Edit</button>
-              <button className="adm-btn adm-btn--danger" type="button" onClick={() => onDelete(post)}>Delete</button>
+              <div className="adm-list-actions">
+                <button className="adm-btn adm-btn--ghost" type="button" onClick={() => onEdit(post)}>Edit</button>
+                <button className="adm-btn adm-btn--danger" type="button" onClick={() => onDelete(post)}>Delete</button>
+              </div>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="adm-empty">No articles yet. Write the first one.</p>
+        <p className="adm-empty">No articles in the database yet. Write the first one.</p>
       )}
     </div>
   );
@@ -321,27 +411,33 @@ function PostList({ posts, onNew, onEdit, onDelete }) {
 
 function LeadList({ leads }) {
   return (
-    <div>
+    <div className="adm-panel">
       <div className="adm-bar">
-        <h1>Enquiries</h1>
+        <div>
+          <p className="adm-eyebrow">Inbox</p>
+          <h1>Enquiries</h1>
+        </div>
         <span className="adm-bar-spacer" />
-        <span className="adm-meta">{leads.length} most recent</span>
+        <span className="adm-meta">{leads.length} loaded</span>
       </div>
       {leads.length ? (
-        <ul className="adm-list">
+        <ul className="adm-list adm-list--leads">
           {leads.map(lead => (
             <li key={lead.id}>
-              <span className="adm-title">
-                {lead.name} — <a href={`mailto:${lead.email}`}>{lead.email}</a>
-              </span>
-              <span className="adm-meta">{new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(lead.created_at))}</span>
-              {lead.source_path ? <span className="adm-meta">{lead.source_path}</span> : null}
+              <div className="adm-list-main">
+                <span className="adm-title">
+                  {lead.name} — <a href={`mailto:${lead.email}`}>{lead.email}</a>
+                </span>
+                <span className="adm-meta">{formatWhen(lead.created_at)}</span>
+                {lead.source_path ? <span className="adm-meta">{lead.source_path}</span> : null}
+                {lead.timeline ? <span className="adm-meta">Timeline: {lead.timeline}</span> : null}
+              </div>
               <p className="adm-lead-body">{lead.message}</p>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="adm-empty">No enquiries yet.</p>
+        <p className="adm-empty">No enquiries yet. They appear here when the contact form saves to Neon.</p>
       )}
     </div>
   );
@@ -350,11 +446,13 @@ function LeadList({ leads }) {
 /* ------------------------------------------------------------------- shell */
 
 export default function AdminPage() {
-  const [state, setState] = useState('checking'); // checking | out | in
+  const [state, setState] = useState('checking');
   const [missingConfig, setMissingConfig] = useState(null);
-  const [tab, setTab] = useState('posts');
+  const [admin, setAdmin] = useState(null);
+  const [tab, setTab] = useState('overview');
   const [posts, setPosts] = useState([]);
   const [leads, setLeads] = useState([]);
+  const [stats, setStats] = useState(null);
   const [editing, setEditing] = useState(null);
   const [notice, setNotice] = useState('');
   const [error, setError] = useState('');
@@ -368,12 +466,14 @@ export default function AdminPage() {
   const refresh = useCallback(async () => {
     setError('');
     try {
-      const [postData, leadData] = await Promise.all([
+      const [postData, leadData, overview] = await Promise.all([
         api('/api/posts?all=1'),
         api('/api/leads').catch(() => ({ leads: [] })),
+        api('/api/admin/overview').catch(() => null),
       ]);
       setPosts(postData.posts || []);
       setLeads(leadData.leads || []);
+      setStats(overview);
     } catch (err) {
       setError(err.message);
     }
@@ -381,8 +481,9 @@ export default function AdminPage() {
 
   useEffect(() => {
     api('/api/admin/session')
-      .then(({ signedIn, missing }) => {
+      .then(({ signedIn, missing, admin: sessionAdmin }) => {
         setMissingConfig(missing || null);
+        setAdmin(sessionAdmin || null);
         setState(signedIn ? 'in' : 'out');
         if (signedIn) refresh();
       })
@@ -392,8 +493,11 @@ export default function AdminPage() {
   async function signOut() {
     await api('/api/admin/session', { method: 'DELETE' }).catch(() => {});
     setState('out');
+    setAdmin(null);
     setPosts([]);
     setLeads([]);
+    setStats(null);
+    setEditing(null);
   }
 
   async function remove(post) {
@@ -410,9 +514,10 @@ export default function AdminPage() {
 
   function afterSave(result) {
     setEditing(null);
+    setTab('posts');
     setNotice(
       result.rebuild?.triggered
-        ? 'Saved. A rebuild was triggered — the article will be live in a minute or two.'
+        ? 'Saved. A rebuild was triggered — the article will be live shortly.'
         : `Saved. ${result.rebuild?.reason === 'draft'
           ? 'Kept as a draft.'
           : 'Set DEPLOY_HOOK_URL to rebuild automatically, or redeploy to publish it.'}`,
@@ -427,63 +532,81 @@ export default function AdminPage() {
   if (state === 'out') {
     return (
       <div className="adm">
-        <div className="adm-shell">
-          <SignIn missing={missingConfig} onDone={() => { setState('in'); refresh(); }} />
-        </div>
+        <SignIn
+          missing={missingConfig}
+          onDone={() => {
+            setState('in');
+            api('/api/admin/session').then(data => setAdmin(data.admin || null));
+            refresh();
+          }}
+        />
       </div>
     );
   }
 
   return (
     <div className="adm">
+      <aside className="adm-nav" aria-label="Admin navigation">
+        <div className="adm-brand">
+          <strong>ebookwriters.us</strong>
+          <span>Studio admin</span>
+        </div>
+        <nav className="adm-nav-links">
+          {[
+            { id: 'overview', label: 'Overview' },
+            { id: 'posts', label: 'Articles' },
+            { id: 'leads', label: 'Enquiries' },
+          ].map(item => (
+            <button
+              key={item.id}
+              type="button"
+              className={`adm-nav-link${tab === item.id && !editing ? ' is-on' : ''}`}
+              onClick={() => { setEditing(null); setTab(item.id); setNotice(''); }}
+            >
+              {item.label}
+            </button>
+          ))}
+        </nav>
+        <div className="adm-nav-foot">
+          <p>{admin?.name || 'Operator'}</p>
+          <span>{admin?.email || 'Signed in'}</span>
+          <button className="adm-btn adm-btn--ghost" type="button" onClick={signOut}>Sign out</button>
+        </div>
+      </aside>
+
       <div className="adm-shell">
+        <div aria-live="polite">
+          {error ? <p className="adm-error">{error}</p> : null}
+          {notice ? <p className="adm-ok">{notice}</p> : null}
+        </div>
+
         {editing ? (
           <PostEditor
             initial={editing}
             onCancel={() => setEditing(null)}
             onSaved={afterSave}
           />
-        ) : (
-          <div>
-            <div className="adm-bar">
-              <h1>Studio admin</h1>
-              <span className="adm-bar-spacer" />
-              <div className="adm-tabs">
-                <button
-                  className={`adm-tab${tab === 'posts' ? ' is-on' : ''}`}
-                  type="button"
-                  onClick={() => setTab('posts')}
-                >
-                  Articles
-                </button>
-                <button
-                  className={`adm-tab${tab === 'leads' ? ' is-on' : ''}`}
-                  type="button"
-                  onClick={() => setTab('leads')}
-                >
-                  Enquiries
-                </button>
-              </div>
-              <button className="adm-btn adm-btn--ghost" type="button" onClick={signOut}>Sign out</button>
-            </div>
+        ) : null}
 
-            <div aria-live="polite">
-              {error ? <p className="adm-error">{error}</p> : null}
-              {notice ? <p className="adm-ok">{notice}</p> : null}
-            </div>
+        {!editing && tab === 'overview' ? (
+          <Overview
+            stats={stats}
+            onOpenPosts={() => setTab('posts')}
+            onOpenLeads={() => setTab('leads')}
+            onNewPost={() => { setNotice(''); setEditing({ ...EMPTY_POST }); }}
+          />
+        ) : null}
 
-            {tab === 'posts' ? (
-              <PostList
-                posts={posts}
-                onNew={() => { setNotice(''); setEditing({ ...EMPTY_POST }); }}
-                onEdit={post => { setNotice(''); setEditing(post); }}
-                onDelete={remove}
-              />
-            ) : (
-              <LeadList leads={leads} />
-            )}
-          </div>
-        )}
+        {!editing && tab === 'posts' ? (
+          <PostList
+            posts={posts}
+            onNew={() => { setNotice(''); setEditing({ ...EMPTY_POST }); }}
+            onEdit={post => { setNotice(''); setEditing(post); }}
+            onDelete={remove}
+          />
+        ) : null}
+
+        {!editing && tab === 'leads' ? <LeadList leads={leads} /> : null}
       </div>
     </div>
   );
