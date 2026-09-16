@@ -126,14 +126,95 @@ function CloseBand({ title, lead, to = '/contact', cta = 'Start Your Project' })
 }
 
 export function AboutPage() {
+  const page = aboutPage;
+
   return (
-    <>
-      <ArticlePage page={aboutPage} />
-      <CloseBand
-        title="Ready to talk through your book?"
-        lead="A 30-minute discovery call, an NDA, and a fixed quote. No hourly billing."
+    <div className="blog-page content-page about-page">
+      <ScrollTop />
+      <PageHero
+        eyebrow={page.eyebrow}
+        title={page.title}
+        titleEm={page.titleEm}
+        lead={page.lead}
+        image={page.heroImage}
+        imageAlt={page.heroImageAlt}
+        actions={page.actions}
       />
-    </>
+
+      <section className="about-manifesto" aria-label="Studio promise">
+        <div className="shell about-manifesto-inner">
+          <p className="about-manifesto-quote">{page.manifesto}</p>
+          <ul className="about-pillars">
+            {page.pillars.map(pillar => (
+              <li key={pillar.label}>
+                <p className="about-pillar-label">{pillar.label}</p>
+                <p>{pillar.copy}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="about-split" aria-label="Studio story">
+        <div className="shell about-split-grid">
+          <div className="about-principles">
+            {page.principles.map(item => (
+              <article key={item.index} className="about-principle">
+                <span className="about-principle-index" aria-hidden="true">{item.index}</span>
+                <div>
+                  <h2>{item.heading}</h2>
+                  {item.paragraphs.map(paragraph => (
+                    <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+          <figure className="about-portrait">
+            <img src={page.portrait.image} alt={page.portrait.alt} loading="lazy" />
+            <figcaption>{page.portrait.caption}</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section className="about-stages" aria-labelledby="about-stages-title">
+        <div className="shell">
+          <header className="about-stages-head">
+            <p className="eyebrow"><span>The path</span><i aria-hidden="true" /></p>
+            <h2 id="about-stages-title">
+              From discovery to <em>retailer-ready</em> files
+            </h2>
+          </header>
+          <ol className="about-stage-list">
+            {page.stages.map(stage => (
+              <li key={stage.n}>
+                <span className="about-stage-n" aria-hidden="true">{stage.n}</span>
+                <h3>{stage.title}</h3>
+                <p>{stage.copy}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="about-links" aria-label="Explore the studio">
+        <div className="shell">
+          <p className="eyebrow"><span>Keep reading</span><i aria-hidden="true" /></p>
+          <ul className="about-link-grid">
+            {page.links.map(link => (
+              <li key={link.href}>
+                <Link to={link.href}>
+                  <span>{link.label}</span>
+                  <IconArrow aria-hidden="true" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <CloseBand title={page.closeTitle} lead={page.closeLead} />
+    </div>
   );
 }
 

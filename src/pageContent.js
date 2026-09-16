@@ -6,7 +6,8 @@ const packageSnapshotBullets = plans.map(
 
 export const aboutPage = {
   eyebrow: 'The studio',
-  title: 'A US ebook writing studio built for authors who want the book done.',
+  title: 'A US ebook writing studio built for authors who want the',
+  titleEm: 'book done.',
   lead:
     'ebookwriters.us is an Iowa ghostwriting and publishing studio. We write, edit, design, and prepare books for Amazon KDP and IngramSpark — so you are not coordinating a dozen freelancers.',
   heroImage: '/assets/brand/page-hero-studio.png',
@@ -15,35 +16,67 @@ export const aboutPage = {
     { label: 'Request a quote', href: '/contact' },
     { label: 'See packages', href: '/pricing', variant: 'gold' },
   ],
-  sections: [
+  manifesto:
+    'One studio. One schedule. Your name on the cover — and nowhere is ours unless you ask.',
+  pillars: [
     {
+      label: 'Ownership',
+      copy: '100% rights and royalties stay with you. NDA before the first interview.',
+    },
+    {
+      label: 'Fixed fee',
+      copy: 'Packages quoted up front. Scope changes appear in writing before we write past them.',
+    },
+    {
+      label: 'Matched writers',
+      copy: 'Finance, health, law, memoir, and related nonfiction — specialists, not generalists.',
+    },
+  ],
+  principles: [
+    {
+      index: '01',
       heading: 'Who we are',
       paragraphs: [
         'We help experts, entrepreneurs, and first-time authors turn a clear idea into a manuscript they are proud to put their name on. The work happens under one roof: ghostwriting, editing, cover design, formatting, and retailer setup.',
-        `The studio is based in ${siteContact.address}. You can reach us at ${siteContact.email} or ${siteContact.phone}. We work with authors across the United States and remotely worldwide.`,
+        `Based in ${siteContact.address}. Reach us at ${siteContact.email} or ${siteContact.phone}. Authors across the US — and remotely worldwide.`,
       ],
     },
     {
+      index: '02',
       heading: 'How we work',
       paragraphs: [
         'Every project starts with a short discovery call and an NDA. We match you with a writer experienced in your category, agree a chapter outline, and write against a dated schedule. You review as chapters land — typically a few hours of your time in total.',
-        'You keep 100% of the rights and royalties. Your name goes on the cover. Ours appears nowhere unless you ask.',
+        'You keep 100% of the rights and royalties. Your name goes on the cover.',
       ],
     },
     {
+      index: '03',
       heading: 'What we will not do',
       paragraphs: [
-        'We will not guess at a niche we cannot staff. If we do not have a specialist for your subject — finance, health, law, memoir, and related nonfiction are our core — we will say so rather than assign a generalist.',
-        'We also will not bury fees. Packages are quoted fixed up front. If the scope changes, you see the change before we write past it.',
+        'We will not guess at a niche we cannot staff. If we do not have a specialist for your subject, we will say so rather than assign a generalist.',
+        'We also will not bury fees. If the scope changes, you see the change before we write past it.',
       ],
     },
   ],
+  stages: [
+    { n: '01', title: 'Discovery + NDA', copy: 'Goals, audience, length, and a clear yes or no on fit.' },
+    { n: '02', title: 'Outline + sample', copy: 'Chapter map and a paid sample chapter before the rest is written.' },
+    { n: '03', title: 'Draft + revise', copy: 'Dated schedule, chapter reviews, and fixed revision rounds.' },
+    { n: '04', title: 'Design + files', copy: 'Cover, formatting, and retailer-ready files for the package you chose.' },
+  ],
+  portrait: {
+    image: '/assets/brand/publishing-craft-v2.webp',
+    alt: 'Manuscript and craft tools on the studio production desk',
+    caption: 'Production desk — outline to retailer-ready files under one roof.',
+  },
   links: [
     { label: 'Ebook ghostwriting', href: '/ebook-ghostwriting-services' },
     { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
     { label: 'Amazon KDP publishing', href: '/amazon-kdp-ebook-writing' },
     { label: 'Writing packages', href: '/pricing' },
   ],
+  closeTitle: 'Ready to talk through your book?',
+  closeLead: 'A 30-minute discovery call, an NDA, and a fixed quote. No hourly billing.',
 };
 
 export const pricingPage = {
