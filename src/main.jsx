@@ -467,10 +467,7 @@ function Services() {
 /* ---------------------------------------------------------------- portfolio */
 
 function Portfolio() {
-  const shelf = books.slice(0, 6).map((book, index) => ({
-    ...book,
-    cover: `/assets/brand/portfolio-shelf-book-${index + 1}.png`,
-  }));
+  const shelf = books.slice(0, 6).map(book => ({ ...book, cover: book.image }));
   const [activeBook, setActiveBook] = useState(2);
   const [paused, setPaused] = useState(false);
   const stageRef = useRef(null);
