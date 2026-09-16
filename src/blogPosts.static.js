@@ -52,7 +52,7 @@ export const staticBlogPosts = [
     lead:
       '“Writing included” is not enough. Before you hire ebook writers or a ghostwriting studio, use this checklist to see what a complete package should cover — and what usually gets left out of cheap quotes.',
     cta: 'Choose a writing package',
-    image: '/assets/brand/faq-editorial-v2.png',
+    image: '/assets/brand/faq-editorial-v2.webp',
     imageAlt: 'Stack of clothbound books and a fountain pen on a marble desk',
     takeaways: [
       'A complete package covers writing, editing, cover, retailer files, and rights — not only a first draft.',
@@ -194,7 +194,7 @@ export const staticBlogPosts = [
     lead:
       'Both paths can produce a manuscript. They are not the same product. If you are choosing between a ghostwriting studio and a solo freelancer, compare process, accountability, and what you receive after the draft — not only the headline price.',
     cta: 'Talk to a ghostwriting specialist',
-    image: '/assets/brand/hero-concept-photo.png',
+    image: '/assets/brand/hero-concept-photo.webp',
     imageAlt: 'Clothbound hardcover standing on a writer’s desk beside manuscript pages and a fountain pen',
     takeaways: [
       'A studio coordinates writing, editing, design, and often publishing under one agreement.',
@@ -555,7 +555,7 @@ export const staticBlogPosts = [
     lead:
       '“How much does a ghostwriter cost?” usually means two things: what the market charges, and what you actually get for the fee. Here is a clear ghostwriting-focused breakdown — separate from a general “hire an ebook writer” budget guide.',
     cta: 'Request a ghostwriting quote',
-    image: '/assets/brand/hero-concept-photo.png',
+    image: '/assets/brand/hero-concept-photo.webp',
     imageAlt: 'Manuscript pages and pen on a desk — ebook ghostwriting cost guide',
     takeaways: [
       'Ghostwriting fees track length, research, voice work, and whether edits and files are bundled.',

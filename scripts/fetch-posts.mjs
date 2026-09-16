@@ -11,8 +11,8 @@
  *
  *   npm run posts:pull     (also runs automatically before every build)
  */
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { basename, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadEnv } from './load-env.mjs';
 import { staticBlogPosts } from '../src/blogPosts.static.js';
@@ -22,6 +22,19 @@ loadEnv();
 const root = join(fileURLToPath(new URL('.', import.meta.url)), '..');
 const outDir = join(root, 'src', 'generated');
 const outFile = join(outDir, 'posts.js');
+const brandDir = join(root, 'public', 'assets', 'brand');
+
+/** Prefer a local .webp sibling when we compressed the PNG for speed. */
+function preferWebp(imagePath) {
+  if (!imagePath || typeof imagePath !== 'string') return imagePath;
+  if (!imagePath.endsWith('.png')) return imagePath;
+  const file = basename(imagePath);
+  const webpName = file.replace(/\.png$/i, '.webp');
+  if (existsSync(join(brandDir, webpName))) {
+    return imagePath.replace(/\.png$/i, '.webp');
+  }
+  return imagePath;
+}
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'];
@@ -63,7 +76,7 @@ function fromRow(row) {
     keywords: row.keywords || [],
     lead: row.lead,
     cta: row.cta,
-    image: row.image,
+    image: preferWebp(row.image),
     imageAlt: row.image_alt,
     takeaways: row.takeaways || [],
     sections: row.sections || [],

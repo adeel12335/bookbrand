@@ -17,6 +17,16 @@
       "source": "/ghostwriting",
       "destination": "/ebook-ghostwriting-services",
       "permanent": true
+    },
+    {
+      "source": "/favicon.ico",
+      "destination": "/assets/brand/favicon-32.png",
+      "permanent": false
+    },
+    {
+      "source": "/404",
+      "destination": "/404.html",
+      "statusCode": 404
     }
   ],
   "headers": [

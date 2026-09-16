@@ -105,7 +105,7 @@ export const portfolioIntro = {
   meta: 'Selected titles across business, memoir, health, and more.',
   linkLabel: 'View full portfolio',
   linkHref: '/portfolio',
-  image: '/assets/brand/portfolio-shelf-v2.png',
+  image: '/assets/brand/portfolio-shelf-v2.webp',
   imageAlt: 'Six professionally designed books displayed on a warm stone shelf',
 };
 
@@ -126,7 +126,7 @@ export const dualOffer = {
     note: 'Both desks are included in every full-service plan.',
   },
   stage: {
-    image: '/assets/brand/publishing-craft-v2.png',
+    image: '/assets/brand/publishing-craft-v2.webp',
     imageAlt: 'Open manuscript and craft tools on a publishing production desk',
   },
   publish: {
@@ -162,12 +162,12 @@ export const dualOffer = {
 };
 
 export const books = [
-  { title: 'Higher Ground', author: 'Daniel Brooks', genre: 'Self-Development', image: '/assets/brand/portfolio-shelf-book-1.png' },
-  { title: 'The Kindness Effect', author: 'Elena Martin', genre: 'Personal Growth', image: '/assets/brand/portfolio-shelf-book-2.png' },
-  { title: 'Beyond the Stars', author: 'Marcus Hill', genre: 'Parenting', image: '/assets/brand/portfolio-shelf-book-3.png' },
-  { title: 'The Second Chapter', author: 'Olivia Reese', genre: 'Memoir', image: '/assets/brand/portfolio-shelf-book-4.png' },
-  { title: 'Wealth with Purpose', author: 'Jonathan Blake', genre: 'Business & Finance', image: '/assets/brand/portfolio-shelf-book-5.png' },
-  { title: 'A Healthier You', author: 'Dr. Amanda Lewis', genre: 'Health & Wellness', image: '/assets/brand/portfolio-shelf-book-6.png' },
+  { title: 'Higher Ground', author: 'Daniel Brooks', genre: 'Self-Development', image: '/assets/brand/portfolio-shelf-book-1.webp' },
+  { title: 'The Kindness Effect', author: 'Elena Martin', genre: 'Personal Growth', image: '/assets/brand/portfolio-shelf-book-2.webp' },
+  { title: 'Beyond the Stars', author: 'Marcus Hill', genre: 'Parenting', image: '/assets/brand/portfolio-shelf-book-3.webp' },
+  { title: 'The Second Chapter', author: 'Olivia Reese', genre: 'Memoir', image: '/assets/brand/portfolio-shelf-book-4.webp' },
+  { title: 'Wealth with Purpose', author: 'Jonathan Blake', genre: 'Business & Finance', image: '/assets/brand/portfolio-shelf-book-5.webp' },
+  { title: 'A Healthier You', author: 'Dr. Amanda Lewis', genre: 'Health & Wellness', image: '/assets/brand/portfolio-shelf-book-6.webp' },
 ];
 
 export const portfolioPage = {

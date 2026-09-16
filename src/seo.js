@@ -16,7 +16,7 @@ export { SITE_ORIGIN, absoluteUrl, absoluteAsset } from './site.js';
 
 const LASTMOD = '2026-09-16';
 const DEFAULT_ROBOTS = 'index, follow, max-image-preview:large';
-const ORG_LOGO = '/assets/brand/page-hero-studio.png';
+const ORG_LOGO = '/assets/brand/logo-dark.png';
 
 function organization() {
   return {
@@ -160,7 +160,7 @@ function page({
 const staticPages = [
   page({
     path: '/',
-    title: 'Ebook Writers & Ghostwriting Services | ebookwriters.us',
+    title: 'Ebook Writers & Ghostwriting | ebookwriters.us',
     description:
       'Hire professional ebook writers and ghostwriters for writing, editing, cover design, formatting, and KDP publishing. Fixed packages from $699. 100% author ownership.',
     changefreq: 'weekly',
@@ -193,10 +193,10 @@ const staticPages = [
   }),
   page({
     path: '/contact',
-    title: 'Contact — Book Writing Quote | ebookwriters.us',
+    title: 'Contact for a Book Quote | ebookwriters.us',
     description:
       'Contact ebookwriters.us for a fixed ebook writing or ghostwriting quote. Email info@ebookwriters.us or call +1 712-414-0542. Iowa, USA.',
-    image: '/assets/brand/contact-consultation-v2.png',
+    image: '/assets/brand/contact-consultation-v2.webp',
     imageAlt: 'Author consultation — notebook and publishing notes on a warm desk',
     changefreq: 'monthly',
     priority: 0.9,
@@ -236,7 +236,6 @@ const staticPages = [
             '@type': 'ListItem',
             position: index + 1,
             name: `${book.title} by ${book.author}`,
-            url: absoluteUrl('/portfolio'),
           })),
         },
       },
@@ -250,7 +249,7 @@ const staticPages = [
     path: '/blog',
     title: blogIndex.metaTitle,
     description: blogIndex.metaDescription,
-    image: '/assets/brand/faq-editorial-v2.png',
+    image: '/assets/brand/faq-editorial-v2.webp',
     changefreq: 'weekly',
     priority: 0.8,
     jsonLd: [
@@ -270,7 +269,7 @@ const staticPages = [
   }),
   page({
     path: '/about',
-    title: 'About Our Ebook Writing Studio | ebookwriters.us',
+    title: 'About the Writing Studio | ebookwriters.us',
     description:
       'ebookwriters.us is an Iowa ebook writing and ghostwriting studio. Named specialists, 100% author ownership, and fixed packages from writing through KDP publishing.',
     priority: 0.8,
@@ -341,7 +340,7 @@ const staticPages = [
   }),
   page({
     path: '/services',
-    title: 'Ebook Writing, Editing & Publishing Services | ebookwriters.us',
+    title: 'Ebook Writing & Publishing Services | ebookwriters.us',
     description:
       'Ghostwriting, editing, cover design, Amazon KDP formatting, ISBN support, and book marketing — one studio from outline to published ebook.',
     priority: 0.9,
@@ -359,7 +358,7 @@ const staticPages = [
   }),
   page({
     path: '/ebook-ghostwriting-services',
-    title: 'Ebook Ghostwriting Services — Your Voice, Your Name | ebookwriters.us',
+    title: 'Ebook Ghostwriting Services | ebookwriters.us',
     description:
       'Hire ebook ghostwriters on a fixed fee. Outline to manuscript, revisions, NDA, and 100% ownership. Packages from $699.',
     priority: 0.9,
@@ -401,7 +400,7 @@ const staticPages = [
   }),
   page({
     path: '/amazon-kdp-ebook-writing',
-    title: 'Amazon KDP Ebook Writing & Publishing | ebookwriters.us',
+    title: 'Amazon KDP Ebook Writing | ebookwriters.us',
     description:
       'Amazon KDP ebook writing, formatting, categories, and publishing setup. Manuscript through retailer-ready files. You keep the KDP account and 100% of royalties.',
     priority: 0.9,
@@ -422,7 +421,7 @@ const staticPages = [
   }),
   page({
     path: '/ebook-editing-services',
-    title: 'Ebook Editing Services — Developmental, Line & Proofreading | ebookwriters.us',
+    title: 'Ebook Editing Services | ebookwriters.us',
     description:
       editingPage.lead,
     priority: 0.9,
@@ -442,7 +441,7 @@ const staticPages = [
   }),
   page({
     path: '/ebook-cover-design',
-    title: 'Ebook Cover Design for Kindle & Print | ebookwriters.us',
+    title: 'Ebook Cover Design | ebookwriters.us',
     description: coverPage.lead,
     priority: 0.9,
     jsonLd: [
@@ -461,7 +460,7 @@ const staticPages = [
   }),
   page({
     path: '/faq',
-    title: 'Ebook Writing & Publishing FAQ | ebookwriters.us',
+    title: 'Ebook Writing FAQ | ebookwriters.us',
     description: faqPage.lead,
     priority: 0.8,
     changefreq: 'monthly',
@@ -495,9 +494,9 @@ const staticPages = [
 function blogPostPage(post) {
   return page({
     path: `/blog/${post.slug}`,
-    title: `${post.title} | ebookwriters.us`,
+    title: `${post.title.length > 42 ? `${post.title.slice(0, 40).trim()}…` : post.title} | ebookwriters.us`,
     description: post.description,
-    image: post.image || '/assets/brand/faq-editorial-v2.png',
+    image: post.image || '/assets/brand/faq-editorial-v2.webp',
     imageAlt: post.imageAlt || DEFAULT_OG_ALT,
     type: 'article',
     changefreq: 'monthly',
@@ -511,7 +510,7 @@ function blogPostPage(post) {
         description: post.description,
         datePublished: post.date,
         dateModified: post.date,
-        image: absoluteAsset(post.image || '/assets/brand/faq-editorial-v2.png'),
+        image: absoluteAsset(post.image || '/assets/brand/faq-editorial-v2.webp'),
         author: { '@type': 'Organization', name: SITE_NAME, url: absoluteUrl('/') },
         publisher: {
           '@type': 'Organization',

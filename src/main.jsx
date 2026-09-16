@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useRef, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useId, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
@@ -18,27 +18,31 @@ import {
   portfolioIntro, servicesIntro, benefits, pathBand, dualOffer,
   pricingIntro, faqIntro, contactIntro, footerBrand,
 } from './data.js';
-import { BlogIndexPage, BlogPostPage } from './BlogPages.jsx';
-import { PortfolioPage } from './PortfolioPage.jsx';
-import {
-  AboutPage,
-  CoverDesignPage,
-  EditingPage,
-  FaqPage,
-  GhostwritingPage,
-  HireWriterPage,
-  KdpPage,
-  NotFoundPage,
-  PricingPage,
-  PrivacyPage,
-  ServicesPage,
-  TermsPage,
-} from './ContentPages.jsx';
 import { PageHero } from './PageHero.jsx';
 import { SeoHead } from './SeoHead.jsx';
-import AdminPage from './AdminPage.jsx';
 import './fonts.css';
 import './styles.css';
+
+const BlogIndexPage = lazy(() => import('./BlogPages.jsx').then(m => ({ default: m.BlogIndexPage })));
+const BlogPostPage = lazy(() => import('./BlogPages.jsx').then(m => ({ default: m.BlogPostPage })));
+const PortfolioPage = lazy(() => import('./PortfolioPage.jsx').then(m => ({ default: m.PortfolioPage })));
+const AdminPage = lazy(() => import('./AdminPage.jsx'));
+const AboutPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.AboutPage })));
+const CoverDesignPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.CoverDesignPage })));
+const EditingPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.EditingPage })));
+const FaqPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.FaqPage })));
+const GhostwritingPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.GhostwritingPage })));
+const HireWriterPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.HireWriterPage })));
+const KdpPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.KdpPage })));
+const NotFoundPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.NotFoundPage })));
+const PricingPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.PricingPage })));
+const PrivacyPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.PrivacyPage })));
+const ServicesPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.ServicesPage })));
+const TermsPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.TermsPage })));
+
+function RouteFallback() {
+  return <div className="shell" style={{ padding: '4rem 0' }} aria-busy="true">Loading…</div>;
+}
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -236,6 +240,41 @@ function Header() {
 
 /* --------------------------------------------------------------------- hero */
 
+/*
+ * The approved concept art with its type removed; the copy is set live on top,
+ * positioned in plate pixels (see .hx-plate in styles.css) so it scales with
+ * the picture. The visible headline and lead are aria-hidden: the sr-only
+ * h1 and lead above carry the crawlable, read-aloud copy.
+ */
+function HeroPlateCopy({ lines, strip }) {
+  return (
+    <>
+      <div className="hx-plate">
+        <p className="hx-plate-title" aria-hidden="true">
+          {lines.map((line, i) => (
+            <span key={line} className={i === lines.length - 1 ? 'is-accent' : undefined}>
+              {line}
+            </span>
+          ))}
+        </p>
+        <p className="hx-plate-lead" aria-hidden="true">{hero.leadVisible}</p>
+        <div className="hx-plate-actions">
+          <a className="hx-plate-cta" href="/contact">{hero.cta}</a>
+          <a className="hx-plate-link" href={hero.link.href}>
+            <span>{hero.link.label}</span>
+            <IconArrow />
+          </a>
+        </div>
+      </div>
+      {strip && (
+        <ul className="hx-plate-strip">
+          {hero.strip.map(item => <li key={item}>{item}</li>)}
+        </ul>
+      )}
+    </>
+  );
+}
+
 function Hero() {
   const rootRef = useRef(null);
 
@@ -244,40 +283,30 @@ function Hero() {
       <h1 id="hero-title" className="sr-only">{hero.h1}</h1>
       <p className="sr-only">{hero.lead}</p>
 
-      {/* Desktop: pixel-matched to the approved concept art */}
+      {/* Desktop: the approved concept plate */}
       <div className="hx-exact">
         <img
-          src="/assets/brand/hero-v2-exact.png"
+          src="/assets/brand/hero-desk-plate.jpg"
           alt={hero.imageAlt}
           width="1586"
           height="888"
           fetchPriority="high"
           decoding="async"
         />
-        <a className="hx-exact-hit hx-exact-hit--cta" href="/contact">
-          {hero.cta}
-        </a>
-        <a className="hx-exact-hit hx-exact-hit--link" href={hero.link.href}>
-          {hero.link.label}
-        </a>
+        <HeroPlateCopy lines={hero.lines} strip />
       </div>
 
-      {/* Mobile / tablet: pixel-exact reference mock (same approach as desktop) */}
+      {/* Mobile / tablet: the approved mobile plate (logo and menu mark are in the art) */}
       <div className="hx-exact-mob">
         <img
-          src="/assets/brand/hero-mobile-exact.png"
+          src="/assets/brand/hero-mob-plate.jpg"
           alt={hero.imageAlt}
           width="576"
           height="1024"
           fetchPriority="high"
           decoding="async"
         />
-        <a className="hx-exact-mob-hit hx-exact-mob-hit--cta" href="/contact">
-          {hero.cta}
-        </a>
-        <a className="hx-exact-mob-hit hx-exact-mob-hit--link" href={hero.link.href}>
-          {hero.link.label}
-        </a>
+        <HeroPlateCopy lines={hero.linesMobile} />
       </div>
     </section>
   );
@@ -1070,7 +1099,7 @@ function Contact({ asPage = false }) {
                   autoComplete="email"
                   required
                   maxLength={254}
-                  placeholder="alex@company.com"
+                  placeholder="you@email.com"
                   aria-invalid={fieldErrors.email ? 'true' : undefined}
                   aria-describedby={fieldErrors.email ? 'email-error' : undefined}
                 />
@@ -1195,7 +1224,7 @@ function Footer() {
 function MobileBar() {
   const [hidden, setHidden] = useState(true);
   useEffect(() => {
-    const heroCta = document.querySelector('.hx-exact-mob-hit--cta, .hx-live .hx-cta');
+    const heroCta = document.querySelector('.hx-exact-mob .hx-plate-cta, .hx-live .hx-cta');
     const pathCard = document.querySelector('.ed-path-card');
     const portfolio = document.getElementById('portfolio');
     const faq = document.getElementById('faq');
@@ -1268,6 +1297,7 @@ function App() {
   return (
     <BrowserRouter>
       <SeoHead />
+      <Suspense fallback={<RouteFallback />}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/blog" element={<BlogShell><BlogIndexPage /></BlogShell>} />
@@ -1289,6 +1319,7 @@ function App() {
         <Route path="/terms" element={<BlogShell><TermsPage /></BlogShell>} />
         <Route path="*" element={<BlogShell><NotFoundPage /></BlogShell>} />
       </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

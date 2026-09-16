@@ -38,8 +38,11 @@
   --line-soft: rgba(15, 61, 50, 0.08);
   --line-light: rgba(240, 230, 210, 0.18);
 
-  --display: 'Cormorant Garamond', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
-  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  /* Neue Haas Grotesk direction, set in Switzer — see src/fonts.css.
+     --display is the same face drawn at 85%, so sizes tuned for the old
+     serif keep their cap height and measure. */
+  --display: 'Switzer Display', 'Switzer Display Fallback', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --sans: 'Switzer', 'Switzer Fallback', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
   --shell: 1280px;
   --gutter: clamp(1.25rem, 4vw, 3.5rem);
@@ -74,7 +77,11 @@ body {
   font-family: var(--sans);
   font-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
   line-height: 1.7;
+  /* Switzer is spaced for display, like NHG Display; text sizes get the
+     slightly open fit NHG Text is cut with. */
+  letter-spacing: 0.01em;
   font-feature-settings: 'kern' 1, 'liga' 1;
+  font-synthesis: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -88,15 +95,15 @@ img { height: auto; }
 h1, h2, h3, h4 {
   margin: 0;
   font-family: var(--display);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--emerald-900);
   line-height: 1.05;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.025em;
 }
 
 h1 { font-size: clamp(2.4rem, 0.9rem + 3.9vw, 4.25rem); }
 h2 { font-size: clamp(2.1rem, 1.2rem + 3.4vw, 3.75rem); }
-h3 { font-size: clamp(1.2rem, 1.08rem + 0.5vw, 1.45rem); line-height: 1.25; letter-spacing: -0.005em; }
+h3 { font-size: clamp(1.2rem, 1.08rem + 0.5vw, 1.45rem); line-height: 1.25; letter-spacing: -0.012em; }
 
 /* Headings that sit in a narrow half-column drop a size step so they do not rag. */
 .why-copy h2,
@@ -209,6 +216,7 @@ button {
   text-transform: uppercase;
   color: var(--gold-ink);
 }
+.eyebrow-light { color: var(--gold-300); }
 .eyebrow i {
   display: block;
   width: clamp(2.5rem, 5vw, 4.25rem);
@@ -216,7 +224,9 @@ button {
   background: currentColor;
   opacity: 0.55;
 }
-.eyebrow-light { color: var(--gold-300); }
+.eyebrow {
+  color: var(--gold-ink);
+}
 
 /* -------------------------------------------------------------------- ctas */
 
@@ -1980,7 +1990,7 @@ body { background: var(--paper); }
   padding-right: clamp(2.5rem, 5vw, 5rem);
   background:
     linear-gradient(90deg, rgba(7,36,28,0.96) 0%, rgba(7,36,28,0.83) 48%, rgba(7,36,28,0.46) 100%),
-    url('/assets/brand/contact-writing-desk.png') center / cover no-repeat;
+    url('/assets/brand/contact-writing-desk.webp') center / cover no-repeat;
   color: rgba(240,230,210,0.72);
 }
 .contact-copy::after {
@@ -4900,30 +4910,6 @@ body {
   height: auto;
   display: block;
 }
-.hx-exact-hit {
-  position: absolute;
-  z-index: 2;
-  display: block;
-  color: transparent;
-  font-size: 0;
-  overflow: hidden;
-  cursor: pointer;
-}
-.hx-exact-hit--cta {
-  /* Primary gold button under the lead */
-  left: 7.1%;
-  top: 58.5%;
-  width: 16%;
-  height: 4.5%;
-  border-radius: 4px;
-}
-.hx-exact-hit--link {
-  /* Explore our services text link */
-  left: 24%;
-  top: 58.8%;
-  width: 15%;
-  height: 4.2%;
-}
 
 .hx-live {
   display: block;
@@ -6803,7 +6789,7 @@ body {
   font-family: var(--display);
   font-size: clamp(1.05rem, 1.3vw, 1.25rem);
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.12;
   color: var(--emerald-ink);
 }
 
@@ -6878,7 +6864,7 @@ body {
 
 .ed-path-copy h2 em {
   color: #d4b483;
-  font-style: italic;
+  font-style: normal;
 }
 
 .ed-path-copy > p {
@@ -7914,6 +7900,7 @@ body {
   font-size: clamp(2rem, 2.6vw, 2.6rem);
   font-weight: 600;
   line-height: 1;
+  letter-spacing: -0.02em;
   color: var(--emerald-ink);
 }
 
@@ -9336,7 +9323,7 @@ body {
   min-height: 32rem;
   padding: clamp(3rem, 6vw, 6rem) max(3rem, calc((100vw - 1440px) / 2 + 3rem));
   overflow: hidden;
-  background: #071b16 url('/assets/brand/manifesto-books.png') 92% 78% / 40% auto no-repeat !important;
+  background: #071b16 url('/assets/brand/manifesto-books.webp') 92% 78% / 40% auto no-repeat !important;
 }
 
 .fq-copy::after {
@@ -9543,7 +9530,8 @@ body {
   color: #f7f3ea !important;
   font-family: var(--display);
   font-size: clamp(1.55rem, 2vw, 2.1rem);
-  line-height: 1.08;
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .footer-cta .cta {
@@ -9566,14 +9554,6 @@ body {
     overflow: hidden;
   }
 
-  .hx-exact-hit--cta {
-    top: 75.6%;
-  }
-
-  .hx-exact-hit--link {
-    top: 76%;
-  }
-
   .ed-folio {
     padding-block: 2.2rem 0;
   }
@@ -9590,7 +9570,9 @@ body {
   .ed-folio-head h2 {
     max-width: none;
     font-size: clamp(3.2rem, 4vw, 4rem);
-    white-space: nowrap;
+    /* One line was wider than its column and ran under .ed-folio-meta. */
+    white-space: normal;
+    text-wrap: balance;
   }
 
   .ed-folio-meta {
@@ -10016,7 +9998,7 @@ body {
   }
   .ed-svc-head h2 {
     font-size: clamp(1.85rem, 7.5vw, 2.4rem) !important;
-    line-height: 1.12 !important;
+    line-height: 1.04 !important;
   }
   .ed-svc-cards {
     grid-template-columns: 1fr !important;
@@ -10051,7 +10033,7 @@ body {
   .ed-folio-head h2 {
     max-width: none !important;
     font-size: clamp(1.85rem, 7.5vw, 2.4rem) !important;
-    line-height: 1.12 !important;
+    line-height: 1.04 !important;
     white-space: normal !important;
   }
   .ed-folio-meta {
@@ -11227,7 +11209,7 @@ body {
 }
 
 .ed-price-head h2 em {
-  font-style: italic !important;
+  font-style: normal !important;
   color: #826a3c !important;
 }
 
@@ -11317,7 +11299,7 @@ body {
   justify-content: flex-start !important;
   min-height: clamp(36rem, 50vw, 45rem) !important;
   padding-top: clamp(4rem, 7vw, 7rem) !important;
-  background: #071b16 url('/assets/brand/faq-editorial-v2.png') center / cover no-repeat !important;
+  background: #071b16 url('/assets/brand/faq-editorial-v2.webp') center / cover no-repeat !important;
 }
 
 .fq-copy::after {
@@ -11892,7 +11874,7 @@ body {
   min-height: clamp(34rem, 52vw, 44rem) !important;
   padding: clamp(3.5rem, 7vw, 6.5rem) clamp(2rem, 5vw, 5rem) !important;
   overflow: hidden;
-  background: #071b16 url('/assets/brand/faq-editorial-v2.png') center / cover no-repeat !important;
+  background: #071b16 url('/assets/brand/faq-editorial-v2.webp') center / cover no-repeat !important;
 }
 
 .fq-copy::after {
@@ -11924,7 +11906,7 @@ body {
 
 .fq-copy h2 em {
   color: #d4b483 !important;
-  font-style: italic !important;
+  font-style: normal !important;
   font-weight: 400 !important;
 }
 
@@ -12202,7 +12184,7 @@ body {
 .ed-faq-volume {
   margin: 0 0 1.1rem;
   color: #8b7448;
-  font-family: var(--mono, ui-monospace, Consolas, monospace);
+  font-family: var(--sans);
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.18em;
@@ -12222,7 +12204,7 @@ body {
 
 .ed-faq-copy h2 em {
   color: #0a4d3e;
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
 }
 
@@ -12307,7 +12289,7 @@ body {
 .ed-faq-num {
   padding-top: 0.35rem;
   color: #b18948;
-  font-family: var(--mono, ui-monospace, Consolas, monospace);
+  font-family: var(--sans);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -12317,7 +12299,7 @@ body {
   font-family: var(--display);
   font-size: clamp(1.2rem, 1.7vw, 1.55rem);
   font-weight: 500;
-  line-height: 1.25;
+  line-height: 1.12;
   letter-spacing: -0.02em;
 }
 
@@ -12738,7 +12720,7 @@ body {
   top: clamp(1.1rem, 2.5vw, 1.6rem);
   left: clamp(1.1rem, 2.5vw, 1.75rem);
   margin: 0;
-  font-family: var(--mono, ui-monospace, monospace);
+  font-family: var(--sans);
   font-size: 0.68rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -12934,7 +12916,7 @@ body {
 
 .ed-duo-head h2 em {
   display: block;
-  font-style: italic;
+  font-style: normal;
   color: #d4b483;
 }
 
@@ -13677,7 +13659,7 @@ body {
 
 .ed-duo--stage .ed-duo-head h2 em {
   color: #d4b483;
-  font-style: italic;
+  font-style: normal;
 }
 
 .ed-duo--stage .ed-duo-head-aside p {
@@ -14021,7 +14003,7 @@ body {
   font-family: var(--display);
   font-size: clamp(1.05rem, 1.5vw, 1.2rem);
   font-weight: 450;
-  line-height: 1.4;
+  line-height: 1.3;
   letter-spacing: -0.01em;
 }
 
@@ -14141,7 +14123,7 @@ body {
 
   .ed-voices-min-card p {
     font-size: 1rem;
-    line-height: 1.38;
+    line-height: 1.3;
   }
 
   .ed-voices-min-card footer {
@@ -15996,32 +15978,6 @@ body {
   height: auto;
 }
 
-.hx-exact-mob-hit {
-  position: absolute;
-  z-index: 2;
-  display: block;
-  color: transparent;
-  font-size: 0;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-/* Tuned against the reference body plate */
-.hx-exact-mob-hit--cta {
-  left: 6.5%;
-  top: 40.8%;
-  width: 87%;
-  height: 5.2%;
-  border-radius: 3px;
-}
-
-.hx-exact-mob-hit--link {
-  left: 6.5%;
-  top: 47.2%;
-  width: 48%;
-  height: 3.2%;
-}
-
 @media (max-width: 1020px) {
   .hx-exact { display: none !important; }
   .hx-live { display: none !important; }
@@ -16092,21 +16048,6 @@ body {
     min-height: 100dvh !important;
     object-fit: cover !important;
     object-position: center top !important;
-  }
-
-  /* Hit areas relative to full reference mock (includes header band) */
-  .hx-exact-mob-hit--cta {
-    left: 6.5% !important;
-    top: 38.5% !important;
-    width: 87% !important;
-    height: 4.8% !important;
-  }
-
-  .hx-exact-mob-hit--link {
-    left: 6.5% !important;
-    top: 44.5% !important;
-    width: 48% !important;
-    height: 2.8% !important;
   }
 
   .hx-live,
@@ -17052,7 +16993,7 @@ body {
 .blog-card h2 {
   margin: 0 0 0.65rem;
   font-size: clamp(1.28rem, 2vw, 1.55rem);
-  line-height: 1.22;
+  line-height: 1.08;
 }
 
 .blog-card h2 a {
@@ -17130,7 +17071,7 @@ body {
 .blog-article-head h1 {
   margin: 0.7rem 0 1rem;
   font-size: clamp(2.1rem, 5vw, 3.2rem);
-  line-height: 1.12;
+  line-height: 1.02;
 }
 
 .blog-article-lead {
@@ -17818,7 +17759,7 @@ body {
 .pf-voice-grid p {
   margin: 0 0 1.25rem;
   color: var(--ink-700);
-  line-height: 1.6;
+  line-height: 1.42;
   font-family: var(--display);
   font-size: 1.2rem;
 }
@@ -18022,7 +17963,7 @@ body {
 .blog-card h3 {
   margin: 0 0 0.65rem;
   font-size: clamp(1.28rem, 2vw, 1.55rem);
-  line-height: 1.22;
+  line-height: 1.08;
 }
 
 .blog-card h2 a,
@@ -18066,7 +18007,7 @@ body {
   max-width: 18ch;
   margin: 0.65rem 0 1rem;
   font-size: clamp(2.05rem, 4.6vw, 3.05rem);
-  line-height: 1.12;
+  line-height: 1.02;
 }
 
 .blog-article-lead {
@@ -18303,7 +18244,7 @@ body {
   font-family: var(--display);
   font-size: 1.08rem;
   font-weight: 500;
-  line-height: 1.3;
+  line-height: 1.15;
   color: var(--emerald-800);
 }
 
@@ -18335,7 +18276,7 @@ body {
 
 .blog-close h2 em {
   color: var(--gold-300);
-  font-style: italic;
+  font-style: normal;
 }
 
 .blog-close p {
@@ -19035,7 +18976,8 @@ body {
   font-family: var(--display);
   font-size: 1.2rem;
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 1.18;
+  letter-spacing: -0.012em;
 }
 
 .content-faq-item dd {
@@ -19086,7 +19028,7 @@ body {
 .pf-hero--bg .pf-hero-copy h1 {
   margin: 0.35rem 0 0.5rem !important;
   font-size: clamp(1.65rem, 3.2vw, 2.25rem) !important;
-  line-height: 1.1 !important;
+  line-height: 1.02 !important;
   max-width: 16ch !important;
 }
 
@@ -19242,7 +19184,7 @@ body {
 
 .blog-card--featured h2 {
   font-size: clamp(1.7rem, 3.2vw, 2.35rem);
-  line-height: 1.18;
+  line-height: 1.04;
   max-width: 28ch;
   margin-bottom: 0.85rem;
 }
@@ -19548,7 +19490,7 @@ body {
 
 .blog-list-title em {
   color: var(--emerald-700);
-  font-style: italic;
+  font-style: normal;
 }
 
 .blog-featured {
@@ -19662,4 +19604,218 @@ body {
   .blog-card.blog-card--featured h2 a {
     max-width: none;
   }
+}
+
+/* ==========================================================================
+   HERO PLATE TYPE — live Switzer over the text-free concept plates
+   hero-desk-plate.jpg (1586 wide) / hero-mob-plate.jpg (576 wide) are the
+   approved concept art with the baked serif removed. The copy is positioned
+   in plate pixels: --u is one pixel of the plate at its rendered width, so
+   the type scales with the picture exactly as the baked type did.
+   ========================================================================== */
+
+.hx-exact,
+.hx-exact-mob {
+  container-type: inline-size;
+}
+
+.hx-exact { --u: calc(100cqw / 1586); }
+.hx-exact-mob { --u: calc(100cqw / 576); }
+
+.hx-plate {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: normal;
+  color: #f7f3ea;
+}
+
+.hx-plate-title {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--paper);
+}
+
+.hx-plate-title span {
+  display: block;
+  white-space: nowrap;
+}
+
+.hx-plate-title .is-accent {
+  color: var(--gold-300);
+}
+
+.hx-plate-lead {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 400;
+  letter-spacing: 0.005em;
+  color: rgba(247, 243, 234, 0.92);
+}
+
+.hx-plate-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  font-family: var(--sans);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--emerald-950);
+  background: var(--gold-300);
+  border-radius: var(--radius);
+  transition: background-color 0.3s var(--ease);
+}
+
+.hx-plate-cta:hover {
+  background: var(--gold-200);
+}
+
+.hx-plate-link {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--sans);
+  font-weight: 400;
+  letter-spacing: 0.005em;
+  color: #f7f3ea;
+}
+
+.hx-plate-link span {
+  border-bottom: max(1px, calc(1.6 * var(--u))) solid rgba(212, 180, 131, 0.75);
+  transition: border-color 0.3s var(--ease);
+}
+
+.hx-plate-link svg {
+  flex: none;
+  transition: transform 0.3s var(--ease);
+}
+
+.hx-plate-link:hover span {
+  border-color: var(--gold-300);
+}
+
+.hx-plate-link:hover svg {
+  transform: translateX(3px);
+}
+
+.hx-plate-strip {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hx-plate-strip li {
+  position: absolute;
+  top: calc(719 * var(--u));
+  transform: translateX(-50%);
+  font-family: var(--display);
+  font-size: calc(33 * var(--u));
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  color: var(--paper);
+}
+
+.hx-plate-strip li:nth-child(1) { left: calc(312 * var(--u)); }
+.hx-plate-strip li:nth-child(2) { left: calc(792 * var(--u)); }
+.hx-plate-strip li:nth-child(3) { left: calc(1273 * var(--u)); }
+
+.hx-plate-actions {
+  display: flex;
+}
+
+/* Desktop plate — 1586 x 888 */
+.hx-exact .hx-plate {
+  left: calc(115 * var(--u));
+  top: calc(70 * var(--u));
+  width: calc(700 * var(--u));
+}
+
+.hx-exact .hx-plate-actions {
+  align-items: center;
+  gap: calc(44 * var(--u));
+  margin-top: calc(35 * var(--u));
+}
+
+.hx-exact .hx-plate-title {
+  font-size: calc(112 * var(--u));
+  line-height: 0.88;
+}
+
+.hx-exact .hx-plate-lead {
+  max-width: calc(600 * var(--u));
+  margin-top: calc(35 * var(--u));
+  font-size: calc(21 * var(--u));
+  line-height: calc(30 * var(--u));
+}
+
+.hx-exact .hx-plate-cta {
+  width: calc(248 * var(--u));
+  height: calc(68 * var(--u));
+  font-size: calc(20 * var(--u));
+}
+
+.hx-exact .hx-plate-link {
+  gap: calc(6 * var(--u));
+  font-size: calc(20 * var(--u));
+  line-height: calc(30 * var(--u));
+}
+
+.hx-exact .hx-plate-link svg {
+  width: calc(28 * var(--u));
+  height: calc(28 * var(--u));
+}
+
+/* Mobile plate — 576 x 1024 */
+.hx-exact-mob .hx-plate {
+  left: calc(37 * var(--u));
+  top: calc(90 * var(--u));
+  width: calc(505 * var(--u));
+}
+
+.hx-exact-mob .hx-plate-title {
+  font-size: calc(80 * var(--u));
+  line-height: 0.8;
+}
+
+.hx-exact-mob .hx-plate-lead {
+  max-width: calc(385 * var(--u));
+  margin-top: calc(8 * var(--u));
+  font-size: calc(20 * var(--u));
+  line-height: calc(28.5 * var(--u));
+}
+
+.hx-exact-mob .hx-plate-actions {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(24 * var(--u));
+  margin-top: calc(19 * var(--u));
+}
+
+.hx-exact-mob .hx-plate-cta {
+  width: calc(262 * var(--u));
+  height: calc(58 * var(--u));
+  font-size: calc(22 * var(--u));
+}
+
+.hx-exact-mob .hx-plate-link {
+  gap: calc(4 * var(--u));
+  font-size: calc(20 * var(--u));
+  line-height: calc(26 * var(--u));
+}
+
+.hx-exact-mob .hx-plate-link svg {
+  width: calc(28 * var(--u));
+  height: calc(28 * var(--u));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-plate-cta,
+  .hx-plate-link span,
+  .hx-plate-link svg { transition: none; }
 }

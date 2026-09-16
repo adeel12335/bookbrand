@@ -4,14 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node scripts/fetch-fonts.mjs",
     "dev": "vite",
-    "prebuild": "node scripts/fetch-posts.mjs",
+    "prebuild": "node scripts/fetch-posts.mjs && node scripts/fetch-fonts.mjs",
     "build": "vite build && node scripts/prerender.mjs",
     "seo:stamp": "node scripts/stamp-html.mjs",
     "seo:prerender": "node scripts/prerender.mjs",
     "qa:seo-html": "node scripts/qa-seo-html.mjs",
     "preview": "vite preview",
     "posts:pull": "node scripts/fetch-posts.mjs",
+    "fonts:pull": "node scripts/fetch-fonts.mjs --force",
     "db:migrate": "node scripts/db-migrate.mjs",
     "db:seed": "node scripts/db-seed-posts.mjs",
     "db:seed-admin": "node scripts/db-seed-admin.mjs",
@@ -20,7 +22,6 @@
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
     "@vitejs/plugin-react": "latest",
-    "framer-motion": "latest",
     "gsap": "latest",
     "lenis": "latest",
     "lucide-react": "latest",
@@ -28,7 +29,7 @@
     "react-dom": "latest",
     "react-router-dom": "^7.18.4",
     "resend": "^6.28.1",
-    "swiper": "latest",
+    "swiper": "^14.2.0",
     "vite": "latest"
   },
   "devDependencies": {

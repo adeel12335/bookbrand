@@ -119,7 +119,31 @@ export function getCrawlMarkup(page) {
     chunks.push(blogIndexBlock());
   }
   if (path.startsWith('/blog/') && path !== '/blog') {
-    chunks.push(`<section><p>Article on ebookwriters.us. <a href="/blog">All articles</a> · <a href="/contact">Contact</a></p></section>`);
+    const slug = path.slice('/blog/'.length);
+    const post = blogPosts.find(item => item.slug === slug);
+    if (post) {
+      const takeaways = (post.takeaways || [])
+        .map(item => `<li>${esc(item)}</li>`)
+        .join('');
+      const sections = (post.sections || []).slice(0, 4).map(section => {
+        const paras = (section.paragraphs || [])
+          .slice(0, 2)
+          .map(p => `<p>${esc(p)}</p>`)
+          .join('\n');
+        return `<section>
+  <h2>${esc(section.heading)}</h2>
+  ${paras}
+</section>`;
+      }).join('\n');
+      chunks.push(`<p class="lead">${esc(post.lead || post.description)}</p>`);
+      if (takeaways) {
+        chunks.push(`<section><h2>Key takeaways</h2><ul>${takeaways}</ul></section>`);
+      }
+      chunks.push(sections);
+      chunks.push(`<p><a href="/blog">All articles</a> · <a href="/contact">${esc(post.cta || 'Contact')}</a></p>`);
+    } else {
+      chunks.push(`<section><p>Article on ebookwriters.us. <a href="/blog">All articles</a> · <a href="/contact">Contact</a></p></section>`);
+    }
   }
 
   chunks.push(`<p><a href="/contact">Contact</a> · <a href="/pricing">Pricing</a> · <a href="/services">Services</a> · Email ${esc(SITE_EMAIL)}</p>`);
