@@ -6,7 +6,7 @@ import { enforceLimit } from './_lib/ratelimit.js';
 import { verifyRecaptcha } from './_lib/recaptcha.js';
 
 const NOTIFY_TO = process.env.LEAD_NOTIFY_TO || 'info@ebookwriters.us';
-const NOTIFY_FROM = process.env.LEAD_NOTIFY_FROM || 'ebookwriters.us <onboarding@resend.dev>';
+const NOTIFY_FROM = process.env.LEAD_NOTIFY_FROM || 'ebookwriters.us <noreply@ebookwriters.us>';
 
 function escapeHtml(value) {
   return String(value)
