@@ -1,5 +1,5 @@
 import { blogIndex, blogPosts } from './blogPosts.js';
-import { books, faqs, portfolioPage } from './data.js';
+import { books, faqs, plans, portfolioPage } from './data.js';
 import { coverPage, editingPage, faqPage, landers } from './pageContent.js';
 import {
   DEFAULT_OG_ALT,
@@ -16,6 +16,7 @@ export { SITE_ORIGIN, absoluteUrl, absoluteAsset } from './site.js';
 
 const LASTMOD = '2026-09-16';
 const DEFAULT_ROBOTS = 'index, follow, max-image-preview:large';
+const ORG_LOGO = '/assets/brand/page-hero-studio.png';
 
 function organization() {
   return {
@@ -26,6 +27,7 @@ function organization() {
     email: SITE_EMAIL,
     telephone: SITE_PHONE,
     image: absoluteAsset(DEFAULT_OG_PATH),
+    logo: absoluteAsset(ORG_LOGO),
     priceRange: '$699 - $3,999',
     areaServed: { '@type': 'Country', name: 'United States' },
     address: {
@@ -92,6 +94,36 @@ function faqPageSchema(items) {
       name: item.q,
       acceptedAnswer: { '@type': 'Answer', text: item.a },
     })),
+  };
+}
+
+function pricingOfferSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Ebook writing and ghostwriting packages',
+    description:
+      'Fixed ebook writing packages from $699 to $3,999 including writing, editing, cover design, and retailer-ready files.',
+    brand: { '@type': 'Brand', name: SITE_NAME },
+    url: absoluteUrl('/pricing'),
+    offers: {
+      '@type': 'AggregateOffer',
+      url: absoluteUrl('/pricing'),
+      priceCurrency: 'USD',
+      lowPrice: '699',
+      highPrice: '3999',
+      offerCount: String(plans.length),
+      availability: 'https://schema.org/InStock',
+      offers: plans.map(plan => ({
+        '@type': 'Offer',
+        name: `${plan.name} package`,
+        price: plan.price.replace(',', ''),
+        priceCurrency: 'USD',
+        description: `${plan.words}. ${plan.copy}`,
+        url: absoluteUrl('/pricing'),
+        availability: 'https://schema.org/InStock',
+      })),
+    },
   };
 }
 
@@ -163,7 +195,7 @@ const staticPages = [
     path: '/contact',
     title: 'Contact — Book Writing Quote | ebookwriters.us',
     description:
-      'Contact ebookwriters.us for a fixed ebook writing or ghostwriting quote. Email info@ebookwriterusa.com or call +1 712-414-0542. Tennessee, USA.',
+      'Contact ebookwriters.us for a fixed ebook writing or ghostwriting quote. Email info@ebookwriters.us or call +1 712-414-0542. Tennessee, USA.',
     image: '/assets/brand/contact-consultation-v2.png',
     imageAlt: 'Author consultation — notebook and publishing notes on a warm desk',
     changefreq: 'monthly',
@@ -273,6 +305,8 @@ const staticPages = [
         { name: 'Home', path: '/' },
         { name: 'Pricing', path: '/pricing' },
       ]),
+      pricingOfferSchema(),
+      faqPageSchema(faqs.slice(0, 4)),
     ],
   }),
   page({
@@ -485,7 +519,7 @@ function blogPostPage(post) {
           url: absoluteUrl('/'),
           logo: {
             '@type': 'ImageObject',
-            url: absoluteAsset('/assets/brand/logo-dark.png'),
+            url: absoluteAsset(ORG_LOGO),
           },
         },
         mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),

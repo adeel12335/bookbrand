@@ -433,7 +433,7 @@ export const hero = {
 };
 
 export const siteContact = {
-  email: 'info@ebookwriterusa.com',
+  email: 'info@ebookwriters.us',
   phone: '+1 712-414-0542',
   phoneHref: 'tel:+17124140542',
   address: 'Tennessee, USA',

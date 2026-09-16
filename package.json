@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite",
     "prebuild": "node scripts/fetch-posts.mjs",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender.mjs",
     "seo:stamp": "node scripts/stamp-html.mjs",
+    "seo:prerender": "node scripts/prerender.mjs",
+    "qa:seo-html": "node scripts/qa-seo-html.mjs",
     "preview": "vite preview",
     "posts:pull": "node scripts/fetch-posts.mjs",
     "db:migrate": "node scripts/db-migrate.mjs",
@@ -30,6 +32,7 @@
     "vite": "latest"
   },
   "devDependencies": {
-    "playwright": "^1.63.0"
+    "playwright": "^1.63.0",
+    "vercel": "^54.9.1"
   }
 }

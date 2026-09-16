@@ -58,6 +58,33 @@ The consequence: **writing an article is not enough — the site has to rebuild.
 `DEPLOY_HOOK_URL` to a Vercel deploy hook and publishing does that automatically;
 without it, redeploy by hand after publishing.
 
+### SEO / AEO: HTML bots can read
+
+`npm run build` is:
+
+1. `fetch-posts` — Neon → `src/generated/posts.js`
+2. `vite build` — SPA bundle + **stamp-html** (unique title/meta/JSON-LD/sitemap per route)
+3. `prerender` — Playwright opens each public route and writes the hydrated `#root` back into
+   `dist/**/index.html` so AI crawlers that skip JS still see services, pricing, FAQs, etc.
+
+Verify locally after a build:
+
+```bash
+npm run qa:seo-html
+```
+
+Or open `dist/pricing/index.html` and confirm package names appear without running JS.
+
+### Google Search Console (ops checklist)
+
+1. Add property `https://www.ebookwriters.us` (URL-prefix) and verify DNS/HTML tag.
+2. Submit sitemap: `https://www.ebookwriters.us/sitemap.xml` (also linked from
+   [`public/robots.txt`](public/robots.txt)).
+3. URL Inspection → Live Test on `/`, `/services`, `/pricing`, `/contact`, and one `/blog/…`
+   URL — confirm **HTML** (not only screenshot) contains body copy.
+4. Phone/address NAP: keep current TN + `+1 712-414-0542` until the business confirms a
+   corrected NAP; do not invent a new number in code.
+
 ### Spam protection
 
 Three layers, cheapest first: an off-screen honeypot field, a per-IP rate limit
