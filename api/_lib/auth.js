@@ -63,7 +63,8 @@ export async function authenticateAdmin(email, password) {
   const cleanPassword = String(password || '');
   if (!cleanPassword) return null;
 
-  const users = await sql`
+  const db = sql();
+  const users = await db`
     select id, email, name, password_hash
     from admin_users
     order by id asc
@@ -75,7 +76,7 @@ export async function authenticateAdmin(email, password) {
       ? users.find(row => row.email.toLowerCase() === cleanEmail)
       : users[0];
     if (!user || !verifyPassword(cleanPassword, user.password_hash)) return null;
-    await sql`update admin_users set last_login_at = now() where id = ${user.id}`;
+    await db`update admin_users set last_login_at = now() where id = ${user.id}`;
     return { id: user.id, email: user.email, name: user.name };
   }
 
@@ -85,7 +86,7 @@ export async function authenticateAdmin(email, password) {
   if (!bootstrapPassword || !safeEqual(cleanPassword, bootstrapPassword)) return null;
   if (cleanEmail && cleanEmail !== bootstrapEmail) return null;
 
-  const inserted = await sql`
+  const inserted = await db`
     insert into admin_users (email, name, password_hash, last_login_at)
     values (
       ${bootstrapEmail},

@@ -15,7 +15,8 @@ async function sessionUser(req) {
   if (!session?.adminId || session.adminId === '0' || !hasDatabase()) {
     return session ? { signedIn: true, admin: null } : null;
   }
-  const rows = await sql`
+  const db = sql();
+  const rows = await db`
     select id, email, name, last_login_at
     from admin_users
     where id = ${Number(session.adminId)}
