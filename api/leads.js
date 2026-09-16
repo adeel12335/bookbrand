@@ -5,7 +5,7 @@ import { requireAdmin } from './_lib/auth.js';
 import { enforceLimit } from './_lib/ratelimit.js';
 import { verifyRecaptcha } from './_lib/recaptcha.js';
 
-const NOTIFY_TO = process.env.LEAD_NOTIFY_TO || 'info@ebookwriterusa.com';
+const NOTIFY_TO = process.env.LEAD_NOTIFY_TO || 'info@ebookwriters.us';
 const NOTIFY_FROM = process.env.LEAD_NOTIFY_FROM || 'ebookwriters.us <onboarding@resend.dev>';
 
 function escapeHtml(value) {
@@ -114,7 +114,9 @@ async function leads(req, res) {
   // Resend outage must not tell the author their enquiry failed.
   let emailed = false;
   let emailError = null;
-  if (process.env.RESEND_API_KEY) {
+  if (!process.env.RESEND_API_KEY) {
+    console.error('[leads] RESEND_API_KEY is not set — lead', inserted[0].id, 'saved without email');
+  } else {
     try {
       const resend = new Resend(process.env.RESEND_API_KEY);
       const sent = await resend.emails.send({

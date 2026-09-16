@@ -12,19 +12,26 @@ import {
   headingId,
 } from './blogPosts.js';
 
-function BlogCard({ post, heading: Heading = 'h2' }) {
+function BlogCard({ post, heading: Heading = 'h2', index = null, featured = false }) {
   return (
-    <article className="blog-card blog-card--text">
+    <article className={`blog-card blog-card--text${featured ? ' blog-card--featured' : ''}`}>
       <div className="blog-card-body">
-        <p className="blog-card-meta">
-          <span>{post.category}</span>
-          <span aria-hidden="true">·</span>
-          <time dateTime={post.date}>{post.dateLabel}</time>
-        </p>
+        <div className="blog-card-top">
+          {index != null ? (
+            <span className="blog-card-index" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+          ) : null}
+          <p className="blog-card-meta">
+            <span className="blog-card-cat">{post.category}</span>
+            <span aria-hidden="true">·</span>
+            <time dateTime={post.date}>{post.dateLabel}</time>
+          </p>
+        </div>
         <Heading>
           <Link to={`/blog/${post.slug}`}>{post.title}</Link>
         </Heading>
-        <p>{post.description}</p>
+        <p className="blog-card-desc">{post.description}</p>
         <div className="blog-card-foot">
           <span>{post.readTime}</span>
           <Link className="blog-card-link" to={`/blog/${post.slug}`}>
@@ -41,6 +48,8 @@ export function BlogIndexPage() {
     window.scrollTo(0, 0);
   }, []);
 
+  const [featured, ...rest] = blogPosts;
+
   return (
     <div className="blog-page">
       <PageHero
@@ -55,13 +64,20 @@ export function BlogIndexPage() {
 
       <section className="blog-list-section" aria-label="All articles">
         <div className="shell">
-          <ul className="blog-grid">
-            {blogPosts.map(post => (
-              <li key={post.slug}>
-                <BlogCard post={post} />
-              </li>
-            ))}
-          </ul>
+          {featured ? (
+            <div className="blog-featured">
+              <BlogCard post={featured} featured index={0} />
+            </div>
+          ) : null}
+          {rest.length > 0 ? (
+            <ul className="blog-grid blog-grid--editorial">
+              {rest.map((post, i) => (
+                <li key={post.slug}>
+                  <BlogCard post={post} index={i + 1} />
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </div>
       </section>
     </div>
