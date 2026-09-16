@@ -280,7 +280,7 @@ export function PricingPage() {
 
 export function ServicesPage() {
   return (
-    <div className="blog-page content-page">
+    <div className="blog-page content-page svc-page">
       <ScrollTop />
       <PageHero
         eyebrow={servicesPage.eyebrow}
@@ -290,44 +290,45 @@ export function ServicesPage() {
         imageAlt={servicesPage.heroImageAlt}
         actions={servicesPage.actions}
       />
-      <section className="ed-svc content-svc" aria-label="Service list">
+      <section className="svc-list" aria-label="Service list">
         <div className="shell">
-          <ul className="ed-svc-cards">
+          <ol className="svc-list-grid">
             {services.map(service => {
               const Icon = serviceIcons[service.key] || IconArrow;
               const href = serviceHrefs[service.key] || service.href || '/contact';
               return (
-                <li className="ed-svc-card" key={service.title}>
-                  <span className="ed-svc-icon" aria-hidden="true"><Icon /></span>
-                  <div className="ed-svc-body">
-                    <h2>{service.title}</h2>
-                    <p>{service.copy}</p>
-                  </div>
-                  <Link
-                    className="ed-svc-orb"
-                    to={href}
-                    aria-label={`${href === '/contact' ? 'Inquire about' : 'Learn more about'} ${service.title}`}
-                  >
-                    <IconArrow aria-hidden="true" />
+                <li key={service.title}>
+                  <Link className="svc-item" to={href}>
+                    <span className="svc-item-n" aria-hidden="true">{service.n}</span>
+                    <span className="svc-item-icon" aria-hidden="true"><Icon /></span>
+                    <div className="svc-item-body">
+                      <h2>{service.title}</h2>
+                      <p>{service.copy}</p>
+                    </div>
+                    <span className="svc-item-go" aria-hidden="true">
+                      <IconArrow />
+                    </span>
                   </Link>
                 </li>
               );
             })}
-          </ul>
+          </ol>
         </div>
       </section>
-      <div className="shell content-related-wrap">
-        <RelatedLinks
-          links={[
-            { label: 'Ebook ghostwriting services', href: '/ebook-ghostwriting-services' },
-            { label: 'Ebook editing services', href: '/ebook-editing-services' },
-            { label: 'Ebook cover design', href: '/ebook-cover-design' },
-            { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
-            { label: 'Amazon KDP ebook writing', href: '/amazon-kdp-ebook-writing' },
-            { label: 'Pricing', href: '/pricing' },
-          ]}
-        />
-      </div>
+      <section className="svc-links" aria-label="Explore services">
+        <div className="shell">
+          <RelatedLinks
+            links={[
+              { label: 'Ebook ghostwriting services', href: '/ebook-ghostwriting-services' },
+              { label: 'Ebook editing services', href: '/ebook-editing-services' },
+              { label: 'Ebook cover design', href: '/ebook-cover-design' },
+              { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
+              { label: 'Amazon KDP ebook writing', href: '/amazon-kdp-ebook-writing' },
+              { label: 'Pricing', href: '/pricing' },
+            ]}
+          />
+        </div>
+      </section>
       <CloseBand
         title="Tell us what you need written."
         lead="We will come back with a fixed scope, price, and timeline — or a clear no if we cannot staff it well."
