@@ -110,6 +110,90 @@ function ArticlePage({ page, children }) {
   );
 }
 
+function ServiceDetail({ page, closeTitle, closeLead, closeCta, closeTo = '/contact' }) {
+  return (
+    <div className="blog-page content-page sd-page">
+      <ScrollTop />
+      <PageHero
+        eyebrow={page.eyebrow}
+        title={page.title}
+        lead={page.lead}
+        image={page.heroImage}
+        imageAlt={page.heroImageAlt}
+        actions={page.actions}
+      />
+
+      {page.sections?.length ? (
+        <div className="sd-sections">
+          <div className="shell sd-rail">
+            {page.sections.map((section, i) => (
+              <section
+                key={section.heading}
+                className={`sd-block${section.bullets?.length ? ' sd-block--with-points' : ''}`}
+              >
+                <header className="sd-head">
+                  <span className="sd-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  <h2>{section.heading}</h2>
+                </header>
+                <div className="sd-copy">
+                  {section.paragraphs?.map(paragraph => (
+                    <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                  ))}
+                </div>
+                {section.bullets?.length ? (
+                  <ul className="sd-points">
+                    {section.bullets.map(item => (
+                      <li key={item}>
+                        <IconCheck className="tick" aria-hidden="true" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </section>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {page.faqs?.length ? (
+        <section className="sd-faq" aria-labelledby="sd-faq-title">
+          <div className="shell sd-rail">
+            <header className="sd-faq-head">
+              <p className="eyebrow"><span>Questions</span><i aria-hidden="true" /></p>
+              <h2 id="sd-faq-title">Frequently asked questions</h2>
+            </header>
+            <dl className="sd-faq-list">
+              {page.faqs.map(item => (
+                <div key={item.q} className="sd-faq-item">
+                  <dt>{item.q}</dt>
+                  <dd>{item.a}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+      ) : null}
+
+      {page.links?.length ? (
+        <section className="sd-links" aria-label="Related pages">
+          <div className="shell">
+            <p className="eyebrow"><span>Keep reading</span><i aria-hidden="true" /></p>
+            <RelatedLinks links={page.links} />
+          </div>
+        </section>
+      ) : null}
+
+      <CloseBand
+        title={closeTitle}
+        lead={closeLead}
+        to={closeTo}
+        cta={closeCta}
+      />
+    </div>
+  );
+}
+
 function CloseBand({ title, lead, to = '/contact', cta = 'Start Your Project' }) {
   return (
     <section className="blog-close" aria-labelledby="content-close-title">
@@ -339,14 +423,12 @@ export function ServicesPage() {
 
 function Lander({ page }) {
   return (
-    <>
-      <ArticlePage page={page} />
-      <CloseBand
-        title="Start with a fixed quote."
-        lead="Share the idea, target length, and deadline. You will hear back within one working day."
-        cta="Contact the studio"
-      />
-    </>
+    <ServiceDetail
+      page={page}
+      closeTitle="Start with a fixed quote."
+      closeLead="Share the idea, target length, and deadline. You will hear back within one working day."
+      closeCta="Contact the studio"
+    />
   );
 }
 
@@ -364,27 +446,23 @@ export function KdpPage() {
 
 export function EditingPage() {
   return (
-    <>
-      <ArticlePage page={editingPage} />
-      <CloseBand
-        title="Send the draft."
-        lead="Tell us the length, genre, and which edit you need. You will get a fixed editing quote."
-        cta="Request an editing quote"
-      />
-    </>
+    <ServiceDetail
+      page={editingPage}
+      closeTitle="Send the draft."
+      closeLead="Tell us the length, genre, and which edit you need. You will get a fixed editing quote."
+      closeCta="Request an editing quote"
+    />
   );
 }
 
 export function CoverDesignPage() {
   return (
-    <>
-      <ArticlePage page={coverPage} />
-      <CloseBand
-        title="Brief the cover."
-        lead="Share the genre, title direction, and whether you need ebook, print, or both."
-        cta="Request a cover quote"
-      />
-    </>
+    <ServiceDetail
+      page={coverPage}
+      closeTitle="Brief the cover."
+      closeLead="Share the genre, title direction, and whether you need ebook, print, or both."
+      closeCta="Request a cover quote"
+    />
   );
 }
 
