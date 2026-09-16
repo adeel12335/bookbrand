@@ -161,6 +161,18 @@ export const staticBlogPosts = [
         ],
       },
       {
+        heading: 'How our packages map to the calendar',
+        paragraphs: [
+          'These are the same bands on our pricing page — useful when you want package names, not only word counts:',
+        ],
+        bullets: [
+          'Starter (~15,000 words): about 3 weeks',
+          'Professional (~30,000 words): about 5 weeks',
+          'Premium (~50,000 words): about 8 weeks',
+          'Elite (up to ~100,000 words): about 12 weeks',
+        ],
+      },
+      {
         heading: 'How to get a date you can trust',
         paragraphs: [
           'Ask for a written schedule before work starts: outline date, sample chapter date, weekly draft cadence, and final-files date. A studio that can publish that calendar is more reliable than one that only says “as soon as possible.”',
@@ -520,6 +532,88 @@ export const staticBlogPosts = [
         heading: 'Next step',
         paragraphs: [
           'Ready for writing plus KDP as one scope? Start on our Amazon KDP ebook writing page or send your length, deadline, and whether you already have a draft.',
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'how-much-does-an-ebook-ghostwriter-cost',
+    title: 'How Much Does an Ebook Ghostwriter Cost?',
+    description:
+      'What ebook ghostwriters charge in plain language — market ranges, what drives ghostwriting fees, and how fixed studio packages from $699 to $3,999 compare.',
+    date: '2026-09-16',
+    dateLabel: 'September 16, 2026',
+    readTime: '7 min read',
+    category: 'Pricing',
+    eyebrow: 'Ghostwriting cost',
+    keywords: [
+      'ebook ghostwriter cost',
+      'how much does a ghostwriter cost',
+      'ghostwriting rates',
+      'ebook ghostwriting price',
+    ],
+    lead:
+      '“How much does a ghostwriter cost?” usually means two things: what the market charges, and what you actually get for the fee. Here is a clear ghostwriting-focused breakdown — separate from a general “hire an ebook writer” budget guide.',
+    cta: 'Request a ghostwriting quote',
+    image: '/assets/brand/hero-concept-photo.png',
+    imageAlt: 'Manuscript pages and pen on a desk — ebook ghostwriting cost guide',
+    takeaways: [
+      'Ghostwriting fees track length, research, voice work, and whether edits and files are bundled.',
+      'Studio packages for nonfiction often land between $699 and $3,999 for agreed word counts.',
+      'A low per-word draft without NDA, rights, or revisions is unfinished risk — not a bargain.',
+      'Budget to the book’s job, then demand a fixed total and written ownership.',
+    ],
+    sections: [
+      {
+        heading: 'Ghostwriter cost vs “ebook writer” cost',
+        paragraphs: [
+          'People search both phrases. Ghostwriting specifically means someone else drafts the manuscript in your voice while you keep the byline. Hiring an “ebook writer” can mean the same thing — or a thinner draft-only gig.',
+          'Compare apples to apples: confidential process, voice matching, revision rounds, and rights transfer belong in a real ghostwriting fee. For a broader package budget walkthrough, see our guide on how much it costs to hire an ebook writer.',
+        ],
+      },
+      {
+        heading: 'What ghostwriters usually charge',
+        paragraphs: [
+          'Public marketplace bids vary wildly. Serious nonfiction ghostwriting for a short guide can start in the high hundreds when scope is tight; full-length authority books with research, edits, and production support commonly reach several thousand dollars.',
+          'Our fixed packages run from $699 (about 15,000 words) to $3,999 (up to about 100,000 words with deeper production support). Those totals include the studio path listed on pricing — not an open hourly clock.',
+        ],
+      },
+      {
+        heading: 'What drives a ghostwriting fee',
+        paragraphs: [
+          'Length and research depth matter most. A memoir with heavy interview work is priced differently from a short lead magnet. Specialist niches (finance, health, law) need writers who already know the lane.',
+          'Also price the invisible work: NDA, outline, sample chapter, revision rounds, and — if bundled — editing, cover, and retailer files. Ghostwriting that stops at a rough Word doc leaves those costs for later.',
+        ],
+        bullets: [
+          'Word count and interview load',
+          'Niche expertise',
+          'Revision rounds and editorial passes',
+          'Whether cover and KDP files are included',
+          'Rush timelines',
+        ],
+      },
+      {
+        heading: 'Fixed packages at ebookwriters.us',
+        paragraphs: [
+          'We quote fixed bands so you can plan without guessing an hourly total:',
+        ],
+        bullets: [
+          'Starter — from $699 — ~15k words, ~3 weeks',
+          'Professional — from $1,499 — ~30k words, ~5 weeks (includes KDP setup)',
+          'Premium — from $2,499 — ~50k words, ~8 weeks (KDP + IngramSpark)',
+          'Elite — from $3,999 — up to ~100k words, ~12 weeks',
+        ],
+      },
+      {
+        heading: 'Red flags in cheap ghostwriting quotes',
+        paragraphs: [
+          'No NDA. No rights language. No sample chapter. No revision policy. “Done in a weekend” for a full-length book. Those are not bargains — they are how manuscripts stall or end up unusable under your name.',
+        ],
+      },
+      {
+        heading: 'Next step',
+        paragraphs: [
+          'If you want a ghostwriting quote for a fixed length and deadline, start on our ghostwriting services page or send the brief on contact. You keep the byline, the rights, and the royalties.',
         ],
       },
     ],

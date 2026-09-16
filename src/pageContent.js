@@ -163,6 +163,10 @@ export const landers = {
         a: 'About three weeks for a 15,000-word guide, five for ~30,000 words, eight for ~50,000, and up to twelve for a full-length Elite manuscript — dated before we start.',
       },
       {
+        q: 'Do you use AI to write the manuscript?',
+        a: 'No — we do not deliver an unedited AI-generated book as ghostwriting. Your manuscript is written and revised by the assigned human writer, under studio editorial review. Ordinary tools may support research, outlining, or production admin; the published prose is authored for your voice. If you need stricter language in the agreement, say so on the discovery call.',
+      },
+      {
         q: 'What do I need to provide?',
         a: 'A short brief (audience, goal, target length, deadline), time for a discovery call and one or two voice interviews, and feedback as chapters land. Roughly two to four hours of your time in total.',
       },
@@ -174,6 +178,7 @@ export const landers = {
     links: [
       { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
       { label: 'Amazon KDP writing & publishing', href: '/amazon-kdp-ebook-writing' },
+      { label: 'How much does an ebook ghostwriter cost?', href: '/blog/how-much-does-an-ebook-ghostwriter-cost' },
       { label: 'How much it costs to hire a writer', href: '/blog/how-much-does-it-cost-to-hire-an-ebook-writer' },
       { label: 'Ghostwriting vs a freelancer', href: '/blog/ghostwriting-vs-hiring-a-freelancer' },
       { label: 'All services', href: '/services' },
@@ -417,7 +422,8 @@ export const coverPage = {
         'Custom cover design',
         'Front, spine, and back for print when scoped',
         'Genre-matched art direction',
-        'Files sized for Amazon and print workflows as agreed in your quote',
+        'Ebook front: JPEG or PNG sized for Amazon/KDP',
+        'Print wrap: PDF (front, spine, back) when paperback is in scope',
       ],
     },
     {
@@ -429,7 +435,7 @@ export const coverPage = {
     {
       heading: 'File delivery',
       paragraphs: [
-        'You receive print- and retailer-ready cover files as scoped in your quote. Exact export formats are confirmed in writing for your project.',
+        'Standard delivery is a KDP-ready ebook front (JPEG or PNG) and, when print is included, a print-wrap PDF. Working or layered source files are included only when your quote says so.',
         'Pair cover work with formatting and KDP setup when you want listing and files handled together.',
       ],
     },
@@ -442,6 +448,10 @@ export const coverPage = {
     {
       q: 'Can you design for print and ebook?',
       a: 'Yes. Ebook fronts and print wraps (front, spine, back) are available when your scope includes print.',
+    },
+    {
+      q: 'What file types do I receive?',
+      a: 'Ebook: JPEG or PNG front cover for KDP. Print: PDF wrap when paperback is scoped. Any extra source files are listed in your quote.',
     },
   ],
   links: [

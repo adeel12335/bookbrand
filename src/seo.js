@@ -14,7 +14,7 @@ import {
 
 export { SITE_ORIGIN, absoluteUrl, absoluteAsset } from './site.js';
 
-const LASTMOD = '2026-09-15';
+const LASTMOD = '2026-09-16';
 const DEFAULT_ROBOTS = 'index, follow, max-image-preview:large';
 
 function organization() {
@@ -82,37 +82,6 @@ function webPageSchema({ type = 'WebPage', name, description, path }) {
     isPartOf: { '@type': 'WebSite', name: SITE_NAME, url: absoluteUrl('/') },
   };
 }
-
-const homeFaq = [
-  {
-    q: 'Who owns the rights to the finished book?',
-    a: 'You do, completely and permanently. Every project is covered by an NDA and a full rights-transfer agreement signed before writing begins. Your name goes on the cover; ours appears nowhere unless you want it to.',
-  },
-  {
-    q: 'How much does it cost to hire an ebook writer?',
-    a: 'Packages start at $699 for a focused 15,000-word guide and go up to $3,999 for a full-length authority book with launch support. Every quote is fixed up front — writing, editing, cover, and retailer-ready files are included in the package you choose.',
-  },
-  {
-    q: 'How involved do I need to be?',
-    a: 'Roughly two to four hours in total. That is a discovery call, one or two voice-matching interviews, and reviewing each chapter as it lands. Everything else is on us.',
-  },
-  {
-    q: 'How long does a book actually take?',
-    a: 'A 15,000-word guide takes about three weeks, a 30,000-word book around five, and a full-length 50,000-word manuscript around eight. You get a dated schedule before we start and weekly drafts against it.',
-  },
-  {
-    q: 'What happens if I do not like the draft?',
-    a: 'You see a chapter outline and a sample chapter before the full manuscript is written, precisely so this does not happen. Every package includes revision rounds, and if the sample chapter misses your voice we rewrite it at no cost.',
-  },
-  {
-    q: 'Do you help with publishing, or only the writing?',
-    a: 'Both. We set up KDP and IngramSpark, research categories and keywords, prepare metadata and hand over every retailer-ready file. You keep the accounts and 100% of the royalties.',
-  },
-  {
-    q: 'Can you write in a specific niche or technical field?',
-    a: 'Yes. We match every project to a writer experienced in that area — finance, health, law, SaaS, memoir, and related nonfiction. If we do not have the right specialist, we will say so rather than guess.',
-  },
-];
 
 function faqPageSchema(items) {
   return {
@@ -185,7 +154,7 @@ const staticPages = [
         },
       },
       {
-        ...faqPageSchema(homeFaq),
+        ...faqPageSchema(faqs),
       },
       webSite(),
     ],

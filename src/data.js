@@ -359,6 +359,10 @@ export const faqs = [
     q: 'Can you write in a specific niche or technical field?',
     a: 'Yes. We match every project to a writer experienced in that area — finance, health, law, SaaS, memoir, and related nonfiction. If we do not have the right specialist, we will say so rather than guess.',
   },
+  {
+    q: 'Do you use AI to write the manuscript?',
+    a: 'No — we do not deliver an unedited AI-generated book as ghostwriting. Your manuscript is written and revised by the assigned human writer, under studio editorial review. Ordinary tools may support research, outlining, or production admin; the published prose is authored for your voice.',
+  },
 ];
 
 export const contactIntro = {
