@@ -64,8 +64,10 @@ without it, redeploy by hand after publishing.
 
 1. `fetch-posts` — Neon → `src/generated/posts.js`
 2. `vite build` — SPA bundle + **stamp-html** (unique title/meta/JSON-LD/sitemap per route)
-3. `prerender` — Playwright opens each public route and writes the hydrated `#root` back into
-   `dist/**/index.html` so AI crawlers that skip JS still see services, pricing, FAQs, etc.
+3. `prerender` — locally, Playwright hydrates each route into `dist/**/index.html`.
+   On **Vercel**, Playwright is skipped (`VERCEL=1`); stamp already injects a full
+   crawlable `<main data-seo-crawl>` inside `#root` so AI bots that skip JS still see
+   services, pricing, FAQs, and contact copy. React `createRoot` replaces that shell for visitors.
 
 Verify locally after a build:
 

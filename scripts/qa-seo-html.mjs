@@ -27,7 +27,10 @@ function assertIncludes(html, path, needles) {
 
 function assertNoEmptyRoot(html, path) {
   if (/<div id="root"\s*>\s*<\/div>/.test(html)) {
-    throw new Error(`${path} still has empty #root — prerender did not run`);
+    throw new Error(`${path} still has empty #root — stamp crawl HTML missing`);
+  }
+  if (!html.includes('data-seo-crawl="1"') && !html.includes('data-seo-crawl')) {
+    // Playwright prerender may replace crawl marker; body text checks below still apply.
   }
 }
 

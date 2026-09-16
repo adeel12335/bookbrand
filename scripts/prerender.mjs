@@ -129,6 +129,17 @@ function writeRendered(path, html) {
 }
 
 export async function prerender() {
+  // Vercel build images cannot reliably download/run Playwright Chromium.
+  // Stamp already injects crawlable #root HTML; local/CI can still force full prerender.
+  if (process.env.VERCEL && process.env.FORCE_PRERENDER !== '1') {
+    console.log('[prerender] Skipping on Vercel (stamp crawl HTML is enough). Set FORCE_PRERENDER=1 to override.');
+    return;
+  }
+  if (process.env.SKIP_PRERENDER === '1') {
+    console.log('[prerender] SKIP_PRERENDER=1 — skipping.');
+    return;
+  }
+
   if (!existsSync(join(distDir, 'index.html'))) {
     throw new Error('dist/index.html missing — run vite build + stamp first');
   }

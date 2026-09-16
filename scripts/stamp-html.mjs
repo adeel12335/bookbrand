@@ -2,6 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { absoluteUrl, getPrerenderPages, getSitemapEntries } from '../src/seo.js';
+import { getCrawlMarkup } from './crawl-html.mjs';
 
 const root = join(fileURLToPath(new URL('.', import.meta.url)), '..');
 const distDir = join(root, 'dist');
@@ -59,19 +60,24 @@ function replaceJsonLd(html, blocks) {
   return stripped.replace('</head>', `${scripts}\n  </head>`);
 }
 
+function injectCrawlBody(html, page) {
+  const markup = getCrawlMarkup(page);
+  const root = `<div id="root">\n${markup}\n</div>`;
+  if (html.includes('<div id="root"></div>')) {
+    return html.replace('<div id="root"></div>', root);
+  }
+  return html.replace(/<div id="root"[^>]*>[\s\S]*?<\/div>\s*(?=<script|<!--|$)/, `${root}\n    `);
+}
+
 function injectNoscript(html, page) {
   const noscript = `    <noscript>
-      <main>
-        <h1>${escapeHtml(page.title)}</h1>
-        <p>${escapeHtml(page.description)}</p>
-        <p><a href="/contact">Contact</a> · <a href="/pricing">Pricing</a> · <a href="/services">Services</a></p>
-      </main>
+${getCrawlMarkup(page)}
     </noscript>
 `;
   if (html.includes('<noscript>')) {
     return html.replace(/<noscript>[\s\S]*?<\/noscript>\n?/, noscript);
   }
-  return html.replace('<div id="root"></div>', `<div id="root"></div>\n${noscript}`);
+  return html.replace(/<div id="root"[^>]*>[\s\S]*?<\/div>/, match => `${match}\n${noscript}`);
 }
 
 function applyPage(html, page) {
@@ -93,6 +99,7 @@ function applyPage(html, page) {
   next = setMeta(next, 'name', 'twitter:image', image);
   next = setMeta(next, 'name', 'twitter:image:alt', page.imageAlt);
   next = replaceJsonLd(next, page.jsonLd || []);
+  next = injectCrawlBody(next, page);
   next = injectNoscript(next, page);
   return next;
 }
