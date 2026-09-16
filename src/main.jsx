@@ -22,6 +22,9 @@ import { BlogIndexPage, BlogPostPage } from './BlogPages.jsx';
 import { PortfolioPage } from './PortfolioPage.jsx';
 import {
   AboutPage,
+  CoverDesignPage,
+  EditingPage,
+  FaqPage,
   GhostwritingPage,
   HireWriterPage,
   KdpPage,
@@ -873,6 +876,12 @@ function Faq() {
             {faqIntro.cta}
             <IconArrow aria-hidden="true" />
           </a>
+          {faqIntro.allHref ? (
+            <Link className="ed-faq-all" to={faqIntro.allHref}>
+              {faqIntro.allLabel}
+              <IconArrow aria-hidden="true" />
+            </Link>
+          ) : null}
         </Reveal>
 
         <Reveal className="ed-faq-board" delay={90}>
@@ -1263,6 +1272,9 @@ function App() {
         <Route path="/ghostwriting" element={<Navigate to="/ebook-ghostwriting-services" replace />} />
         <Route path="/hire-ebook-writer" element={<BlogShell><HireWriterPage /></BlogShell>} />
         <Route path="/amazon-kdp-ebook-writing" element={<BlogShell><KdpPage /></BlogShell>} />
+        <Route path="/ebook-editing-services" element={<BlogShell><EditingPage /></BlogShell>} />
+        <Route path="/ebook-cover-design" element={<BlogShell><CoverDesignPage /></BlogShell>} />
+        <Route path="/faq" element={<BlogShell><FaqPage /></BlogShell>} />
         <Route path="/privacy" element={<BlogShell><PrivacyPage /></BlogShell>} />
         <Route path="/terms" element={<BlogShell><TermsPage /></BlogShell>} />
         <Route path="*" element={<BlogShell><NotFoundPage /></BlogShell>} />

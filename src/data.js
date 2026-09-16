@@ -3,7 +3,14 @@ export const navigation = [
   {
     label: 'Services',
     href: '/services',
-    match: ['/services', '/ebook-ghostwriting-services', '/hire-ebook-writer', '/amazon-kdp-ebook-writing'],
+    match: [
+      '/services',
+      '/ebook-ghostwriting-services',
+      '/hire-ebook-writer',
+      '/amazon-kdp-ebook-writing',
+      '/ebook-editing-services',
+      '/ebook-cover-design',
+    ],
   },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Pricing', href: '/pricing' },
@@ -21,13 +28,13 @@ export const services = [
     n: '02', key: 'editing', title: 'Editing & Proofreading',
     copy: 'Refine your manuscript with expert editors for clarity, flow, and impact before it goes to press.',
     points: ['Developmental edit', 'Line & copy edit', 'Final proofread'],
-    href: '/services',
+    href: '/ebook-editing-services',
   },
   {
     n: '03', key: 'formatting', title: 'Cover Design',
     copy: 'Market-ready covers that capture your story, fit your genre, and stand out on Amazon and bookstore shelves.',
     points: ['Custom cover design', 'Front, spine & back', 'Genre-matched art direction'],
-    href: '/services',
+    href: '/ebook-cover-design',
   },
   {
     n: '04', key: 'publishing', title: 'Publishing & Formatting',
@@ -319,6 +326,8 @@ export const faqIntro = {
   lead:
     'Straight answers on rights, cost, timelines, and KDP publishing — the questions authors ask before they hire a ghostwriter.',
   cta: 'Still unsure? Ask a writing specialist',
+  allLabel: 'Read the full FAQ',
+  allHref: '/faq',
 };
 
 export const faqs = [
@@ -381,7 +390,8 @@ export const footerLinks = [
       { label: 'Ebook Ghostwriting', href: '/ebook-ghostwriting-services' },
       { label: 'Hire an Ebook Writer', href: '/hire-ebook-writer' },
       { label: 'Amazon KDP Publishing', href: '/amazon-kdp-ebook-writing' },
-      { label: 'Editing & Cover Design', href: '/services' },
+      { label: 'Ebook Editing', href: '/ebook-editing-services' },
+      { label: 'Ebook Cover Design', href: '/ebook-cover-design' },
       { label: 'All Services', href: '/services' },
     ],
   },
@@ -391,7 +401,7 @@ export const footerLinks = [
       { label: 'About', href: '/about' },
       { label: 'Portfolio', href: '/portfolio' },
       { label: 'Pricing', href: '/pricing' },
-      { label: 'FAQ', href: '/#faq' },
+      { label: 'FAQ', href: '/faq' },
       { label: 'Blog', href: '/blog' },
       { label: 'Contact', href: '/contact' },
       { label: 'Privacy', href: '/privacy' },

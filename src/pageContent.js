@@ -1,4 +1,8 @@
-import { plans, siteContact } from './data.js';
+import { faqs, plans, siteContact } from './data.js';
+
+const packageSnapshotBullets = plans.map(
+  plan => `${plan.name} — $${plan.price} — ${plan.words} — ${plan.timeline}`,
+);
 
 export const aboutPage = {
   eyebrow: 'The studio',
@@ -74,8 +78,8 @@ export const servicesPage = {
 
 export const serviceHrefs = {
   writing: '/ebook-ghostwriting-services',
-  editing: '/services',
-  formatting: '/services',
+  editing: '/ebook-editing-services',
+  formatting: '/ebook-cover-design',
   publishing: '/amazon-kdp-ebook-writing',
   ghostwriting: '/services',
   branding: '/services',
@@ -113,20 +117,64 @@ export const landers = {
       {
         heading: 'Who this is for',
         paragraphs: [
-          'Experts who need a book that carries their consulting brand. Founders who want a lead-generating guide. Memoirists who have the story but not the hours to draft 30,000 words. If you can talk the book but cannot sit down and write it, this is the service.',
+          'Authors with a clear idea and no time to draft. Experts who can talk the book but are not writers. Founders who need a lead-generating guide. Memoirists who want confidentiality and a finished manuscript under their name.',
+          'If you want the byline and the rights — and a studio that can carry the book through edits and files — this is the service.',
         ],
       },
       {
         heading: 'How a ghostwriting project runs',
         paragraphs: [
-          'We start with scope: length, audience, and the job the book must do. You get a fixed quote and a dated schedule. Then interviews, outline, sample chapter, full manuscript, edits, and files. A 15,000-word guide is typically about three weeks; a 50,000-word book around eight.',
+          'We start with scope: length, audience, and the job the book must do. You get a fixed quote and a dated schedule. Then interviews, outline, sample chapter, full manuscript, edits, and files.',
           'If the sample chapter misses your voice, we rewrite it at no cost before the rest of the manuscript is written.',
         ],
+      },
+      {
+        heading: 'Packages for ghostwriting',
+        paragraphs: [
+          'Fixed packages cover writing through retailer-ready files. See full feature lists on the pricing page — these are the length and timeline bands we quote against.',
+        ],
+        bullets: packageSnapshotBullets,
+      },
+      {
+        heading: 'Ownership, NDA, and royalties',
+        paragraphs: [
+          'You keep copyright, royalties, and your retailer accounts. An NDA is signed before you share source material. A rights-transfer agreement is signed before writing begins. Your name goes on the cover; ours appears nowhere unless you ask.',
+        ],
+      },
+      {
+        heading: 'Genres we write',
+        paragraphs: [
+          'We staff writers for the categories we can do well. Portfolio work spans self-development, personal growth, memoir, business and finance, health and wellness, parenting, and related nonfiction. Fiction projects are considered when we have the right specialist.',
+          'If we cannot staff your niche honestly, we will say so rather than assign a generalist.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'Who owns the finished ebook?',
+        a: 'You do — completely. Rights transfer before writing begins. You keep royalties and retailer accounts.',
+      },
+      {
+        q: 'How many revision rounds are included?',
+        a: 'Every package includes revision rounds (Starter starts at two). Premium lists unlimited revisions within the agreed scope. The sample chapter is rewritten at no cost if the voice is wrong.',
+      },
+      {
+        q: 'How long does ghostwriting take?',
+        a: 'About three weeks for a 15,000-word guide, five for ~30,000 words, eight for ~50,000, and up to twelve for a full-length Elite manuscript — dated before we start.',
+      },
+      {
+        q: 'What do I need to provide?',
+        a: 'A short brief (audience, goal, target length, deadline), time for a discovery call and one or two voice interviews, and feedback as chapters land. Roughly two to four hours of your time in total.',
+      },
+      {
+        q: 'Is the work confidential?',
+        a: 'Yes. NDA before source material. We do not put the studio name on your cover unless you request it.',
       },
     ],
     links: [
       { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
       { label: 'Amazon KDP writing & publishing', href: '/amazon-kdp-ebook-writing' },
+      { label: 'How much it costs to hire a writer', href: '/blog/how-much-does-it-cost-to-hire-an-ebook-writer' },
       { label: 'Ghostwriting vs a freelancer', href: '/blog/ghostwriting-vs-hiring-a-freelancer' },
       { label: 'All services', href: '/services' },
     ],
@@ -159,6 +207,12 @@ export const landers = {
         ],
       },
       {
+        heading: 'Matched by genre — not by lowest bid',
+        paragraphs: [
+          'We staff writers for categories we know: business and finance, health and wellness, memoir, self-help, and related nonfiction. The match happens before you pay for a full manuscript — so the person writing has already done work in that lane.',
+        ],
+      },
+      {
         heading: 'Freelance marketplace vs a studio',
         paragraphs: [
           'Hiring one freelancer for chapters, another for edits, and a third for a cover is how manuscripts stall. A studio quote includes the path to retailer-ready files. If you only need writing, say so — we will not pad the scope.',
@@ -166,10 +220,37 @@ export const landers = {
         ],
       },
       {
+        heading: 'Package snapshot',
+        paragraphs: [
+          'These are the fixed bands on /pricing. Writing, editorial passes, cover work, and files scale with the package — open pricing for the full feature list.',
+        ],
+        bullets: packageSnapshotBullets,
+      },
+      {
+        heading: 'Timeline expectations',
+        paragraphs: [
+          'Starter guides are typically about three weeks. Professional manuscripts around five. Premium around eight. Elite up to twelve. You get a dated schedule with chapter delivery points before writing starts.',
+        ],
+      },
+      {
         heading: 'How to brief us',
         paragraphs: [
           'The useful brief is short: who the book is for, what it should do for you (authority, leads, a story told properly), target length, and when you need files. Send that on the contact page. You hear back within one working day with a clear yes, no, or clarifying question.',
         ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'Is hiring you cheaper than a marketplace freelancer?',
+        a: 'Hourly bids can look lower until you add edits, a cover, formatting, and project management. Our packages are fixed for an agreed scope — compare the finished deliverable, not the first draft rate.',
+      },
+      {
+        q: 'Can I hire you for writing only?',
+        a: 'Yes. Say so on the contact form. We will quote writing without padding publishing work you do not need.',
+      },
+      {
+        q: 'When do I pay?',
+        a: 'After you approve a written scope and quote. We do not start manuscript work on an open hourly tab.',
       },
     ],
     links: [
@@ -196,7 +277,6 @@ export const landers = {
         heading: 'Writing made for the Kindle store',
         paragraphs: [
           'A KDP ebook still has to be a good book. We outline and write to the promise on the cover and the category you will compete in — not a generic manuscript you later try to “optimize.”',
-          'Professional and Premium packages include KDP publishing setup. Elite adds IngramSpark and broader distribution files when you want paperback and hardcover beyond Amazon.',
         ],
       },
       {
@@ -214,19 +294,189 @@ export const landers = {
         ],
       },
       {
+        heading: 'Which packages include KDP setup',
+        paragraphs: [
+          'Starter includes writing, an editorial pass, a standard cover, and EPUB/PDF files — without KDP listing setup in the package features. Professional adds KDP publishing setup. Premium adds KDP and IngramSpark. Elite includes broader global distribution and hardcover-ready files.',
+        ],
+        bullets: packageSnapshotBullets,
+      },
+      {
+        heading: 'What you still own',
+        paragraphs: [
+          'Your KDP (and IngramSpark) accounts stay in your name. You keep 100% of royalties. We guide setup and hand over retailer-ready files — we do not become the publisher of record.',
+        ],
+      },
+      {
         heading: 'Writing only, or writing plus publish',
         paragraphs: [
           'If you already have a draft, say so on the contact form — editing, cover, and KDP files may be the right scope. If you need the book written first, start with ghostwriting and keep publishing in the same package so nothing is re-traded later.',
         ],
       },
     ],
+    faqs: [
+      {
+        q: 'Will you log into my KDP account as the owner?',
+        a: 'You remain the account holder and publisher of record. We support setup with the files and listing details; we do not take over ownership of the account.',
+      },
+      {
+        q: 'Do all packages include KDP setup?',
+        a: 'No. Professional and above include KDP setup in the listed features. Starter delivers retailer-ready files without the KDP setup line item.',
+      },
+      {
+        q: 'Can you help if I already have a manuscript?',
+        a: 'Yes — editing, cover design, formatting, and KDP support can be scoped without full ghostwriting. Tell us what you already have on the contact form.',
+      },
+    ],
     links: [
       { label: 'Ebook ghostwriting', href: '/ebook-ghostwriting-services' },
       { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
+      { label: 'Ebook editing services', href: '/ebook-editing-services' },
       { label: 'How long writing and publishing take', href: '/blog/how-long-does-it-take-to-write-and-publish-a-book' },
       { label: 'Pricing', href: '/pricing' },
     ],
   },
+};
+
+export const editingPage = {
+  path: '/ebook-editing-services',
+  eyebrow: 'Editing',
+  title: 'Ebook editing services for drafts that need a professional pass.',
+  lead:
+    'Already have a manuscript? Developmental, line and copy editing, and a final proofread — so the book is clear before cover and KDP files.',
+  heroImage: '/assets/brand/publishing-craft-v2.png',
+  heroImageAlt: 'Manuscript pages and editing tools on a publishing desk',
+  actions: [
+    { label: 'Request an editing quote', href: '/contact' },
+    { label: 'Need the book written first?', href: '/ebook-ghostwriting-services', variant: 'gold' },
+  ],
+  sections: [
+    {
+      heading: 'What editing covers',
+      paragraphs: [
+        'We match the edit to the draft you have — not a one-size pass labeled “editing.”',
+      ],
+      bullets: [
+        'Developmental edit — structure, argument, pacing, and chapter order',
+        'Line and copy edit — clarity, voice consistency, grammar, and flow',
+        'Final proofread — last pass before files go to design and retailers',
+      ],
+    },
+    {
+      heading: 'Who this is for',
+      paragraphs: [
+        'Authors who drafted the book themselves and want a studio edit before publishing. Ghostwriting clients who want an extra editorial layer beyond the rounds in a writing package. Anyone who knows the manuscript is “almost there” but not retailer-ready.',
+      ],
+    },
+    {
+      heading: 'Deliverables and scope',
+      paragraphs: [
+        'You receive an edited manuscript and clear notes on what changed. Revision rounds are quoted per manuscript length and edit depth — we confirm rounds in writing before work starts rather than inventing a blanket “unlimited” promise on this page.',
+        'If the draft still needs substantial new chapters written, we will say so and point you to ghostwriting instead of selling a polish that cannot fix a missing book.',
+      ],
+    },
+  ],
+  faqs: [
+    {
+      q: 'Do I need editing or ghostwriting?',
+      a: 'If the manuscript exists and mainly needs structure and polish, start with editing. If large sections are still unwritten or the voice is not there yet, start with ghostwriting.',
+    },
+    {
+      q: 'Can editing include a cover and KDP files?',
+      a: 'Yes — say what you need on the contact form. Cover design and KDP setup can be scoped with editing or as a follow-on.',
+    },
+  ],
+  links: [
+    { label: 'Ebook ghostwriting', href: '/ebook-ghostwriting-services' },
+    { label: 'Ebook cover design', href: '/ebook-cover-design' },
+    { label: 'Amazon KDP publishing', href: '/amazon-kdp-ebook-writing' },
+    { label: 'Pricing', href: '/pricing' },
+  ],
+};
+
+export const coverPage = {
+  path: '/ebook-cover-design',
+  eyebrow: 'Cover design',
+  title: 'Ebook cover design built to read at thumbnail size.',
+  lead:
+    'Custom covers matched to your genre — front, spine, and back for print when you need them — so the title holds up on Amazon and bookstore shelves.',
+  heroImage: '/assets/brand/portfolio-hero-bg.png',
+  heroImageAlt: 'Book covers and design materials on a sunlit writing desk',
+  actions: [
+    { label: 'Request a cover quote', href: '/contact' },
+    { label: 'See portfolio covers', href: '/portfolio', variant: 'gold' },
+  ],
+  sections: [
+    {
+      heading: 'What you get',
+      paragraphs: [
+        'A custom cover directed for your category — not a generic template with your title dropped in.',
+      ],
+      bullets: [
+        'Custom cover design',
+        'Front, spine, and back for print when scoped',
+        'Genre-matched art direction',
+        'Files sized for Amazon and print workflows as agreed in your quote',
+      ],
+    },
+    {
+      heading: 'Thumbnail-first on Amazon',
+      paragraphs: [
+        'Most readers meet your book as a small image. We design for title readability and genre cues at that size, then refine for full-size ebook and print wraps.',
+      ],
+    },
+    {
+      heading: 'File delivery',
+      paragraphs: [
+        'You receive print- and retailer-ready cover files as scoped in your quote. Exact export formats are confirmed in writing for your project.',
+        'Pair cover work with formatting and KDP setup when you want listing and files handled together.',
+      ],
+    },
+  ],
+  faqs: [
+    {
+      q: 'Is cover design included in writing packages?',
+      a: 'Yes — every writing package on /pricing includes cover design at the level listed for that plan. Standalone cover projects are quoted separately.',
+    },
+    {
+      q: 'Can you design for print and ebook?',
+      a: 'Yes. Ebook fronts and print wraps (front, spine, back) are available when your scope includes print.',
+    },
+  ],
+  links: [
+    { label: 'Amazon KDP publishing', href: '/amazon-kdp-ebook-writing' },
+    { label: 'Ebook editing', href: '/ebook-editing-services' },
+    { label: 'Portfolio', href: '/portfolio' },
+    { label: 'Contact', href: '/contact' },
+  ],
+};
+
+export const faqPage = {
+  path: '/faq',
+  eyebrow: 'FAQ',
+  title: 'Ebook writing and publishing FAQ.',
+  lead:
+    'Ownership, pricing ranges, timelines, revisions, publishing support, and niches — the same straight answers authors ask before they hire us.',
+  heroImage: '/assets/brand/faq-editorial-v2.png',
+  heroImageAlt: 'Editorial desk with manuscript notes — ebook writing FAQ',
+  actions: [
+    { label: 'Talk to a specialist', href: '/contact' },
+    { label: 'See packages', href: '/pricing', variant: 'gold' },
+  ],
+  sections: [
+    {
+      heading: 'Still deciding?',
+      paragraphs: [
+        'If your question is about a specific manuscript, length, or deadline, the contact form is faster than guessing from a general answer. You hear back within one working day.',
+      ],
+    },
+  ],
+  faqs,
+  links: [
+    { label: 'Ebook ghostwriting', href: '/ebook-ghostwriting-services' },
+    { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
+    { label: 'Amazon KDP publishing', href: '/amazon-kdp-ebook-writing' },
+    { label: 'Pricing', href: '/pricing' },
+  ],
 };
 
 export const privacyPage = {

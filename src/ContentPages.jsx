@@ -5,6 +5,9 @@ import { plans, services } from './data.js';
 import { PageHero } from './PageHero.jsx';
 import {
   aboutPage,
+  coverPage,
+  editingPage,
+  faqPage,
   landers,
   notFoundPage,
   pricingPage,
@@ -63,6 +66,25 @@ function Sections({ sections }) {
   );
 }
 
+function PageFaqs({ faqs, title = 'Frequently asked questions' }) {
+  if (!faqs?.length) return null;
+  return (
+    <div className="shell content-body content-faq">
+      <section className="blog-section" aria-label={title}>
+        <h2>{title}</h2>
+        <dl className="content-faq-list">
+          {faqs.map(item => (
+            <div key={item.q} className="content-faq-item">
+              <dt>{item.q}</dt>
+              <dd>{item.a}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    </div>
+  );
+}
+
 function ArticlePage({ page, children }) {
   return (
     <div className="blog-page content-page">
@@ -78,6 +100,7 @@ function ArticlePage({ page, children }) {
       />
       {children}
       <Sections sections={page.sections} />
+      <PageFaqs faqs={page.faqs} />
       {page.links ? (
         <div className="shell content-related-wrap">
           <RelatedLinks links={page.links} />
@@ -191,7 +214,7 @@ export function ServicesPage() {
           <ul className="ed-svc-cards">
             {services.map(service => {
               const Icon = serviceIcons[service.key] || IconArrow;
-              const href = serviceHrefs[service.key] || '/contact';
+              const href = serviceHrefs[service.key] || service.href || '/contact';
               return (
                 <li className="ed-svc-card" key={service.title}>
                   <span className="ed-svc-icon" aria-hidden="true"><Icon /></span>
@@ -216,6 +239,8 @@ export function ServicesPage() {
         <RelatedLinks
           links={[
             { label: 'Ebook ghostwriting services', href: '/ebook-ghostwriting-services' },
+            { label: 'Ebook editing services', href: '/ebook-editing-services' },
+            { label: 'Ebook cover design', href: '/ebook-cover-design' },
             { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
             { label: 'Amazon KDP ebook writing', href: '/amazon-kdp-ebook-writing' },
             { label: 'Pricing', href: '/pricing' },
@@ -253,6 +278,45 @@ export function HireWriterPage() {
 
 export function KdpPage() {
   return <Lander page={landers.kdp} />;
+}
+
+export function EditingPage() {
+  return (
+    <>
+      <ArticlePage page={editingPage} />
+      <CloseBand
+        title="Send the draft."
+        lead="Tell us the length, genre, and which edit you need. You will get a fixed editing quote."
+        cta="Request an editing quote"
+      />
+    </>
+  );
+}
+
+export function CoverDesignPage() {
+  return (
+    <>
+      <ArticlePage page={coverPage} />
+      <CloseBand
+        title="Brief the cover."
+        lead="Share the genre, title direction, and whether you need ebook, print, or both."
+        cta="Request a cover quote"
+      />
+    </>
+  );
+}
+
+export function FaqPage() {
+  return (
+    <>
+      <ArticlePage page={faqPage} />
+      <CloseBand
+        title="Still have a question?"
+        lead="Ask about your manuscript, timeline, or package — we reply within one working day."
+        cta="Contact the studio"
+      />
+    </>
+  );
 }
 
 export function PrivacyPage() {

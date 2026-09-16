@@ -1,5 +1,6 @@
 import { blogIndex, blogPosts } from './blogPosts.js';
-import { books, portfolioPage } from './data.js';
+import { books, faqs, portfolioPage } from './data.js';
+import { coverPage, editingPage, faqPage, landers } from './pageContent.js';
 import {
   DEFAULT_OG_ALT,
   DEFAULT_OG_PATH,
@@ -113,6 +114,18 @@ const homeFaq = [
   },
 ];
 
+function faqPageSchema(items) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map(item => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  };
+}
+
 function page({
   path,
   title,
@@ -172,13 +185,7 @@ const staticPages = [
         },
       },
       {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: homeFaq.map(item => ({
-          '@type': 'Question',
-          name: item.q,
-          acceptedAnswer: { '@type': 'Answer', text: item.a },
-        })),
+        ...faqPageSchema(homeFaq),
       },
       webSite(),
     ],
@@ -349,9 +356,9 @@ const staticPages = [
   }),
   page({
     path: '/ebook-ghostwriting-services',
-    title: 'Ebook Ghostwriting Services | ebookwriters.us',
+    title: 'Ebook Ghostwriting Services — Your Voice, Your Name | ebookwriters.us',
     description:
-      'Professional ebook ghostwriting in your voice — research, outline, manuscript, edits, and rights transfer. Fixed packages from $699. You keep 100% ownership.',
+      'Hire ebook ghostwriters on a fixed fee. Outline to manuscript, revisions, NDA, and 100% ownership. Packages from $699.',
     priority: 0.9,
     jsonLd: [
       serviceSchema({
@@ -365,6 +372,7 @@ const staticPages = [
         { name: 'Services', path: '/services' },
         { name: 'Ebook Ghostwriting', path: '/ebook-ghostwriting-services' },
       ]),
+      faqPageSchema(landers.ghostwriting.faqs),
     ],
   }),
   page({
@@ -385,6 +393,7 @@ const staticPages = [
         { name: 'Services', path: '/services' },
         { name: 'Hire an Ebook Writer', path: '/hire-ebook-writer' },
       ]),
+      faqPageSchema(landers.hire.faqs),
     ],
   }),
   page({
@@ -405,6 +414,65 @@ const staticPages = [
         { name: 'Services', path: '/services' },
         { name: 'Amazon KDP Publishing', path: '/amazon-kdp-ebook-writing' },
       ]),
+      faqPageSchema(landers.kdp.faqs),
+    ],
+  }),
+  page({
+    path: '/ebook-editing-services',
+    title: 'Ebook Editing Services — Developmental, Line & Proofreading | ebookwriters.us',
+    description:
+      editingPage.lead,
+    priority: 0.9,
+    jsonLd: [
+      serviceSchema({
+        name: 'Ebook Editing Services',
+        description: editingPage.lead,
+        path: '/ebook-editing-services',
+      }),
+      breadcrumbs([
+        { name: 'Home', path: '/' },
+        { name: 'Services', path: '/services' },
+        { name: 'Ebook Editing', path: '/ebook-editing-services' },
+      ]),
+      faqPageSchema(editingPage.faqs),
+    ],
+  }),
+  page({
+    path: '/ebook-cover-design',
+    title: 'Ebook Cover Design for Kindle & Print | ebookwriters.us',
+    description: coverPage.lead,
+    priority: 0.9,
+    jsonLd: [
+      serviceSchema({
+        name: 'Ebook Cover Design',
+        description: coverPage.lead,
+        path: '/ebook-cover-design',
+      }),
+      breadcrumbs([
+        { name: 'Home', path: '/' },
+        { name: 'Services', path: '/services' },
+        { name: 'Ebook Cover Design', path: '/ebook-cover-design' },
+      ]),
+      faqPageSchema(coverPage.faqs),
+    ],
+  }),
+  page({
+    path: '/faq',
+    title: 'Ebook Writing & Publishing FAQ | ebookwriters.us',
+    description: faqPage.lead,
+    priority: 0.8,
+    changefreq: 'monthly',
+    jsonLd: [
+      webPageSchema({
+        name: 'Ebook Writing and Publishing FAQ',
+        description: faqPage.lead,
+        path: '/faq',
+      }),
+      breadcrumbs([
+        { name: 'Home', path: '/' },
+        { name: 'FAQ', path: '/faq' },
+      ]),
+      faqPageSchema(faqs),
     ],
   }),
   // The admin panel is a real prerendered file rather than a rewrite: with

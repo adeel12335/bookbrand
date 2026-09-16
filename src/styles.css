@@ -19010,3 +19010,55 @@ body {
 .content-page .pf-hero {
   margin-bottom: 0;
 }
+
+.content-faq {
+  padding-top: 0;
+}
+
+.content-faq-list {
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.content-faq-item {
+  padding: 1rem 0;
+  border-top: 1px solid var(--line-soft);
+}
+
+.content-faq-item:last-child {
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.content-faq-item dt {
+  margin: 0 0 0.45rem;
+  color: var(--emerald-800);
+  font-family: var(--display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.content-faq-item dd {
+  margin: 0;
+  color: var(--ink-500);
+  line-height: 1.65;
+}
+
+.ed-faq-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  color: var(--emerald-800);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ed-faq-all:hover {
+  text-decoration: underline;
+}
+
+.ed-faq-all svg {
+  width: 0.95rem;
+  height: 0.95rem;
+}
