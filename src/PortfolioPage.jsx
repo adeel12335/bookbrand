@@ -1,85 +1,8 @@
-﻿import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination, A11y } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { IconArrow, IconCheck } from "./icons.jsx";
-import { books, portfolioPage, services, testimonials } from "./data.js";
-import { PageHero } from "./PageHero.jsx";
-
-function PortfolioCarousel() {
-  const [active, setActive] = useState(0);
-  const reduceMotion =
-    typeof window !== "undefined"
-    && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const selected = books[active] || books[0];
-
-  return (
-    <div className="pf-carousel">
-      <Swiper
-        className="pf-swiper"
-        modules={[Autoplay, Navigation, Pagination, A11y]}
-        slidesPerView={1.15}
-        spaceBetween={16}
-        centeredSlides
-        loop
-        speed={700}
-        autoplay={reduceMotion ? false : { delay: 3200, disableOnInteraction: false, pauseOnMouseEnter: true }}
-        navigation={{
-          prevEl: ".pf-carousel-prev",
-          nextEl: ".pf-carousel-next",
-        }}
-        pagination={{ el: ".pf-carousel-dots", clickable: true }}
-        breakpoints={{
-          640: { slidesPerView: 2.1, spaceBetween: 18 },
-          900: { slidesPerView: 3, spaceBetween: 22 },
-          1100: { slidesPerView: 3.4, spaceBetween: 24 },
-        }}
-        onSlideChange={(swiper) => setActive(swiper.realIndex)}
-        a11y={{
-          prevSlideMessage: "Previous book",
-          nextSlideMessage: "Next book",
-        }}
-      >
-        {books.map((book) => (
-          <SwiperSlide key={book.title}>
-            <article className="pf-book pf-book--slide">
-              <div className="pf-book-cover">
-                <img
-                  src={book.image}
-                  alt={`${book.title} by ${book.author} — ${book.genre} book cover`}
-                  width="320"
-                  height="480"
-                  loading="lazy"
-                  draggable="false"
-                />
-              </div>
-            </article>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-
-      <div className="pf-carousel-foot">
-        <div className="pf-carousel-selected" aria-live="polite">
-          <span>{selected.genre}</span>
-          <h3>{selected.title}</h3>
-          <p>Written by {selected.author}</p>
-        </div>
-        <div className="pf-carousel-controls">
-          <button type="button" className="pf-carousel-prev" aria-label="Previous book">
-            <IconArrow aria-hidden="true" />
-          </button>
-          <div className="pf-carousel-dots" />
-          <button type="button" className="pf-carousel-next" aria-label="Next book">
-            <IconArrow aria-hidden="true" />
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
+﻿import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { IconArrow, IconCheck } from './icons.jsx';
+import { books, portfolioPage, services, testimonials } from './data.js';
+import { PageHero } from './PageHero.jsx';
 
 export function PortfolioPage() {
   const page = portfolioPage;
@@ -89,7 +12,7 @@ export function PortfolioPage() {
   }, []);
 
   return (
-    <div className="pf-page">
+    <div className="pf-page pf-page--v2">
       <PageHero
         eyebrow={page.eyebrow}
         title={page.title}
@@ -106,8 +29,11 @@ export function PortfolioPage() {
       <section className="pf-pillars" aria-label="Why authors trust our portfolio work">
         <div className="shell">
           <ul className="pf-pillar-grid">
-            {page.pillars.map((item) => (
+            {page.pillars.map((item, index) => (
               <li key={item.title}>
+                <span className="pf-pillar-n" aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
                 <IconCheck className="tick" aria-hidden="true" />
                 <h2>{item.title}</h2>
                 <p>{item.copy}</p>
@@ -132,7 +58,29 @@ export function PortfolioPage() {
             </ul>
           </header>
 
-          <PortfolioCarousel />
+          <ul className="pf-cover-grid">
+            {books.map((book, index) => (
+              <li key={book.title}>
+                <article className="pf-cover-item">
+                  <div className="pf-cover-frame">
+                    <img
+                      src={book.image}
+                      alt={`${book.title} by ${book.author} — ${book.genre} book cover`}
+                      width="320"
+                      height="480"
+                      loading={index < 3 ? 'eager' : 'lazy'}
+                      decoding="async"
+                    />
+                  </div>
+                  <div className="pf-cover-meta">
+                    <span>{book.genre}</span>
+                    <h3>{book.title}</h3>
+                    <p>{book.author}</p>
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
