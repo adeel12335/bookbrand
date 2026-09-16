@@ -20989,3 +20989,15 @@ body {
     transform: none;
   }
 }
+
+/* Portfolio / content heroes — never truncate the lead mid-word */
+.pf-page .pf-hero--bg .pf-hero-lead,
+.content-page .pf-hero--bg .pf-hero-lead,
+.about-page .pf-hero--bg .pf-hero-lead,
+.svc-page .pf-hero--bg .pf-hero-lead {
+  display: block !important;
+  -webkit-line-clamp: unset !important;
+  -webkit-box-orient: unset !important;
+  overflow: visible !important;
+  max-height: none !important;
+}
