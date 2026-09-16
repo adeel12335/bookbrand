@@ -1,7 +1,15 @@
 # ebookwriters.us — Website
 
 A premium one-page marketing site for ebookwriters.us, built to the approved brand sheet:
-deep emerald, gold foil and warm paper, Cormorant Garamond over DM Sans.
+deep emerald, gold foil and warm paper, set in a Neue Haas Grotesk–style grotesk.
+
+## Typeface
+
+Neue Haas Grotesk is a paid font, so the site is set in **Switzer** (free, ITF Free Font
+License) until a web license is bought. The license forbids redistributing the files and
+this repo is public, so they are not committed: `npm run dev` and `npm run build` pull them
+from Fontshare into `public/fonts/switzer/` (gitignored). `npm run fonts:pull` refreshes them.
+See `src/fonts.css` for the Display/Text setup and how to swap in licensed Neue Haas Grotesk.
 
 ## Stack
 

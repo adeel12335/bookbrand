@@ -13,3 +13,7 @@ backups/
 #src/generated/
 .env*
 !.env.example
+
+# Switzer is pulled from Fontshare before dev/build (scripts/fetch-fonts.mjs).
+# Its license forbids redistribution, and this repo is public — never commit it.
+public/fonts/switzer/

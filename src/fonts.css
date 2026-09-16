@@ -1,56 +1,90 @@
+/* ==========================================================================
+   Typeface — Neue Haas Grotesk direction, set in Switzer
+   --------------------------------------------------------------------------
+   Neue Haas Grotesk is commercial (Commercial Type / Adobe Fonts). Until a web
+   license is bought, the site is set in Switzer, a free Swiss neo-grotesk
+   under the ITF Free Font License. The files are pulled from Fontshare by
+   scripts/fetch-fonts.mjs and are never committed (see .gitignore).
+
+   Two families from one file, mirroring Neue Haas Grotesk Display / Text:
+
+   · 'Switzer'          body copy, UI, labels — nominal size.
+   · 'Switzer Display'  headings and figures — drawn at 85% of nominal. Every
+                        display size in styles.css was set for Cormorant, whose
+                        capitals are 15% shorter; the scale keeps each heading's
+                        cap height and measure, so no layout re-wraps.
+                        It is declared Thin–Medium only (100–500): Medium is the
+                        heaviest display weight in this brand, like NHG Display
+                        65. A heading asking for 600 renders at 500 — the old
+                        serif's semibold. body sets font-synthesis: none, so the
+                        browser never fakes a bolder cut on top.
+
+   The *Fallback faces are Arial remapped to Switzer's width and vertical
+   metrics, so the swap when the webfont lands does not shift the layout.
+
+   Moving to licensed Neue Haas Grotesk: point the Display faces at NHG
+   Display and the text faces at NHG Text (self-hosted, not in this public
+   repo), then re-check size-adjust against NHG's cap height.
+   ========================================================================== */
+
 @font-face {
-  font-family: 'Cormorant Garamond';
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(/fonts/switzer/Switzer-Variable.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Switzer';
   font-style: italic;
-  font-weight: 400;
+  font-weight: 100 900;
   font-display: swap;
-  src: url(/fonts/font-1.ttf) format('truetype');
+  src: url(/fonts/switzer/Switzer-VariableItalic.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Switzer Display';
+  font-style: normal;
+  font-weight: 100 500;
+  font-display: swap;
+  size-adjust: 85%;
+  src: url(/fonts/switzer/Switzer-Variable.woff2) format('woff2');
 }
 @font-face {
-  font-family: 'Cormorant Garamond';
+  font-family: 'Switzer Display';
   font-style: italic;
-  font-weight: 500;
+  font-weight: 100 500;
   font-display: swap;
-  src: url(/fonts/font-2.ttf) format('truetype');
+  size-adjust: 85%;
+  src: url(/fonts/switzer/Switzer-VariableItalic.woff2) format('woff2');
+}
+
+/* Arial → Switzer 400 and Arial Bold → Switzer 600, measured with fontTools
+   on running text. Overrides are divided by size-adjust, which scales them. */
+@font-face {
+  font-family: 'Switzer Fallback';
+  font-weight: 100 500;
+  src: local('Arial'), local('ArialMT');
+  size-adjust: 101.13%;
+  ascent-override: 96.9%;
+  descent-override: 24.72%;
+  line-gap-override: 8.9%;
 }
 @font-face {
-  font-family: 'Cormorant Garamond';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(/fonts/font-3.ttf) format('truetype');
+  font-family: 'Switzer Fallback';
+  font-weight: 600 900;
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  size-adjust: 96.1%;
+  ascent-override: 101.98%;
+  descent-override: 26.01%;
+  line-gap-override: 9.37%;
 }
 @font-face {
-  font-family: 'Cormorant Garamond';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(/fonts/font-4.ttf) format('truetype');
-}
-@font-face {
-  font-family: 'Cormorant Garamond';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(/fonts/font-5.ttf) format('truetype');
-}
-@font-face {
-  font-family: 'DM Sans';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(/fonts/font-6.ttf) format('truetype');
-}
-@font-face {
-  font-family: 'DM Sans';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(/fonts/font-7.ttf) format('truetype');
-}
-@font-face {
-  font-family: 'DM Sans';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(/fonts/font-8.ttf) format('truetype');
+  font-family: 'Switzer Display Fallback';
+  font-weight: 100 500;
+  src: local('Arial'), local('ArialMT');
+  size-adjust: 85.96%;
+  ascent-override: 96.9%;
+  descent-override: 24.72%;
+  line-gap-override: 8.9%;
 }
