@@ -187,7 +187,7 @@ function Header() {
 
   return (
     <header
-      className={`site-header${stuck ? ' is-stuck' : ''}${open ? ' is-open' : ''}`}
+      className={`site-header${onHome ? ' site-header--home' : ''}${stuck ? ' is-stuck' : ''}${open ? ' is-open' : ''}`}
       onKeyDown={event => {
         if (event.key === 'Escape' && open) {
           setOpen(false);

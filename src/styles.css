@@ -15997,7 +15997,7 @@ body {
    ========================================================================== */
 
 @media (max-width: 1020px) {
-  .site-header {
+  .site-header--home {
     position: absolute !important;
     inset: 0 0 auto 0 !important;
     background: transparent !important;
@@ -16005,33 +16005,33 @@ body {
     border: 0 !important;
   }
 
-  .site-header::before {
+  .site-header--home::before {
     opacity: 0 !important;
     background: transparent !important;
   }
 
-  .site-header .wordmark,
-  .site-header .wordmark * {
+  .site-header--home .wordmark,
+  .site-header--home .wordmark * {
     opacity: 0 !important;
     pointer-events: none !important;
   }
 
-  .site-header .nav-toggle {
+  .site-header--home .nav-toggle {
     color: #d4b483 !important;
   }
 
-  .site-header.is-stuck {
+  .site-header--home.is-stuck {
     position: fixed !important;
     background: #071b16 !important;
   }
 
-  .site-header.is-stuck::before {
+  .site-header--home.is-stuck::before {
     opacity: 1 !important;
     background: rgba(7, 27, 22, 0.94) !important;
   }
 
-  .site-header.is-stuck .wordmark,
-  .site-header.is-stuck .wordmark * {
+  .site-header--home.is-stuck .wordmark,
+  .site-header--home.is-stuck .wordmark * {
     opacity: 1 !important;
     pointer-events: auto !important;
   }
@@ -16072,12 +16072,12 @@ body {
 
 /* Hide real chrome over the exact mock (logo+menu already in the PNG) */
 @media (max-width: 1020px) {
-  .site-header:not(.is-stuck):not(.is-open) .nav-toggle {
+  .site-header--home:not(.is-stuck):not(.is-open) .nav-toggle {
     opacity: 0 !important;
   }
 
   /* Invisible but clickable hit over the mock hamburger */
-  .site-header:not(.is-stuck):not(.is-open) .nav-toggle {
+  .site-header--home:not(.is-stuck):not(.is-open) .nav-toggle {
     position: relative !important;
     z-index: 5 !important;
   }
@@ -21281,3 +21281,107 @@ body {
 
 .pf-page--v2 .pf-offer-grid span,
 .about-stage-n { color: var(--gold-ink); }
+
+/* ------------------------------------------------------------------ */
+/* Inner-page mobile header — keep the home-plate overlay off these    */
+/* routes so logo + menu are visible at the top of the page.           */
+/* ------------------------------------------------------------------ */
+@media (max-width: 1020px) {
+  .blog-shell .site-header,
+  .contact-page .site-header {
+    position: sticky !important;
+    top: 0;
+    inset: auto !important;
+    z-index: 800;
+    background: #071b16 !important;
+    border-bottom: 1px solid rgba(212, 180, 131, 0.18) !important;
+    box-shadow: none !important;
+  }
+
+  .blog-shell .site-header::before,
+  .contact-page .site-header::before {
+    opacity: 1 !important;
+    background: rgba(7, 27, 22, 0.96) !important;
+  }
+
+  .blog-shell .site-header .wordmark,
+  .blog-shell .site-header .wordmark *,
+  .contact-page .site-header .wordmark,
+  .contact-page .site-header .wordmark * {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .blog-shell .site-header .nav-toggle,
+  .contact-page .site-header .nav-toggle {
+    opacity: 1 !important;
+    color: var(--gold-200) !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .blog-shell .pf-hero,
+  .contact-page .pf-hero {
+    display: block !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .blog-shell .pf-hero--bg .pf-hero-media,
+  .contact-page .pf-hero--bg .pf-hero-media {
+    position: absolute !important;
+    inset: 0 !important;
+    order: unset !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    z-index: 0;
+  }
+
+  .blog-shell .pf-hero--bg .pf-hero-media img,
+  .contact-page .pf-hero--bg .pf-hero-media img {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    object-fit: cover !important;
+    object-position: 78% center !important;
+  }
+
+  .blog-shell .pf-hero--bg .pf-hero-shell,
+  .contact-page .pf-hero--bg .pf-hero-shell {
+    position: relative !important;
+    z-index: 1;
+    display: flex !important;
+    align-items: flex-end !important;
+    min-height: min(34rem, 72vh) !important;
+    height: auto !important;
+    padding: 1.15rem var(--gutter) 1.25rem !important;
+    background: transparent !important;
+  }
+
+  .blog-shell .pf-hero--bg .pf-hero-copy,
+  .contact-page .pf-hero--bg .pf-hero-copy {
+    max-width: none !important;
+    width: 100%;
+    padding: 1rem 1.05rem !important;
+    background: rgba(247, 244, 239, 0.92) !important;
+    border: 1px solid rgba(15, 61, 50, 0.08) !important;
+  }
+
+  .blog-shell .pf-hero--bg .pf-hero-copy h1,
+  .contact-page .pf-hero--bg .pf-hero-copy h1 {
+    max-width: none !important;
+  }
+
+  .blog-shell .pf-hero-actions,
+  .contact-page .pf-hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .blog-shell .pf-hero-actions .cta,
+  .contact-page .pf-hero-actions .cta {
+    width: 100%;
+    justify-content: center;
+  }
+}
