@@ -20990,14 +20990,19 @@ body {
   }
 }
 
-/* Portfolio / content heroes — never truncate the lead mid-word */
-.pf-page .pf-hero--bg .pf-hero-lead,
-.content-page .pf-hero--bg .pf-hero-lead,
-.about-page .pf-hero--bg .pf-hero-lead,
-.svc-page .pf-hero--bg .pf-hero-lead {
+/* PageHero leads — never truncate mid-word on any route */
+.pf-hero--bg .pf-hero-lead,
+.pf-hero-lead {
   display: block !important;
   -webkit-line-clamp: unset !important;
   -webkit-box-orient: unset !important;
   overflow: visible !important;
   max-height: none !important;
+}
+
+.pf-hero--bg .pf-trust-note {
+  display: block !important;
+  -webkit-line-clamp: unset !important;
+  overflow: visible !important;
+  max-width: none !important;
 }
