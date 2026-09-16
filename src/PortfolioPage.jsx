@@ -7,6 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { IconArrow, IconCheck } from "./icons.jsx";
 import { books, portfolioPage, services, testimonials } from "./data.js";
+import { PageHero } from "./PageHero.jsx";
 
 function PortfolioCarousel() {
   const [active, setActive] = useState(0);
@@ -89,36 +90,18 @@ export function PortfolioPage() {
 
   return (
     <div className="pf-page">
-      <section className="pf-hero pf-hero--bg" aria-labelledby="pf-title">
-        <div className="pf-hero-media" aria-hidden="true">
-          <img
-            src={page.heroImage}
-            alt=""
-            width="1600"
-            height="900"
-            fetchPriority="high"
-            decoding="async"
-          />
-        </div>
-        <div className="shell pf-hero-shell">
-          <div className="pf-hero-copy">
-            <p className="eyebrow"><span>{page.eyebrow}</span><i aria-hidden="true" /></p>
-            <h1 id="pf-title">
-              {page.title}
-              <br />
-              <em>{page.titleEm}</em>
-            </h1>
-            <p className="pf-hero-lead">{page.lead}</p>
-            <div className="pf-hero-actions">
-              <Link className="cta cta-solid" to="/contact">
-                <span>{page.cta}</span>
-                <IconArrow className="cta-arrow" />
-              </Link>
-              <p className="pf-trust-note">{page.trustNote}</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow={page.eyebrow}
+        title={page.title}
+        titleEm={page.titleEm}
+        lead={page.lead}
+        image={page.heroImage}
+        imageAlt={page.heroImageAlt}
+        id="pf-title"
+        actions={[{ label: page.cta, href: '/contact' }]}
+      >
+        <p className="pf-trust-note">{page.trustNote}</p>
+      </PageHero>
 
       <section className="pf-pillars" aria-label="Why authors trust our portfolio work">
         <div className="shell">

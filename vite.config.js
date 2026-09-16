@@ -9,10 +9,12 @@ function seoStampPlugin() {
   return {
     name: 'seo-stamp-html',
     apply: 'build',
-    closeBundle: {
+    writeBundle: {
       sequential: true,
       order: 'post',
       handler() {
+        const htmlPath = join(process.cwd(), 'dist', 'index.html');
+        if (!existsSync(htmlPath)) return;
         stampHtml();
       },
     },

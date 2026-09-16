@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { IconArrow, IconCheck, serviceIcons } from './icons.jsx';
 import { plans, services } from './data.js';
+import { PageHero } from './PageHero.jsx';
 import {
   aboutPage,
   landers,
@@ -18,33 +19,6 @@ function ScrollTop() {
     window.scrollTo(0, 0);
   }, []);
   return null;
-}
-
-function Eyebrow({ children }) {
-  return (
-    <p className="eyebrow">
-      <span>{children}</span>
-      <i aria-hidden="true" />
-    </p>
-  );
-}
-
-function Actions({ actions }) {
-  if (!actions?.length) return null;
-  return (
-    <div className="content-page-actions">
-      {actions.map(action => (
-        <Link
-          key={action.href + action.label}
-          className={`cta ${action.variant === 'gold' ? 'cta-gold' : 'cta-solid'}`}
-          to={action.href}
-        >
-          <span>{action.label}</span>
-          <IconArrow className="cta-arrow" />
-        </Link>
-      ))}
-    </div>
-  );
 }
 
 function RelatedLinks({ links }) {
@@ -93,15 +67,15 @@ function ArticlePage({ page, children }) {
   return (
     <div className="blog-page content-page">
       <ScrollTop />
-      <section className="blog-hero">
-        <div className="shell">
-          <Eyebrow>{page.eyebrow}</Eyebrow>
-          <h1>{page.title}</h1>
-          <p className="blog-hero-lead">{page.lead}</p>
-          {page.updated ? <p className="content-updated">Last updated {page.updated}</p> : null}
-          <Actions actions={page.actions} />
-        </div>
-      </section>
+      <PageHero
+        eyebrow={page.eyebrow}
+        title={page.title}
+        lead={page.lead}
+        image={page.heroImage}
+        imageAlt={page.heroImageAlt}
+        actions={page.actions}
+        meta={page.updated ? <p className="content-updated">Last updated {page.updated}</p> : null}
+      />
       {children}
       <Sections sections={page.sections} />
       {page.links ? (
@@ -144,14 +118,14 @@ export function PricingPage() {
   return (
     <div className="blog-page content-page">
       <ScrollTop />
-      <section className="blog-hero">
-        <div className="shell">
-          <Eyebrow>{pricingPage.eyebrow}</Eyebrow>
-          <h1>{pricingPage.title}</h1>
-          <p className="blog-hero-lead">{pricingPage.lead}</p>
-          <Actions actions={pricingPage.actions} />
-        </div>
-      </section>
+      <PageHero
+        eyebrow={pricingPage.eyebrow}
+        title={pricingPage.title}
+        lead={pricingPage.lead}
+        image={pricingPage.heroImage}
+        imageAlt={pricingPage.heroImageAlt}
+        actions={pricingPage.actions}
+      />
       <section className="ed-price content-price" aria-label="Publishing packages">
         <div className="shell">
           <div className="ed-price-sheet">
@@ -204,14 +178,14 @@ export function ServicesPage() {
   return (
     <div className="blog-page content-page">
       <ScrollTop />
-      <section className="blog-hero">
-        <div className="shell">
-          <Eyebrow>{servicesPage.eyebrow}</Eyebrow>
-          <h1>{servicesPage.title}</h1>
-          <p className="blog-hero-lead">{servicesPage.lead}</p>
-          <Actions actions={servicesPage.actions} />
-        </div>
-      </section>
+      <PageHero
+        eyebrow={servicesPage.eyebrow}
+        title={servicesPage.title}
+        lead={servicesPage.lead}
+        image={servicesPage.heroImage}
+        imageAlt={servicesPage.heroImageAlt}
+        actions={servicesPage.actions}
+      />
       <section className="ed-svc content-svc" aria-label="Service list">
         <div className="shell">
           <ul className="ed-svc-cards">
@@ -293,14 +267,17 @@ export function NotFoundPage() {
   return (
     <div className="blog-page content-page">
       <ScrollTop />
-      <section className="blog-hero">
-        <div className="shell">
-          <Eyebrow>{notFoundPage.eyebrow}</Eyebrow>
-          <h1>{notFoundPage.title}</h1>
-          <p className="blog-hero-lead">{notFoundPage.lead}</p>
+      <PageHero
+        eyebrow={notFoundPage.eyebrow}
+        title={notFoundPage.title}
+        lead={notFoundPage.lead}
+        image={notFoundPage.heroImage}
+        imageAlt={notFoundPage.heroImageAlt}
+      >
+        <div className="page-hero-links">
           <RelatedLinks links={notFoundPage.links} />
         </div>
-      </section>
+      </PageHero>
     </div>
   );
 }

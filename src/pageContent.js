@@ -5,6 +5,8 @@ export const aboutPage = {
   title: 'A US ebook writing studio built for authors who want the book done.',
   lead:
     'ebookwriters.us is a Tennessee ghostwriting and publishing studio. We write, edit, design, and prepare books for Amazon KDP and IngramSpark — so you are not coordinating a dozen freelancers.',
+  heroImage: '/assets/brand/hero-desk.jpg',
+  heroImageAlt: 'Writing desk with manuscript pages and publishing tools',
   actions: [
     { label: 'Request a quote', href: '/contact' },
     { label: 'See packages', href: '/pricing', variant: 'gold' },
@@ -45,6 +47,8 @@ export const pricingPage = {
   title: 'Ebook writing packages — $699 to $3,999.',
   lead:
     'Ghostwriting packages with editing, cover design, and retailer-ready files included. No surprise invoices. Choose a plan, then request a quote with that package selected.',
+  heroImage: '/assets/brand/path-roadmap-desk.png',
+  heroImageAlt: 'Publishing roadmap desk with journal and stage books',
   actions: [
     { label: 'Talk to a specialist', href: '/contact' },
     { label: 'What a package includes', href: '/blog/what-is-included-in-a-professional-ebook-writing-package', variant: 'gold' },
@@ -60,6 +64,8 @@ export const servicesPage = {
   title: 'Ebook writing, editing, design, and publishing — in one studio.',
   lead:
     'Hire ebook writers and ghostwriters without stitching together a cover designer, formatter, and KDP specialist later. Start with a lander below, or request a quote and we will map the work.',
+  heroImage: '/assets/brand/publishing-craft-v2.png',
+  heroImageAlt: 'Open manuscript and craft tools on a publishing production desk',
   actions: [
     { label: 'Get a writing quote', href: '/contact' },
     { label: 'View packages', href: '/pricing', variant: 'gold' },
@@ -82,6 +88,8 @@ export const landers = {
     title: 'Ebook ghostwriting services in your voice.',
     lead:
       'A professional ghostwriter researches, outlines, and writes the manuscript. You stay the author. NDA before you share anything, full rights transfer before writing begins, and your name on the cover.',
+    heroImage: '/assets/brand/hero-concept-photo.png',
+    heroImageAlt: 'Author workspace for professional ebook ghostwriting',
     actions: [
       { label: 'Request a ghostwriting quote', href: '/contact' },
       { label: 'See ghostwriting packages', href: '/pricing', variant: 'gold' },
@@ -129,6 +137,8 @@ export const landers = {
     title: 'Hire an ebook writer on a fixed fee — not an open tab.',
     lead:
       'Tell us the idea, the length, and the deadline. We match you with a writer in that category and quote a package. Writing, edits, and files are in the number you approve — not billed by the hour.',
+    heroImage: '/assets/brand/hero-desk.jpg',
+    heroImageAlt: 'Desk setup for hiring a professional ebook writer',
     actions: [
       { label: 'Hire an ebook writer', href: '/contact' },
       { label: 'Compare packages', href: '/pricing', variant: 'gold' },
@@ -175,6 +185,8 @@ export const landers = {
     title: 'Amazon KDP ebook writing and publishing, handled as one project.',
     lead:
       'We write the manuscript, format EPUB and print files, research categories and keywords, and walk you through KDP setup. You keep the Amazon account and 100% of the royalties.',
+    heroImage: '/assets/brand/path-roadmap-desk.png',
+    heroImageAlt: 'Publishing desk for Amazon KDP ebook setup',
     actions: [
       { label: 'Plan KDP publishing', href: '/contact' },
       { label: 'See packages with KDP setup', href: '/pricing', variant: 'gold' },
@@ -222,6 +234,8 @@ export const privacyPage = {
   title: 'Privacy policy',
   updated: 'September 15, 2026',
   lead: `This policy describes how ${siteContact.email} and the ebookwriters.us website handle information. It is written for a marketing site and quote form — not as a substitute for a signed project agreement.`,
+  heroImage: '/assets/brand/hero-desk.jpg',
+  heroImageAlt: 'Quiet writing desk — privacy and studio policies',
   sections: [
     {
       heading: 'Who is responsible',
@@ -282,6 +296,8 @@ export const termsPage = {
   updated: 'September 15, 2026',
   lead:
     'These terms cover use of the ebookwriters.us website and quote requests. A paid writing project is governed by the statement of work and rights agreement you sign — those documents control if they conflict with this page.',
+  heroImage: '/assets/brand/hero-desk.jpg',
+  heroImageAlt: 'Studio desk — terms of service for ebookwriters.us',
   sections: [
     {
       heading: 'The site',
@@ -345,6 +361,8 @@ export const notFoundPage = {
   eyebrow: '404',
   title: 'This page is not on ebookwriters.us.',
   lead: 'The address you opened is not a published route. These pages are a better next step:',
+  heroImage: '/assets/brand/hero-concept-photo.png',
+  heroImageAlt: 'Publishing studio desk — page not found',
   links: [
     { label: 'Home', href: '/' },
     { label: 'Services', href: '/services' },

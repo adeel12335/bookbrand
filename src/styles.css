@@ -18997,3 +18997,16 @@ body {
 .ct-recaptcha a:focus-visible {
   color: var(--gold-ink);
 }
+
+.page-hero-links {
+  margin-top: 1.25rem;
+}
+
+.page-hero .content-updated {
+  color: var(--ink-500);
+}
+
+.blog-page .pf-hero,
+.content-page .pf-hero {
+  margin-bottom: 0;
+}

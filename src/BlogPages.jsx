@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { IconArrow, IconCheck } from './icons.jsx';
+import { PageHero } from './PageHero.jsx';
 import {
   blogArticle,
   blogIndex,
@@ -47,17 +48,15 @@ export function BlogIndexPage() {
 
   return (
     <div className="blog-page">
-      <section className="blog-hero" aria-labelledby="blog-index-title">
-        <div className="shell">
-          <p className="eyebrow"><span>Blog</span><i aria-hidden="true" /></p>
-          <h1 id="blog-index-title">
-            {blogIndex.title}
-            <br />
-            <em>{blogIndex.titleEm}</em>
-          </h1>
-          <p className="blog-hero-lead">{blogIndex.lead}</p>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Blog"
+        title={blogIndex.title}
+        titleEm={blogIndex.titleEm}
+        lead={blogIndex.lead}
+        image={blogIndex.heroImage}
+        imageAlt={blogIndex.heroImageAlt}
+        id="blog-index-title"
+      />
 
       <section className="blog-list-section" aria-label="All articles">
         <div className="shell">
