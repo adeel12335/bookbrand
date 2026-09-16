@@ -255,6 +255,7 @@ export const landers = {
     ],
     links: [
       { label: 'Ebook ghostwriting services', href: '/ebook-ghostwriting-services' },
+      { label: 'How to hire an ebook writer (checklist)', href: '/blog/how-to-hire-an-ebook-writer' },
       { label: 'How much it costs to hire an ebook writer', href: '/blog/how-much-does-it-cost-to-hire-an-ebook-writer' },
       { label: 'Amazon KDP publishing', href: '/amazon-kdp-ebook-writing' },
       { label: 'Contact the studio', href: '/contact' },
@@ -331,6 +332,7 @@ export const landers = {
       { label: 'Ebook ghostwriting', href: '/ebook-ghostwriting-services' },
       { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
       { label: 'Ebook editing services', href: '/ebook-editing-services' },
+      { label: 'KDP publishing checklist', href: '/blog/kdp-publishing-checklist-for-first-time-authors' },
       { label: 'How long writing and publishing take', href: '/blog/how-long-does-it-take-to-write-and-publish-a-book' },
       { label: 'Pricing', href: '/pricing' },
     ],
