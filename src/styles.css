@@ -21273,7 +21273,8 @@ body {
 .ed-price-card:not(.is-featured) .ed-price-meta dt { color: var(--gold-ink); }
 .ed-price-card.is-featured .ed-price-amt i { color: var(--gold-300); }
 
-.blog-card:not(.blog-card--featured) .blog-card-meta { color: var(--ink-500); }
+.blog-card:not(.blog-card--featured) .blog-card-meta,
+.blog-card:not(.blog-card--featured) .blog-card-foot { color: var(--ink-500); }
 .blog-card:not(.blog-card--featured) .blog-card-index { color: var(--gold-ink) !important; }
 
 .pf-trust-note { color: var(--ink-500); }

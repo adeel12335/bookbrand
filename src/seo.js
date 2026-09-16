@@ -491,10 +491,32 @@ const staticPages = [
   }),
 ];
 
+const TITLE_MAX = 60;
+const TITLE_SUFFIX = ` | ${SITE_NAME}`;
+
+/**
+ * A search title must be a complete phrase — a search engine cannot expand
+ * "A Practical…" back into the headline. So never truncate: keep the brand
+ * suffix while it fits, drop it before cutting words, and for headlines longer
+ * than the limit use their lead clause ("X vs Y: Which…" → "X vs Y").
+ */
+export function articleTitle(headline) {
+  const title = headline.trim();
+  const fit = text => (
+    text.length + TITLE_SUFFIX.length <= TITLE_MAX ? `${text}${TITLE_SUFFIX}`
+      : text.length <= TITLE_MAX ? text
+        : null
+  );
+  const whole = fit(title);
+  if (whole) return whole;
+  const lead = title.split(/(?<=\?)\s|:\s|\s[—–]\s/)[0].trim();
+  return (lead !== title && lead.length >= 20 && fit(lead)) || title;
+}
+
 function blogPostPage(post) {
   return page({
     path: `/blog/${post.slug}`,
-    title: `${post.title.length > 42 ? `${post.title.slice(0, 40).trim()}…` : post.title} | ebookwriters.us`,
+    title: articleTitle(post.title),
     description: post.description,
     image: post.image || '/assets/brand/faq-editorial-v2.webp',
     imageAlt: post.imageAlt || DEFAULT_OG_ALT,

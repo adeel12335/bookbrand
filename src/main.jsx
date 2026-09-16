@@ -1,9 +1,6 @@
 import React, { Suspense, lazy, useEffect, useId, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Lenis from 'lenis';
 import {
   IconArrow, IconArrowUpRight, IconBook, IconCheck, IconClose,
   IconMail, IconMenu, IconPhone, IconPlus,
@@ -44,7 +41,24 @@ function RouteFallback() {
   return <div className="shell" style={{ padding: '4rem 0' }} aria-busy="true">Loading…</div>;
 }
 
-gsap.registerPlugin(ScrollTrigger);
+/*
+ * GSAP, ScrollTrigger and Lenis only drive enhancements (smooth scroll, the
+ * progress bar, magnetic CTAs), so they load after first paint instead of
+ * riding in the main bundle. One shared promise; callers must tolerate the
+ * libraries arriving late.
+ */
+let motionLibs;
+function loadMotion() {
+  motionLibs ??= Promise.all([
+    import('gsap'),
+    import('gsap/ScrollTrigger'),
+    import('lenis'),
+  ]).then(([{ gsap }, { ScrollTrigger }, { default: Lenis }]) => {
+    gsap.registerPlugin(ScrollTrigger);
+    return { gsap, ScrollTrigger, Lenis };
+  });
+  return motionLibs;
+}
 
 const reduceMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -84,19 +98,22 @@ function useMagnetic(strength = 0.28) {
     const node = ref.current;
     if (!node || reduceMotion()) return undefined;
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return undefined;
+    let gsap = null;
+    loadMotion().then(libs => { gsap = libs.gsap; });
     const move = event => {
+      if (!gsap) return;
       const rect = node.getBoundingClientRect();
       const x = event.clientX - rect.left - rect.width / 2;
       const y = event.clientY - rect.top - rect.height / 2;
       gsap.to(node, { x: x * strength, y: y * strength, duration: 0.5, ease: 'power3.out' });
     };
-    const reset = () => gsap.to(node, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' });
+    const reset = () => gsap?.to(node, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' });
     node.addEventListener('pointermove', move);
     node.addEventListener('pointerleave', reset);
     return () => {
       node.removeEventListener('pointermove', move);
       node.removeEventListener('pointerleave', reset);
-      gsap.killTweensOf(node);
+      gsap?.killTweensOf(node);
     };
   }, [strength]);
   return ref;
@@ -1349,7 +1366,7 @@ function ContactPage() {
       <main id="main">
         <PageHero
           eyebrow="Contact"
-          title="Request a fixed writing quote."
+          title={contactIntro.pageTitle}
           lead={contactIntro.lead}
           image="/assets/brand/page-hero-contact.png"
           imageAlt={contactIntro.photoAlt}
@@ -1366,28 +1383,40 @@ function HomePage() {
   const progressRef = useRef(null);
 
   useEffect(() => {
-    const bar = progressRef.current;
-    const progress = ScrollTrigger.create({
-      start: 0,
-      end: 'max',
-      onUpdate: self => { if (bar) bar.style.transform = `scaleX(${self.progress})`; },
-    });
-    if (reduceMotion()) return () => progress.kill();
+    let cancelled = false;
+    let teardown = () => {};
+    loadMotion().then(({ gsap, ScrollTrigger, Lenis }) => {
+      if (cancelled) return;
+      const bar = progressRef.current;
+      const progress = ScrollTrigger.create({
+        start: 0,
+        end: 'max',
+        onUpdate: self => { if (bar) bar.style.transform = `scaleX(${self.progress})`; },
+      });
+      if (reduceMotion()) {
+        teardown = () => progress.kill();
+        return;
+      }
 
-    const lenis = new Lenis({
-      autoRaf: false,
-      lerp: 0.085,
-      wheelMultiplier: 0.95,
-      anchors: true,
+      const lenis = new Lenis({
+        autoRaf: false,
+        lerp: 0.085,
+        wheelMultiplier: 0.95,
+        anchors: true,
+      });
+      const tick = time => lenis.raf(time * 1000);
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(tick);
+      gsap.ticker.lagSmoothing(0);
+      teardown = () => {
+        progress.kill();
+        gsap.ticker.remove(tick);
+        lenis.destroy();
+      };
     });
-    const tick = time => lenis.raf(time * 1000);
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
     return () => {
-      progress.kill();
-      gsap.ticker.remove(tick);
-      lenis.destroy();
+      cancelled = true;
+      teardown();
     };
   }, []);
 

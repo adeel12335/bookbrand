@@ -69,17 +69,6 @@ function injectCrawlBody(html, page) {
   return html.replace(/<div id="root"[^>]*>[\s\S]*?<\/div>\s*(?=<script|<!--|$)/, `${root}\n    `);
 }
 
-function injectNoscript(html, page) {
-  const noscript = `    <noscript>
-${getCrawlMarkup(page)}
-    </noscript>
-`;
-  if (html.includes('<noscript>')) {
-    return html.replace(/<noscript>[\s\S]*?<\/noscript>\n?/, noscript);
-  }
-  return html.replace(/<div id="root"[^>]*>[\s\S]*?<\/div>/, match => `${match}\n${noscript}`);
-}
-
 function applyPage(html, page) {
   const url = absoluteUrl(page.path);
   const image = page.image.startsWith('http') ? page.image : absoluteUrl(page.image);
@@ -99,8 +88,14 @@ function applyPage(html, page) {
   next = setMeta(next, 'name', 'twitter:image', image);
   next = setMeta(next, 'name', 'twitter:image:alt', page.imageAlt);
   next = replaceJsonLd(next, page.jsonLd || []);
+  // The template preloads the home hero plates; on any other route that is a
+  // wasted high-priority download of an image the page never shows.
+  if (page.path !== '/') {
+    next = next.replace(/[ \t]*<link rel="preload" as="image" href="\/assets\/brand\/hero-[^"]*-plate\.[a-z]+"[^>]*>\r?\n/g, '');
+  }
+  // #root already carries the crawl copy for clients without JavaScript, so a
+  // <noscript> duplicate would only double every page's weight.
   next = injectCrawlBody(next, page);
-  next = injectNoscript(next, page);
   return next;
 }
 

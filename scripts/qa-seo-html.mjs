@@ -78,4 +78,20 @@ for (const check of checks) {
   console.log(`ok ${check.path}`);
 }
 
+// Every sitemap URL: a real body for non-JS crawlers, and a complete title.
+const MIN_WORDS = 150;
+const decode = s => s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+for (const loc of sitemap.match(/<loc>[^<]+<\/loc>/g)) {
+  const path = new URL(loc.slice(5, -6)).pathname;
+  const html = readPage(path);
+  const rootHtml = html.match(/<div id="root">([\s\S]*?)<\/div>\s*(?:<script|<!--|<\/body>)/)?.[1] || '';
+  const words = rootHtml.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
+  if (words < MIN_WORDS) throw new Error(`${path} #root has ${words} words (< ${MIN_WORDS}) — thin crawl HTML`);
+  const title = decode(html.match(/<title>([^<]*)<\/title>/)?.[1] || '');
+  if (title.length > 60) throw new Error(`${path} title is ${title.length} chars: ${title}`);
+  if (/…|\.\.\.$/.test(title)) throw new Error(`${path} title is truncated: ${title}`);
+  if (html.includes('<noscript>')) throw new Error(`${path} duplicates the crawl copy in <noscript>`);
+}
+console.log(`ok all sitemap URLs have >= ${MIN_WORDS} crawlable words and complete titles`);
+
 console.log('qa:seo-html passed — key routes have crawlable body HTML.');
