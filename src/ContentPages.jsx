@@ -1,8 +1,9 @@
 ﻿import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { IconArrow, IconCheck, serviceIcons } from './icons.jsx';
-import { plans, services } from './data.js';
-import { PageHero } from './PageHero.jsx';
+import { plans, pricingIntro, services, servicesIntro } from './data.js';
+import { Contact } from './ContactSection.jsx';
+import { headingId } from './blogPosts.js';
 import {
   aboutPage,
   coverPage,
@@ -24,186 +25,293 @@ function ScrollTop() {
   return null;
 }
 
-function RelatedLinks({ links }) {
-  if (!links?.length) return null;
-  return (
-    <ul className="content-related">
-      {links.map(link => (
-        <li key={link.href + link.label}>
-          <Link to={link.href}>
-            {link.label}
-            <IconArrow aria-hidden="true" />
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function Sections({ sections }) {
-  if (!sections?.length) return null;
-  return (
-    <div className="shell content-body">
-      {sections.map(section => (
-        <section key={section.heading} className="blog-section">
-          <h2>{section.heading}</h2>
-          {section.paragraphs?.map(paragraph => (
-            <p key={paragraph.slice(0, 48)}>{paragraph}</p>
-          ))}
-          {section.bullets ? (
-            <ul>
-              {section.bullets.map(item => (
-                <li key={item}>
-                  <IconCheck className="tick" aria-hidden="true" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </section>
-      ))}
-    </div>
-  );
-}
-
-function PageFaqs({ faqs, title = 'Frequently asked questions' }) {
-  if (!faqs?.length) return null;
-  return (
-    <div className="shell content-body content-faq">
-      <section className="blog-section" aria-label={title}>
-        <h2>{title}</h2>
-        <dl className="content-faq-list">
-          {faqs.map(item => (
-            <div key={item.q} className="content-faq-item">
-              <dt>{item.q}</dt>
-              <dd>{item.a}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
-    </div>
-  );
-}
-
 function ArticlePage({ page, children }) {
+  const sections = page.sections || [];
+  const tocItems = [
+    ...sections.map(section => ({ id: headingId(section.heading), label: section.heading })),
+    ...(page.faqs?.length ? [{ id: 'page-faqs', label: 'Frequently asked questions' }] : []),
+    ...(page.links?.length ? [{ id: 'page-links', label: 'Keep reading' }] : []),
+  ];
+
   return (
-    <div className="blog-page content-page">
+    <div className="br_legal_page">
       <ScrollTop />
-      <PageHero
-        eyebrow={page.eyebrow}
-        title={page.title}
-        lead={page.lead}
-        image={page.heroImage}
-        imageAlt={page.heroImageAlt}
-        actions={page.actions}
-        meta={page.updated ? <p className="content-updated">Last updated {page.updated}</p> : null}
-      />
-      {children}
-      <Sections sections={page.sections} />
-      <PageFaqs faqs={page.faqs} />
-      {page.links ? (
-        <div className="shell content-related-wrap">
-          <RelatedLinks links={page.links} />
+
+      <section className="br_post_banner" aria-labelledby="legal-title">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-10">
+              <nav className="br_post_crumbs" aria-label="Breadcrumb">
+                <Link to="/">Home</Link>
+                <span aria-hidden="true">/</span>
+                <span aria-current="page">{page.eyebrow}</span>
+              </nav>
+              <p className="br-eyebrow br-eyebrow-light">{page.eyebrow}</p>
+              <h1 id="legal-title" className="br-primary-heading">{page.title}</h1>
+              <p className="br_post_intro">{page.lead}</p>
+              {page.updated ? (
+                <p className="br_post_meta">Last updated {page.updated}</p>
+              ) : null}
+              {page.actions?.length ? (
+                <div className="br_wrapper_buttons">
+                  {page.actions.map(action => (
+                    <Link
+                      key={action.href}
+                      className={action.variant === 'gold' ? 'btn-outline' : 'btn'}
+                      to={action.href}
+                    >
+                      {action.label}
+                    </Link>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          </div>
         </div>
-      ) : null}
+      </section>
+
+      <section className="br_section br_post_body">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-3">
+              <aside className="br_sidebar" aria-label="On this page">
+                <h2 className="br_sidebar_eyebrow">On this page</h2>
+                <ol className="br_post_toc">
+                  {tocItems.map((item, index) => (
+                    <li key={item.id}>
+                      <a href={`#${item.id}`}>
+                        <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+                <Link className="btn-outline br_sidebar_cta" to="/contact">Ask a question</Link>
+              </aside>
+            </div>
+
+            <div className="col-md-9 br_col_post_content">
+              <div className="br_wrapper_post_content">
+                {children}
+
+                {sections.map((section, index) => (
+                  <div
+                    className={`br_block br_text_block${index ? ' br_border_top' : ''}`}
+                    id={headingId(section.heading)}
+                    key={section.heading}
+                  >
+                    <h2>{section.heading}</h2>
+                    {section.paragraphs?.map(paragraph => (
+                      <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                    ))}
+                    {section.bullets?.length ? (
+                      <ul className="br_duo_list">
+                        {section.bullets.map(item => (
+                          <li key={item}>
+                            <IconCheck aria-hidden="true" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
+                ))}
+
+                {page.faqs?.length ? (
+                  <div className="br_block br_border_top" id="page-faqs">
+                    <h2>Frequently asked questions</h2>
+                    <dl className="br_legal_faq">
+                      {page.faqs.map(item => (
+                        <div key={item.q}>
+                          <dt>{item.q}</dt>
+                          <dd>{item.a}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                ) : null}
+
+                {page.links?.length ? (
+                  <div className="br_block br_border_top" id="page-links">
+                    <h2>Keep reading</h2>
+                    <ul className="row br_grid">
+                      {page.links.map(link => (
+                        <li className="col-md-6" key={link.href}>
+                          <Link className="br_about_link" to={link.href}>
+                            <span>{link.label}</span>
+                            <IconArrow aria-hidden="true" />
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
 
 function ServiceDetail({ page, closeTitle, closeLead, closeCta, closeTo = '/contact' }) {
   return (
-    <div className="blog-page content-page sd-page">
+    <div className="br_service_page">
       <ScrollTop />
-      <PageHero
-        eyebrow={page.eyebrow}
-        title={page.title}
-        lead={page.lead}
-        image={page.heroImage}
-        imageAlt={page.heroImageAlt}
-        actions={page.actions}
-      />
 
-      {page.sections?.length ? (
-        <div className="sd-sections">
-          <div className="shell sd-rail">
-            {page.sections.map((section, i) => (
-              <section
-                key={section.heading}
-                className={`sd-block${section.bullets?.length ? ' sd-block--with-points' : ''}`}
-              >
-                <header className="sd-head">
-                  <span className="sd-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                  <h2>{section.heading}</h2>
-                </header>
-                <div className="sd-copy">
-                  {section.paragraphs?.map(paragraph => (
-                    <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+      <section
+        className="br_page_hero"
+        aria-labelledby="service-title"
+        style={{ '--bgImage': `url('${page.heroImage}')` }}
+      >
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_page_hero_content">
+                <p className="br-eyebrow br-eyebrow-light">{page.eyebrow}</p>
+                <h1 id="service-title" className="br-primary-heading">{page.title}</h1>
+                <p>{page.lead}</p>
+                <div className="br_wrapper_buttons">
+                  {page.actions?.map(action => (
+                    <Link
+                      key={action.href}
+                      className={action.variant === 'gold' ? 'btn-outline' : 'btn'}
+                      to={action.href}
+                    >
+                      {action.label}
+                    </Link>
                   ))}
                 </div>
-                {section.bullets?.length ? (
-                  <ul className="sd-points">
-                    {section.bullets.map(item => (
-                      <li key={item}>
-                        <IconCheck className="tick" aria-hidden="true" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
-              </section>
-            ))}
+              </div>
+            </div>
           </div>
         </div>
+      </section>
+
+      {page.sections?.length ? (
+        <section className="br_section br_service_sections" aria-label="What is included">
+          <div className="container">
+            {page.sections.map((section, i) => (
+              <div className="row br_service_block" key={section.heading}>
+                <div className="col-md-4">
+                  <div className="br_service_block_head">
+                    <span className="br_about_index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                    <h2>{section.heading}</h2>
+                  </div>
+                </div>
+                <div className="col-md-8">
+                  <div className="br_service_block_copy">
+                    {section.paragraphs?.map(paragraph => (
+                      <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                    ))}
+                    {section.bullets?.length ? (
+                      <ul className="br_duo_list">
+                        {section.bullets.map(item => (
+                          <li key={item}>
+                            <IconCheck aria-hidden="true" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       ) : null}
 
       {page.faqs?.length ? (
-        <section className="sd-faq" aria-labelledby="sd-faq-title">
-          <div className="shell sd-rail">
-            <header className="sd-faq-head">
-              <p className="eyebrow"><span>Questions</span><i aria-hidden="true" /></p>
-              <h2 id="sd-faq-title">Frequently asked questions</h2>
-            </header>
-            <dl className="sd-faq-list">
+        <section className="br_section br_section--paper" aria-labelledby="service-faq-title">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="br_section_head">
+                  <div className="br_section_head_copy">
+                    <p className="br-eyebrow">Questions</p>
+                    <h2 id="service-faq-title">Frequently asked questions</h2>
+                  </div>
+                  <Link className="btn" to="/faq">Read the full FAQ</Link>
+                </div>
+              </div>
+            </div>
+            <div className="row br_grid">
               {page.faqs.map(item => (
-                <div key={item.q} className="sd-faq-item">
-                  <dt>{item.q}</dt>
-                  <dd>{item.a}</dd>
+                <div className="col-md-6" key={item.q}>
+                  <article className="br_about_pillar">
+                    <h3>{item.q}</h3>
+                    <p>{item.a}</p>
+                  </article>
                 </div>
               ))}
-            </dl>
+            </div>
           </div>
         </section>
       ) : null}
 
       {page.links?.length ? (
-        <section className="sd-links" aria-label="Related pages">
-          <div className="shell">
-            <p className="eyebrow"><span>Keep reading</span><i aria-hidden="true" /></p>
-            <RelatedLinks links={page.links} />
+        <section className="br_section" aria-labelledby="service-links-title">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="br_section_head">
+                  <div className="br_section_head_copy">
+                    <p className="br-eyebrow">Keep reading</p>
+                    <h2 id="service-links-title">Related pages</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ul className="row br_grid">
+              {page.links.map(link => (
+                <li className="col-md-6 col-lg-4" key={link.href + link.label}>
+                  <Link className="br_about_link" to={link.href}>
+                    <span>{link.label}</span>
+                    <IconArrow aria-hidden="true" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       ) : null}
 
-      <CloseBand
-        title={closeTitle}
-        lead={closeLead}
-        to={closeTo}
-        cta={closeCta}
-      />
+      <section className="br_cta" aria-labelledby="service-cta-title">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_section_head">
+                <div className="br_section_head_copy">
+                  <h2 id="service-cta-title">{closeTitle}</h2>
+                  <p>{closeLead}</p>
+                </div>
+                <Link className="btn" to={closeTo}>{closeCta}</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
 
 function CloseBand({ title, lead, to = '/contact', cta = 'Start Your Project' }) {
   return (
-    <section className="blog-close" aria-labelledby="content-close-title">
-      <div className="shell blog-close-inner">
-        <h2 id="content-close-title">{title}</h2>
-        <p>{lead}</p>
-        <Link className="cta cta-solid" to={to}>
-          <span>{cta}</span>
-          <IconArrow className="cta-arrow" />
-        </Link>
+    <section className="br_cta" aria-labelledby="content-close-title">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="br_section_head">
+              <div className="br_section_head_copy">
+                <h2 id="content-close-title">{title}</h2>
+                <p>{lead}</p>
+              </div>
+              <Link className="btn" to={to}>{cta}</Link>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -213,81 +321,168 @@ export function AboutPage() {
   const page = aboutPage;
 
   return (
-    <div className="blog-page content-page about-page">
+    <div className="br_about">
       <ScrollTop />
-      <PageHero
-        eyebrow={page.eyebrow}
-        title={page.title}
-        titleEm={page.titleEm}
-        lead={page.lead}
-        image={page.heroImage}
-        imageAlt={page.heroImageAlt}
-        actions={page.actions}
-      />
 
-      <section className="about-manifesto" aria-label="Studio promise">
-        <div className="shell about-manifesto-inner">
-          <p className="about-manifesto-quote">{page.manifesto}</p>
-          <ul className="about-pillars">
-            {page.pillars.map(pillar => (
-              <li key={pillar.label}>
-                <p className="about-pillar-label">{pillar.label}</p>
-                <p>{pillar.copy}</p>
-              </li>
-            ))}
-          </ul>
+      <section
+        className="br_page_hero"
+        aria-labelledby="about-title"
+        style={{ '--bgImage': `url('${page.heroImage}')` }}
+      >
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_page_hero_content">
+                <p className="br-eyebrow br-eyebrow-light">{page.eyebrow}</p>
+                <h1 id="about-title" className="br-primary-heading">
+                  {page.title} <span>{page.titleEm}</span>
+                </h1>
+                <p>{page.lead}</p>
+                <div className="br_wrapper_buttons">
+                  {page.actions.map(action => (
+                    <Link
+                      key={action.href}
+                      className={action.variant === 'gold' ? 'btn-outline' : 'btn'}
+                      to={action.href}
+                    >
+                      {action.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="about-split" aria-label="Studio story">
-        <div className="shell about-split-grid">
-          <div className="about-principles">
+      <section className="br_section br_about_intro" aria-labelledby="about-intro-title">
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-md-6">
+              <div className="br_about_intro_copy">
+                <p className="br-eyebrow">About us</p>
+                <h2 id="about-intro-title">
+                  One studio. One schedule. <span>Your name on the cover.</span>
+                </h2>
+                <p>{page.lead}</p>
+                <p>{page.principles[0].paragraphs[0]}</p>
+                <ul className="br_duo_list">
+                  {page.pillars.map(pillar => (
+                    <li key={pillar.label}>
+                      <IconCheck aria-hidden="true" />
+                      <span><strong>{pillar.label}.</strong> {pillar.copy}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <figure className="br_about_image">
+                <img src={page.portrait.image} alt={page.portrait.alt} loading="lazy" />
+                <figcaption>{page.portrait.caption}</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="br_section br_section--paper br_about_offer" aria-label="What the studio offers">
+        <div className="container">
+          <div className="row br_grid">
+            <div className="col-md-6">
+              <article className="br_duo_card br_duo_card--light">
+                <p className="br_duo_kicker"><span>01</span>Services</p>
+                <h3>{servicesIntro.title} {servicesIntro.titleEm}</h3>
+                <p className="br_duo_lead">{servicesIntro.lead}</p>
+                <Link className="btn" to="/services">Explore services</Link>
+              </article>
+            </div>
+            <div className="col-md-6">
+              <article className="br_duo_card br_duo_card--light">
+                <p className="br_duo_kicker"><span>02</span>Pricing</p>
+                <h3>{pricingIntro.title} {pricingIntro.titleEm}</h3>
+                <p className="br_duo_lead">{pricingIntro.lead}</p>
+                <Link className="btn" to="/pricing">See packages</Link>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="br_section br_about_story" aria-labelledby="about-story-title">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_section_head">
+                <div className="br_section_head_copy">
+                  <p className="br-eyebrow">Who we are</p>
+                  <h2 id="about-story-title">How the studio works</h2>
+                </div>
+                <Link className="btn" to="/contact">Talk to a Specialist</Link>
+              </div>
+            </div>
+          </div>
+          <div className="row br_grid">
             {page.principles.map(item => (
-              <article key={item.index} className="about-principle">
-                <span className="about-principle-index" aria-hidden="true">{item.index}</span>
-                <div>
-                  <h2>{item.heading}</h2>
+              <div className="col-md-4" key={item.index}>
+                <article className="br_about_pillar">
+                  <span className="br_about_index" aria-hidden="true">{item.index}</span>
+                  <h3>{item.heading}</h3>
                   {item.paragraphs.map(paragraph => (
                     <p key={paragraph.slice(0, 40)}>{paragraph}</p>
                   ))}
-                </div>
-              </article>
+                </article>
+              </div>
             ))}
           </div>
-          <figure className="about-portrait">
-            <img src={page.portrait.image} alt={page.portrait.alt} loading="lazy" />
-            <figcaption>{page.portrait.caption}</figcaption>
-          </figure>
         </div>
       </section>
 
-      <section className="about-stages" aria-labelledby="about-stages-title">
-        <div className="shell">
-          <header className="about-stages-head">
-            <p className="eyebrow"><span>The path</span><i aria-hidden="true" /></p>
-            <h2 id="about-stages-title">
-              From discovery to <em>retailer-ready</em> files
-            </h2>
-          </header>
-          <ol className="about-stage-list">
+      <section className="br_section br_section--dark br_about_stages" aria-labelledby="about-stages-title">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_section_head">
+                <div className="br_section_head_copy">
+                  <p className="br-eyebrow br-eyebrow-light">The path</p>
+                  <h2 id="about-stages-title">
+                    From discovery to <span>retailer-ready</span> files
+                  </h2>
+                </div>
+                <Link className="btn" to="/contact">Request a quote</Link>
+              </div>
+            </div>
+          </div>
+          <ol className="row br_grid">
             {page.stages.map(stage => (
-              <li key={stage.n}>
-                <span className="about-stage-n" aria-hidden="true">{stage.n}</span>
-                <h3>{stage.title}</h3>
-                <p>{stage.copy}</p>
+              <li className="col-md-6 col-lg-3" key={stage.n}>
+                <div className="br_about_stage">
+                  <span className="br_about_stage_n" aria-hidden="true">{stage.n}</span>
+                  <h3>{stage.title}</h3>
+                  <p>{stage.copy}</p>
+                </div>
               </li>
             ))}
           </ol>
         </div>
       </section>
 
-      <section className="about-links" aria-label="Explore the studio">
-        <div className="shell">
-          <p className="eyebrow"><span>Keep reading</span><i aria-hidden="true" /></p>
-          <ul className="about-link-grid">
+      <section className="br_section br_about_links" aria-labelledby="about-links-title">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_section_head">
+                <div className="br_section_head_copy">
+                  <p className="br-eyebrow">Keep reading</p>
+                  <h2 id="about-links-title">Explore the studio</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ul className="row br_grid">
             {page.links.map(link => (
-              <li key={link.href}>
-                <Link to={link.href}>
+              <li className="col-md-6 col-lg-3" key={link.href}>
+                <Link className="br_about_link" to={link.href}>
                   <span>{link.label}</span>
                   <IconArrow aria-hidden="true" />
                 </Link>
@@ -297,126 +492,256 @@ export function AboutPage() {
         </div>
       </section>
 
-      <CloseBand title={page.closeTitle} lead={page.closeLead} />
+      <section className="br_cta" aria-labelledby="about-cta-title">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_section_head">
+                <div className="br_section_head_copy">
+                  <h2 id="about-cta-title">{page.closeTitle}</h2>
+                  <p>{page.closeLead}</p>
+                </div>
+                <Link className="btn" to="/contact">Start Your Project</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
 
 export function PricingPage() {
+  const page = pricingPage;
+
   return (
-    <div className="blog-page content-page">
+    <div className="br_pricing_page">
       <ScrollTop />
-      <PageHero
-        eyebrow={pricingPage.eyebrow}
-        title={pricingPage.title}
-        lead={pricingPage.lead}
-        image={pricingPage.heroImage}
-        imageAlt={pricingPage.heroImageAlt}
-        actions={pricingPage.actions}
-      />
-      <section className="ed-price content-price" aria-label="Publishing packages">
-        <div className="shell">
-          <div className="ed-price-sheet">
-            {plans.map(plan => (
-              <article
-                className={`ed-price-card${plan.featured ? ' is-featured' : ''}`}
-                key={plan.name}
-              >
-                {plan.featured ? <span className="ed-price-flag">Most popular</span> : null}
-                <h2>{plan.name}</h2>
-                <p className="ed-price-amt">
-                  <i>$</i>
-                  {plan.price}
-                </p>
-                <p className="ed-price-copy">{plan.copy}</p>
-                <dl className="ed-price-meta">
-                  <div>
-                    <dt>Length</dt>
-                    <dd>{plan.words}</dd>
-                  </div>
-                  <div>
-                    <dt>Timeline</dt>
-                    <dd>{plan.timeline}</dd>
-                  </div>
-                </dl>
-                <ul className="ed-price-features">
-                  {plan.features.map(feature => (
-                    <li key={feature}>
-                      <IconCheck className="tick" aria-hidden="true" />
-                      {feature}
-                    </li>
+
+      <section
+        className="br_page_hero"
+        aria-labelledby="pricing-title"
+        style={{ '--bgImage': `url('${page.heroImage}')` }}
+      >
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_page_hero_content">
+                <p className="br-eyebrow br-eyebrow-light">{page.eyebrow}</p>
+                <h1 id="pricing-title" className="br-primary-heading">
+                  Ebook writing packages <span>$699 to $3,999.</span>
+                </h1>
+                <p>{page.lead}</p>
+                <div className="br_wrapper_buttons">
+                  {page.actions.map(action => (
+                    <Link
+                      key={action.href}
+                      className={action.variant === 'gold' ? 'btn-outline' : 'btn'}
+                      to={action.href}
+                    >
+                      {action.label}
+                    </Link>
                   ))}
-                </ul>
-                <Link className="ed-price-cta" to={`/contact?plan=${encodeURIComponent(plan.name)}`}>
-                  <span>{plan.featured ? 'Get started' : `Choose ${plan.name}`}</span>
-                  <IconArrow aria-hidden="true" />
-                </Link>
-              </article>
-            ))}
+                </div>
+              </div>
+            </div>
           </div>
-          <p className="content-price-note">{pricingPage.note}</p>
         </div>
       </section>
-      <CloseBand title="Need a recommendation?" lead={pricingPage.closing} cta="Request a quote" />
+
+      <section className="br_section" aria-labelledby="pricing-plans-title">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_section_head">
+                <div className="br_section_head_copy">
+                  <p className="br-eyebrow">Packages</p>
+                  <h2 id="pricing-plans-title">
+                    Choose the plan that matches <span>your manuscript.</span>
+                  </h2>
+                  <p>{pricingIntro.lead}</p>
+                </div>
+                <Link className="btn" to="/contact">Talk to a Specialist</Link>
+              </div>
+            </div>
+          </div>
+          <div className="row br_grid" aria-label="Publishing packages">
+            {plans.map(plan => (
+              <div className="col-md-6 col-lg-3" key={plan.name}>
+                <article className={`br_price_card${plan.featured ? ' is-featured' : ''}`}>
+                  {plan.featured ? <span className="br_price_badge">Most popular</span> : null}
+                  <h3>{plan.name}</h3>
+                  <p className="br_price_amount"><sup>$</sup>{plan.price}</p>
+                  <p className="br_price_copy">{plan.copy}</p>
+                  <dl className="br_price_meta">
+                    <div><dt>Length</dt><dd>{plan.words}</dd></div>
+                    <div><dt>Timeline</dt><dd>{plan.timeline}</dd></div>
+                  </dl>
+                  <ul className="br_price_features">
+                    {plan.features.map(feature => (
+                      <li key={feature}><IconCheck aria-hidden="true" />{feature}</li>
+                    ))}
+                  </ul>
+                  <Link
+                    className={plan.featured ? 'btn' : 'btn-outline'}
+                    to={`/contact?plan=${encodeURIComponent(plan.name)}`}
+                  >
+                    {plan.featured ? 'Get started' : `Choose ${plan.name}`}
+                  </Link>
+                </article>
+              </div>
+            ))}
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <p className="br_price_note">{page.note}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Contact />
+
+      <section className="br_cta" aria-labelledby="pricing-cta-title">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_section_head">
+                <div className="br_section_head_copy">
+                  <h2 id="pricing-cta-title">Need a recommendation?</h2>
+                  <p>{page.closing}</p>
+                </div>
+                <Link className="btn" to="/contact">Request a quote</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
 
 export function ServicesPage() {
+  const page = servicesPage;
+  const related = [
+    { label: 'Ebook ghostwriting services', href: '/ebook-ghostwriting-services' },
+    { label: 'Ebook editing services', href: '/ebook-editing-services' },
+    { label: 'Ebook cover design', href: '/ebook-cover-design' },
+    { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
+    { label: 'Amazon KDP ebook writing', href: '/amazon-kdp-ebook-writing' },
+    { label: 'Writing packages', href: '/pricing' },
+  ];
+
   return (
-    <div className="blog-page content-page svc-page">
+    <div className="br_services_page">
       <ScrollTop />
-      <PageHero
-        eyebrow={servicesPage.eyebrow}
-        title={servicesPage.title}
-        lead={servicesPage.lead}
-        image={servicesPage.heroImage}
-        imageAlt={servicesPage.heroImageAlt}
-        actions={servicesPage.actions}
-      />
-      <section className="svc-list" aria-label="Service list">
-        <div className="shell">
-          <ol className="svc-list-grid">
+
+      <section
+        className="br_page_hero"
+        aria-labelledby="services-title"
+        style={{ '--bgImage': `url('${page.heroImage}')` }}
+      >
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_page_hero_content">
+                <p className="br-eyebrow br-eyebrow-light">{page.eyebrow}</p>
+                <h1 id="services-title" className="br-primary-heading">
+                  Ebook writing, editing, design <span>and publishing.</span>
+                </h1>
+                <p>{page.lead}</p>
+                <div className="br_wrapper_buttons">
+                  {page.actions.map(action => (
+                    <Link
+                      key={action.href}
+                      className={action.variant === 'gold' ? 'btn-outline' : 'btn'}
+                      to={action.href}
+                    >
+                      {action.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="br_section" aria-labelledby="services-list-title">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_section_head">
+                <div className="br_section_head_copy">
+                  <p className="br-eyebrow">What we do</p>
+                  <h2 id="services-list-title">Everything your book needs, under one roof</h2>
+                </div>
+                <Link className="btn" to="/contact">Get a writing quote</Link>
+              </div>
+            </div>
+          </div>
+          <div className="row br_grid">
             {services.map(service => {
               const Icon = serviceIcons[service.key] || IconArrow;
-              const href = serviceHrefs[service.key] || service.href || '/contact';
+              const target = serviceHrefs[service.key] || service.href || '/contact';
+              const href = target === '/services' ? '/contact' : target;
               return (
-                <li key={service.title}>
-                  <Link className="svc-item" to={href}>
-                    <span className="svc-item-n" aria-hidden="true">{service.n}</span>
-                    <span className="svc-item-icon" aria-hidden="true"><Icon /></span>
-                    <div className="svc-item-body">
-                      <h2>{service.title}</h2>
+                <div className="col-md-6" key={service.title}>
+                  <Link className="ed-svc-card" to={href}>
+                    <span className="ed-svc-icon" aria-hidden="true"><Icon /></span>
+                    <div className="ed-svc-body">
+                      <h3>{service.title}</h3>
                       <p>{service.copy}</p>
                     </div>
-                    <span className="svc-item-go" aria-hidden="true">
-                      <IconArrow />
-                    </span>
+                    <span className="ed-svc-orb" aria-hidden="true"><IconArrow /></span>
                   </Link>
-                </li>
+                </div>
               );
             })}
-          </ol>
+          </div>
         </div>
       </section>
-      <section className="svc-links" aria-label="Explore services">
-        <div className="shell">
-          <RelatedLinks
-            links={[
-              { label: 'Ebook ghostwriting services', href: '/ebook-ghostwriting-services' },
-              { label: 'Ebook editing services', href: '/ebook-editing-services' },
-              { label: 'Ebook cover design', href: '/ebook-cover-design' },
-              { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
-              { label: 'Amazon KDP ebook writing', href: '/amazon-kdp-ebook-writing' },
-              { label: 'Pricing', href: '/pricing' },
-            ]}
-          />
+
+      <section className="br_section br_section--paper" aria-labelledby="services-related-title">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_section_head">
+                <div className="br_section_head_copy">
+                  <p className="br-eyebrow">Keep reading</p>
+                  <h2 id="services-related-title">Explore a service in detail</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ul className="row br_grid">
+            {related.map(link => (
+              <li className="col-md-6 col-lg-4" key={link.href}>
+                <Link className="br_about_link" to={link.href}>
+                  <span>{link.label}</span>
+                  <IconArrow aria-hidden="true" />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
-      <CloseBand
-        title="Tell us what you need written."
-        lead="We will come back with a fixed scope, price, and timeline — or a clear no if we cannot staff it well."
-      />
+
+      <section className="br_cta" aria-labelledby="services-cta-title">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_section_head">
+                <div className="br_section_head_copy">
+                  <h2 id="services-cta-title">Tell us what you need written.</h2>
+                  <p>We will come back with a fixed scope, price, and timeline — or a clear no if we cannot staff it well.</p>
+                </div>
+                <Link className="btn" to="/contact">Start Your Project</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
@@ -489,19 +814,55 @@ export function TermsPage() {
 
 export function NotFoundPage() {
   return (
-    <div className="blog-page content-page">
+    <div className="br_notfound_page">
       <ScrollTop />
-      <PageHero
-        eyebrow={notFoundPage.eyebrow}
-        title={notFoundPage.title}
-        lead={notFoundPage.lead}
-        image={notFoundPage.heroImage}
-        imageAlt={notFoundPage.heroImageAlt}
+
+      <section
+        className="br_page_hero"
+        aria-labelledby="notfound-title"
+        style={{ '--bgImage': `url('${notFoundPage.heroImage}')` }}
       >
-        <div className="page-hero-links">
-          <RelatedLinks links={notFoundPage.links} />
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_page_hero_content">
+                <p className="br-eyebrow br-eyebrow-light">{notFoundPage.eyebrow}</p>
+                <h1 id="notfound-title" className="br-primary-heading">{notFoundPage.title}</h1>
+                <p>{notFoundPage.lead}</p>
+                <div className="br_wrapper_buttons">
+                  <Link className="btn" to="/">Back to home</Link>
+                  <Link className="btn-outline" to="/blog">Read the blog</Link>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </PageHero>
+      </section>
+
+      <section className="br_section" aria-labelledby="notfound-links-title">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_section_head">
+                <div className="br_section_head_copy">
+                  <p className="br-eyebrow">Popular pages</p>
+                  <h2 id="notfound-links-title">Try one of these</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ul className="row br_grid">
+            {notFoundPage.links.map(link => (
+              <li className="col-md-6 col-lg-3" key={link.href}>
+                <Link className="br_about_link" to={link.href}>
+                  <span>{link.label}</span>
+                  <IconArrow aria-hidden="true" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
     </div>
   );
 }

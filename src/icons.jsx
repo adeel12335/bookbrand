@@ -186,6 +186,20 @@ export const IconPhone = props => (
   <Svg {...props}><path d="M17.6 9h-5A3.6 3.6 0 0 0 9 12.9C9.9 27 21 38.1 35.1 39a3.6 3.6 0 0 0 3.9-3.6v-5l-8-3-3.4 4.1a25 25 0 0 1-11.1-11.1L20.6 17z" /></Svg>
 );
 
+export const IconMapPin = props => (
+  <Svg {...props}>
+    <path d="M24 42s-13-11.4-13-21.5a13 13 0 0 1 26 0C37 30.6 24 42 24 42z" />
+    <circle cx="24" cy="20.5" r="4.5" />
+  </Svg>
+);
+
+export const IconSearch = props => (
+  <Svg {...props}>
+    <circle cx="21" cy="21" r="12" />
+    <path d="M30 30 40 40" />
+  </Svg>
+);
+
 export const IconBriefcase = props => (
   <Svg {...props}>
     <rect x="7" y="14" width="34" height="25" rx="2.5" />

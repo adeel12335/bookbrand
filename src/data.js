@@ -85,7 +85,7 @@ export const pathBand = {
   titleEm: 'a clear ghostwriting path.',
   lead:
     'From the first outline to retailer-ready files, our ebook writing studio maps every step so you always know what comes next — and who is doing the work.',
-  cta: 'Talk to an Ebook Writing Specialist',
+  cta: 'Talk to a Specialist',
   journey: ['Write', 'Edit', 'Design', 'Publish', 'Market', 'Grow'],
   roadmap: {
     title: 'Your publishing roadmap',

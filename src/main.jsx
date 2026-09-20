@@ -1,9 +1,9 @@
 import React, { Suspense, lazy, useEffect, useId, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import {
-  IconArrow, IconArrowUpRight, IconBook, IconCheck, IconClose,
-  IconMail, IconMenu, IconPhone, IconPlus,
+  IconArrow, IconArrowUpRight, IconBook, IconCheck, IconClose, IconQuote,
+  IconMenu, IconPlus, IconSearch,
   IconWriting, IconWriters, IconPublishing,
   IconCoins, IconCalendar, IconLeaf, IconEditing, IconFormatting, IconBranding,
   serviceIcons,
@@ -15,10 +15,18 @@ import {
   portfolioIntro, servicesIntro, benefits, pathBand, dualOffer,
   pricingIntro, faqIntro, contactIntro, footerBrand,
 } from './data.js';
-import { PageHero } from './PageHero.jsx';
+import { blogPosts } from './blogPosts.js';
+import { Contact, Eyebrow, Reveal, reduceMotion, useRecaptcha } from './ContactSection.jsx';
 import { SeoHead } from './SeoHead.jsx';
-import './fonts.css';
-import './styles.css';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { A11y, Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import './css/fonts.css';
+import './css/base.css';
+import './css/styles.css';
+import './css/Responsive.css';
+import './css/Tablet.css';
 
 const BlogIndexPage = lazy(() => import('./BlogPages.jsx').then(m => ({ default: m.BlogIndexPage })));
 const BlogPostPage = lazy(() => import('./BlogPages.jsx').then(m => ({ default: m.BlogPostPage })));
@@ -36,9 +44,10 @@ const PricingPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default
 const PrivacyPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.PrivacyPage })));
 const ServicesPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.ServicesPage })));
 const TermsPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.TermsPage })));
+const SearchPage = lazy(() => import('./SearchPage.jsx'));
 
 function RouteFallback() {
-  return <div className="shell" style={{ padding: '4rem 0' }} aria-busy="true">Loading…</div>;
+  return <div className="container" style={{ padding: '4rem 0' }} aria-busy="true">Loading…</div>;
 }
 
 /*
@@ -60,36 +69,7 @@ function loadMotion() {
   return motionLibs;
 }
 
-const reduceMotion = () =>
-  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
 /* ------------------------------------------------------------------ helpers */
-
-/** Scroll-reveal wrapper. Adds .is-in once the element enters the viewport. */
-function Reveal({ as: Tag = 'div', className = '', delay = 0, children, ...rest }) {
-  const ref = useRef(null);
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return undefined;
-    if (reduceMotion()) {
-      node.classList.add('is-in');
-      return undefined;
-    }
-    const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        node.classList.add('is-in');
-        io.disconnect();
-      }
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    io.observe(node);
-    return () => io.disconnect();
-  }, []);
-  return (
-    <Tag ref={ref} className={`reveal ${className}`.trim()} style={{ '--reveal-delay': `${delay}ms` }} {...rest}>
-      {children}
-    </Tag>
-  );
-}
 
 /** Cursor-following pull on primary calls to action. Pointer-fine devices only. */
 function useMagnetic(strength = 0.28) {
@@ -129,23 +109,12 @@ function Cta({ href = '/contact', variant = 'solid', className = '', children, o
   );
 }
 
-function Eyebrow({ children, tone }) {
-  return (
-    <p className={`eyebrow${tone ? ` eyebrow-${tone}` : ''}`}>
-      <span>{children}</span>
-      <i aria-hidden="true" />
-    </p>
-  );
-}
-
 function Wordmark({ light = false, className = '' }) {
   return (
     <Link className={`wordmark ${className}`.trim()} to="/" aria-label="ebookwriters.us — home">
       <img
-        src={light ? '/assets/brand/logo-light.png' : '/assets/brand/logo-dark.png'}
+        src={light ? '/assets/brand/logo-light.png' : '/assets/brand/logo-dark-new.png'}
         alt="ebookwriters.us — Write. Publish. Grow."
-        width="970"
-        height="189"
       />
     </Link>
   );
@@ -186,144 +155,114 @@ function Header() {
   }, [open]);
 
   return (
-    <header
-      className={`site-header${onHome ? ' site-header--home' : ''}${stuck ? ' is-stuck' : ''}${open ? ' is-open' : ''}`}
-      onKeyDown={event => {
-        if (event.key === 'Escape' && open) {
-          setOpen(false);
-          toggleRef.current?.focus();
-        }
-      }}
-    >
-      <div
-        className="nav-scrim"
-        aria-hidden="true"
-        onClick={() => setOpen(false)}
-      />
-      <div className="shell header-inner">
-        <Wordmark light />
-        <nav id="primary-nav" className="primary-nav" aria-label="Primary">
-          <ul>
-            {navigation.map(item => {
-              const href = onHome ? item.href : navHref(item.href);
-              const isRoute = href.startsWith('/') && !href.startsWith('/#');
-              const prefixes = item.match || [href];
-              const isCurrent = isRoute && prefixes.some(prefix => (
-                location.pathname === prefix
-                || (prefix !== '/' && location.pathname.startsWith(`${prefix}/`))
-              ));
-              return (
-                <li key={item.href}>
-                  {isRoute ? (
-                    <Link
-                      to={href}
-                      onClick={() => setOpen(false)}
-                      aria-current={isCurrent ? 'page' : undefined}
-                    >
-                      {item.label}
-                    </Link>
-                  ) : (
-                    <a
-                      href={href}
-                      onClick={() => setOpen(false)}
-                      aria-current={onHome && active === item.href ? 'true' : undefined}
-                    >
-                      {item.label}
-                    </a>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-          <Link className="nav-cta" to="/contact" onClick={() => setOpen(false)}>
-            Start Your Project
-          </Link>
-        </nav>
-        <button
-          ref={toggleRef}
-          type="button"
-          className="nav-toggle"
-          aria-expanded={open}
-          aria-controls="primary-nav"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          onClick={() => setOpen(v => !v)}
-        >
-          {open ? <IconClose /> : <IconMenu />}
-        </button>
+    <>
+      <div className="alert-bar">
+        <div className="container">
+          Fixed packages from $699 — you keep 100% of the rights and royalties.
+        </div>
       </div>
-    </header>
+      <header
+        className={`site-header${onHome ? ' site-header--home' : ''}${stuck ? ' is-stuck' : ''}${open ? ' is-open' : ''}`}
+        onKeyDown={event => {
+          if (event.key === 'Escape' && open) {
+            setOpen(false);
+            toggleRef.current?.focus();
+          }
+        }}
+      >
+        <div
+          className="nav-scrim"
+          aria-hidden="true"
+          onClick={() => setOpen(false)}
+        />
+        <div className="container">
+          <div className="header-inner">
+            <Wordmark />
+            <nav id="primary-nav" className="primary-nav" aria-label="Primary">
+              <ul>
+                {navigation.map(item => {
+                  const href = onHome ? item.href : navHref(item.href);
+                  const isRoute = href.startsWith('/') && !href.startsWith('/#');
+                  const prefixes = item.match || [href];
+                  const isCurrent = isRoute && prefixes.some(prefix => (
+                    location.pathname === prefix
+                    || (prefix !== '/' && location.pathname.startsWith(`${prefix}/`))
+                  ));
+                  return (
+                    <li key={item.href}>
+                      {isRoute ? (
+                        <Link
+                          to={href}
+                          onClick={() => setOpen(false)}
+                          aria-current={isCurrent ? 'page' : undefined}
+                        >
+                          {item.label}
+                        </Link>
+                      ) : (
+                        <a
+                          href={href}
+                          onClick={() => setOpen(false)}
+                          aria-current={onHome && active === item.href ? 'true' : undefined}
+                        >
+                          {item.label}
+                        </a>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+              <Link className="nav-cta" to="/contact" onClick={() => setOpen(false)}>
+                Start Your Project
+              </Link>
+            </nav>
+            <button
+              ref={toggleRef}
+              type="button"
+              className="nav-toggle"
+              aria-expanded={open}
+              aria-controls="primary-nav"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              onClick={() => setOpen(v => !v)}
+            >
+              {open ? <IconClose /> : <IconMenu />}
+            </button>
+          </div>
+        </div>
+      </header>
+    </>
   );
 }
 
 /* --------------------------------------------------------------------- hero */
 
-/*
- * The approved concept art with its type removed; the copy is set live on top,
- * positioned in plate pixels (see .hx-plate in styles.css) so it scales with
- * the picture. The visible headline and lead are aria-hidden: the sr-only
- * h1 and lead above carry the crawlable, read-aloud copy.
- */
-function HeroPlateCopy({ lines, strip }) {
-  return (
-    <>
-      <div className="hx-plate">
-        <p className="hx-plate-title" aria-hidden="true">
-          {lines.map((line, i) => (
-            <span key={line} className={i === lines.length - 1 ? 'is-accent' : undefined}>
-              {line}
-            </span>
-          ))}
-        </p>
-        <p className="hx-plate-lead" aria-hidden="true">{hero.leadVisible}</p>
-        <div className="hx-plate-actions">
-          <a className="hx-plate-cta" href="/contact">{hero.cta}</a>
-          <a className="hx-plate-link" href={hero.link.href}>
-            <span>{hero.link.label}</span>
-            <IconArrow />
-          </a>
-        </div>
-      </div>
-      {strip && (
-        <ul className="hx-plate-strip">
-          {hero.strip.map(item => <li key={item}>{item}</li>)}
-        </ul>
-      )}
-    </>
-  );
-}
-
 function Hero() {
-  const rootRef = useRef(null);
+  const title = hero.lines.slice(0, -1).join(' ');
+  const accent = hero.lines[hero.lines.length - 1];
 
   return (
-    <section className="hx" id="top" ref={rootRef} aria-labelledby="hero-title">
-      <h1 id="hero-title" className="sr-only">{hero.h1}</h1>
-      <p className="sr-only">{hero.lead}</p>
-
-      {/* Desktop: the approved concept plate */}
-      <div className="hx-exact">
-        <img
-          src="/assets/brand/hero-desk-plate.jpg"
-          alt={hero.imageAlt}
-          width="1586"
-          height="888"
-          fetchPriority="high"
-          decoding="async"
-        />
-        <HeroPlateCopy lines={hero.lines} strip />
-      </div>
-
-      {/* Mobile / tablet: the approved mobile plate (logo and menu mark are in the art) */}
-      <div className="hx-exact-mob">
-        <img
-          src="/assets/brand/hero-mob-plate.jpg"
-          alt={hero.imageAlt}
-          width="576"
-          height="1024"
-          fetchPriority="high"
-          decoding="async"
-        />
-        <HeroPlateCopy lines={hero.linesMobile} />
+    <section
+      className="hero-section"
+      id="top"
+      style={{
+        '--bgDesktop': "url('/assets/brand/hero-desktop.png')",
+        '--bgMobile': "url('/assets/brand/hero-mob.png')",
+      }}
+    >
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6">
+            <div className="br_wrapper_content_hero_home">
+              <div className="content">
+                <h1 className="br-primary-heading">{title} <span>{accent}</span></h1>
+                <p>{hero.leadVisible}</p>
+                <div className="br_wrapper_buttons">
+                  <a className="btn" href="/contact">{hero.cta}</a>
+                  <a className="btn-outline" href={hero.link.href}>{hero.link.label}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -350,19 +289,23 @@ const journeyIcons = [
 function TrustBar() {
   return (
     <section className="ed-trust" aria-label="Why authors trust us">
-      <div className="shell">
-        <ul className="ed-trust-grid">
-          {benefits.map((item, i) => {
-            const Icon = benefitIcons[item.key] || IconCheck;
-            return (
-              <Reveal as="li" className="ed-trust-item" key={item.title} delay={i * 60}>
-                <span className="ed-trust-icon" aria-hidden="true"><Icon /></span>
-                <h3>{item.title}</h3>
-                <p>{item.copy}</p>
-              </Reveal>
-            );
-          })}
-        </ul>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <ul className="ed-trust-grid">
+              {benefits.map((item, i) => {
+                const Icon = benefitIcons[item.key] || IconCheck;
+                return (
+                  <Reveal as="li" className="ed-trust-item" key={item.title} delay={i * 60}>
+                    <span className="ed-trust-icon" aria-hidden="true"><Icon /></span>
+                    <h3>{item.title}</h3>
+                    <p>{item.copy}</p>
+                  </Reveal>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -371,53 +314,52 @@ function TrustBar() {
 function PathBand() {
   return (
     <section className="ed-path" id="why" aria-labelledby="why-title">
-      <div className="ed-path-split">
-        <Reveal className="ed-path-copy">
-          <Eyebrow tone="light">{pathBand.eyebrow}</Eyebrow>
-          <h2 id="why-title">
-            {pathBand.title}{' '}
-            <em>{pathBand.titleEm}</em>
-          </h2>
-          <p>{pathBand.lead}</p>
-          <a className="ed-path-cta" href="/contact">
-            <span>{pathBand.cta}</span>
-            <span className="ed-path-cta-orb" aria-hidden="true"><IconArrow /></span>
-          </a>
-          <ol className="ed-path-journey">
-            {pathBand.journey.map((label, i) => {
-              const Icon = journeyIcons[i] || IconCheck;
-              return (
-                <li key={label}>
-                  <span className="ed-path-dot" aria-hidden="true"><Icon /></span>
-                  <span>{label}</span>
-                </li>
-              );
-            })}
-          </ol>
-        </Reveal>
-        <Reveal className="ed-path-visual" delay={100}>
-          <img
-            src={pathBand.image}
-            alt={pathBand.imageAlt}
-            width="900"
-            height="1100"
-            loading="lazy"
-          />
-          <aside className="ed-path-card">
-            <div className="ed-path-card-head">
-              <IconLeaf aria-hidden="true" />
-              <h3>{pathBand.roadmap.title}</h3>
+      <div className="container">
+        <div className="row">
+          <Reveal className="col-md-6 ed-path-copy">
+            <div className="content">
+              <Eyebrow tone="light">{pathBand.eyebrow}</Eyebrow>
+              <h2 id="why-title">
+                {pathBand.title}{' '}
+                <em>{pathBand.titleEm}</em>
+              </h2>
+              <p>{pathBand.lead}</p>
+              <a className="btn br_path_cta" href="/contact">{pathBand.cta}</a>
+              <ol className="br_path_steps">
+                {pathBand.journey.map((label, i) => {
+                  const Icon = journeyIcons[i] || IconCheck;
+                  return (
+                    <li key={label}>
+                      <span className="br_path_step_icon" aria-hidden="true"><Icon /></span>
+                      <span className="br_path_step_label">{label}</span>
+                    </li>
+                  );
+                })}
+              </ol>
             </div>
-            <ol>
-              {pathBand.roadmap.steps.map((step, i) => (
-                <li key={step}>
-                  <span aria-hidden="true">{i + 1}</span>
-                  {step}
-                </li>
-              ))}
-            </ol>
-          </aside>
-        </Reveal>
+          </Reveal>
+          <Reveal className="col-md-6 ed-path-visual" delay={100}>
+            <img
+              src={pathBand.image}
+              alt={pathBand.imageAlt}
+              loading="lazy"
+            />
+            <aside className="ed-path-card">
+              <div className="ed-path-card-head">
+                <IconLeaf aria-hidden="true" />
+                <h3>{pathBand.roadmap.title}</h3>
+              </div>
+              <ol>
+                {pathBand.roadmap.steps.map((step, i) => (
+                  <li key={step}>
+                    <span aria-hidden="true">{i + 1}</span>
+                    {step}
+                  </li>
+                ))}
+              </ol>
+            </aside>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -426,39 +368,43 @@ function PathBand() {
 function Services() {
   return (
     <section className="ed-svc" id="services" aria-labelledby="services-title">
-      <div className="shell">
-        <Reveal className="ed-svc-head ed-svc-head--split">
-          <div>
-            <Eyebrow>{servicesIntro.eyebrow}</Eyebrow>
-            <h2 id="services-title">
-              {servicesIntro.title}
-              <br />
-              <em>{servicesIntro.titleEm}</em>
-            </h2>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <Reveal className="ed-svc-head ed-svc-head--split">
+              <div>
+                <Eyebrow>{servicesIntro.eyebrow}</Eyebrow>
+                <h2 id="services-title">
+                  {servicesIntro.title}
+                  <br />
+                  <em>{servicesIntro.titleEm}</em>
+                </h2>
+              </div>
+              <p>{servicesIntro.lead}</p>
+            </Reveal>
+            <ul className="ed-svc-cards">
+              {services.map((service, i) => {
+                const Icon = serviceIcons[service.key] || IconWriting;
+                return (
+                  <Reveal as="li" className="ed-svc-card" key={service.title} delay={(i % 3) * 70}>
+                    <span className="ed-svc-icon" aria-hidden="true"><Icon /></span>
+                    <div className="ed-svc-body">
+                      <h3>{service.title}</h3>
+                      <p>{service.copy}</p>
+                    </div>
+                    <Link
+                      className="ed-svc-orb"
+                      to={service.href || '/contact'}
+                      aria-label={`Learn more about ${service.title}`}
+                    >
+                      <IconArrow aria-hidden="true" />
+                    </Link>
+                  </Reveal>
+                );
+              })}
+            </ul>
           </div>
-          <p>{servicesIntro.lead}</p>
-        </Reveal>
-        <ul className="ed-svc-cards">
-          {services.map((service, i) => {
-            const Icon = serviceIcons[service.key] || IconWriting;
-            return (
-              <Reveal as="li" className="ed-svc-card" key={service.title} delay={(i % 3) * 70}>
-                <span className="ed-svc-icon" aria-hidden="true"><Icon /></span>
-                <div className="ed-svc-body">
-                  <h3>{service.title}</h3>
-                  <p>{service.copy}</p>
-                </div>
-                <Link
-                  className="ed-svc-orb"
-                  to={service.href || '/contact'}
-                  aria-label={`Learn more about ${service.title}`}
-                >
-                  <IconArrow aria-hidden="true" />
-                </Link>
-              </Reveal>
-            );
-          })}
-        </ul>
+        </div>
       </div>
     </section>
   );
@@ -508,131 +454,128 @@ function Portfolio() {
 
   return (
     <section className="ed-folio ed-folio--showcase" id="portfolio" aria-labelledby="portfolio-title">
-      <div className="shell">
-        <Reveal className="ed-folio-head">
-          <Eyebrow>{portfolioIntro.eyebrow}</Eyebrow>
-          <div className="ed-folio-head-row">
-            <h2 id="portfolio-title">{portfolioIntro.title}</h2>
-            <div className="ed-folio-meta">
-              <p>{portfolioIntro.meta}</p>
-              <a className="ed-folio-link" href={portfolioIntro.linkHref}>
-                {portfolioIntro.linkLabel}
-                <span className="ed-folio-link-orb" aria-hidden="true"><IconArrow /></span>
-              </a>
-            </div>
-          </div>
-        </Reveal>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <Reveal className="br_section_head">
+              <div className="br_section_head_copy">
+                <Eyebrow>{portfolioIntro.eyebrow}</Eyebrow>
+                <h2 id="portfolio-title">{portfolioIntro.title}</h2>
+                <p>{portfolioIntro.meta}</p>
+              </div>
+              <a className="btn" href={portfolioIntro.linkHref}>{portfolioIntro.linkLabel}</a>
+            </Reveal>
 
-        <Reveal
-          className="ed-folio-theater"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocusCapture={() => setPaused(true)}
-          onBlurCapture={event => {
-            if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false);
-          }}
-        >
-          <div ref={stageRef} className="ed-folio-theater-inner">
-            <div
-              className="ed-folio-coverflow"
-              role="group"
-              aria-label="Select a published book"
-              onKeyDown={event => {
-                if (event.key === 'ArrowRight') {
-                  event.preventDefault();
-                  moveSelection(1);
-                }
-                if (event.key === 'ArrowLeft') {
-                  event.preventDefault();
-                  moveSelection(-1);
-                }
+            <Reveal
+              className="ed-folio-theater"
+              onMouseEnter={() => setPaused(true)}
+              onMouseLeave={() => setPaused(false)}
+              onFocusCapture={() => setPaused(true)}
+              onBlurCapture={event => {
+                if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false);
               }}
             >
-              {shelf.map((book, index) => {
-                const n = shelf.length;
-                let offset = index - activeBook;
-                if (offset > n / 2) offset -= n;
-                if (offset < -n / 2) offset += n;
-                const abs = Math.abs(offset);
-                const far = abs > 2;
-                const x = reduceMotion()
-                  ? `calc(-50% + ${offset} * 8.1rem)`
-                  : `calc(-50% + ${offset} * clamp(5.8rem, 11.5vw, 9.25rem))`;
-                const y = abs === 0 ? '-1.1rem' : `${abs * 0.35}rem`;
-                const scale = reduceMotion()
-                  ? (activeBook === index ? 1.06 : 0.9)
-                  : Math.max(0.68, 1.08 - abs * 0.14);
-                const rot = reduceMotion() ? 0 : offset * -26;
-                const depth = reduceMotion() ? 0 : -abs * 110;
-                return (
-                  <button
-                    type="button"
-                    key={book.title}
-                    className={`ed-folio-book${activeBook === index ? ' is-active' : ''}${far ? ' is-far' : ''}`}
-                    style={{
-                      '--offset': offset,
-                      zIndex: 40 - abs,
-                      transform: `translate3d(${x}, ${y}, ${depth}px) rotateY(${rot}deg) scale(${scale})`,
-                      opacity: far ? 0.22 : 1 - abs * 0.14,
-                    }}
-                    aria-label={`${book.title} by ${book.author}`}
-                    aria-pressed={activeBook === index}
-                    onClick={() => selectBook(index)}
-                    onFocus={() => selectBook(index)}
-                  >
-                    <span className="ed-folio-book-spine" aria-hidden="true" />
-                    <img
-                      src={book.cover}
-                      alt={`${book.title} by ${book.author} — ${book.genre} book cover`}
-                      width="320"
-                      height="480"
-                      loading={abs <= 1 ? 'eager' : 'lazy'}
-                      draggable="false"
-                    />
-                    <span className="ed-folio-book-shade" aria-hidden="true" />
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="ed-folio-stage-glow" aria-hidden="true" />
-
-            <div className="ed-folio-theater-foot">
-              <div className="ed-folio-dots" role="tablist" aria-label="Published titles">
-                {shelf.map((book, index) => (
-                  <button
-                    key={book.title}
-                    type="button"
-                    role="tab"
-                    aria-selected={activeBook === index}
-                    aria-label={`Show ${book.title}`}
-                    className={activeBook === index ? 'is-active' : undefined}
-                    onClick={() => selectBook(index)}
-                  />
-                ))}
-              </div>
-              <div className="ed-folio-selected">
-                <span>{selected.genre}</span>
-                <h3>{selected.title}</h3>
-                <p>Written by {selected.author}</p>
-              </div>
-              <div className="ed-folio-actions">
-                <div className="ed-folio-arrows">
-                  <button type="button" onClick={() => moveSelection(-1)} aria-label="Previous book">
-                    <IconArrow aria-hidden="true" />
-                  </button>
-                  <button type="button" onClick={() => moveSelection(1)} aria-label="Next book">
-                    <IconArrow aria-hidden="true" />
-                  </button>
+              <div ref={stageRef} className="ed-folio-theater-inner">
+                <div
+                  className="ed-folio-coverflow"
+                  role="group"
+                  aria-label="Select a published book"
+                  onKeyDown={event => {
+                    if (event.key === 'ArrowRight') {
+                      event.preventDefault();
+                      moveSelection(1);
+                    }
+                    if (event.key === 'ArrowLeft') {
+                      event.preventDefault();
+                      moveSelection(-1);
+                    }
+                  }}
+                >
+                  {shelf.map((book, index) => {
+                    const n = shelf.length;
+                    let offset = index - activeBook;
+                    if (offset > n / 2) offset -= n;
+                    if (offset < -n / 2) offset += n;
+                    const abs = Math.abs(offset);
+                    const far = abs > 2;
+                    const x = reduceMotion()
+                      ? `calc(-50% + ${offset} * 8.1rem)`
+                      : `calc(-50% + ${offset} * clamp(5.8rem, 11.5vw, 9.25rem))`;
+                    const y = abs === 0 ? '-1.1rem' : `${abs * 0.35}rem`;
+                    const scale = reduceMotion()
+                      ? (activeBook === index ? 1.06 : 0.9)
+                      : Math.max(0.68, 1.08 - abs * 0.14);
+                    const rot = reduceMotion() ? 0 : offset * -26;
+                    const depth = reduceMotion() ? 0 : -abs * 110;
+                    return (
+                      <button
+                        type="button"
+                        key={book.title}
+                        className={`ed-folio-book${activeBook === index ? ' is-active' : ''}${far ? ' is-far' : ''}`}
+                        style={{
+                          '--offset': offset,
+                          zIndex: 40 - abs,
+                          transform: `translate3d(${x}, ${y}, ${depth}px) rotateY(${rot}deg) scale(${scale})`,
+                          opacity: far ? 0.22 : 1 - abs * 0.14,
+                        }}
+                        aria-label={`${book.title} by ${book.author}`}
+                        aria-pressed={activeBook === index}
+                        onClick={() => selectBook(index)}
+                        onFocus={() => selectBook(index)}
+                      >
+                        <span className="ed-folio-book-spine" aria-hidden="true" />
+                        <img
+                          src={book.cover}
+                          alt={`${book.title} by ${book.author} — ${book.genre} book cover`}
+                          loading={abs <= 1 ? 'eager' : 'lazy'}
+                          draggable="false"
+                        />
+                        <span className="ed-folio-book-shade" aria-hidden="true" />
+                      </button>
+                    );
+                  })}
                 </div>
-                <a href="/contact">
-                  Start a similar project
-                  <IconArrow aria-hidden="true" />
-                </a>
+
+                <div className="ed-folio-stage-glow" aria-hidden="true" />
+
+                <div className="ed-folio-theater-foot">
+                  <div className="ed-folio-dots" role="tablist" aria-label="Published titles">
+                    {shelf.map((book, index) => (
+                      <button
+                        key={book.title}
+                        type="button"
+                        role="tab"
+                        aria-selected={activeBook === index}
+                        aria-label={`Show ${book.title}`}
+                        className={activeBook === index ? 'is-active' : undefined}
+                        onClick={() => selectBook(index)}
+                      />
+                    ))}
+                  </div>
+                  <div className="ed-folio-selected">
+                    <span>{selected.genre}</span>
+                    <h3>{selected.title}</h3>
+                    <p>Written by {selected.author}</p>
+                  </div>
+                  <div className="ed-folio-actions">
+                    <div className="ed-folio-arrows">
+                      <button type="button" onClick={() => moveSelection(-1)} aria-label="Previous book">
+                        <IconArrow aria-hidden="true" />
+                      </button>
+                      <button type="button" onClick={() => moveSelection(1)} aria-label="Next book">
+                        <IconArrow aria-hidden="true" />
+                      </button>
+                    </div>
+                    <a href="/contact">
+                      Start a similar project
+                      <IconArrow aria-hidden="true" />
+                    </a>
+                  </div>
+                </div>
               </div>
-            </div>
+            </Reveal>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -642,80 +585,46 @@ function Portfolio() {
 
 function DualCard({ offer, tone }) {
   return (
-    <article className={`ed-duo-card ed-duo-card--${tone}`}>
-      <p className="ed-duo-card-kicker">
+    <article className={`br_duo_card br_duo_card--${tone}`}>
+      <p className="br_duo_kicker">
         <span>{offer.index}</span>
-        <i aria-hidden="true" />
-        <span>{offer.tag}</span>
+        {offer.tag}
       </p>
-      <h3 className="ed-duo-card-title">{offer.title}</h3>
-      <p className="ed-duo-card-lead">{offer.lead}</p>
-      <ul className="ed-duo-card-list">
+      <h3>{offer.title}</h3>
+      <p className="br_duo_lead">{offer.lead}</p>
+      <ul className="br_duo_list">
         {offer.checklist.map(item => (
-          <li key={item}>
-            <span className="ed-duo-card-tick" aria-hidden="true"><IconCheck /></span>
-            {item}
-          </li>
+          <li key={item}><IconCheck aria-hidden="true" />{item}</li>
         ))}
       </ul>
-      <a className="ed-duo-card-cta" href={offer.href}>
-        {offer.cta}
-        <IconArrow aria-hidden="true" />
-      </a>
-      <p className="ed-duo-card-fig">{offer.caption}</p>
+      <a className={tone === 'dark' ? 'btn' : 'btn-outline'} href={offer.href}>{offer.cta}</a>
     </article>
   );
 }
 
 function DualOffer() {
-  const { intro, publish, market, stage } = dualOffer;
+  const { intro, publish, market } = dualOffer;
 
   return (
-    <section className="ed-duo ed-duo--stage" id="publish" aria-labelledby="ed-duo-title">
-      <div className="ed-duo-stage" aria-hidden="true">
-        <img
-          src={stage.image}
-          alt={stage.imageAlt}
-          width="1600"
-          height="1068"
-          loading="lazy"
-          decoding="async"
-        />
-        <span className="ed-duo-stage-veil" />
-      </div>
-
-      <div className="shell ed-duo-shell">
-        <Reveal className="ed-duo-head">
-          <div className="ed-duo-head-main">
-            <Eyebrow tone="light">{intro.eyebrow}</Eyebrow>
-            <h2 id="ed-duo-title">
-              {intro.title}
-              {' '}
-              <em>{intro.titleEm}</em>
-            </h2>
+    <section className="br_duo" id="publish" aria-labelledby="ed-duo-title">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <Reveal className="br_duo_head">
+              <Eyebrow>{intro.eyebrow}</Eyebrow>
+              <h2 id="ed-duo-title">
+                {intro.title} <span>{intro.titleEm}</span>
+              </h2>
+              <p>{intro.lead}</p>
+              <p className="br_duo_note">{intro.note}</p>
+            </Reveal>
           </div>
-          <div className="ed-duo-head-aside">
-            <p>{intro.lead}</p>
-            <p className="ed-duo-note">{intro.note}</p>
-          </div>
-        </Reveal>
-
-        <div className="ed-duo-board">
-          <svg className="ed-duo-arc" viewBox="0 0 640 120" preserveAspectRatio="none" aria-hidden="true">
-            <path
-              d="M40,96 C180,16 460,16 600,96"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.25"
-            />
-            <circle cx="40" cy="96" r="4.5" fill="currentColor" />
-            <circle cx="600" cy="96" r="4.5" fill="currentColor" />
-          </svg>
-
-          <Reveal className="ed-duo-board-col">
+        </div>
+        <div className="row br_grid">
+          <Reveal className="col-md-6">
             <DualCard offer={publish} tone="dark" />
           </Reveal>
-          <Reveal className="ed-duo-board-col" delay={100}>
+          <Reveal className="col-md-6" delay={100}>
             <DualCard offer={market} tone="light" />
           </Reveal>
         </div>
@@ -728,26 +637,46 @@ function DualOffer() {
 
 function Testimonials() {
   return (
-    <section className="ed-voices ed-voices--min" aria-labelledby="voices-title">
-      <div className="shell">
-        <Reveal className="ed-voices-min-head">
-          <Eyebrow tone="light">{testimonialsIntro.eyebrow}</Eyebrow>
-          <h2 id="voices-title">{testimonialsIntro.title}</h2>
-        </Reveal>
-
-        <ul className="ed-voices-min-grid">
-          {testimonials.map((item, i) => (
-            <Reveal as="li" className="ed-voices-min-card" key={item.name} delay={i * 70}>
-              <blockquote>
-                <p>“{item.quote}”</p>
-              </blockquote>
-              <footer>
-                <strong>{item.name}</strong>
-                <span>{item.role}</span>
-              </footer>
+    <section className="br_testimonials" aria-labelledby="voices-title">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <Reveal className="br_testimonials_head">
+              <Eyebrow tone="light">{testimonialsIntro.eyebrow}</Eyebrow>
+              <h2 id="voices-title">{testimonialsIntro.title}</h2>
             </Reveal>
-          ))}
-        </ul>
+
+            <div className="br_testimonials_slider_wrap">
+              <Swiper
+                className="br_testimonial_slider"
+                modules={[A11y, Autoplay, Pagination]}
+                slidesPerView={1}
+                spaceBetween={24}
+                pagination={{ clickable: true }}
+                autoplay={reduceMotion() ? false : { delay: 6000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+                rewind
+              >
+                {testimonials.map(item => (
+                  <SwiperSlide key={item.name}>
+                    <figure className="br_testimonial_card">
+                      <IconQuote className="br_testimonial_icon" />
+                      <blockquote>
+                        <p>{item.quote}</p>
+                      </blockquote>
+                      <figcaption>
+                        <span className="br_testimonial_avatar" aria-hidden="true">{item.initials}</span>
+                        <span className="br_testimonial_meta">
+                          <strong>{item.name}</strong>
+                          <span>{item.role}</span>
+                        </span>
+                      </figcaption>
+                    </figure>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -757,42 +686,83 @@ function Testimonials() {
 
 function Pricing() {
   return (
-    <section className="ed-price" id="pricing" aria-labelledby="pricing-title">
-      <div className="shell">
-        <Reveal className="ed-price-head">
-          <div>
-            <Eyebrow>{pricingIntro.eyebrow}</Eyebrow>
-            <h2 id="pricing-title">
-              {pricingIntro.title} <em>{pricingIntro.titleEm}</em>
-            </h2>
+    <section className="br_pricing" id="pricing" aria-labelledby="pricing-title">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <Reveal className="br_pricing_head">
+              <Eyebrow>{pricingIntro.eyebrow}</Eyebrow>
+              <h2 id="pricing-title">
+                {pricingIntro.title} <span>{pricingIntro.titleEm}</span>
+              </h2>
+              <p>{pricingIntro.lead}</p>
+            </Reveal>
           </div>
-          <p>{pricingIntro.lead}</p>
-        </Reveal>
-        <div className="ed-price-sheet" aria-label="Publishing packages">
+        </div>
+        <div className="row br_grid" aria-label="Publishing packages">
           {plans.map((plan, i) => (
-            <Reveal
-              as="article"
-              className={`ed-price-card${plan.featured ? ' is-featured' : ''}`}
-              key={plan.name}
-              delay={i * 70}
-            >
-              {plan.featured ? <span className="ed-price-flag">Most popular</span> : null}
-              <h3>{plan.name}</h3>
-              <p className="ed-price-amt"><i>$</i>{plan.price}</p>
-              <p className="ed-price-copy">{plan.copy}</p>
-              <dl className="ed-price-meta">
-                <div><dt>Length</dt><dd>{plan.words}</dd></div>
-                <div><dt>Timeline</dt><dd>{plan.timeline}</dd></div>
-              </dl>
-              <ul className="ed-price-features">
-                {plan.features.slice(0, 3).map(feature => (
-                  <li key={feature}><IconCheck className="tick" aria-hidden="true" />{feature}</li>
-                ))}
-              </ul>
-              <a className="ed-price-cta" href="/contact">
-                <span>{plan.featured ? 'Get started' : `Choose ${plan.name}`}</span>
-                <IconArrow aria-hidden="true" />
-              </a>
+            <Reveal className="col-md-6 col-lg-3" key={plan.name} delay={i * 70}>
+              <article className={`br_price_card${plan.featured ? ' is-featured' : ''}`}>
+                {plan.featured ? <span className="br_price_badge">Most popular</span> : null}
+                <h3>{plan.name}</h3>
+                <p className="br_price_amount"><sup>$</sup>{plan.price}</p>
+                <p className="br_price_copy">{plan.copy}</p>
+                <dl className="br_price_meta">
+                  <div><dt>Length</dt><dd>{plan.words}</dd></div>
+                  <div><dt>Timeline</dt><dd>{plan.timeline}</dd></div>
+                </dl>
+                <ul className="br_price_features">
+                  {plan.features.slice(0, 4).map(feature => (
+                    <li key={feature}><IconCheck aria-hidden="true" />{feature}</li>
+                  ))}
+                </ul>
+                <a className={plan.featured ? 'btn' : 'btn-outline'} href="/contact">
+                  {plan.featured ? 'Get started' : `Choose ${plan.name}`}
+                </a>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Latest() {
+  const posts = blogPosts.slice(0, 3);
+  if (!posts.length) return null;
+
+  return (
+    <section className="br_latest" aria-labelledby="latest-title">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <Reveal className="br_section_head">
+              <div className="br_section_head_copy">
+                <Eyebrow>From the blog</Eyebrow>
+                <h2 id="latest-title">The latest</h2>
+              </div>
+              <Link className="btn" to="/blog">View all articles</Link>
+            </Reveal>
+          </div>
+        </div>
+        <div className="row br_grid">
+          {posts.map((post, i) => (
+            <Reveal className="col-md-4" key={post.slug} delay={i * 70}>
+              <article className="br_post_card">
+                <Link to={`/blog/${post.slug}`}>
+                  {post.image ? (
+                    <img src={post.image} alt={post.imageAlt || post.title} loading="lazy" />
+                  ) : null}
+                  <ul className="br_post_tags">
+                    <li>{post.category}</li>
+                    {post.eyebrow ? <li>{post.eyebrow}</li> : null}
+                  </ul>
+                  <h3>{post.title}</h3>
+                  <p>{post.description}</p>
+                  <time className="br_post_date" dateTime={post.date}>{post.dateLabel}</time>
+                </Link>
+              </article>
             </Reveal>
           ))}
         </div>
@@ -803,145 +773,69 @@ function Pricing() {
 
 /* ---------------------------------------------------------------------- faq */
 
-function FaqItem({ item, index, open, onToggle, progress }) {
+function FaqItem({ item, index, open, onToggle }) {
   const panelId = useId();
   const buttonId = useId();
   return (
-    <div className={`ed-faq-item${open ? ' is-open' : ''}`} role="listitem">
+    <div className={`br_faq_item${open ? ' is-open' : ''}`}>
       <h3>
         <button
           type="button"
+          className="br_faq_question"
           id={buttonId}
           aria-expanded={open}
           aria-controls={panelId}
           onClick={onToggle}
         >
-          <span className="ed-faq-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-          <span className="ed-faq-q">{item.q}</span>
-          <span className="ed-faq-toggle" aria-hidden="true">
+          <span className="br_faq_num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <span className="br_faq_q">{item.q}</span>
+          <span className="br_faq_icon" aria-hidden="true">
             {open ? <IconClose /> : <IconPlus />}
           </span>
         </button>
       </h3>
-      <div id={panelId} role="region" aria-labelledby={buttonId} className="ed-faq-a" hidden={!open}>
-        <p>{item.a}</p>
+      <div id={panelId} role="region" aria-labelledby={buttonId} className="br_faq_answer" inert={!open}>
+        <div className="br_faq_answer_inner">
+          <p>{item.a}</p>
+        </div>
       </div>
-      {open ? (
-        <i className="ed-faq-progress" style={{ '--p': `${Math.round(progress * 100)}%` }} aria-hidden="true" />
-      ) : null}
     </div>
   );
 }
 
 function Faq() {
   const [open, setOpen] = useState(0);
-  const [progress, setProgress] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const sectionRef = useRef(null);
-  const inViewRef = useRef(false);
-  const holdUntilRef = useRef(0);
-  const dwellMs = 5200;
-
-  useEffect(() => {
-    const node = sectionRef.current;
-    if (!node) return undefined;
-    const io = new IntersectionObserver(([entry]) => {
-      inViewRef.current = entry.isIntersecting && entry.intersectionRatio >= 0.25;
-    }, { threshold: [0.2, 0.35, 0.5] });
-    io.observe(node);
-    return () => io.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (reduceMotion() || paused) {
-      setProgress(0);
-      return undefined;
-    }
-    let start = performance.now();
-    let frame = 0;
-    let lastPaintedProgress = -1;
-    const tick = now => {
-      if (!inViewRef.current || now < holdUntilRef.current) {
-        start = now;
-        if (lastPaintedProgress !== 0) {
-          setProgress(0);
-          lastPaintedProgress = 0;
-        }
-        frame = requestAnimationFrame(tick);
-        return;
-      }
-      const ratio = Math.min(1, (now - start) / dwellMs);
-      if (ratio - lastPaintedProgress >= 0.02 || ratio >= 1) {
-        setProgress(ratio);
-        lastPaintedProgress = ratio;
-      }
-      if (ratio >= 1) {
-        setOpen(current => (current + 1) % faqs.length);
-        start = now;
-        setProgress(0);
-        lastPaintedProgress = 0;
-      }
-      frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [open, paused]);
-
-  function selectItem(index) {
-    holdUntilRef.current = performance.now() + 8000;
-    setProgress(0);
-    setOpen(index);
-  }
 
   return (
-    <section
-      ref={sectionRef}
-      className="ed-faq"
-      id="faq"
-      aria-labelledby="faq-title"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={event => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false);
-      }}
-    >
-      <div className="shell ed-faq-shell">
-        <Reveal className="ed-faq-copy">
-          <p className="ed-faq-volume" aria-hidden="true">Vol. VI · Answers</p>
-          <Eyebrow>{faqIntro.eyebrow}</Eyebrow>
-          <h2 id="faq-title">
-            {faqIntro.title}
-            <br />
-            <em>{faqIntro.titleEm}</em>
-          </h2>
-          <p>{faqIntro.lead}</p>
-          <a className="ed-faq-cta" href="/contact">
-            {faqIntro.cta}
-            <IconArrow aria-hidden="true" />
-          </a>
-          {faqIntro.allHref ? (
-            <Link className="ed-faq-all" to={faqIntro.allHref}>
-              {faqIntro.allLabel}
-              <IconArrow aria-hidden="true" />
-            </Link>
-          ) : null}
-        </Reveal>
+    <section className="br_faq" id="faq" aria-labelledby="faq-title">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <Reveal className="br_section_head br_faq_head">
+              <div className="br_section_head_copy">
+                <Eyebrow>{faqIntro.eyebrow}</Eyebrow>
+                <h2 id="faq-title">
+                  {faqIntro.title} <span>{faqIntro.titleEm}</span>
+                </h2>
+                <p>{faqIntro.lead}</p>
+              </div>
+              <a className="btn" href="/contact">{faqIntro.cta}</a>
+            </Reveal>
 
-        <Reveal className="ed-faq-board" delay={90}>
-          <div className="ed-faq-list" role="list">
-            {faqs.map((item, i) => (
-              <FaqItem
-                key={item.q}
-                item={item}
-                index={i}
-                open={open === i}
-                progress={open === i ? progress : 0}
-                onToggle={() => selectItem(i)}
-              />
-            ))}
+            <Reveal className="br_faq_list" delay={90}>
+              {faqs.map((item, i) => (
+                <FaqItem
+                  key={item.q}
+                  item={item}
+                  index={i}
+                  open={open === i}
+                  onToggle={() => setOpen(current => (current === i ? -1 : i))}
+                />
+              ))}
+            </Reveal>
+
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -949,284 +843,154 @@ function Faq() {
 
 /* ------------------------------------------------------------------ contact */
 
-/**
- * reCAPTCHA v3 — invisible, scored. The script is only pulled in on pages that
- * actually carry the form, so Google is not loaded across the whole site. With
- * no site key configured the hook returns an empty token and the server skips
- * verification, so the form still works before the keys are in place.
- */
-function useRecaptcha() {
-  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '';
+/* ------------------------------------------------------------------- footer */
 
-  useEffect(() => {
-    if (!siteKey || document.querySelector('script[data-recaptcha]')) return undefined;
-    const script = document.createElement('script');
-    script.src = `https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(siteKey)}`;
-    script.async = true;
-    script.defer = true;
-    script.setAttribute('data-recaptcha', '1');
-    document.head.appendChild(script);
-    return undefined;
-  }, [siteKey]);
-
-  return async function getToken(action) {
-    if (!siteKey || !window.grecaptcha) return '';
-    try {
-      await new Promise(resolve => window.grecaptcha.ready(resolve));
-      return await window.grecaptcha.execute(siteKey, { action });
-    } catch {
-      // A blocked or failed challenge must not stop the submit; the server
-      // decides what to do with a missing token.
-      return '';
-    }
-  };
-}
-
-function Contact({ asPage = false }) {
+function FooterSignup() {
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
-  const [fieldErrors, setFieldErrors] = useState({});
-  const [failure, setFailure] = useState('');
-  const resultRef = useRef(null);
-  const formRef = useRef(null);
   const getRecaptchaToken = useRecaptcha();
-  const TitleTag = 'h2';
-
-  useEffect(() => { if (status === 'sent') resultRef.current?.focus(); }, [status]);
-
-  // Send the caret to whatever the server rejected, rather than leaving the
-  // visitor to hunt for the red text.
-  useEffect(() => {
-    const first = Object.keys(fieldErrors)[0];
-    if (first) formRef.current?.elements[first]?.focus();
-  }, [fieldErrors]);
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const form = event.currentTarget;
-    const data = new FormData(form);
-
+    const email = new FormData(event.currentTarget).get('email');
     setStatus('sending');
-    setFieldErrors({});
-    setFailure('');
-
     try {
       const recaptchaToken = await getRecaptchaToken('contact');
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: data.get('name'),
-          email: data.get('email'),
-          message: data.get('message'),
-          timeline: data.get('timeline'),
-          hp_trap: data.get('hp_trap'),
+          name: 'Newsletter subscriber',
+          email,
+          message: 'Newsletter signup from the website footer.',
+          timeline: 'Newsletter',
           recaptchaToken,
-          sourcePath: `${window.location.pathname}${window.location.search}`,
+          sourcePath: `${window.location.pathname}#newsletter`,
         }),
       });
-      const payload = await response.json().catch(() => ({}));
-
-      if (!response.ok) {
-        setFieldErrors(payload.errors || {});
-        setFailure(payload.error || 'Something went wrong on our side.');
-        setStatus('error');
-        return;
-      }
-
-      form.reset();
-      setStatus('sent');
+      setStatus(response.ok ? 'sent' : 'error');
     } catch {
-      setFailure('We could not reach the server.');
       setStatus('error');
     }
   }
 
-  return (
-    <section className={`section contact ct${asPage ? ' ct--page' : ''}`} id="contact" aria-labelledby="contact-title">
-      <div className="ct-shell">
-        <Reveal className="ct-aside">
-          {!asPage ? (
-            <img
-              className="ct-photo"
-              src={contactIntro.photo || '/assets/brand/page-hero-contact.png'}
-              alt={contactIntro.photoAlt}
-              loading="lazy"
-            />
-          ) : null}
-          <div className="ct-aside-copy">
-            <Eyebrow tone="light">{contactIntro.eyebrow}</Eyebrow>
-            <TitleTag id="contact-title">
-              {contactIntro.title}
-              <br />
-              <em>{contactIntro.titleEm}</em>
-            </TitleTag>
-            <p>{contactIntro.lead}</p>
-            <ul className="ct-points">
-              {contactIntro.points.map(point => (
-                <li key={point}><IconCheck className="tick" />{point}</li>
-              ))}
-            </ul>
-            <div className="ct-direct">
-              <a href={`mailto:${siteContact.email}`}><IconMail /> {siteContact.email}</a>
-              <a href={siteContact.phoneHref}><IconPhone /> {siteContact.phone}</a>
-              <p className="ct-address">{siteContact.address}</p>
-            </div>
-          </div>
-        </Reveal>
+  if (status === 'sent') {
+    return (
+      <p className="br_footer_thanks" role="status">
+        Thanks for signing up — we will send you our latest publishing tips.
+      </p>
+    );
+  }
 
-        <Reveal className="ct-panel" delay={120}>
-          {status === 'sent' ? (
-            <div className="brief" ref={resultRef} tabIndex={-1}>
-              <h3>Thank you — your enquiry is with us</h3>
-              <p className="brief-note">
-                We have your project details and typically reply within 1–2 business days.
-                If it is urgent, email <a href={`mailto:${siteContact.email}`}>{siteContact.email}</a> directly.
-              </p>
-              <div className="brief-actions">
-                <button type="button" className="link-button" onClick={() => setStatus('idle')}>
-                  Send another enquiry
-                </button>
-              </div>
-            </div>
-          ) : (
-            <form className="ct-form" ref={formRef} onSubmit={handleSubmit}>
-              <label className="field">
-                <span>Your name</span>
-                <input
-                  name="name"
-                  autoComplete="name"
-                  required
-                  maxLength={120}
-                  placeholder="Alex Morgan"
-                  aria-invalid={fieldErrors.name ? 'true' : undefined}
-                  aria-describedby={fieldErrors.name ? 'name-error' : undefined}
-                />
-                {fieldErrors.name
-                  ? <em className="field-error" id="name-error">{fieldErrors.name}</em>
-                  : null}
-              </label>
-              <label className="field">
-                <span>Your email</span>
-                <input
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  maxLength={254}
-                  placeholder="you@email.com"
-                  aria-invalid={fieldErrors.email ? 'true' : undefined}
-                  aria-describedby={fieldErrors.email ? 'email-error' : undefined}
-                />
-                {fieldErrors.email
-                  ? <em className="field-error" id="email-error">{fieldErrors.email}</em>
-                  : null}
-              </label>
-              <input type="hidden" name="timeline" value="Within 3 months" />
-              {/* Honeypot: off-screen. Avoid names like company/website — autofill traps humans. */}
-              <div className="ct-trap" aria-hidden="true">
-                <label>
-                  Leave blank
-                  <input
-                    name="hp_trap"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    data-lpignore="true"
-                    data-1p-ignore="true"
-                    data-form-type="other"
-                  />
-                </label>
-              </div>
-              <label className="field">
-                <span>Tell us about your book or project</span>
-                <textarea
-                  name="message"
-                  rows={5}
-                  required
-                  maxLength={4000}
-                  placeholder="The idea, who it is for, and what you want it to do for you."
-                  aria-invalid={fieldErrors.message ? 'true' : undefined}
-                  aria-describedby={fieldErrors.message ? 'message-error' : undefined}
-                  onInput={e => e.target.setCustomValidity('')}
-                />
-                {fieldErrors.message
-                  ? <em className="field-error" id="message-error">{fieldErrors.message}</em>
-                  : null}
-              </label>
-              <button type="submit" className="ct-submit" disabled={status === 'sending'}>
-                {status === 'sending' ? 'Sending…' : 'Send enquiry'}
-                <IconArrow aria-hidden="true" />
-              </button>
-              <p className="ct-note" role="status">
-                {status === 'error'
-                  ? `${failure} Please try again, or email ${siteContact.email}.`
-                  : 'We typically respond within 1–2 business days.'}
-              </p>
-              {import.meta.env.VITE_RECAPTCHA_SITE_KEY ? (
-                <p className="ct-recaptcha">
-                  Protected by reCAPTCHA — the Google{' '}
-                  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-                  {' '}and{' '}
-                  <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a>
-                  {' '}apply.
-                </p>
-              ) : null}
-            </form>
-          )}
-        </Reveal>
-      </div>
-    </section>
+  return (
+    <div className="br_footer_signup">
+      <h2>Sign up to get the latest</h2>
+      <form className="br_footer_form" onSubmit={handleSubmit}>
+        <input
+          type="email"
+          name="email"
+          required
+          maxLength={254}
+          placeholder="Enter your email..."
+          aria-label="Your email address"
+          autoComplete="email"
+        />
+        <button type="submit" className="btn" disabled={status === 'sending'}>
+          {status === 'sending' ? 'Sending…' : 'Subscribe'}
+        </button>
+      </form>
+      {status === 'error' ? (
+        <p className="br_footer_error" role="status">
+          Something went wrong. Please try again or email {siteContact.email}.
+        </p>
+      ) : null}
+    </div>
   );
 }
 
-/* ------------------------------------------------------------------- footer */
+function FooterSearch() {
+  const navigate = useNavigate();
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const q = String(new FormData(event.currentTarget).get('q') || '').trim();
+    navigate(q ? `/search?q=${encodeURIComponent(q)}` : '/search');
+  }
+
+  return (
+    <form className="br_footer_search" role="search" onSubmit={handleSubmit}>
+      <input type="search" name="q" placeholder="Search..." aria-label="Search the site" autoComplete="off" />
+      <button type="submit" aria-label="Search">
+        <IconSearch aria-hidden="true" />
+      </button>
+    </form>
+  );
+}
 
 function Footer() {
   const location = useLocation();
   const onHome = location.pathname === '/';
 
   return (
-    <footer className="footer">
-      <div className="shell">
-        <div className="footer-top">
-          <div className="footer-brand">
+    <footer className="br_footer">
+      <div className="container br_footer_top">
+        <div className="row align-items-center">
+          <div className="col-md-3">
             <Wordmark light />
-            <p>{footerBrand.blurb}</p>
-            <div className="footer-contact">
-              <a href={`mailto:${siteContact.email}`}><IconMail /> {siteContact.email}</a>
-              <a href={siteContact.phoneHref}><IconPhone /> {siteContact.phone}</a>
-              <p className="footer-address">{siteContact.address}</p>
-            </div>
           </div>
+          <div className="col-md-9">
+            <FooterSignup />
+          </div>
+        </div>
+      </div>
+
+      <div className="container br_footer_menus">
+        <div className="row">
           {footerLinks.map(column => (
-            <nav className="footer-col" key={column.title} aria-label={column.title}>
-              <h3>{column.title}</h3>
-              <ul>
+            <nav className="col-md-4" key={column.title} aria-label={column.title}>
+              <ul className={`br_footer_menu${column.links.length > 6 ? ' br_footer_menu--split' : ''}`}>
+                <li className="br_footer_menu_title">{column.title}</li>
                 {column.links.map(link => {
                   const href = link.href.startsWith('#') && !onHome ? navHref(link.href) : link.href;
                   const isRoute = href.startsWith('/') && !href.startsWith('/#');
                   return (
                     <li key={link.label}>
-                      {isRoute ? (
-                        <Link to={href}>{link.label}</Link>
-                      ) : (
-                        <a href={href}>{link.label}</a>
-                      )}
+                      {isRoute ? <Link to={href}>{link.label}</Link> : <a href={href}>{link.label}</a>}
                     </li>
                   );
                 })}
               </ul>
             </nav>
           ))}
-          <div className="footer-col footer-cta">
-            <h3>{footerBrand.ctaTitle}</h3>
-            <p>{footerBrand.ctaCopy}</p>
-            <Cta variant="gold">{footerBrand.ctaLabel}</Cta>
+          <div className="col-md-4">
+            <ul className="br_footer_menu">
+              <li className="br_footer_menu_title">Get in touch</li>
+              <li><a href={`mailto:${siteContact.email}`}>{siteContact.email}</a></li>
+              <li><a href={siteContact.phoneHref}>{siteContact.phone}</a></li>
+              <li><Link to="/contact">{footerBrand.ctaLabel}</Link></li>
+            </ul>
+            <FooterSearch />
           </div>
         </div>
-        <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} ebookwriters.us. All rights reserved.</p>
-          <p className="footer-tag">Write &middot; Publish &middot; Grow</p>
-          <a className="footer-top-link" href={onHome ? '#top' : '/'}>Back to top <IconArrowUpRight /></a>
+      </div>
+
+      <div className="container br_footer_bottom">
+        <div className="row align-items-center">
+          <div className="col-md-8">
+            <p>{footerBrand.blurb}</p>
+            <p className="br_footer_policy">
+              <Link to="/privacy">Privacy Policy</Link>
+              <Link to="/terms">Terms of Service</Link>
+            </p>
+            <p>&copy; {new Date().getFullYear()} ebookwriters.us. All rights reserved.</p>
+          </div>
+          <div className="col-md-4 br_footer_backtop">
+            <button
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: reduceMotion() ? 'auto' : 'smooth' })}
+            >
+              Back to top <IconArrowUpRight aria-hidden="true" />
+            </button>
+          </div>
         </div>
       </div>
     </footer>
@@ -1238,7 +1002,7 @@ function Footer() {
 function MobileBar() {
   const [hidden, setHidden] = useState(true);
   useEffect(() => {
-    const heroCta = document.querySelector('.hx-exact-mob .hx-plate-cta, .hx-live .hx-cta');
+    const heroCta = document.querySelector('.hero-section .btn');
     const pathCard = document.querySelector('.ed-path-card');
     const portfolio = document.getElementById('portfolio');
     const faq = document.getElementById('faq');
@@ -1307,9 +1071,27 @@ function MobileBar() {
   );
 }
 
+function ScrollToTop() {
+  const { pathname, search, hash } = useLocation();
+
+  useEffect(() => {
+    if (hash) {
+      const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+      if (target) {
+        target.scrollIntoView();
+        return;
+      }
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [pathname, search, hash]);
+
+  return null;
+}
+
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <SeoHead />
       <Suspense fallback={<RouteFallback />}>
       <Routes>
@@ -1331,6 +1113,7 @@ function App() {
         <Route path="/faq" element={<BlogShell><FaqPage /></BlogShell>} />
         <Route path="/privacy" element={<BlogShell><PrivacyPage /></BlogShell>} />
         <Route path="/terms" element={<BlogShell><TermsPage /></BlogShell>} />
+        <Route path="/search" element={<BlogShell><SearchPage /></BlogShell>} />
         <Route path="*" element={<BlogShell><NotFoundPage /></BlogShell>} />
       </Routes>
       </Suspense>
@@ -1361,14 +1144,6 @@ function ContactPage() {
       <div className="grain" aria-hidden="true" />
       <Header />
       <main id="main">
-        <PageHero
-          eyebrow="Contact"
-          title={contactIntro.pageTitle}
-          lead={contactIntro.lead}
-          image="/assets/brand/page-hero-contact.png"
-          imageAlt={contactIntro.photoAlt}
-          id="contact-page-hero-title"
-        />
         <Contact asPage />
       </main>
       <Footer />
@@ -1432,6 +1207,7 @@ function HomePage() {
         <DualOffer />
         <Testimonials />
         <Pricing />
+        <Latest />
         <Faq />
         <Contact />
       </main>

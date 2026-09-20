@@ -477,6 +477,14 @@ const staticPages = [
       faqPageSchema(faqs),
     ],
   }),
+  page({
+    path: '/search',
+    title: 'Search | ebookwriters.us',
+    description: 'Search ebookwriters.us for services, pricing, articles, and answers about ebook writing and publishing.',
+    robots: 'noindex, follow',
+    sitemap: false,
+    jsonLd: [],
+  }),
   // The admin panel is a real prerendered file rather than a rewrite: with
   // cleanUrls on, a rewrite to /index.html never resolved and /admin 404ed.
   // A file also lets the served HTML carry its own noindex instead of the
