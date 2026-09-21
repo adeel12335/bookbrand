@@ -2,12 +2,14 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { IconBook, IconCheck } from './icons.jsx';
 import {
+  BLOG_REDIRECTS,
   blogArticle,
   blogIndex,
   blogPosts,
   getPostBySlug,
   headingId,
 } from './blogPosts.js';
+import { appPath, tokenizeInline } from './inlineMarkup.js';
 
 const STEP = 4;
 
@@ -187,18 +189,28 @@ export function BlogIndexPage() {
 }
 
 function RichText({ text }) {
-  const parts = String(text).split(/(\*\*[^*]+\*\*)/g);
-  return parts.map((part, i) =>
-    part.startsWith('**') && part.endsWith('**')
-      ? <strong key={i}>{part.slice(2, -2)}</strong>
-      : <React.Fragment key={i}>{part}</React.Fragment>
-  );
+  return tokenizeInline(text).map((token, i) => {
+    if (token.type === 'strong') return <strong key={i}>{token.value}</strong>;
+    if (token.type === 'link') {
+      const href = appPath(token.href);
+      if (href.startsWith('/')) {
+        return <Link key={i} to={href}>{token.value}</Link>;
+      }
+      return (
+        <a key={i} href={href} rel="noopener noreferrer">
+          {token.value}
+        </a>
+      );
+    }
+    return <React.Fragment key={i}>{token.value}</React.Fragment>;
+  });
 }
 
 export function BlogPostPage() {
   const { slug } = useParams();
-  const post = getPostBySlug(slug);
-  const latest = blogPosts.filter(item => item.slug !== slug).slice(0, 3);
+  const redirected = BLOG_REDIRECTS[slug];
+  const post = redirected ? null : getPostBySlug(slug);
+  const latest = post ? blogPosts.filter(item => item.slug !== slug).slice(0, 3) : [];
 
   useEffect(() => {
     if (!post) return undefined;
@@ -206,6 +218,7 @@ export function BlogPostPage() {
     return undefined;
   }, [post]);
 
+  if (redirected) return <Navigate to={`/blog/${redirected}`} replace />;
   if (!post) return <Navigate to="/blog" replace />;
 
   return (

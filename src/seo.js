@@ -366,7 +366,7 @@ const staticPages = [
     path: '/about',
     title: 'About the Writing Studio | ebookwriters.us',
     description:
-      'ebookwriters.us is an Iowa ebook writing and ghostwriting studio. Named specialists, 100% author ownership, and fixed packages from ghostwriting through KDP publishing.',
+      'ebookwriters.us is an Iowa ebook writing studio. Genre-matched writers named after NDA, 100% author ownership, and fixed packages through KDP publishing.',
     priority: 0.8,
     jsonLd: [
       webPageSchema({

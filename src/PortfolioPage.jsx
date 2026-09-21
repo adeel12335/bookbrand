@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { IconArrow, IconCheck, serviceIcons } from './icons.jsx';
-import { books, portfolioPage, services } from './data.js';
-import { serviceHrefs } from './pageContent.js';
+import { books, portfolioPage } from './data.js';
 
 export function PortfolioPage() {
   const page = portfolioPage;
@@ -103,6 +101,11 @@ export function PortfolioPage() {
                   <span className="br_cover_genre">{book.genre}</span>
                   <h3>{book.title}</h3>
                   <p>{book.author}</p>
+                  {book.amazonUrl ? (
+                    <a href={book.amazonUrl} rel="noopener noreferrer">
+                      View on Amazon
+                    </a>
+                  ) : null}
                 </article>
               </div>
             ))}
@@ -137,43 +140,6 @@ export function PortfolioPage() {
               </li>
             ))}
           </ol>
-        </div>
-      </section>
-
-      <section className="br_section" aria-labelledby="pf-offer-title">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="br_section_head">
-                <div className="br_section_head_copy">
-                  <p className="br-eyebrow">{page.offer.eyebrow}</p>
-                  <h2 id="pf-offer-title">
-                    {page.offer.title} <span>{page.offer.titleEm}</span>
-                  </h2>
-                  <p>{page.offer.lead}</p>
-                </div>
-                <Link className="btn" to="/services">Explore services</Link>
-              </div>
-            </div>
-          </div>
-          <div className="row br_grid">
-            {services.map(service => {
-              const Icon = serviceIcons[service.key] || IconArrow;
-              const href = serviceHrefs[service.key] || service.href || '/contact';
-              return (
-                <div className="col-md-6" key={service.title}>
-                  <Link className="ed-svc-card" to={href}>
-                    <span className="ed-svc-icon" aria-hidden="true"><Icon /></span>
-                    <div className="ed-svc-body">
-                      <h3>{service.title}</h3>
-                      <p>{service.copy}</p>
-                    </div>
-                    <span className="ed-svc-orb" aria-hidden="true"><IconArrow /></span>
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
         </div>
       </section>
 

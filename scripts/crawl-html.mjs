@@ -17,6 +17,7 @@ import {
 } from '../src/pageContent.js';
 import { SITE_EMAIL, SITE_PHONE_DISPLAY } from '../src/site.js';
 import { blogIndex, blogPosts } from '../src/blogPosts.js';
+import { inlineHtml } from '../src/inlineMarkup.js';
 
 function esc(value) {
   return String(value)
@@ -54,13 +55,13 @@ function footer() {
 
 function list(items) {
   if (!items?.length) return '';
-  return `<ul>${items.map(item => `<li>${esc(item)}</li>`).join('')}</ul>`;
+  return `<ul>${items.map(item => `<li>${inlineHtml(item, esc)}</li>`).join('')}</ul>`;
 }
 
 function sectionsBlock(sections = []) {
   return sections.map(section => `<section>
   <h2>${esc(section.heading)}</h2>
-  ${(section.paragraphs || []).map(p => `<p>${esc(p)}</p>`).join('\n  ')}
+  ${(section.paragraphs || []).map(p => `<p>${inlineHtml(p, esc)}</p>`).join('\n  ')}
   ${list(section.bullets)}
 </section>`).join('\n');
 }
@@ -189,7 +190,6 @@ function portfolioBlock() {
   <p>Genres: ${esc(work.genres.join(', '))}.</p>
   <ul>${titles}</ul>
 </section>
-${servicesBlock()}
 <section>
   <h2>${esc(joinTitle(process))}</h2>
   <p>${esc(process.lead)}</p>
@@ -283,7 +283,7 @@ export function getCrawlMarkup(page) {
     `<main data-seo-crawl="1">`,
     nav(),
     `<h1>${esc(route.h1)}</h1>`,
-    route.lead ? `<p data-speakable="1">${esc(route.lead)}</p>` : '',
+    route.lead ? `<p data-speakable="1">${inlineHtml(route.lead, esc)}</p>` : '',
     route.body(),
     `</main>`,
     footer(),

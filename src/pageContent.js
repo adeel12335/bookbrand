@@ -29,7 +29,7 @@ export const aboutPage = {
     },
     {
       label: 'Matched writers',
-      copy: 'Finance, health, law, memoir, and related nonfiction — specialists, not generalists.',
+      copy: 'Finance, health, law, memoir, and related nonfiction. After NDA you meet the assigned writer by name — we do not publish a public roster.',
     },
   ],
   principles: [
@@ -45,8 +45,8 @@ export const aboutPage = {
       index: '02',
       heading: 'How we work',
       paragraphs: [
-        'Every project starts with a short discovery call and an NDA. We match you with a writer experienced in your category, agree a chapter outline, and write against a dated schedule. You review as chapters land — typically a few hours of your time in total.',
-        'You keep 100% of the rights and royalties. Your name goes on the cover.',
+        'Every project starts with a short discovery call and an NDA. We match you with a writer experienced in your category, introduce that writer by name, agree a chapter outline, and write against a dated schedule. You review as chapters land — typically a few hours of your time in total.',
+        'You keep 100% of the rights and royalties. Your name goes on the cover. We do not publish a public writer roster because most titles are confidential ghostwriting.',
       ],
     },
     {
@@ -60,7 +60,7 @@ export const aboutPage = {
   ],
   stages: [
     { n: '01', title: 'Discovery + NDA', copy: 'Goals, audience, length, and a clear yes or no on fit.' },
-    { n: '02', title: 'Outline + sample', copy: 'Chapter map and a paid sample chapter before the rest is written.' },
+    { n: '02', title: 'Outline + sample', copy: 'Chapter map and a sample chapter included in the package. If the voice misses, we rewrite that sample at no extra cost before the rest is written.' },
     { n: '03', title: 'Draft + revise', copy: 'Dated schedule, chapter reviews, and fixed revision rounds.' },
     { n: '04', title: 'Design + files', copy: 'Cover, formatting, and retailer-ready files for the package you chose.' },
   ],
@@ -212,7 +212,7 @@ export const landers = {
       { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
       { label: 'Amazon KDP writing & publishing', href: '/amazon-kdp-ebook-writing' },
       { label: 'How much does an ebook ghostwriter cost?', href: '/blog/how-much-does-an-ebook-ghostwriter-cost' },
-      { label: 'How much it costs to hire a writer', href: '/blog/how-much-does-it-cost-to-hire-an-ebook-writer' },
+      { label: 'How to hire an ebook writer (checklist)', href: '/blog/how-to-hire-an-ebook-writer' },
       { label: 'Ghostwriting vs a freelancer', href: '/blog/ghostwriting-vs-hiring-a-freelancer' },
       { label: 'All services', href: '/services' },
     ],
@@ -233,7 +233,7 @@ export const landers = {
       {
         heading: 'What you get when you hire us',
         paragraphs: [
-          'A named genre specialist — not a rotating bid board. An NDA and a rights-transfer agreement so the finished ebook is yours. A schedule with chapter delivery dates, not a vague “we will see.”',
+          'A genre-matched writer introduced by name after NDA — not a rotating bid board. An NDA and a rights-transfer agreement so the finished ebook is yours. A schedule with chapter delivery dates, not a vague “we will see.”',
           `Packages start at $${plans[0].price} for a focused 15,000-word guide and go to $${plans[plans.length - 1].price} for a full-length authority book with launch support.`,
         ],
         bullets: [
@@ -294,7 +294,7 @@ export const landers = {
     links: [
       { label: 'Ebook ghostwriting services', href: '/ebook-ghostwriting-services' },
       { label: 'How to hire an ebook writer (checklist)', href: '/blog/how-to-hire-an-ebook-writer' },
-      { label: 'How much it costs to hire an ebook writer', href: '/blog/how-much-does-it-cost-to-hire-an-ebook-writer' },
+      { label: 'How much does an ebook ghostwriter cost?', href: '/blog/how-much-does-an-ebook-ghostwriter-cost' },
       { label: 'Amazon KDP publishing', href: '/amazon-kdp-ebook-writing' },
       { label: 'Contact the studio', href: '/contact' },
     ],

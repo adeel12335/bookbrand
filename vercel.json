@@ -17,6 +17,11 @@
       "source": "/ghostwriting",
       "destination": "/ebook-ghostwriting-services",
       "permanent": true
+    },
+    {
+      "source": "/blog/how-much-does-it-cost-to-hire-an-ebook-writer",
+      "destination": "/blog/how-much-does-an-ebook-ghostwriter-cost",
+      "permanent": true
     }
   ],
   "rewrites": [

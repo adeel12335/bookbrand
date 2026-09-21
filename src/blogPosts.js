@@ -6,11 +6,13 @@
  * database is not reachable. Everything downstream (BlogPages, seo.js,
  * stamp-html) keeps importing from here and does not care which it got.
  */
+import { BLOG_REDIRECTS } from './blogRedirects.js';
 import { posts } from './generated/posts.js';
 
+export { BLOG_REDIRECTS } from './blogRedirects.js';
 export { blogIndex, blogArticle } from './blogPosts.static.js';
 
-export const blogPosts = posts;
+export const blogPosts = posts.filter(post => !BLOG_REDIRECTS[post.slug]);
 
 export function getPostBySlug(slug) {
   return blogPosts.find(post => post.slug === slug) || null;

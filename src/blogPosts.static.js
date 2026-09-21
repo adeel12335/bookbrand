@@ -247,88 +247,10 @@ export const staticBlogPosts = [
     ],
   },
   {
-    slug: 'how-much-does-it-cost-to-hire-an-ebook-writer',
-    title: 'How Much Does It Cost to Hire an Ebook Writer?',
-    description:
-      'Real ebook writing and ghostwriting package ranges — from short guides to full-length books — plus what is included and how to budget with confidence.',
-    date: '2026-09-15',
-    dateLabel: 'September 15, 2026',
-    readTime: '7 min read',
-    category: 'Pricing',
-    eyebrow: 'Cost guide',
-    keywords: ['ebook writer cost', 'hire ebook writer', 'ghostwriting price', 'book writing packages'],
-    lead:
-      'If you are searching for professional ebook writers or a ghostwriter, price is usually the first question. Here is a clear breakdown of what ebook writing costs in 2026, what you should expect in a package, and how to choose the right budget for your manuscript.',
-    cta: 'Get a fixed writing quote',
-    image: '/assets/brand/portfolio-hero-bg.png',
-    imageAlt: 'Sunlit desk with a notebook, mug, and books labelled ideas, manuscripts, publish, and grow',
-    takeaways: [
-      'Professional nonfiction packages typically run from $699 to $3,999 depending on length and extras.',
-      'Word count, research depth, edits, cover, and KDP setup drive the price more than an hourly rate.',
-      'A cheap draft without editing, files, or rights is not a cheaper book — it is unfinished work.',
-      'Budget to the job the book must do, then insist on a fixed total and written ownership.',
-    ],
-    sections: [
-      {
-        heading: 'Quick answer: typical ebook writing costs',
-        paragraphs: [
-          'Most professional ebook writing and ghostwriting packages for nonfiction fall between $699 and $3,999, depending on length, research depth, editing rounds, cover design, and whether publishing setup (KDP / IngramSpark) is included.',
-          'Hourly freelancers can look cheaper on paper, but unfinished manuscripts, missing edits, and weak covers often push the real cost higher. A fixed package with a dated schedule is usually safer for first-time authors.',
-        ],
-      },
-      {
-        heading: 'What drives the price of an ebook writer?',
-        paragraphs: [
-          'Word count is the biggest lever. A 15,000-word lead magnet takes less research and fewer editorial passes than a 50,000-word authority book. Genre matters too — technical finance or health manuscripts need specialist writers, which raises the fee.',
-          'Also check what is bundled. Writing alone is only one stage. Editing, proofreading, cover design, EPUB/print files, and retailer setup can double the bill if you buy them separately later.',
-        ],
-        bullets: [
-          'Length and research depth',
-          'Number of revision rounds',
-          'Whether cover design and formatting are included',
-          'KDP / IngramSpark publishing support',
-          'Timeline — rush delivery costs more',
-        ],
-      },
-      {
-        heading: 'Sample package ranges (what good studios quote)',
-        paragraphs: [
-          'At ebookwriters.us, packages are fixed up front so you are not billed by the hour. Use these ranges as a planning guide when you compare quotes from ebook writers or ghostwriting studios.',
-        ],
-        bullets: [
-          'Starter (~15,000 words): from $699 — short guide or lead magnet, writing, one edit pass, standard cover, EPUB/PDF',
-          'Professional (~30,000 words): from $1,499 — outline, two edit passes, custom cover, retailer formats, KDP setup',
-          'Premium (~50,000 words): from $2,499 — senior writer, deeper edits, print-ready interior, KDP + IngramSpark, launch messaging',
-          'Elite (~100,000 words): from $3,999 — dedicated team, premium design, global distribution setup, author brand copy',
-        ],
-      },
-      {
-        heading: 'Ghostwriting vs hiring a cheap freelancer',
-        paragraphs: [
-          'The lowest bid is rarely the lowest cost. A $200 chapter from an unverified freelancer can stall for weeks, miss your voice, or arrive without rights paperwork. Professional ghostwriting includes voice matching, an NDA, revision rounds, and a rights-transfer agreement so you own the finished book.',
-          'If a quote is far below market and vague about edits, covers, or ownership, treat that as a risk signal — not a bargain.',
-        ],
-      },
-      {
-        heading: 'How to budget without overpaying',
-        paragraphs: [
-          'Start with the job the book must do. A short guide that grows your email list does not need an Elite package. A flagship business book that carries your consulting brand usually does need stronger editing, design, and launch support.',
-          'Ask every ebook writing service for: a fixed total, a dated schedule, what files you receive, how many revisions are included, and written confirmation that you keep 100% of the rights and royalties.',
-        ],
-      },
-      {
-        heading: 'Next step',
-        paragraphs: [
-          'If you want a fixed quote for your idea, length, and timeline, tell us what you are writing and who it is for. You will get a clear scope and price — not an open-ended hourly estimate.',
-        ],
-      },
-    ],
-  },
-  {
     slug: 'how-to-hire-an-ebook-writer',
     title: 'How to Hire an Ebook Writer: A Practical Checklist',
     description:
-      'A step-by-step checklist for hiring an ebook writer — NDA, rights, samples, milestones, revisions, and KDP — so you do not buy a cheap draft that stalls.',
+      'Checklist before you hire an ebook writer: NDA, rights, sample chapter, milestones, revisions, KDP. Hire page is the quote; this is the questions.',
     date: '2026-09-16',
     dateLabel: 'September 16, 2026',
     readTime: '8 min read',
@@ -341,7 +263,7 @@ export const staticBlogPosts = [
       'ghostwriting rights',
     ],
     lead:
-      'Hiring an ebook writer is not the same as posting a job and hoping for the best. Use this checklist before you sign — so voice, ownership, timeline, and publishing are clear up front.',
+      'This is the buyer checklist, not a quote page. Use it before you sign — so voice, ownership, timeline, and publishing are clear. When you are ready to hire on a fixed fee, use the hire-an-ebook-writer page.',
     cta: 'Hire an ebook writer',
     image: '/assets/brand/hero-desk.jpg',
     imageAlt: 'Writing desk ready for briefing a professional ebook writer',
@@ -427,7 +349,7 @@ export const staticBlogPosts = [
       {
         heading: 'Next step',
         paragraphs: [
-          'If you want a studio that works this way — fixed fee, NDA, rights, and a dated schedule — start on our hire page or send the brief on contact. You should hear back within one working day with a clear yes, no, or clarifying question.',
+          'If you want a studio that works this way — fixed fee, NDA, rights, and a dated schedule — start on [hire an ebook writer](/hire-ebook-writer) or send the brief on [contact](/contact). For package bands, see [how much an ebook ghostwriter costs](/blog/how-much-does-an-ebook-ghostwriter-cost) and [pricing](/pricing). You should hear back within one working day with a clear yes, no, or clarifying question.',
         ],
       },
     ],
@@ -531,7 +453,7 @@ export const staticBlogPosts = [
       {
         heading: 'Next step',
         paragraphs: [
-          'Ready for writing plus KDP as one scope? Start on our Amazon KDP ebook writing page or send your length, deadline, and whether you already have a draft.',
+          'Ready for writing plus KDP as one scope? Start on [Amazon KDP ebook writing](/amazon-kdp-ebook-writing) or send your length, deadline, and whether you already have a draft on [contact](/contact).',
         ],
       },
     ],
@@ -540,7 +462,7 @@ export const staticBlogPosts = [
     slug: 'how-much-does-an-ebook-ghostwriter-cost',
     title: 'How Much Does an Ebook Ghostwriter Cost?',
     description:
-      'What ebook ghostwriters charge in plain language — market ranges, what drives ghostwriting fees, and how fixed studio packages from $699 to $3,999 compare.',
+      'Ebook ghostwriter and ebook-writer costs in one place — market ranges, what drives fees, and fixed studio packages from $699 to $3,999.',
     date: '2026-09-16',
     dateLabel: 'September 16, 2026',
     readTime: '7 min read',
@@ -549,11 +471,13 @@ export const staticBlogPosts = [
     keywords: [
       'ebook ghostwriter cost',
       'how much does a ghostwriter cost',
+      'ebook writer cost',
+      'hire ebook writer',
       'ghostwriting rates',
       'ebook ghostwriting price',
     ],
     lead:
-      '“How much does a ghostwriter cost?” usually means two things: what the market charges, and what you actually get for the fee. Here is a clear ghostwriting-focused breakdown — separate from a general “hire an ebook writer” budget guide.',
+      '“How much does a ghostwriter cost?” and “how much does it cost to hire an ebook writer” are the same buying question. Here is one clear breakdown: market ranges, what the fee should include, and how our fixed packages from $699 to $3,999 compare.',
     cta: 'Request a ghostwriting quote',
     image: '/assets/brand/hero-concept-photo.webp',
     imageAlt: 'Manuscript pages and pen on a desk — ebook ghostwriting cost guide',
@@ -568,14 +492,14 @@ export const staticBlogPosts = [
         heading: 'Ghostwriter cost vs “ebook writer” cost',
         paragraphs: [
           'People search both phrases. Ghostwriting specifically means someone else drafts the manuscript in your voice while you keep the byline. Hiring an “ebook writer” can mean the same thing — or a thinner draft-only gig.',
-          'Compare apples to apples: confidential process, voice matching, revision rounds, and rights transfer belong in a real ghostwriting fee. For a broader package budget walkthrough, see our guide on how much it costs to hire an ebook writer.',
+          'Compare apples to apples: confidential process, voice matching, revision rounds, and rights transfer belong in a real ghostwriting fee. This page is the cost guide for both searches. The [how to hire an ebook writer](/blog/how-to-hire-an-ebook-writer) checklist is the questions to ask before you sign — not a second price list.',
         ],
       },
       {
         heading: 'What ghostwriters usually charge',
         paragraphs: [
           'Public marketplace bids vary wildly. Serious nonfiction ghostwriting for a short guide can start in the high hundreds when scope is tight; full-length authority books with research, edits, and production support commonly reach several thousand dollars.',
-          'Our fixed packages run from $699 (about 15,000 words) to $3,999 (up to about 100,000 words with deeper production support). Those totals include the studio path listed on pricing — not an open hourly clock.',
+          'Our fixed packages run from $699 (about 15,000 words) to $3,999 (up to about 100,000 words with deeper production support). Those totals include the studio path listed on [pricing](/pricing) — not an open hourly clock.',
         ],
       },
       {
@@ -595,25 +519,32 @@ export const staticBlogPosts = [
       {
         heading: 'Fixed packages at ebookwriters.us',
         paragraphs: [
-          'We quote fixed bands so you can plan without guessing an hourly total:',
+          'We quote fixed bands so you can plan without guessing an hourly total. Feature lists live on [pricing](/pricing):',
         ],
         bullets: [
-          'Starter — from $699 — ~15k words, ~3 weeks',
-          'Professional — from $1,499 — ~30k words, ~5 weeks (includes KDP setup)',
-          'Premium — from $2,499 — ~50k words, ~8 weeks (KDP + IngramSpark)',
-          'Elite — from $3,999 — up to ~100k words, ~12 weeks',
+          'Starter — from $699 — ~15k words, ~3 weeks — writing, one edit pass, standard cover, EPUB/PDF, 2 revision rounds',
+          'Professional — from $1,499 — ~30k words, ~5 weeks — outline, two edit passes, custom cover, retailer formats, KDP setup',
+          'Premium — from $2,499 — ~50k words, ~8 weeks — senior writer, print-ready interior, KDP + IngramSpark, unlimited revisions within agreed scope',
+          'Elite — from $3,999 — up to ~100k words, ~12 weeks — dedicated team, premium design, global distribution setup, author brand copy',
+        ],
+      },
+      {
+        heading: 'How to budget without overpaying',
+        paragraphs: [
+          'Start with the job the book must do. A short guide that grows your email list does not need an Elite package. A flagship business book that carries your consulting brand usually does need stronger editing, design, and launch support.',
+          'Ask every ebook writing service for: a fixed total, a dated schedule, what files you receive, how many revisions are included, and written confirmation that you keep 100% of the rights and royalties.',
         ],
       },
       {
         heading: 'Red flags in cheap ghostwriting quotes',
         paragraphs: [
-          'No NDA. No rights language. No sample chapter. No revision policy. “Done in a weekend” for a full-length book. Those are not bargains — they are how manuscripts stall or end up unusable under your name.',
+          'No NDA. No rights language. No sample chapter. No revision policy. “Done in a weekend” for a full-length book. Those are not bargains — they are how manuscripts stall or end up unusable under your name. A $200 chapter from an unverified freelancer can stall for weeks, miss your voice, or arrive without rights paperwork.',
         ],
       },
       {
         heading: 'Next step',
         paragraphs: [
-          'If you want a ghostwriting quote for a fixed length and deadline, start on our ghostwriting services page or send the brief on contact. You keep the byline, the rights, and the royalties.',
+          'If you want a ghostwriting quote for a fixed length and deadline, start on [ebook ghostwriting services](/ebook-ghostwriting-services), [hire an ebook writer](/hire-ebook-writer), or send the brief on [contact](/contact). You keep the byline, the rights, and the royalties.',
         ],
       },
     ],

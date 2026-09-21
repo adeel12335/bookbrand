@@ -10,6 +10,7 @@
 import { neon } from '@neondatabase/serverless';
 import { loadEnv } from './load-env.mjs';
 import { staticBlogPosts } from '../src/blogPosts.static.js';
+import { BLOG_REDIRECTS } from '../src/blogRedirects.js';
 
 loadEnv();
 
@@ -73,6 +74,11 @@ for (const post of staticBlogPosts) {
 
   if (result[0].inserted) { created += 1; console.log(`  create ${post.slug}`); }
   else { updated += 1; console.log(`  update ${post.slug}`); }
+}
+
+for (const [fromSlug, toSlug] of Object.entries(BLOG_REDIRECTS)) {
+  const retired = await sql`update posts set published = false where slug = ${fromSlug} returning slug`;
+  if (retired.length) console.log(`  unpublish ${fromSlug} → /blog/${toSlug}`);
 }
 
 console.log(`\nSeed complete — ${created} created, ${updated} updated, ${skipped} skipped.`);

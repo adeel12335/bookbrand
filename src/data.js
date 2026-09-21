@@ -69,8 +69,8 @@ export const benefits = [
   },
   {
     key: 'specialists',
-    title: 'Named Genre Specialists',
-    copy: 'Work with experts in your category.',
+    title: 'Genre-matched writers',
+    copy: 'You meet the assigned writer by name after NDA.',
   },
   {
     key: 'time',
@@ -206,8 +206,8 @@ export const portfolioPage = {
     title: 'A glimpse of our',
     titleEm: 'recent projects.',
     lead:
-      'Each book we support has its own purpose — to inspire, educate, entertain, or build authority. Our role is to help each project look polished, feel complete, and speak clearly to the right readers.',
-    genres: ['Fiction', 'Non-Fiction', 'Memoir', 'Self-Help', 'Business', 'Health & Wellness'],
+      'These covers are published titles from the studio. Ask us for a retailer link to a specific book — we only publish store URLs we can verify.',
+    genres: ['Self-Development', 'Personal Growth', 'Parenting', 'Memoir', 'Business & Finance', 'Health & Wellness'],
   },
   offer: {
     eyebrow: 'What we offer',
@@ -286,7 +286,7 @@ export const plans = [
   {
     name: 'Premium', price: '2,499', words: 'Up to 50,000 words', timeline: '8 weeks',
     copy: 'A full-length book with launch support behind it.',
-    features: ['Senior genre writer', 'Three editorial passes', 'Cover, spine and back design', 'Print-ready interior', 'KDP and IngramSpark setup', 'Launch messaging kit', 'Unlimited revisions'],
+    features: ['Senior genre writer', 'Three editorial passes', 'Cover, spine and back design', 'Print-ready interior', 'KDP and IngramSpark setup', 'Launch messaging kit', 'Unlimited revisions within agreed scope'],
   },
   {
     name: 'Elite', price: '3,999', words: 'Up to 100,000 words', timeline: '12 weeks',
@@ -338,6 +338,10 @@ export const faqs = [
   {
     q: 'Do you use AI to write the manuscript?',
     a: 'No — we do not deliver an unedited AI-generated book as ghostwriting. Your manuscript is written and revised by the assigned human writer, under studio editorial review. Ordinary tools may support research, outlining, or production admin; the published prose is authored for your voice.',
+  },
+  {
+    q: 'Who writes my book — can I see the team?',
+    a: 'After the NDA we introduce the assigned writer by name. We do not list a public roster because most titles are confidential ghostwriting. If we cannot staff your category, we say so rather than assign a generalist.',
   },
 ];
 
