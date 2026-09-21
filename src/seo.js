@@ -1,4 +1,4 @@
-import { blogIndex, blogPosts } from './blogPosts.js';
+import { blogArticle, blogIndex, blogPosts } from './blogPosts.js';
 import { books, faqs, plans, portfolioPage } from './data.js';
 import { coverPage, editingPage, faqPage, landers } from './pageContent.js';
 import {
@@ -17,6 +17,18 @@ export { SITE_ORIGIN, absoluteUrl, absoluteAsset } from './site.js';
 const LASTMOD = '2026-09-21';
 const DEFAULT_ROBOTS = 'index, follow, max-image-preview:large';
 const ORG_LOGO = '/assets/brand/logo-dark.png';
+const TITLE_MAX = 60;
+const DESC_MAX = 160;
+const TITLE_SUFFIX = ` | ${SITE_NAME}`;
+
+function clipPlain(text, max) {
+  const value = String(text || '').replace(/\s+/g, ' ').trim();
+  if (value.length <= max) return value;
+  const window = value.slice(0, max);
+  const at = window.lastIndexOf(' ');
+  const cut = (at > Math.floor(max * 0.55) ? window.slice(0, at) : window).trim();
+  return cut.replace(/[.,;:–—\-\s]+$/g, '');
+}
 
 function organization() {
   return {
@@ -35,6 +47,31 @@ function organization() {
       addressRegion: 'IA',
       addressCountry: 'US',
     },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'sales',
+      email: SITE_EMAIL,
+      telephone: SITE_PHONE,
+      areaServed: 'US',
+      availableLanguage: 'English',
+    },
+    knowsAbout: [
+      'Ebook ghostwriting',
+      'Amazon KDP publishing',
+      'Book editing',
+      'Ebook cover design',
+    ],
+  };
+}
+
+function editorialPerson() {
+  return {
+    '@type': 'Person',
+    '@id': `${SITE_ORIGIN}/#editorial`,
+    name: blogArticle.authorRole,
+    jobTitle: 'Editorial desk',
+    url: absoluteUrl('/about'),
+    worksFor: { '@id': `${SITE_ORIGIN}/#organization` },
   };
 }
 
@@ -46,6 +83,14 @@ function webSite() {
     url: absoluteUrl('/'),
     description: 'Professional ebook writers and ghostwriting studio for writing, editing, design, and publishing.',
     publisher: { '@id': `${SITE_ORIGIN}/#organization` },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${SITE_ORIGIN}/search?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
   };
 }
 
@@ -74,8 +119,8 @@ function serviceSchema({ name, description, path }) {
   };
 }
 
-function webPageSchema({ type = 'WebPage', name, description, path }) {
-  return {
+function webPageSchema({ type = 'WebPage', name, description, path, speakable = false }) {
+  const node = {
     '@context': 'https://schema.org',
     '@type': type,
     name,
@@ -83,6 +128,13 @@ function webPageSchema({ type = 'WebPage', name, description, path }) {
     url: absoluteUrl(path),
     isPartOf: { '@type': 'WebSite', name: SITE_NAME, url: absoluteUrl('/') },
   };
+  if (speakable) {
+    node.speakable = {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['h1', '[data-speakable]'],
+    };
+  }
+  return node;
 }
 
 function faqPageSchema(items) {
@@ -97,15 +149,49 @@ function faqPageSchema(items) {
   };
 }
 
+function stripRich(text) {
+  return String(text || '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\*\*/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function faqsFromMarkdownBlocks(blocks) {
+  const faqs = [];
+  const blob = (blocks || []).join('\n');
+  for (const part of blob.split(/###\s+/).slice(1)) {
+    const nl = part.search(/\r?\n/);
+    const q = stripRich(nl === -1 ? part : part.slice(0, nl));
+    const a = stripRich(nl === -1 ? '' : part.slice(nl + 1));
+    if (!q.endsWith('?') || q.length > 140 || a.length < 40) continue;
+    faqs.push({ q, a: a.slice(0, 500) });
+  }
+  return faqs;
+}
+
+function extractPostFaqs(post) {
+  if (Array.isArray(post.faqs) && post.faqs.length) return post.faqs.slice(0, 8);
+  const sections = post.sections || [];
+  const named = sections.filter(section => /faq/i.test(section.heading || ''));
+  const target = named.length ? named : sections;
+  const faqs = [];
+  for (const section of target) {
+    faqs.push(...faqsFromMarkdownBlocks([...(section.paragraphs || []), ...(section.bullets || [])]));
+  }
+  return faqs.slice(0, 8);
+}
+
 function pricingOfferSchema() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Product',
+    '@type': 'Service',
     name: 'Ebook writing and ghostwriting packages',
     description:
       'Fixed ebook writing packages from $699 to $3,999 including writing, editing, cover design, and retailer-ready files.',
-    brand: { '@type': 'Brand', name: SITE_NAME },
+    provider: organization(),
     url: absoluteUrl('/pricing'),
+    areaServed: { '@type': 'Country', name: 'United States' },
     offers: {
       '@type': 'AggregateOffer',
       url: absoluteUrl('/pricing'),
@@ -143,8 +229,8 @@ function page({
 }) {
   return {
     path,
-    title,
-    description,
+    title: clipPlain(title, TITLE_MAX),
+    description: clipPlain(description, DESC_MAX),
     image,
     imageAlt,
     type,
@@ -162,7 +248,7 @@ const staticPages = [
     path: '/',
     title: 'Ebook Writers & Ghostwriting | ebookwriters.us',
     description:
-      'Hire professional ebook writers and ghostwriters for writing, editing, cover design, formatting, and KDP publishing. Fixed packages from $699. 100% author ownership.',
+      'Hire ebook writers and ghostwriters for writing, editing, cover design, and KDP publishing. Packages from $699. You keep 100% of the rights.',
     changefreq: 'weekly',
     priority: 1,
     jsonLd: [
@@ -185,6 +271,13 @@ const staticPages = [
           ],
         },
       },
+      webPageSchema({
+        name: 'Ebook Writers and Ghostwriting Studio',
+        description:
+          'Hire ebook writers and ghostwriters for writing, editing, cover design, and KDP publishing. Packages from $699.',
+        path: '/',
+        speakable: true,
+      }),
       {
         ...faqPageSchema(faqs),
       },
@@ -271,7 +364,7 @@ const staticPages = [
     path: '/about',
     title: 'About the Writing Studio | ebookwriters.us',
     description:
-      'ebookwriters.us is an Iowa ebook writing and ghostwriting studio. Named specialists, 100% author ownership, and fixed packages from writing through KDP publishing.',
+      'Iowa ebook writing studio. Named specialists, 100% author ownership, and fixed packages from ghostwriting through KDP publishing.',
     priority: 0.8,
     jsonLd: [
       webPageSchema({
@@ -281,6 +374,10 @@ const staticPages = [
           'Meet the ebookwriters.us studio — ghostwriting, editing, design, and KDP publishing under one roof.',
         path: '/about',
       }),
+      {
+        '@context': 'https://schema.org',
+        ...editorialPerson(),
+      },
       breadcrumbs([
         { name: 'Home', path: '/' },
         { name: 'About', path: '/about' },
@@ -299,6 +396,7 @@ const staticPages = [
         description:
           'Transparent ghostwriting packages with editing, cover design, and KDP-ready files.',
         path: '/pricing',
+        speakable: true,
       }),
       breadcrumbs([
         { name: 'Home', path: '/' },
@@ -469,6 +567,7 @@ const staticPages = [
         name: 'Ebook Writing and Publishing FAQ',
         description: faqPage.lead,
         path: '/faq',
+        speakable: true,
       }),
       breadcrumbs([
         { name: 'Home', path: '/' },
@@ -499,14 +598,11 @@ const staticPages = [
   }),
 ];
 
-const TITLE_MAX = 60;
-const TITLE_SUFFIX = ` | ${SITE_NAME}`;
-
 /**
  * A search title must be a complete phrase — a search engine cannot expand
- * "A Practical…" back into the headline. So never truncate: keep the brand
- * suffix while it fits, drop it before cutting words, and for headlines longer
- * than the limit use their lead clause ("X vs Y: Which…" → "X vs Y").
+ * "A Practical…" back into the headline. Keep the brand suffix while it fits,
+ * drop it before cutting words, use the lead clause when that is shorter, and
+ * only then clip on a word boundary so the tag never exceeds TITLE_MAX.
  */
 export function articleTitle(headline) {
   const title = headline.trim();
@@ -517,15 +613,26 @@ export function articleTitle(headline) {
   );
   const whole = fit(title);
   if (whole) return whole;
-  const lead = title.split(/(?<=\?)\s|:\s|\s[—–]\s/)[0].trim();
-  return (lead !== title && lead.length >= 20 && fit(lead)) || title;
+  const lead = title.split(/(?<=\?)\s|:\s|\s[—–]\s|\s\(/)[0].trim();
+  if (lead !== title && lead.length >= 20) {
+    const fitted = fit(lead);
+    if (fitted) return fitted;
+  }
+  const shortened = title.replace(/\s+(that|which|without)\s+.+$/i, '').trim();
+  if (shortened !== title && shortened.length >= 20) {
+    const fitted = fit(shortened);
+    if (fitted) return fitted;
+  }
+  return clipPlain(title, TITLE_MAX);
 }
 
 function blogPostPage(post) {
+  const description = clipPlain(post.description, DESC_MAX);
+  const postFaqs = extractPostFaqs(post);
   return page({
     path: `/blog/${post.slug}`,
     title: articleTitle(post.title),
-    description: post.description,
+    description,
     image: post.image || '/assets/brand/faq-editorial-v2.webp',
     imageAlt: post.imageAlt || DEFAULT_OG_ALT,
     type: 'article',
@@ -537,11 +644,11 @@ function blogPostPage(post) {
         '@context': 'https://schema.org',
         '@type': 'Article',
         headline: post.title,
-        description: post.description,
+        description,
         datePublished: post.date,
         dateModified: post.date,
         image: absoluteAsset(post.image || '/assets/brand/faq-editorial-v2.webp'),
-        author: { '@type': 'Organization', name: SITE_NAME, url: absoluteUrl('/') },
+        author: editorialPerson(),
         publisher: {
           '@type': 'Organization',
           name: SITE_NAME,
@@ -553,12 +660,17 @@ function blogPostPage(post) {
         },
         mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
         keywords: post.keywords?.join(', '),
+        speakable: {
+          '@type': 'SpeakableSpecification',
+          cssSelector: ['h1', '[data-speakable]'],
+        },
       },
       breadcrumbs([
         { name: 'Home', path: '/' },
         { name: 'Blog', path: '/blog' },
         { name: post.title, path: `/blog/${post.slug}` },
       ]),
+      ...(postFaqs.length ? [faqPageSchema(postFaqs)] : []),
     ],
   });
 }

@@ -173,7 +173,7 @@ export const books = [
 export const portfolioPage = {
   metaTitle: 'Book Writing Portfolio — Published Covers | ebookwriters.us',
   metaDescription:
-    'Browse books our ghostwriting studio has helped authors bring to life — fiction, memoir, business, self-help, and more. Writing, editing, design, and publishing support.',
+    'Browse books our ghostwriting studio has helped authors publish — memoir, business, self-help, and more. Writing, editing, design, and KDP support.',
   heroImage: '/assets/brand/page-hero-covers.png',
   heroImageAlt: 'Studio desk with laptop showing book covers and hardcover samples',
   eyebrow: 'Our portfolio',

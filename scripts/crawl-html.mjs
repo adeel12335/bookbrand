@@ -102,7 +102,7 @@ function faqBlock(items = faqs, heading = 'Ebook writing & publishing FAQ') {
   if (!items?.length) return '';
   const entries = items.map(item => `<article>
   <h3>${esc(item.q)}</h3>
-  <p>${esc(item.a)}</p>
+  <p data-speakable="1">${esc(item.a)}</p>
 </article>`).join('\n');
   return `<section>
   <h2>${esc(heading)}</h2>
@@ -111,12 +111,18 @@ function faqBlock(items = faqs, heading = 'Ebook writing & publishing FAQ') {
 }
 
 function contactBlock() {
+  const serviceLinks = footerLinks[0].links;
   return `<section>
   <h2>${esc(joinTitle(contactIntro))}</h2>
-  <p>${esc(contactIntro.lead)}</p>
+  <p data-speakable="1">${esc(contactIntro.lead)}</p>
   ${list(contactIntro.points)}
   <p>Email ${esc(SITE_EMAIL)} or call ${esc(SITE_PHONE_DISPLAY)}. ${esc(siteContact.address)}.</p>
   <p>Send an enquiry for a fixed ebook writing or ghostwriting quote. We typically reply within 1–2 business days.</p>
+  <p>Tell us about your book: who it is for, the job it has to do (authority, leads, memoir), target length, and when you need retailer-ready files. We come back with a clear yes, no, or clarifying question — and a fixed quote, not an hourly estimate.</p>
+  <p>Every project starts with a free 30-minute discovery call and an NDA before you share source material. Rights transfer before writing begins. You keep 100% of the copyright, royalties, and retailer accounts.</p>
+  ${faqBlock(faqs.slice(0, 4), 'Before you write')}
+  ${packagesBlock()}
+  ${linksBlock(serviceLinks, 'Writing and publishing services')}
   <form action="/contact" method="get">
     <label>Your name <input name="name" /></label>
     <label>Your email <input name="email" type="email" /></label>
@@ -124,6 +130,24 @@ function contactBlock() {
     <button type="submit">Send enquiry</button>
   </form>
 </section>`;
+}
+
+function servicesIndexBlock() {
+  const landerPages = [...Object.values(landers), editingPage, coverPage];
+  const landerList = landerPages.map(item => `<article>
+  <h2><a href="${esc(item.path)}">${esc(item.title)}</a></h2>
+  <p>${esc(item.lead)}</p>
+</article>`).join('\n');
+  return [
+    servicesBlock(),
+    `<section>
+  <h2>Service pages</h2>
+  <p>${esc(servicesPage.lead)}</p>
+  ${landerList}
+</section>`,
+    packagesBlock(),
+    faqBlock(faqs.slice(0, 4)),
+  ].join('\n');
 }
 
 function blogIndexBlock() {
@@ -192,7 +216,7 @@ function contentPageBlock(content) {
 const routes = {
   '/': { h1: hero.h1, lead: hero.lead, body: () => [servicesBlock(), packagesBlock(), faqBlock()].join('\n') },
   '/about': { h1: joinTitle(aboutPage), lead: aboutPage.lead, body: aboutBlock },
-  '/services': { h1: servicesPage.title, lead: servicesPage.lead, body: servicesBlock },
+  '/services': { h1: servicesPage.title, lead: servicesPage.lead, body: servicesIndexBlock },
   '/pricing': {
     h1: pricingPage.title,
     lead: pricingPage.lead,
@@ -259,7 +283,7 @@ export function getCrawlMarkup(page) {
     `<main data-seo-crawl="1">`,
     nav(),
     `<h1>${esc(route.h1)}</h1>`,
-    route.lead ? `<p>${esc(route.lead)}</p>` : '',
+    route.lead ? `<p data-speakable="1">${esc(route.lead)}</p>` : '',
     route.body(),
     `</main>`,
     footer(),

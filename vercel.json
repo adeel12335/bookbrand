@@ -19,6 +19,12 @@
       "permanent": true
     }
   ],
+  "rewrites": [
+    {
+      "source": "/ai.txt",
+      "destination": "/llms.txt"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

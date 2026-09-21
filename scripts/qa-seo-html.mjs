@@ -76,6 +76,16 @@ if (!robots.includes('Sitemap: https://www.ebookwriters.us/sitemap.xml')) {
 if (!robots.includes('Disallow: /admin')) {
   throw new Error('robots.txt should disallow /admin');
 }
+if (!robots.includes('GPTBot')) {
+  throw new Error('robots.txt should allow GPTBot');
+}
+
+const llmsSrc = join(root, 'public', 'llms.txt');
+if (!existsSync(llmsSrc)) throw new Error('public/llms.txt missing');
+const llms = readFileSync(llmsSrc, 'utf8');
+if (!llms.includes('https://www.ebookwriters.us/') || !llms.includes('$699')) {
+  throw new Error('llms.txt missing canonical origin or pricing');
+}
 
 for (const check of checks) {
   const html = readPage(check.path);
@@ -96,8 +106,29 @@ for (const loc of sitemap.match(/<loc>[^<]+<\/loc>/g)) {
   const title = decode(html.match(/<title>([^<]*)<\/title>/)?.[1] || '');
   if (title.length > 60) throw new Error(`${path} title is ${title.length} chars: ${title}`);
   if (/…|\.\.\.$/.test(title)) throw new Error(`${path} title is truncated: ${title}`);
+  const desc = decode(html.match(/<meta name="description" content="([^"]*)"/i)?.[1] || '');
+  if (desc.length > 160) throw new Error(`${path} description is ${desc.length} chars`);
   if (html.includes('<noscript>')) throw new Error(`${path} duplicates the crawl copy in <noscript>`);
 }
 console.log(`ok all sitemap URLs have >= ${MIN_WORDS} crawlable words and complete titles`);
+
+const home = readPage('/');
+if (!home.includes('SearchAction')) throw new Error('home missing WebSite SearchAction');
+if (!home.includes('SpeakableSpecification')) throw new Error('home missing SpeakableSpecification');
+
+const pricing = readPage('/pricing');
+if (pricing.includes('"@type": "Product"')) throw new Error('pricing still uses Product schema');
+if (!pricing.includes('AggregateOffer')) throw new Error('pricing missing AggregateOffer');
+
+const contactWords = (readPage('/contact').match(/<div id="root">([\s\S]*?)<\/div>\s*(?:<script|<!--|<\/body>)/)?.[1] || '')
+  .replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
+if (contactWords < 400) throw new Error(`/contact crawl HTML has ${contactWords} words (< 400)`);
+const servicesWords = (readPage('/services').match(/<div id="root">([\s\S]*?)<\/div>\s*(?:<script|<!--|<\/body>)/)?.[1] || '')
+  .replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
+if (servicesWords < 400) throw new Error(`/services crawl HTML has ${servicesWords} words (< 400)`);
+
+const proposal = readPage('/blog/how-to-write-a-nonfiction-book-proposal');
+if (!proposal.includes('"@type": "Person"')) throw new Error('article missing Person author');
+if (!proposal.includes('"@type": "FAQPage"')) throw new Error('FAQ article missing FAQPage JSON-LD');
 
 console.log('qa:seo-html passed — key routes have crawlable body HTML.');
