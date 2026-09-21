@@ -261,32 +261,8 @@ export const testimonialsIntro = {
   title: 'What authors say about our book writing service.',
 };
 
-export const testimonials = [
-  {
-    name: 'Sarah L.',
-    role: 'Memoir Author',
-    initials: 'SL',
-    avatar: '/assets/brand/testimonial-melissa.png',
-    quote:
-      'Professional, supportive, and truly invested. Their ghostwriters matched my voice, and publishing finally felt clear instead of overwhelming.',
-  },
-  {
-    name: 'Michael R.',
-    role: 'Business Author',
-    initials: 'MR',
-    avatar: '/assets/brand/testimonial-daniel.png',
-    quote:
-      'An exceptional team from outline to KDP setup. My business book looks polished — and it is reaching readers worldwide.',
-  },
-  {
-    name: 'Talia M.',
-    role: 'Health & Wellness Author',
-    initials: 'TM',
-    avatar: '/assets/brand/testimonial-james.png',
-    quote:
-      'They brought my vision to life with care. Editing, cover design, and formatting exceeded what I expected from a book writing service.',
-  },
-];
+/** Only publish quotes from real, permissioned clients. Empty until then. */
+export const testimonials = [];
 
 export const pricingIntro = {
   eyebrow: 'Investment',
@@ -383,7 +359,7 @@ export const contactIntro = {
 
 export const footerBrand = {
   blurb:
-    'ebookwriters.us is a US book writing and ghostwriting studio helping authors write, edit, design, and publish books they are proud of.',
+    'EbookWriters Studio is a US book writing and ghostwriting studio helping authors write, edit, design, and publish books they are proud of.',
   ctaTitle: 'Start something',
   ctaCopy: 'Your first chapter is one conversation away.',
   ctaLabel: 'Start Your Project',

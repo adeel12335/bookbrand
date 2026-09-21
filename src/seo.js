@@ -4,10 +4,12 @@ import { coverPage, editingPage, faqPage, landers } from './pageContent.js';
 import {
   DEFAULT_OG_ALT,
   DEFAULT_OG_PATH,
+  SITE_BRAND,
   SITE_EMAIL,
   SITE_NAME,
   SITE_ORIGIN,
   SITE_PHONE,
+  SITE_SAME_AS,
   absoluteAsset,
   absoluteUrl,
 } from './site.js';
@@ -34,7 +36,8 @@ function organization() {
   return {
     '@type': 'ProfessionalService',
     '@id': `${SITE_ORIGIN}/#organization`,
-    name: SITE_NAME,
+    name: SITE_BRAND,
+    alternateName: SITE_NAME,
     url: absoluteUrl('/'),
     email: SITE_EMAIL,
     telephone: SITE_PHONE,
@@ -61,6 +64,7 @@ function organization() {
       'Book editing',
       'Ebook cover design',
     ],
+    ...(SITE_SAME_AS.length ? { sameAs: SITE_SAME_AS } : {}),
   };
 }
 
@@ -79,7 +83,7 @@ function webSite() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: SITE_NAME,
+    name: SITE_BRAND,
     url: absoluteUrl('/'),
     description: 'Professional ebook writers and ghostwriting studio for writing, editing, design, and publishing.',
     publisher: { '@id': `${SITE_ORIGIN}/#organization` },
@@ -126,7 +130,7 @@ function webPageSchema({ type = 'WebPage', name, description, path, speakable = 
     name,
     description,
     url: absoluteUrl(path),
-    isPartOf: { '@type': 'WebSite', name: SITE_NAME, url: absoluteUrl('/') },
+    isPartOf: { '@type': 'WebSite', name: SITE_BRAND, url: absoluteUrl('/') },
   };
   if (speakable) {
     node.speakable = {
@@ -322,7 +326,7 @@ const staticPages = [
         name: portfolioPage.metaTitle,
         description: portfolioPage.metaDescription,
         url: absoluteUrl('/portfolio'),
-        isPartOf: { '@type': 'WebSite', name: SITE_NAME, url: absoluteUrl('/') },
+        isPartOf: { '@type': 'WebSite', name: SITE_BRAND, url: absoluteUrl('/') },
         mainEntity: {
           '@type': 'ItemList',
           itemListElement: books.map((book, index) => ({
@@ -364,7 +368,7 @@ const staticPages = [
     path: '/about',
     title: 'About the Writing Studio | ebookwriters.us',
     description:
-      'Iowa ebook writing studio. Named specialists, 100% author ownership, and fixed packages from ghostwriting through KDP publishing.',
+      'EbookWriters Studio is an Iowa ebook writing and ghostwriting studio. Named specialists, 100% author ownership, and fixed packages from ghostwriting through KDP publishing.',
     priority: 0.8,
     jsonLd: [
       webPageSchema({
@@ -651,7 +655,7 @@ function blogPostPage(post) {
         author: editorialPerson(),
         publisher: {
           '@type': 'Organization',
-          name: SITE_NAME,
+          name: SITE_BRAND,
           url: absoluteUrl('/'),
           logo: {
             '@type': 'ImageObject',

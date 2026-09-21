@@ -1,11 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { A11y, Autoplay, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import { IconArrow, IconCheck, IconQuote, serviceIcons } from './icons.jsx';
-import { books, portfolioPage, services, testimonials } from './data.js';
+import { IconArrow, IconCheck, serviceIcons } from './icons.jsx';
+import { books, portfolioPage, services } from './data.js';
 import { serviceHrefs } from './pageContent.js';
 
 export function PortfolioPage() {
@@ -177,51 +173,6 @@ export function PortfolioPage() {
                 </div>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      <section className="br_testimonials" aria-labelledby="pf-voices-title">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="br_testimonials_head">
-                <p className="br-eyebrow br-eyebrow-light">{page.voices.eyebrow}</p>
-                <h2 id="pf-voices-title">
-                  {page.voices.title} {page.voices.titleEm}
-                </h2>
-              </div>
-
-              <div className="br_testimonials_slider_wrap">
-                <Swiper
-                  className="br_testimonial_slider"
-                  modules={[A11y, Autoplay, Pagination]}
-                  slidesPerView={1}
-                  spaceBetween={24}
-                  pagination={{ clickable: true }}
-                  autoplay={{ delay: 6000, disableOnInteraction: false, pauseOnMouseEnter: true }}
-                  rewind
-                >
-                  {testimonials.map(item => (
-                    <SwiperSlide key={item.name}>
-                      <figure className="br_testimonial_card">
-                        <IconQuote className="br_testimonial_icon" />
-                        <blockquote>
-                          <p>{item.quote}</p>
-                        </blockquote>
-                        <figcaption>
-                          <span className="br_testimonial_avatar" aria-hidden="true">{item.initials}</span>
-                          <span className="br_testimonial_meta">
-                            <strong>{item.name}</strong>
-                            <span>{item.role}</span>
-                          </span>
-                        </figcaption>
-                      </figure>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-            </div>
           </div>
         </div>
       </section>

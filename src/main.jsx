@@ -2,7 +2,7 @@ import React, { Suspense, lazy, useEffect, useId, useRef, useState } from 'react
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import {
-  IconArrow, IconArrowUpRight, IconBook, IconCheck, IconClose, IconQuote,
+  IconArrow, IconArrowUpRight, IconBook, IconCheck, IconClose,
   IconMenu, IconPlus, IconSearch,
   IconWriting, IconWriters, IconPublishing,
   IconCoins, IconCalendar, IconLeaf, IconEditing, IconFormatting, IconBranding,
@@ -10,7 +10,7 @@ import {
 } from './icons.jsx';
 import {
   books, faqs, footerLinks, navigation, plans,
-  services, testimonials, testimonialsIntro, hero,
+  services, hero,
   siteContact,
   portfolioIntro, servicesIntro, benefits, pathBand, dualOffer,
   pricingIntro, faqIntro, contactIntro, footerBrand,
@@ -18,10 +18,6 @@ import {
 import { blogPosts } from './blogPosts.js';
 import { Contact, Eyebrow, Reveal, reduceMotion, useRecaptcha } from './ContactSection.jsx';
 import { SeoHead } from './SeoHead.jsx';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { A11y, Autoplay, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
 import './css/fonts.css';
 import './css/base.css';
 import './css/styles.css';
@@ -633,55 +629,6 @@ function DualOffer() {
   );
 }
 
-/* ------------------------------------------------------------- testimonials */
-
-function Testimonials() {
-  return (
-    <section className="br_testimonials" aria-labelledby="voices-title">
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <Reveal className="br_testimonials_head">
-              <Eyebrow tone="light">{testimonialsIntro.eyebrow}</Eyebrow>
-              <h2 id="voices-title">{testimonialsIntro.title}</h2>
-            </Reveal>
-
-            <div className="br_testimonials_slider_wrap">
-              <Swiper
-                className="br_testimonial_slider"
-                modules={[A11y, Autoplay, Pagination]}
-                slidesPerView={1}
-                spaceBetween={24}
-                pagination={{ clickable: true }}
-                autoplay={reduceMotion() ? false : { delay: 6000, disableOnInteraction: false, pauseOnMouseEnter: true }}
-                rewind
-              >
-                {testimonials.map(item => (
-                  <SwiperSlide key={item.name}>
-                    <figure className="br_testimonial_card">
-                      <IconQuote className="br_testimonial_icon" />
-                      <blockquote>
-                        <p>{item.quote}</p>
-                      </blockquote>
-                      <figcaption>
-                        <span className="br_testimonial_avatar" aria-hidden="true">{item.initials}</span>
-                        <span className="br_testimonial_meta">
-                          <strong>{item.name}</strong>
-                          <span>{item.role}</span>
-                        </span>
-                      </figcaption>
-                    </figure>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ------------------------------------------------------------------ pricing */
 
 function Pricing() {
@@ -1205,7 +1152,6 @@ function HomePage() {
         <Services />
         <Portfolio />
         <DualOffer />
-        <Testimonials />
         <Pricing />
         <Latest />
         <Faq />

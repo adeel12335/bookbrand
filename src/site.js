@@ -1,11 +1,16 @@
 /** Canonical public origin. Matches live 308s to the www host. */
 export const SITE_ORIGIN = 'https://www.ebookwriters.us';
+/** Display / schema name — distinct from Miami “EbookWriters USA”. */
+export const SITE_BRAND = 'EbookWriters Studio';
+/** Domain used in titles and the host. */
 export const SITE_NAME = 'ebookwriters.us';
 export const SITE_EMAIL = 'info@ebookwriters.us';
 export const SITE_PHONE = '+1-712-414-0542';
 export const SITE_PHONE_DISPLAY = '+1 712-414-0542';
+/** Official profiles only. Leave empty until the live URLs are pasted. */
+export const SITE_SAME_AS = [];
 export const DEFAULT_OG_PATH = '/assets/brand/hero-desk.jpg';
-export const DEFAULT_OG_ALT = 'ebookwriters.us publishing studio desk — Write. Publish. Grow.';
+export const DEFAULT_OG_ALT = 'EbookWriters Studio publishing desk — Write. Publish. Grow.';
 
 export function absoluteUrl(path = '/') {
   if (!path || path === '/') return `${SITE_ORIGIN}/`;
