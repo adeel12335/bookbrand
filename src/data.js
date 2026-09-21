@@ -102,6 +102,16 @@ export const comparisons = {
       ['Proofreading', 'Final typos and layout slips', 'After design, before you upload files'],
     ],
   },
+  editingNeed: {
+    caption: 'Match the problem to the pass',
+    columns: ['Your manuscript problem', 'Editing needed'],
+    rows: [
+      ['Chapters do not flow, or the argument jumps', 'Developmental editing'],
+      ['The writing feels awkward or unlike your voice', 'Line editing'],
+      ['Grammar, names, and facts are inconsistent', 'Copyediting'],
+      ['The draft is stable and you need a last typo check', 'Proofreading'],
+    ],
+  },
   kdpVsTraditional: {
     caption: 'Amazon KDP vs traditional publishing',
     columns: ['', 'Amazon KDP', 'Traditional publishing'],
@@ -306,6 +316,10 @@ export const pricingIntro = {
   titleEm: '$699 to $3,999.',
   lead:
     'Ghostwriting packages with editing, cover design, and retailer-ready files included. No surprise invoices — choose the plan that matches your manuscript.',
+  previewTitle: 'Starting prices by length',
+  previewLead:
+    'Fixed starting prices by manuscript length. Detailed inclusions, revision rounds, and what is not included live on the pricing page.',
+  previewCta: 'Compare packages',
 };
 
 export const plans = [

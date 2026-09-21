@@ -8,7 +8,7 @@
  * gets its meta description here reads as a thin page to a crawler.
  */
 import {
-  books, benefits, contactIntro, faqs, footerBrand, footerLinks, hero, plans, portfolioPage, services,
+  books, benefits, contactIntro, faqs, footerBrand, footerLinks, hero, plans, portfolioPage, pricingIntro, services,
   servicesIntro, siteContact,
 } from '../src/data.js';
 import {
@@ -16,7 +16,7 @@ import {
   pricingPage, privacyPage, servicesPage, termsPage,
 } from '../src/pageContent.js';
 import { SITE_EMAIL, SITE_PHONE_DISPLAY } from '../src/site.js';
-import { blogIndex, blogPosts, quickAnswerFor } from '../src/blogPosts.js';
+import { articleSectionParagraphs, articleSources, blogArticle, blogIndex, blogPosts, quickAnswerFor } from '../src/blogPosts.js';
 import { inlineHtml } from '../src/inlineMarkup.js';
 
 function esc(value) {
@@ -77,7 +77,7 @@ function sectionsBlock(sections = []) {
   ${(section.paragraphs || []).map(p => `<p>${inlineHtml(p, esc)}</p>`).join('\n  ')}
   ${list(section.bullets)}
   ${tableBlock(section.table)}
-  ${section.sample?.before ? `<figure><figcaption>Before</figcaption><p>${esc(section.sample.before)}</p></figure><figure><figcaption>After</figcaption><p>${esc(section.sample.after)}</p></figure>` : ''}
+  ${section.sample?.before ? `<figure><figcaption>Before</figcaption><p>${esc(section.sample.before)}</p></figure><figure><figcaption>After</figcaption><p>${esc(section.sample.after)}</p></figure>${section.sample.note ? `<p><strong>Editor’s note.</strong> ${esc(section.sample.note)}</p>` : ''}` : ''}
 </section>`).join('\n');
 }
 
@@ -91,18 +91,17 @@ function linksBlock(links = [], label = 'Related pages') {
 function compactPackagesBlock() {
   const rows = plans.map(plan => `<tr>
   <th scope="row">${esc(plan.name)}</th>
-  <td>$${esc(plan.price)}</td>
   <td>${esc(plan.words)}</td>
-  <td>${esc(plan.timeline)}</td>
+  <td>$${esc(plan.price)}</td>
 </tr>`).join('');
   return `<section>
-  <h2>Ebook writing packages — starting prices</h2>
-  <p>Fixed starting prices by manuscript length. Full feature lists live on the <a href="/pricing">pricing</a> page.</p>
+  <h2>${esc(pricingIntro.previewTitle || 'Starting prices by length')}</h2>
+  <p>${esc(pricingIntro.previewLead || 'Fixed starting prices by manuscript length. Full feature lists live on the pricing page.')}</p>
   <table>
-    <thead><tr><th>Package</th><th>Starting from</th><th>Length</th><th>Timeline</th></tr></thead>
+    <thead><tr><th>Package</th><th>Words</th><th>Starting</th></tr></thead>
     <tbody>${rows}</tbody>
   </table>
-  <p><a href="/pricing">View full pricing</a></p>
+  <p><a href="/pricing">${esc(pricingIntro.previewCta || 'Compare packages')}</a></p>
 </section>`;
 }
 
@@ -113,7 +112,7 @@ function packagesBlock() {
   ${list(plan.features)}
 </article>`).join('\n');
   return `<section>
-  <h2>Ebook writing packages — $699 to $3,999</h2>
+  <h2>${esc(pricingPage.plansHeading || "What's included in each package")}</h2>
   <p>Ghostwriting packages with editing, cover design, and retailer-ready files included. Fixed quotes — no surprise invoices.</p>
   ${items}
 </section>`;
@@ -170,16 +169,20 @@ function contactBlock() {
 
 function servicesIndexBlock() {
   const landerPages = [...Object.values(landers), editingPage, coverPage];
-  const landerList = landerPages.map(item => `<article>
-  <h2><a href="${esc(item.path)}">${esc(item.title)}</a></h2>
-  <p>${esc(item.lead)}</p>
-</article>`).join('\n');
+  const landerList = landerPages.map(item => `<li><a href="${esc(item.path)}">${esc(item.title)}</a></li>`).join('\n  ');
   return [
     servicesBlock(),
     `<section>
-  <h2>Service pages</h2>
-  <p>${esc(servicesPage.lead)}</p>
+  <h2>${esc(servicesPage.briefing.heading)}</h2>
+  <p>${esc(servicesPage.briefing.lead)}</p>
+  ${servicesPage.briefing.paragraphs.map(p => `<p>${esc(p)}</p>`).join('\n  ')}
+  <p>${esc(servicesPage.pricingNote)} <a href="${esc(servicesPage.pricingHref)}">${esc(servicesPage.pricingCta)}</a></p>
+</section>`,
+    `<section>
+  <h2>Dedicated service pages</h2>
+  <ul>
   ${landerList}
+  </ul>
 </section>`,
     `<section>
   <h2>${esc(servicesPage.chooser.heading)}</h2>
@@ -245,8 +248,14 @@ function contentPageBlock(content) {
     : '';
   const covers = content.covers?.length
     ? `<section>
-  <h2>Covers designed to read at thumbnail size</h2>
-  <ul>${content.covers.map(cover => `<li>${esc(cover.title)} — ${esc(cover.genre)}. ${esc(cover.note)}</li>`).join('')}</ul>
+  <h2>Cover case studies from published titles</h2>
+  <ul>${content.covers.map(cover => `<li>
+    <strong>${esc(cover.title)}</strong> — ${esc(cover.genre)}.
+    ${cover.brief ? ` Brief: ${esc(cover.brief)}` : ''}
+    ${cover.type ? ` Typography: ${esc(cover.type)}` : ''}
+    ${cover.thumbnail ? ` Thumbnail: ${esc(cover.thumbnail)}` : ''}
+    ${cover.note ? ` ${esc(cover.note)}` : ''}
+  </li>`).join('')}</ul>
 </section>`
     : '';
   return [
@@ -339,11 +348,23 @@ function blogPostRoute(slug) {
       const sections = (post.sections || []).filter(section => {
         if (!post.takeaways?.length) return true;
         return !/^(key )?takeaways$/i.test(section.heading || '');
-      });
+      }).map(section => ({
+        ...section,
+        paragraphs: articleSectionParagraphs(post, section),
+      }));
+      const updated = post.updatedLabel || post.updated
+        ? ` Updated <time datetime="${esc(post.updated || post.date)}">${esc(post.updatedLabel || post.updated)}</time>.`
+        : '';
+      const sources = articleSources(post.slug);
+      const sourceBlock = sources.length
+        ? `<section><h2>Primary sources</h2><ul>${sources.map(source => `<li><a href="${esc(source.href)}">${esc(source.label)}</a></li>`).join('')}</ul></section>`
+        : '';
       return [
+        `<p>Written by ${esc(blogArticle.authorRole)}. Published <time datetime="${esc(post.date)}">${esc(post.dateLabel || post.date)}</time>.${updated} ${esc(post.readTime || '')}</p>`,
         quick,
         takeaways,
         sectionsBlock(sections),
+        sourceBlock,
         `<p>Publishing guides follow the <a href="/editorial-policy">ebookwriters.us editorial policy</a>.</p>`,
         `<p><a href="/blog">All articles</a> · <a href="/contact">${esc(post.cta || 'Contact')}</a></p>`,
       ].join('\n');

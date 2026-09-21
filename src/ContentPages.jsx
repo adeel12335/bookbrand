@@ -238,8 +238,8 @@ function ServiceDetail({ page, closeTitle, closeLead, closeCta, closeTo = '/cont
                 <div className="br_section_head">
                   <div className="br_section_head_copy">
                     <p className="br-eyebrow">Cover work</p>
-                    <h2 id="cover-proof-title">Covers designed to read at thumbnail size</h2>
-                    <p>Studio covers from the portfolio, with the genre cue each one had to land in a small Amazon image.</p>
+                    <h2 id="cover-proof-title">Cover case studies from published titles</h2>
+                    <p>Six studio covers. Each note is the design brief, why the type was chosen, and what still reads at Amazon thumbnail size. Print wraps are quoted when paperback is in scope — these are the ebook fronts.</p>
                   </div>
                   <Link className="btn" to="/portfolio">View portfolio</Link>
                 </div>
@@ -247,13 +247,16 @@ function ServiceDetail({ page, closeTitle, closeLead, closeCta, closeTo = '/cont
             </div>
             <ul className="row br_grid br_cover_proof">
               {page.covers.map(cover => (
-                <li className="col-md-4 col-lg-2" key={cover.title}>
+                <li className="col-md-6 col-lg-4" key={cover.title}>
                   <figure className="br_cover_card">
                     <img src={cover.image} alt={`${cover.title} — ${cover.genre} ebook cover`} loading="lazy" />
                     <figcaption>
                       <strong>{cover.title}</strong>
                       <span>{cover.genre}</span>
-                      <p>{cover.note}</p>
+                      {cover.brief ? <p><strong>Brief.</strong> {cover.brief}</p> : null}
+                      {cover.type ? <p><strong>Typography.</strong> {cover.type}</p> : null}
+                      {cover.thumbnail ? <p><strong>Thumbnail.</strong> {cover.thumbnail}</p> : null}
+                      {cover.note ? <p>{cover.note}</p> : null}
                     </figcaption>
                   </figure>
                 </li>
@@ -596,9 +599,7 @@ export function PricingPage() {
               <div className="br_section_head">
                 <div className="br_section_head_copy">
                   <p className="br-eyebrow">Packages</p>
-                  <h2 id="pricing-plans-title">
-                    Choose the plan that matches <span>your manuscript.</span>
-                  </h2>
+                  <h2 id="pricing-plans-title">{page.plansHeading}</h2>
                   <p>{pricingIntro.lead}</p>
                 </div>
                 <Link className="btn" to="/contact">Talk to a Specialist</Link>
@@ -714,7 +715,6 @@ export function ServicesPage() {
     { label: 'Ebook cover design', href: '/ebook-cover-design' },
     { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
     { label: 'Amazon KDP ebook writing', href: '/amazon-kdp-ebook-writing' },
-    { label: 'Writing packages', href: '/pricing' },
   ];
 
   return (
@@ -787,6 +787,37 @@ export function ServicesPage() {
         </div>
       </section>
 
+      <section className="br_section br_section--paper" aria-labelledby="services-brief-title">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_section_head">
+                <div className="br_section_head_copy">
+                  <p className="br-eyebrow">Page job</p>
+                  <h2 id="services-brief-title">{page.briefing.heading}</h2>
+                  <p>{page.briefing.lead}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {page.briefing.paragraphs.map(paragraph => (
+            <div className="row" key={paragraph.slice(0, 40)}>
+              <div className="col-md-10">
+                <p>{paragraph}</p>
+              </div>
+            </div>
+          ))}
+          <div className="row">
+            <div className="col-md-12">
+              <p className="br_price_preview_cta">
+                {page.pricingNote}{' '}
+                <Link className="btn" to={page.pricingHref}>{page.pricingCta}</Link>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="br_section br_section--paper" aria-labelledby="services-chooser-title">
         <div className="container">
           <div className="row">
@@ -844,10 +875,13 @@ export function ServicesPage() {
             <div className="col-md-12">
               <div className="br_section_head">
                 <div className="br_section_head_copy">
-                  <h2 id="services-cta-title">Tell us what you need written.</h2>
-                  <p>We will come back with a fixed scope, price, and timeline — or a clear no if we cannot staff it well.</p>
+                  <h2 id="services-cta-title">{page.pricingNote}</h2>
+                  <p>Full feature lists live on pricing. Share the idea, length, and deadline if you want a quote instead.</p>
                 </div>
-                <Link className="btn" to="/contact">Start Your Project</Link>
+                <div className="br_wrapper_buttons">
+                  <Link className="btn" to="/contact">Start Your Project</Link>
+                  <Link className="btn-outline" to="/pricing">{page.pricingCta}</Link>
+                </div>
               </div>
             </div>
           </div>

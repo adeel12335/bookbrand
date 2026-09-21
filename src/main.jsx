@@ -640,10 +640,8 @@ function PricingPreview() {
           <div className="col-md-12">
             <Reveal className="br_pricing_head">
               <Eyebrow>{pricingIntro.eyebrow}</Eyebrow>
-              <h2 id="pricing-title">
-                {pricingIntro.title} <span>{pricingIntro.titleEm}</span>
-              </h2>
-              <p>Fixed starting prices by manuscript length. Full feature lists, revision rounds, and what is not included live on the pricing page.</p>
+              <h2 id="pricing-title">{pricingIntro.previewTitle}</h2>
+              <p>{pricingIntro.previewLead}</p>
             </Reveal>
           </div>
         </div>
@@ -654,25 +652,23 @@ function PricingPreview() {
                 <thead>
                   <tr>
                     <th scope="col">Package</th>
-                    <th scope="col">Starting from</th>
-                    <th scope="col">Length</th>
-                    <th scope="col">Timeline</th>
+                    <th scope="col">Words</th>
+                    <th scope="col">Starting</th>
                   </tr>
                 </thead>
                 <tbody>
                   {plans.map(plan => (
                     <tr key={plan.name}>
                       <th scope="row">{plan.name}</th>
-                      <td>${plan.price}</td>
                       <td>{plan.words}</td>
-                      <td>{plan.timeline}</td>
+                      <td>${plan.price}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
             <p className="br_price_preview_cta">
-              <Link className="btn" to="/pricing">View full pricing</Link>
+              <Link className="btn" to="/pricing">{pricingIntro.previewCta}</Link>
             </p>
           </div>
         </div>

@@ -5150,6 +5150,57 @@ body {
   color: var(--ink-500);
 }
 
+.br_byline {
+  display: grid;
+  gap: 0.65rem 1.4rem;
+  margin: 1.05rem 0 0;
+  padding: 0;
+}
+
+@media (min-width: 700px) {
+  .br_byline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.br_byline > div {
+  margin: 0;
+}
+
+.br_byline dt {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--gold-300);
+}
+
+.br_byline dd {
+  margin: 0.12rem 0 0;
+  font-size: 0.95rem;
+  color: rgba(247, 243, 234, 0.92);
+}
+
+.br_edit_note {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--ink);
+}
+
+.br_cover_proof .br_cover_card p {
+  margin: 0.4rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--ink-500);
+}
+
+.br_cover_proof .br_cover_card p strong {
+  display: inline;
+  font-size: inherit;
+  color: var(--ink);
+}
+
 @media (max-width: 760px) {
   .br_edit_sample {
     grid-template-columns: 1fr;

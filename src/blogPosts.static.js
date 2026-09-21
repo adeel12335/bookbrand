@@ -21,7 +21,10 @@ export const blogIndex = {
 export const blogArticle = {
   tocLabel: 'In this guide',
   takeawaysLabel: 'Key takeaways',
-  authorRole: 'Studio editorial',
+  authorRole: 'ebookwriters.us Editorial Desk',
+  writtenLabel: 'Written by',
+  publishedLabel: 'Published',
+  updatedLabel: 'Updated',
   relatedEyebrow: 'Keep reading',
   relatedTitle: 'Related',
   relatedTitleEm: 'guides.',
@@ -498,7 +501,8 @@ export const staticBlogPosts = [
       {
         heading: 'What ghostwriters usually charge',
         paragraphs: [
-          'Public marketplace bids vary wildly. Serious nonfiction ghostwriting for a short guide can start in the high hundreds when scope is tight; full-length authority books with research, edits, and production support commonly reach several thousand dollars.',
+          'Public marketplace bids vary wildly because the listed scope is rarely comparable — a draft-only chapter is not the same product as a researched manuscript with edits, cover, and files. We do not publish a studio enquiry median here; that would require a numbered CRM extract we have not released.',
+          'As a public market check, the Editorial Freelancers Association publishes member rate charts for editing and related services. Use those as planning context, not as our quote. Serious nonfiction ghostwriting for a short, tightly scoped guide can start in the high hundreds; full-length authority books with research, edits, and production support commonly reach several thousand dollars.',
           'Our fixed packages run from $699 (about 15,000 words) to $3,999 (up to about 100,000 words with deeper production support). Those totals include the studio path listed on [pricing](/pricing) — not an open hourly clock.',
         ],
       },
@@ -573,6 +577,10 @@ const ARTICLE_QUICK_ANSWERS = {
 };
 
 const ARTICLE_SOURCES = {
+  'how-much-does-an-ebook-ghostwriter-cost': [
+    { label: 'Editorial Freelancers Association: Editorial Rates', href: 'https://www.the-efa.org/rates/' },
+    { label: 'U.S. Copyright Office: Works Made for Hire (Circular 30)', href: 'https://www.copyright.gov/circs/circ30.pdf' },
+  ],
   'does-a-ghostwriter-own-your-book-rights': [
     { label: 'U.S. Copyright Office: Works Made for Hire (Circular 30)', href: 'https://www.copyright.gov/circs/circ30.pdf' },
     { label: 'U.S. Copyright Office: Copyright Basics (Circular 1)', href: 'https://www.copyright.gov/circs/circ01.pdf' },
@@ -615,4 +623,18 @@ export function quickAnswerFor(post) {
 
 export function articleSources(slug) {
   return ARTICLE_SOURCES[slug] || [];
+}
+
+const ARTICLE_SECTION_PARAS = {
+  'how-much-does-an-ebook-ghostwriter-cost': {
+    'What ghostwriters usually charge': [
+      'Public marketplace bids vary wildly because the listed scope is rarely comparable — a draft-only chapter is not the same product as a researched manuscript with edits, cover, and files. We do not publish a studio enquiry median here; that would require a numbered CRM extract we have not released.',
+      'As a public market check, the Editorial Freelancers Association publishes member rate charts for editing and related services. Use those as planning context, not as our quote. Serious nonfiction ghostwriting for a short, tightly scoped guide can start in the high hundreds; full-length authority books with research, edits, and production support commonly reach several thousand dollars.',
+      'Our fixed packages run from $699 (about 15,000 words) to $3,999 (up to about 100,000 words with deeper production support). Those totals include the studio path listed on [pricing](/pricing) — not an open hourly clock.',
+    ],
+  },
+};
+
+export function articleSectionParagraphs(post, section) {
+  return ARTICLE_SECTION_PARAS[post?.slug]?.[section?.heading] || section.paragraphs || [];
 }

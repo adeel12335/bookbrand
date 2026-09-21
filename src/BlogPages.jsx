@@ -3,6 +3,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { IconBook, IconCheck } from './icons.jsx';
 import {
   BLOG_REDIRECTS,
+  articleSectionParagraphs,
   articleSources,
   blogArticle,
   blogIndex,
@@ -239,13 +240,28 @@ export function BlogPostPage() {
               <p className="br-eyebrow br-eyebrow-light">{post.category}</p>
               <h1 id="post-title" className="br-primary-heading">{post.title}</h1>
               <p className="br_post_intro"><RichText text={post.description} /></p>
-              <p className="br_post_meta">
-                <span>{blogArticle.authorRole}</span>
-                <span aria-hidden="true">·</span>
-                <time dateTime={post.date}>{post.dateLabel}</time>
-                <span aria-hidden="true">·</span>
-                <span>{post.readTime}</span>
-              </p>
+              <dl className="br_byline">
+                <div>
+                  <dt>{blogArticle.writtenLabel}</dt>
+                  <dd>{blogArticle.authorRole}</dd>
+                </div>
+                <div>
+                  <dt>{blogArticle.publishedLabel}</dt>
+                  <dd><time dateTime={post.date}>{post.dateLabel}</time></dd>
+                </div>
+                {post.updatedLabel || post.updated ? (
+                  <div>
+                    <dt>{blogArticle.updatedLabel}</dt>
+                    <dd>
+                      <time dateTime={post.updated || post.date}>{post.updatedLabel || post.updated}</time>
+                    </dd>
+                  </div>
+                ) : null}
+                <div>
+                  <dt>Read time</dt>
+                  <dd>{post.readTime}</dd>
+                </div>
+              </dl>
               <QuickAnswer text={quickAnswerFor(post)} />
             </div>
           </div>
@@ -319,7 +335,7 @@ export function BlogPostPage() {
                     key={section.heading}
                   >
                     <h2>{section.heading}</h2>
-                    {section.paragraphs.map(paragraph => (
+                    {articleSectionParagraphs(post, section).map(paragraph => (
                       <p key={paragraph.slice(0, 48)}><RichText text={paragraph} /></p>
                     ))}
                     {section.bullets?.length ? (

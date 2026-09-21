@@ -1,4 +1,4 @@
-import { books, comparisons, faqs, plans, siteContact } from './data.js';
+import { comparisons, faqs, plans, siteContact } from './data.js';
 
 export const aboutPage = {
   eyebrow: 'The studio',
@@ -90,6 +90,7 @@ export const pricingPage = {
     'Every quote is fixed for the length and scope we agree. Rush timelines and specialist research can change the fee — you will see that before work starts.',
   closing:
     'Not sure which length you need? Tell us the job the book has to do — lead magnet, flagship business title, memoir — and we will recommend a package.',
+  plansHeading: "What's included in each package",
   why: {
     heading: 'Why our pricing works',
     lead:
@@ -128,8 +129,20 @@ export const servicesPage = {
   heroImageAlt: 'Open manuscript and craft tools on a publishing production desk',
   actions: [
     { label: 'Get a writing quote', href: '/contact' },
-    { label: 'View packages', href: '/pricing', variant: 'gold' },
+    { label: 'View pricing', href: '/pricing', variant: 'gold' },
   ],
+  pricingNote: 'Packages start at $699.',
+  pricingCta: 'View pricing',
+  pricingHref: '/pricing',
+  briefing: {
+    heading: 'What this page is for',
+    lead:
+      'Use /services to pick a starting URL. Full package features live on /pricing. General rights, timeline, and revision questions live on /faq. This index does not repeat those lists.',
+    paragraphs: [
+      'Authors land here when they know they need help and do not yet know whether the next click is ghostwriting, editing, cover design, or Amazon KDP setup. The six cards below are the studio menu. The dedicated pages are the deep briefs. Pricing is a separate commercial page so Google is not asked to rank the same four packages on three URLs.',
+      'If you already know the manuscript length and want a number, skip this page and open pricing. If you have a draft, start with editing. If you need the book written, start with ghostwriting or hire an ebook writer. If Amazon is the destination, start with KDP ebook writing so files and listing sit in one scope.',
+    ],
+  },
   chooser: {
     heading: 'How to choose a starting page',
     lead:
@@ -475,6 +488,13 @@ export const editingPage = {
   ],
   sections: [
     {
+      heading: 'Which type of editing do you need?',
+      paragraphs: [
+        'Name the problem in the manuscript first. The pass follows from that — not from a generic “editing” line item.',
+      ],
+      table: comparisons.editingNeed,
+    },
+    {
       heading: 'What editing covers',
       paragraphs: [
         'We match the edit to the draft you have — not a one-size pass labeled “editing.”',
@@ -514,6 +534,7 @@ export const editingPage = {
       sample: {
         before: 'The thing is that there are a lot of leaders who don’t really know how to talk to their teams and this causes many problems in the company over time.',
         after: 'Many first-time managers inherit a team they have never briefed clearly. The cost shows up later: missed handoffs, quiet resentment, and meetings that decide nothing.',
+        note: 'Cut the throat-clearing (“the thing is that there are a lot of”). Named the actual job (briefing a team), then showed cost in concrete scenes instead of “many problems.”',
       },
     },
     {
@@ -550,10 +571,6 @@ export const editingPage = {
       q: 'Can editing include a cover and KDP files?',
       a: 'Yes — say what you need on the contact form. Cover design and KDP setup can be scoped with editing or as a follow-on.',
     },
-    {
-      q: 'Do you show a before-and-after on my pages before I hire?',
-      a: 'On a paid sample or as part of discovery we can mark a short passage so you see the level of intervention. We do not publish client manuscripts.',
-    },
   ],
   links: [
     { label: 'Ebook ghostwriting', href: '/ebook-ghostwriting-services' },
@@ -578,12 +595,56 @@ export const coverPage = {
     { label: 'Request a cover quote', href: '/contact' },
     { label: 'See portfolio covers', href: '/portfolio', variant: 'gold' },
   ],
-  covers: books.map(book => ({
-    title: book.title,
-    genre: book.genre,
-    image: book.image,
-    note: `Genre cue and title designed to read at Amazon thumbnail size in ${book.genre.toLowerCase()}.`,
-  })),
+  covers: [
+    {
+      title: 'Higher Ground',
+      genre: 'Self-Development',
+      image: '/assets/brand/portfolio-shelf-book-1.webp',
+      brief: 'Mountain, forest, and still water as a progress metaphor — reflective self-development, not a business skyline.',
+      type: 'Cream serif title with a small gold peak mark so the name still holds when the landscape compresses.',
+      thumbnail: 'Pale type + mountain silhouette are the two cues that survive Amazon size.',
+    },
+    {
+      title: 'The Kindness Effect',
+      genre: 'Personal Growth',
+      image: '/assets/brand/portfolio-shelf-book-2.webp',
+      brief: 'Cream field and a botanical branch — gift-book personal growth rather than hard self-help.',
+      type: 'Centered forest-green serif, tracked so three short words stay even in a small tile.',
+      thumbnail: 'Cream-on-green contrast; the blossom spray still signals “soft growth” when type is tiny.',
+    },
+    {
+      title: 'Beyond the Stars',
+      genre: 'Parenting',
+      image: '/assets/brand/portfolio-shelf-book-3.webp',
+      brief: 'Night sky over water — wonder and scale for a parenting title, not a children’s cartoon.',
+      type: 'Wide-spaced white serif across the dark band so two lines stay readable on navy.',
+      thumbnail: 'Milky Way stripe plus white title; the landscape drops first, the type stays.',
+    },
+    {
+      title: 'The Second Chapter',
+      genre: 'Memoir',
+      image: '/assets/brand/portfolio-shelf-book-4.webp',
+      brief: 'Coastal terrace, cypress, olive pot — a life-in-place memoir cue, not a city skyline.',
+      type: 'Gold serif sitting on the light sky, above the view, so the three-word title is the first read.',
+      thumbnail: 'Warm stone + gold type; the sea is atmosphere, the title is the signal.',
+    },
+    {
+      title: 'Wealth with Purpose',
+      genre: 'Business & Finance',
+      image: '/assets/brand/portfolio-shelf-book-5.webp',
+      brief: 'Black cloth and a gold tree with roots — wealth as something grown, not a stock-chart cliché.',
+      type: 'Stacked gold serif in three lines with room so PURPOSE does not crash into the mark.',
+      thumbnail: 'Gold tree + gold type on black: contrast is the whole thumbnail strategy.',
+    },
+    {
+      title: 'A Healthier You',
+      genre: 'Health & Wellness',
+      image: '/assets/brand/portfolio-shelf-book-6.webp',
+      brief: 'Cream ground and layered leaves — wellness without medical stock photography.',
+      type: 'Centered deep-green serif; YOU is the word you catch first at stamp size.',
+      thumbnail: 'Leaf mass + dark type; no photo faces competing in the tile.',
+    },
+  ],
   sections: [
     {
       heading: 'What you get',
@@ -702,7 +763,7 @@ export const editorialPolicyPage = {
     {
       heading: 'Review, updates, and corrections',
       paragraphs: [
-        'Each article shows a published date. When we materially change advice (pricing bands, KDP steps, rights language), we update the article and the date.',
+        'Each article shows a visible byline: written by the ebookwriters.us Editorial Desk, plus a published date in the HTML (not only in schema). When we materially change advice (pricing bands, KDP steps, rights language), we update the article and the date.',
         'If you spot an error, email the studio. Factual corrections are made on the page. We do not silently swap a headline to chase a new keyword variation.',
       ],
     },

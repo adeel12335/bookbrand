@@ -10,7 +10,7 @@ import { BLOG_REDIRECTS } from './blogRedirects.js';
 import { posts } from './generated/posts.js';
 
 export { BLOG_REDIRECTS } from './blogRedirects.js';
-export { articleSources, blogIndex, blogArticle, quickAnswerFor } from './blogPosts.static.js';
+export { articleSources, articleSectionParagraphs, blogIndex, blogArticle, quickAnswerFor } from './blogPosts.static.js';
 
 export const blogPosts = posts.filter(post => !BLOG_REDIRECTS[post.slug]);
 

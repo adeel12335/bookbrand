@@ -56,6 +56,11 @@ export function EditSample({ sample }) {
         <figcaption>After</figcaption>
         <p>{sample.after}</p>
       </figure>
+      {sample.note ? (
+        <p className="br_edit_note">
+          <strong>Editor’s note.</strong> {sample.note}
+        </p>
+      ) : null}
     </div>
   );
 }
