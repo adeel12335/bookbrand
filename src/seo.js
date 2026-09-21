@@ -14,7 +14,7 @@ import {
 
 export { SITE_ORIGIN, absoluteUrl, absoluteAsset } from './site.js';
 
-const LASTMOD = '2026-09-16';
+const LASTMOD = '2026-09-21';
 const DEFAULT_ROBOTS = 'index, follow, max-image-preview:large';
 const ORG_LOGO = '/assets/brand/logo-dark.png';
 

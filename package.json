@@ -9,6 +9,7 @@
     "prebuild": "node scripts/fetch-posts.mjs && node scripts/fetch-fonts.mjs",
     "build": "vite build && node scripts/prerender.mjs",
     "seo:stamp": "node scripts/stamp-html.mjs",
+    "seo:sitemap": "node scripts/stamp-html.mjs --sitemap-only",
     "seo:prerender": "node scripts/prerender.mjs",
     "qa:seo-html": "node scripts/qa-seo-html.mjs",
     "preview": "vite preview",

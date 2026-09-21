@@ -121,11 +121,6 @@ function writeRendered(path, html) {
   const file = outFileFor(path);
   mkdirSync(dirname(file), { recursive: true });
   writeFileSync(file, html);
-  if (path !== '/' && path !== '/404') {
-    const flat = join(distDir, `${path.replace(/^\//, '')}.html`);
-    mkdirSync(dirname(flat), { recursive: true });
-    writeFileSync(flat, html);
-  }
 }
 
 export async function prerender() {

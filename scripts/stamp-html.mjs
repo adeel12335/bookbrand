@@ -121,6 +121,11 @@ ${urls}
 `;
 }
 
+function writeSitemapTo(dir) {
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, 'sitemap.xml'), sitemapXml(getSitemapEntries()));
+}
+
 export function stampHtml() {
   const template = readFileSync(join(distDir, 'index.html'), 'utf8');
   const pages = getPrerenderPages();
@@ -135,11 +140,6 @@ export function stampHtml() {
     const file = outFileFor(page.path);
     mkdirSync(dirname(file), { recursive: true });
     writeFileSync(file, html);
-    if (page.path !== '/' && page.path !== '/404') {
-      const flat = join(distDir, `${page.path.replace(/^\//, '')}.html`);
-      mkdirSync(dirname(flat), { recursive: true });
-      writeFileSync(flat, html);
-    }
     const canonical = html.match(/<link rel="canonical" href="([^"]+)"/i)?.[1];
     const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
     if (!canonical || !canonical.startsWith('https://www.ebookwriters.us')) {
@@ -150,7 +150,8 @@ export function stampHtml() {
     }
   }
 
-  writeFileSync(join(distDir, 'sitemap.xml'), sitemapXml(getSitemapEntries()));
+  writeSitemapTo(distDir);
+  writeSitemapTo(join(root, 'public'));
 
   const home = readFileSync(join(distDir, 'index.html'), 'utf8');
   const contact = readFileSync(join(distDir, 'contact/index.html'), 'utf8');
@@ -169,4 +170,11 @@ export function stampHtml() {
 }
 
 const invoked = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
-if (invoked) stampHtml();
+if (invoked) {
+  if (process.argv.includes('--sitemap-only')) {
+    writeSitemapTo(join(root, 'public'));
+    console.log(`Wrote public/sitemap.xml (${getSitemapEntries().length} URLs).`);
+  } else {
+    stampHtml();
+  }
+}

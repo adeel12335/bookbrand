@@ -60,6 +60,12 @@ const sitemap = readFileSync(join(distDir, 'sitemap.xml'), 'utf8');
 if (!sitemap.includes('https://www.ebookwriters.us/pricing')) {
   throw new Error('sitemap.xml missing /pricing');
 }
+if (!sitemap.includes('/faq')) {
+  throw new Error('sitemap.xml missing /faq');
+}
+if (!sitemap.includes('/ebook-editing-services')) {
+  throw new Error('sitemap.xml missing /ebook-editing-services');
+}
 
 const robotsSrc = join(root, 'public', 'robots.txt');
 if (!existsSync(robotsSrc)) throw new Error('public/robots.txt missing');
