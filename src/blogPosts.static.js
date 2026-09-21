@@ -557,7 +557,7 @@ export const staticBlogPosts = [
 
 const ARTICLE_QUICK_ANSWERS = {
   'how-much-does-an-ebook-ghostwriter-cost':
-    'Professional ebook ghostwriting ranges from short fixed-price guides to full-length books. Price tracks word count, interviews, research, editing, and whether cover and KDP files are bundled. Our studio packages run from $699 to $3,999 for agreed lengths — not an open hourly tab.',
+    'Our studio packages range from $699 to $3,999 for defined word counts and scopes. Broader professional ghostwriting market rates vary substantially by experience, length, interviews, research, and production requirements — that range is our menu, not an industry median.',
   'how-to-hire-an-ebook-writer':
     'Before you hire an ebook writer, lock NDA and rights language, insist on a sample chapter, a fixed fee, dated milestones, and named revision rounds. Decide whether you need writing only or writing plus retailer-ready files. This checklist is the buying test — the hire page is the quote.',
   'does-a-ghostwriter-own-your-book-rights':
@@ -574,6 +574,8 @@ const ARTICLE_QUICK_ANSWERS = {
     'A focused 15,000-word guide can be written in about three weeks on our Starter path; a ~30,000-word book around five; a ~50,000-word manuscript around eight. Interview delays and revision scope change the calendar more than typing speed.',
   'what-is-included-in-a-professional-ebook-writing-package':
     'A complete ebook writing package covers the manuscript, named revision rounds, an editorial pass, cover and retailer files, plus written rights transfer. A Word draft with no NDA, no edits, and no files is not a publishing product.',
+  'memoir-ghostwriting-process-what-to-expect':
+    'Memoir ghostwriting is a structured collaboration in which a writer interviews you, develops the narrative, drafts the manuscript in your voice, and revises it with your feedback. Full-length memoir projects usually require substantially more interview time and a longer schedule than short business or lead-magnet ebooks.',
 };
 
 const ARTICLE_SOURCES = {
@@ -584,6 +586,7 @@ const ARTICLE_SOURCES = {
   'does-a-ghostwriter-own-your-book-rights': [
     { label: 'U.S. Copyright Office: Works Made for Hire (Circular 30)', href: 'https://www.copyright.gov/circs/circ30.pdf' },
     { label: 'U.S. Copyright Office: Copyright Basics (Circular 1)', href: 'https://www.copyright.gov/circs/circ01.pdf' },
+    { label: 'U.S. Copyright Office: Recordation of Transfers (Circular 12)', href: 'https://www.copyright.gov/circs/circ12.pdf' },
   ],
   'kdp-publishing-checklist-for-first-time-authors': [
     { label: 'Amazon KDP Help: Content Guidelines', href: 'https://kdp.amazon.com/en_US/help/topic/G200645680' },
@@ -598,6 +601,7 @@ function firstSentences(text, maxWords = 70) {
   const raw = String(text || '')
     .replace(/<[^>]+>/g, ' ')
     .replace(/\*\*/g, '')
+    .replace(/^[“”"'\s]+/, '')
     .replace(/\s+/g, ' ')
     .trim();
   if (!raw) return '';
@@ -608,7 +612,9 @@ function firstSentences(text, maxWords = 70) {
   }
   let out = '';
   for (const part of parts) {
-    const next = `${out} ${part}`.trim();
+    const clean = part.replace(/^[“”"']+/, '').trim();
+    if (!clean) continue;
+    const next = `${out} ${clean}`.trim();
     if (out && next.split(/\s+/).length > maxWords) return out;
     out = next;
     if (out.split(/\s+/).length >= 40) return out;
@@ -637,4 +643,87 @@ const ARTICLE_SECTION_PARAS = {
 
 export function articleSectionParagraphs(post, section) {
   return ARTICLE_SECTION_PARAS[post?.slug]?.[section?.heading] || section.paragraphs || [];
+}
+
+export const EDITORIAL_DESK_PATH = '/authors/editorial-desk';
+
+export function articleByline(post) {
+  return {
+    author: blogArticle.authorRole,
+    href: EDITORIAL_DESK_PATH,
+    published: post?.dateLabel || post?.date || '',
+    date: post?.date || '',
+    updated: post?.updatedLabel || post?.updated || '',
+    updatedDate: post?.updated || '',
+    readTime: post?.readTime || '',
+  };
+}
+
+const ARTICLE_TAKEAWAYS = {
+  'how-much-does-an-ebook-ghostwriter-cost': [
+    'Ghostwriting fees track length, research, voice work, and whether edits and files are bundled.',
+    'Our studio packages range from $699 to $3,999 for defined word counts and scopes — that is our menu, not an industry median.',
+    'A low per-word draft without NDA, rights, or revisions is unfinished risk — not a bargain.',
+    'Budget to the book’s job, then demand a fixed total and written ownership.',
+  ],
+};
+
+export function articleTakeaways(post) {
+  return ARTICLE_TAKEAWAYS[post?.slug] || post?.takeaways || [];
+}
+
+const ARTICLE_SECTION_SPLITS = {
+  'developmental-editing-vs-copyediting': {
+    'Developmental editing vs copyediting: the real difference': [
+      {
+        heading: 'Developmental editing (the architecture pass)',
+        paragraphs: [
+          'A developmental editor (sometimes called a structural or content editor) looks at the manuscript as a system.',
+          'Deliverables often include an editorial letter, margin notes, and a revision roadmap. You then rewrite. The editor does not merely clean the draft; they help you rebuild it.',
+        ],
+        bullets: [
+          'Fiction: stakes, pacing, subplot balance, character motivation, scene necessity, opening and ending strength.',
+          'Nonfiction / memoir: thesis clarity, chapter logic, evidence gaps, repetition, reader journey, promise vs delivery.',
+          'Either: audience fit — does this book serve the reader you say you want?',
+        ],
+      },
+      {
+        heading: 'When to hire a developmental editor',
+        paragraphs: [
+          'Hire developmental help when the book as a whole is still in question.',
+          'Skip (or delay) a full developmental edit when the manuscript is still outlines and fragments with no complete draft, or when you only need light line polish on a structurally sound book.',
+        ],
+        bullets: [
+          'Beta readers love your voice but bounce in the middle.',
+          'You keep rewriting Chapter 1 because you are unsure what the book is.',
+          'Agents or contest feedback keep saying “structure” or “focus,” not “typos.”',
+          'Your nonfiction outline looked solid, but the draft wanders or repeats.',
+          'You suspect entire chapters should move, merge, or die — and you want a professional second brain before you burn months guessing.',
+        ],
+      },
+      {
+        heading: 'Copyediting (the consistency and correctness pass)',
+        paragraphs: [
+          'A copyeditor works sentence by sentence once the content and structure are stable.',
+          'Copyediting protects reader trust. It does not invent a new plot or restructure your argument for you — and you should not expect it to.',
+        ],
+        bullets: [
+          'Grammar, usage, spelling, punctuation',
+          'Continuity (character eye color, timeline dates, product names)',
+          'Style sheet consistency (serial comma, number treatment, hyphenation)',
+          'Clarity fixes that do not require reinventing the chapter map',
+        ],
+      },
+    ],
+  },
+};
+
+export function articleSections(post) {
+  const raw = (post?.sections || []).filter(section => {
+    if (!post?.takeaways?.length && !ARTICLE_TAKEAWAYS[post?.slug]) return true;
+    return !/^(key )?takeaways$/i.test(section.heading || '');
+  });
+  const splits = ARTICLE_SECTION_SPLITS[post?.slug];
+  if (!splits) return raw;
+  return raw.flatMap(section => splits[section.heading] || [section]);
 }

@@ -128,7 +128,9 @@ const servicesWords = (readPage('/services').match(/<div id="root">([\s\S]*?)<\/
 if (servicesWords < 400) throw new Error(`/services crawl HTML has ${servicesWords} words (< 400)`);
 
 const proposal = readPage('/blog/how-to-write-a-nonfiction-book-proposal');
-if (!proposal.includes('"@type": "Person"')) throw new Error('article missing Person author');
+if (!proposal.includes('"@type": "Organization"') || !proposal.includes('/authors/editorial-desk')) {
+  throw new Error('article missing Organization author with editorial-desk URL');
+}
 if (!proposal.includes('"@type": "FAQPage"')) throw new Error('FAQ article missing FAQPage JSON-LD');
 
 console.log('qa:seo-html passed — key routes have crawlable body HTML.');

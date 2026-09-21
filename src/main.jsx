@@ -39,6 +39,7 @@ const NotFoundPage = lazy(() => import('./ContentPages.jsx').then(m => ({ defaul
 const PricingPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.PricingPage })));
 const PrivacyPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.PrivacyPage })));
 const EditorialPolicyPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.EditorialPolicyPage })));
+const EditorialDeskPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.EditorialDeskPage })));
 const ServicesPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.ServicesPage })));
 const TermsPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.TermsPage })));
 const SearchPage = lazy(() => import('./SearchPage.jsx'));
@@ -990,6 +991,7 @@ function App() {
         <Route path="/faq" element={<BlogShell><FaqPage /></BlogShell>} />
         <Route path="/privacy" element={<BlogShell><PrivacyPage /></BlogShell>} />
         <Route path="/editorial-policy" element={<BlogShell><EditorialPolicyPage /></BlogShell>} />
+        <Route path="/authors/editorial-desk" element={<BlogShell><EditorialDeskPage /></BlogShell>} />
         <Route path="/terms" element={<BlogShell><TermsPage /></BlogShell>} />
         <Route path="/search" element={<BlogShell><SearchPage /></BlogShell>} />
         <Route path="*" element={<BlogShell><NotFoundPage /></BlogShell>} />

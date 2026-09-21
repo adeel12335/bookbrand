@@ -98,6 +98,7 @@ export const pricingPage = {
     paragraphs: [
       'You are not buying “unlimited writing.” You are buying a scoped manuscript path: outline, sample chapter, drafted chapters on a dated schedule, the editorial passes listed for that package, and the files that package includes.',
       'That is how a 15,000-word guide and a 50,000-word authority book can both be quoted up front. Length, research depth, and production support change the band — not an open hourly tab.',
+      'Standard package timelines apply to projects with a defined brief and typical interview or research load. Interview-heavy memoirs, technical books, extensive original research, or complex source material may need a custom timeline and quote — including Elite’s word-count band, which is not a 9–18 month life-story memoir unless we say so in writing.',
     ],
     includedTitle: 'Included in the package you choose',
     included: [
@@ -225,12 +226,12 @@ export const landers = {
       {
         heading: 'Research, interviews, and voice matching',
         paragraphs: [
-          'Voice is not a style filter applied at the end. We match it from recorded interviews, any writing samples you already have, and the reader you named in the brief. Most authors spend two to four hours in total across discovery, interviews, and chapter reviews.',
+          'Voice is not a style filter applied at the end. We match it from recorded interviews, any writing samples you already have, and the reader you named in the brief. Short and standard nonfiction projects often take two to four hours of your time across discovery, interviews, and chapter reviews. Memoirs and interview-intensive books can require substantially more — we name that load in the quote.',
           'Research stays inside the agreed brief: your frameworks, your stories, and publicly checkable facts in your niche. We will not invent lived detail you did not provide, and we will flag claims that need your sign-off before they go in the manuscript.',
         ],
         bullets: [
           'Discovery call and chemistry check',
-          'One or two voice-matching interviews',
+          'One or two voice-matching interviews on a standard nonfiction brief',
           'Chapter outline you approve before drafting',
           'Sample chapter — rewritten at no cost if the voice misses',
           'Chapter batches on a dated schedule',
@@ -272,7 +273,7 @@ export const landers = {
       },
       {
         q: 'How long does ghostwriting take?',
-        a: 'About three weeks for a 15,000-word guide, five for ~30,000 words, eight for ~50,000, and up to twelve for a full-length Elite manuscript — dated before we start.',
+        a: 'About three weeks for a 15,000-word guide, five for ~30,000 words, eight for ~50,000, and up to twelve for a scoped Elite manuscript. Those bands assume a defined brief and typical interview load. Interview-heavy memoirs and research-heavy books get a custom timeline — not the same calendar as a lead-magnet ebook.',
       },
       {
         q: 'Do you use AI to write the manuscript?',
@@ -280,7 +281,7 @@ export const landers = {
       },
       {
         q: 'What do I need to provide?',
-        a: 'A short brief (audience, goal, target length, deadline), time for a discovery call and one or two voice interviews, and feedback as chapters land. Roughly two to four hours of your time in total.',
+        a: 'A short brief (audience, goal, target length, deadline), time for a discovery call and interviews, and feedback as chapters land. Short and standard nonfiction often takes a few hours in total. Memoirs and interview-intensive projects can take substantially more.',
       },
       {
         q: 'Is the work confidential?',
@@ -320,7 +321,7 @@ export const landers = {
         bullets: [
           'Fixed quote before writing begins',
           'Writer matched to your niche',
-          'Two to four hours of your time, total',
+          'A few hours for standard nonfiction; memoirs need more',
           'Revision rounds in every package',
           '100% author ownership and royalties',
         ],
@@ -743,7 +744,7 @@ export const editorialPolicyPage = {
       heading: 'Who this policy covers',
       paragraphs: [
         'It covers public articles on /blog and related explainers on service pages. Client manuscripts, quotes, and contracts follow the project agreement and NDA — not this page.',
-        'Articles currently publish under the studio editorial desk. Named author and reviewer bylines will appear here when those people are listed on the site. We do not invent public writer profiles.',
+        'Articles currently publish under the ebookwriters.us Editorial Desk. Named author and reviewer bylines will appear here when those people are listed on the site. We do not invent public writer profiles.',
       ],
     },
     {
@@ -775,9 +776,61 @@ export const editorialPolicyPage = {
     },
   ],
   links: [
+    { label: 'Editorial desk', href: '/authors/editorial-desk' },
     { label: 'About', href: '/about' },
     { label: 'Blog', href: '/blog' },
     { label: 'FAQ', href: '/faq' },
+    { label: 'Contact', href: '/contact' },
+  ],
+};
+
+export const editorialDeskPage = {
+  path: '/authors/editorial-desk',
+  eyebrow: 'Editorial desk',
+  title: 'ebookwriters.us Editorial Desk.',
+  lead:
+    'Publishing guides on this site are issued by the studio editorial desk — not by invented public author profiles. This page explains who that desk is, what it covers, and how articles are researched and reviewed.',
+  updated: 'September 21, 2026',
+  heroImage: '/assets/brand/faq-editorial-v2.webp',
+  heroImageAlt: 'Editorial desk with manuscript notes — ebookwriters.us Editorial Desk',
+  actions: [
+    { label: 'Editorial policy', href: '/editorial-policy' },
+    { label: 'Read the blog', href: '/blog', variant: 'gold' },
+  ],
+  sections: [
+    {
+      heading: 'What the editorial desk is',
+      paragraphs: [
+        'The editorial desk is the studio function that commissions, reviews, and updates public articles on ebookwriters.us. It is an Organization byline, not a named public writer roster. Client ghostwriters are introduced after NDA; they are not listed here.',
+        'The desk writes for authors making a hiring or publishing decision: cost, rights, KDP, editing, hiring, and process. Commercial pages (/pricing, /contact, service landers) describe what we sell. Guides on /blog are for the decision before you hire.',
+      ],
+    },
+    {
+      heading: 'Subject areas',
+      paragraphs: [
+        'Current guides cover ebook ghostwriting, hiring a writer, ghostwriting cost and rights, Amazon KDP setup, developmental editing versus copyediting, memoir process, book proposals, outlines, and AI versus human drafting.',
+        'We do not publish keyword-variation pages (“ebook writer USA”, “affordable ebook writers USA”) to capture extra queries. If a topic is not on the blog, it is because we have not yet written a guide we will stand behind on a discovery call.',
+      ],
+    },
+    {
+      heading: 'How articles are researched and reviewed',
+      paragraphs: [
+        'Guides start from a real author question. We write from studio process. Where a legal or platform rule matters, we link primary sources such as the U.S. Copyright Office or Amazon KDP Help.',
+        'Ordinary tools may support outlining or production admin. Public articles are reviewed by the desk before they go live. We do not publish invented enquiry statistics or fabricated case studies.',
+        'The full standard lives on the editorial policy page: research, AI use, corrections, and the line between commercial pages and educational guides.',
+      ],
+    },
+    {
+      heading: 'How to cite this byline',
+      paragraphs: [
+        'Articles should read: Written by ebookwriters.us Editorial Desk, with a published date in the HTML. When we materially change advice, we update the article and the date. Named person bylines will appear only when those people are listed on this site.',
+      ],
+    },
+  ],
+  links: [
+    { label: 'Editorial policy', href: '/editorial-policy' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
   ],
 };

@@ -3,8 +3,11 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { IconBook, IconCheck } from './icons.jsx';
 import {
   BLOG_REDIRECTS,
+  articleByline,
   articleSectionParagraphs,
+  articleSections,
   articleSources,
+  articleTakeaways,
   blogArticle,
   blogIndex,
   blogPosts,
@@ -211,11 +214,25 @@ function RichText({ text }) {
   });
 }
 
+function SectionCopy({ text }) {
+  const trimmed = String(text || '').trim();
+  const h3 = trimmed.match(/^#{3}\s+(.+)/);
+  if (h3) return <h3>{h3[1].replace(/\*\*/g, '')}</h3>;
+  const h4 = trimmed.match(/^#{4}\s+(.+)/);
+  if (h4) return <h4>{h4[1].replace(/\*\*/g, '')}</h4>;
+  const strongOnly = trimmed.match(/^\*\*(.+)\*\*$/);
+  if (strongOnly) return <h4>{strongOnly[1]}</h4>;
+  return <p><RichText text={text} /></p>;
+}
+
 export function BlogPostPage() {
   const { slug } = useParams();
   const redirected = BLOG_REDIRECTS[slug];
   const post = redirected ? null : getPostBySlug(slug);
   const latest = post ? blogPosts.filter(item => item.slug !== slug).slice(0, 3) : [];
+  const byline = post ? articleByline(post) : null;
+  const takeaways = post ? articleTakeaways(post) : [];
+  const sections = post ? articleSections(post) : [];
 
   useEffect(() => {
     if (!post) return undefined;
@@ -243,17 +260,17 @@ export function BlogPostPage() {
               <dl className="br_byline">
                 <div>
                   <dt>{blogArticle.writtenLabel}</dt>
-                  <dd>{blogArticle.authorRole}</dd>
+                  <dd><Link to={byline.href}>{byline.author}</Link></dd>
                 </div>
                 <div>
                   <dt>{blogArticle.publishedLabel}</dt>
                   <dd><time dateTime={post.date}>{post.dateLabel}</time></dd>
                 </div>
-                {post.updatedLabel || post.updated ? (
+                {byline.updated ? (
                   <div>
                     <dt>{blogArticle.updatedLabel}</dt>
                     <dd>
-                      <time dateTime={post.updated || post.date}>{post.updatedLabel || post.updated}</time>
+                      <time dateTime={byline.updatedDate || byline.date}>{byline.updated}</time>
                     </dd>
                   </div>
                 ) : null}
@@ -275,10 +292,7 @@ export function BlogPostPage() {
               <aside className="br_sidebar" aria-label={blogArticle.tocLabel}>
                 <h2 className="br_sidebar_eyebrow">{blogArticle.tocLabel}</h2>
                 <ol className="br_post_toc">
-                  {post.sections.filter(section => {
-                    if (!post.takeaways?.length) return true;
-                    return !/^(key )?takeaways$/i.test(section.heading || '');
-                  }).map((section, index) => (
+                  {sections.map((section, index) => (
                     <li key={section.heading}>
                       <a href={`#${headingId(section.heading)}`}>
                         <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
@@ -297,11 +311,11 @@ export function BlogPostPage() {
                   <p className="br_post_lead"><RichText text={post.lead} /></p>
                 </div>
 
-                {post.takeaways?.length ? (
+                {takeaways.length ? (
                   <div className="br_block br_border_top">
                     <h4>{blogArticle.takeawaysLabel}</h4>
                     <ul className="br_duo_list">
-                      {post.takeaways.map(item => (
+                      {takeaways.map(item => (
                         <li key={item}>
                           <IconCheck aria-hidden="true" />
                           <RichText text={item} />
@@ -325,10 +339,7 @@ export function BlogPostPage() {
                   </div>
                 ) : null}
 
-                {post.sections.filter(section => {
-                  if (!post.takeaways?.length) return true;
-                  return !/^(key )?takeaways$/i.test(section.heading || '');
-                }).map(section => (
+                {sections.map(section => (
                   <div
                     className="br_block br_border_top br_text_block"
                     id={headingId(section.heading)}
@@ -336,7 +347,7 @@ export function BlogPostPage() {
                   >
                     <h2>{section.heading}</h2>
                     {articleSectionParagraphs(post, section).map(paragraph => (
-                      <p key={paragraph.slice(0, 48)}><RichText text={paragraph} /></p>
+                      <SectionCopy key={paragraph.slice(0, 48)} text={paragraph} />
                     ))}
                     {section.bullets?.length ? (
                       <ul>

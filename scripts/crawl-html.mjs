@@ -12,11 +12,11 @@ import {
   servicesIntro, siteContact,
 } from '../src/data.js';
 import {
-  aboutPage, coverPage, editingPage, editorialPolicyPage, faqPage, landers, notFoundPage,
+  aboutPage, coverPage, editingPage, editorialDeskPage, editorialPolicyPage, faqPage, landers, notFoundPage,
   pricingPage, privacyPage, servicesPage, termsPage,
 } from '../src/pageContent.js';
 import { SITE_EMAIL, SITE_PHONE_DISPLAY } from '../src/site.js';
-import { articleSectionParagraphs, articleSources, blogArticle, blogIndex, blogPosts, quickAnswerFor } from '../src/blogPosts.js';
+import { articleByline, articleSectionParagraphs, articleSections, articleSources, articleTakeaways, blogIndex, blogPosts, quickAnswerFor } from '../src/blogPosts.js';
 import { inlineHtml } from '../src/inlineMarkup.js';
 
 function esc(value) {
@@ -71,10 +71,21 @@ function tableBlock(table) {
   return `<table>${caption}${head}<tbody>${body}</tbody></table>`;
 }
 
+function paragraphHtml(p) {
+  const trimmed = String(p || '').trim();
+  const h3 = trimmed.match(/^#{3}\s+(.+)/);
+  if (h3) return `<h3>${esc(h3[1].replace(/\*\*/g, ''))}</h3>`;
+  const h4 = trimmed.match(/^#{4}\s+(.+)/);
+  if (h4) return `<h4>${esc(h4[1].replace(/\*\*/g, ''))}</h4>`;
+  const strongOnly = trimmed.match(/^\*\*(.+)\*\*$/);
+  if (strongOnly) return `<h4>${esc(strongOnly[1])}</h4>`;
+  return `<p>${inlineHtml(p, esc)}</p>`;
+}
+
 function sectionsBlock(sections = []) {
   return sections.map(section => `<section>
   <h2>${esc(section.heading)}</h2>
-  ${(section.paragraphs || []).map(p => `<p>${inlineHtml(p, esc)}</p>`).join('\n  ')}
+  ${(section.paragraphs || []).map(paragraphHtml).join('\n  ')}
   ${list(section.bullets)}
   ${tableBlock(section.table)}
   ${section.sample?.before ? `<figure><figcaption>Before</figcaption><p>${esc(section.sample.before)}</p></figure><figure><figcaption>After</figcaption><p>${esc(section.sample.after)}</p></figure>${section.sample.note ? `<p><strong>Editor’s note.</strong> ${esc(section.sample.note)}</p>` : ''}` : ''}
@@ -137,6 +148,7 @@ function faqBlock(items = faqs, heading = 'Ebook writing & publishing FAQ') {
   <h3>${esc(item.q)}</h3>
   <p data-speakable="1">${esc(item.a)}</p>
 </article>`).join('\n');
+  if (!heading) return `<section>${entries}</section>`;
   return `<section>
   <h2>${esc(heading)}</h2>
   ${entries}
@@ -307,7 +319,7 @@ const routes = {
   '/faq': {
     h1: faqPage.title,
     lead: faqPage.lead,
-    body: () => [faqBlock(faqPage.faqs), sectionsBlock(faqPage.sections), linksBlock(faqPage.links)].join('\n'),
+    body: () => [faqBlock(faqPage.faqs, ''), sectionsBlock(faqPage.sections), linksBlock(faqPage.links)].join('\n'),
   },
   '/privacy': {
     h1: privacyPage.title,
@@ -318,6 +330,11 @@ const routes = {
     h1: editorialPolicyPage.title,
     lead: editorialPolicyPage.lead,
     body: () => `<p>Last updated ${esc(editorialPolicyPage.updated)}.</p>\n${sectionsBlock(editorialPolicyPage.sections)}\n${linksBlock(editorialPolicyPage.links)}`,
+  },
+  '/authors/editorial-desk': {
+    h1: editorialDeskPage.title,
+    lead: editorialDeskPage.lead,
+    body: () => `<p>Last updated ${esc(editorialDeskPage.updated)}.</p>\n${sectionsBlock(editorialDeskPage.sections)}\n${linksBlock(editorialDeskPage.links)}`,
   },
   '/terms': {
     h1: termsPage.title,
@@ -331,6 +348,14 @@ for (const content of [...Object.values(landers), editingPage, coverPage]) {
   routes[content.path] = { h1: content.title, lead: content.lead, body: () => contentPageBlock(content) };
 }
 
+function articleBylineHtml(post) {
+  const meta = articleByline(post);
+  const updated = meta.updated
+    ? ` Updated <time datetime="${esc(meta.updatedDate || meta.date)}">${esc(meta.updated)}</time>.`
+    : '';
+  return `<p>Written by <a href="${esc(meta.href)}">${esc(meta.author)}</a>. Published <time datetime="${esc(meta.date)}">${esc(meta.published)}</time>.${updated} ${esc(meta.readTime)}</p>`;
+}
+
 function blogPostRoute(slug) {
   const post = blogPosts.find(item => item.slug === slug);
   if (!post) return null;
@@ -342,27 +367,21 @@ function blogPostRoute(slug) {
       const quick = answer
         ? `<section data-speakable="1"><h2>Quick answer</h2><p>${esc(answer)}</p></section>`
         : '';
-      const takeaways = post.takeaways?.length
-        ? `<section><h2>Key takeaways</h2>${list(post.takeaways)}</section>`
+      const takeaways = articleTakeaways(post);
+      const takeawayBlock = takeaways.length
+        ? `<section><h2>Key takeaways</h2>${list(takeaways)}</section>`
         : '';
-      const sections = (post.sections || []).filter(section => {
-        if (!post.takeaways?.length) return true;
-        return !/^(key )?takeaways$/i.test(section.heading || '');
-      }).map(section => ({
+      const sections = articleSections(post).map(section => ({
         ...section,
         paragraphs: articleSectionParagraphs(post, section),
       }));
-      const updated = post.updatedLabel || post.updated
-        ? ` Updated <time datetime="${esc(post.updated || post.date)}">${esc(post.updatedLabel || post.updated)}</time>.`
-        : '';
       const sources = articleSources(post.slug);
       const sourceBlock = sources.length
         ? `<section><h2>Primary sources</h2><ul>${sources.map(source => `<li><a href="${esc(source.href)}">${esc(source.label)}</a></li>`).join('')}</ul></section>`
         : '';
       return [
-        `<p>Written by ${esc(blogArticle.authorRole)}. Published <time datetime="${esc(post.date)}">${esc(post.dateLabel || post.date)}</time>.${updated} ${esc(post.readTime || '')}</p>`,
         quick,
-        takeaways,
+        takeawayBlock,
         sectionsBlock(sections),
         sourceBlock,
         `<p>Publishing guides follow the <a href="/editorial-policy">ebookwriters.us editorial policy</a>.</p>`,
@@ -377,14 +396,17 @@ function blogPostRoute(slug) {
  */
 export function getCrawlMarkup(page) {
   const path = page.path;
+  const slug = path.startsWith('/blog/') ? path.slice('/blog/'.length) : '';
+  const post = slug ? blogPosts.find(item => item.slug === slug) : null;
   const route = routes[path]
-    || (path.startsWith('/blog/') && blogPostRoute(path.slice('/blog/'.length)))
+    || (post && blogPostRoute(slug))
     || { h1: page.title.replace(/\s*[|—]\s*ebookwriters\.us$/, ''), lead: page.description, body: () => '' };
 
   const chunks = [
     `<main data-seo-crawl="1">`,
     nav(),
     `<h1>${esc(route.h1)}</h1>`,
+    post ? articleBylineHtml(post) : '',
     route.lead ? `<p data-speakable="1">${inlineHtml(route.lead, esc)}</p>` : '',
     route.body(),
     `</main>`,

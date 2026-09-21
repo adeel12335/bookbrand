@@ -367,11 +367,11 @@ export const faqs = [
   },
   {
     q: 'How involved do I need to be?',
-    a: 'Roughly two to four hours in total. That is a discovery call, one or two voice-matching interviews, and reviewing each chapter as it lands. Everything else is on us.',
+    a: 'Short and standard nonfiction projects often need only a few hours of author interviews and review — typically a discovery call, one or two voice-matching interviews, and chapter feedback. Memoirs and interview-intensive books can require substantially more involvement. We confirm that on the quote before work starts.',
   },
   {
     q: 'How long does a book actually take?',
-    a: 'A 15,000-word guide takes about three weeks, a 30,000-word book around five, and a full-length 50,000-word manuscript around eight. You get a dated schedule before we start and weekly drafts against it.',
+    a: 'Standard package timelines apply to projects with a defined brief and typical interview load: about three weeks for a 15,000-word guide, five for ~30,000 words, and eight for ~50,000. Interview-heavy memoirs, technical books, or extensive original research may need a custom timeline — a full life-story memoir is often a much longer collaboration than a lead-magnet ebook. Elite’s 12-week band is a scoped ~100,000-word production path, not a 9–18 month memoir unless we quote that separately.',
   },
   {
     q: 'What happens if I do not like the draft?',
@@ -470,6 +470,7 @@ export const footerLinks = [
       { label: 'Privacy', href: '/privacy' },
       { label: 'Terms', href: '/terms' },
       { label: 'Editorial policy', href: '/editorial-policy' },
+      { label: 'Editorial desk', href: '/authors/editorial-desk' },
     ],
   },
 ];
@@ -492,7 +493,7 @@ export const hero = {
   kicker: 'Book writing & publishing studio',
   cta: 'Start Your Project',
   link: { label: 'Explore our services', href: '/services' },
-  trust: ['100% author ownership', 'Fixed packages from $699', 'KDP & IngramSpark ready'],
+  trust: ['Writer matched by subject', 'Fixed packages from $699', 'KDP & IngramSpark ready'],
   imageAlt: 'ebookwriters.us — professional ebook writers helping authors publish their books',
 };
 

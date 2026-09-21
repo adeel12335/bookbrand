@@ -9,6 +9,7 @@ import {
   aboutPage,
   coverPage,
   editingPage,
+  editorialDeskPage,
   editorialPolicyPage,
   faqPage,
   landers,
@@ -27,11 +28,11 @@ function ScrollTop() {
   return null;
 }
 
-function ArticlePage({ page, children }) {
+function ArticlePage({ page, children, hideFaqHeading = false }) {
   const sections = page.sections || [];
   const tocItems = [
     ...sections.map(section => ({ id: headingId(section.heading), label: section.heading })),
-    ...(page.faqs?.length ? [{ id: 'page-faqs', label: 'Frequently asked questions' }] : []),
+    ...(page.faqs?.length && !hideFaqHeading ? [{ id: 'page-faqs', label: 'Frequently asked questions' }] : []),
     ...(page.links?.length ? [{ id: 'page-links', label: 'Keep reading' }] : []),
   ];
 
@@ -123,7 +124,7 @@ function ArticlePage({ page, children }) {
 
                 {page.faqs?.length ? (
                   <div className="br_block br_border_top" id="page-faqs">
-                    <h2>Frequently asked questions</h2>
+                    {hideFaqHeading ? null : <h2>Frequently asked questions</h2>}
                     <dl className="br_legal_faq">
                       {page.faqs.map(item => (
                         <div key={item.q}>
@@ -939,7 +940,7 @@ export function CoverDesignPage() {
 export function FaqPage() {
   return (
     <>
-      <ArticlePage page={faqPage} />
+      <ArticlePage page={faqPage} hideFaqHeading />
       <CloseBand
         title="Still have a question?"
         lead="Ask about your manuscript, timeline, or package — we reply within one working day."
@@ -955,6 +956,10 @@ export function PrivacyPage() {
 
 export function EditorialPolicyPage() {
   return <ArticlePage page={editorialPolicyPage} />;
+}
+
+export function EditorialDeskPage() {
+  return <ArticlePage page={editorialDeskPage} />;
 }
 
 export function TermsPage() {

@@ -1,6 +1,6 @@
 import { blogArticle, blogIndex, blogPosts } from './blogPosts.js';
 import { books, faqs, plans, portfolioPage } from './data.js';
-import { coverPage, editingPage, editorialPolicyPage, faqPage, landers } from './pageContent.js';
+import { coverPage, editingPage, editorialDeskPage, editorialPolicyPage, faqPage, landers } from './pageContent.js';
 import {
   DEFAULT_OG_ALT,
   DEFAULT_OG_PATH,
@@ -67,14 +67,13 @@ function organization() {
   };
 }
 
-function editorialPerson() {
+function editorialDesk() {
   return {
-    '@type': 'Person',
-    '@id': `${SITE_ORIGIN}/#editorial`,
+    '@type': 'Organization',
+    '@id': `${SITE_ORIGIN}/authors/editorial-desk#desk`,
     name: blogArticle.authorRole,
-    jobTitle: 'Editorial desk',
-    url: absoluteUrl('/about'),
-    worksFor: { '@id': `${SITE_ORIGIN}/#organization` },
+    url: absoluteUrl('/authors/editorial-desk'),
+    parentOrganization: { '@id': `${SITE_ORIGIN}/#organization` },
   };
 }
 
@@ -374,10 +373,6 @@ const staticPages = [
           'Meet the ebookwriters.us studio — ghostwriting, editing, design, and KDP publishing under one roof.',
         path: '/about',
       }),
-      {
-        '@context': 'https://schema.org',
-        ...editorialPerson(),
-      },
       breadcrumbs([
         { name: 'Home', path: '/' },
         { name: 'About', path: '/about' },
@@ -436,6 +431,28 @@ const staticPages = [
       breadcrumbs([
         { name: 'Home', path: '/' },
         { name: 'Editorial Policy', path: '/editorial-policy' },
+      ]),
+    ],
+  }),
+  page({
+    path: '/authors/editorial-desk',
+    title: 'Editorial Desk | ebookwriters.us',
+    description: editorialDeskPage.lead,
+    image: editorialDeskPage.heroImage,
+    priority: 0.5,
+    changefreq: 'yearly',
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'ProfilePage',
+        name: editorialDeskPage.title,
+        url: absoluteUrl('/authors/editorial-desk'),
+        mainEntity: editorialDesk(),
+        isPartOf: { '@type': 'WebSite', name: SITE_NAME, url: absoluteUrl('/') },
+      },
+      breadcrumbs([
+        { name: 'Home', path: '/' },
+        { name: 'Editorial Desk', path: '/authors/editorial-desk' },
       ]),
     ],
   }),
@@ -666,7 +683,7 @@ function blogPostPage(post) {
         datePublished: post.date,
         dateModified: post.date,
         image: absoluteAsset(post.image || '/assets/brand/faq-editorial-v2.webp'),
-        author: editorialPerson(),
+        author: editorialDesk(),
         publisher: {
           '@type': 'Organization',
           name: SITE_NAME,
