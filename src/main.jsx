@@ -1,6 +1,7 @@
 import React, { Suspense, lazy, useEffect, useId, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import {
   IconArrow, IconArrowUpRight, IconBook, IconCheck, IconClose, IconQuote,
   IconMenu, IconPlus, IconSearch,
@@ -1093,6 +1094,7 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
       <SeoHead />
+      <Analytics />
       <Suspense fallback={<RouteFallback />}>
       <Routes>
         <Route path="/" element={<HomePage />} />
