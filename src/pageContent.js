@@ -9,7 +9,7 @@ export const aboutPage = {
   title: 'A US ebook writing studio built for authors who want the',
   titleEm: 'book done.',
   lead:
-    'EbookWriters Studio is an Iowa ghostwriting and publishing studio. We write, edit, design, and prepare books for Amazon KDP and IngramSpark — so you are not coordinating a dozen freelancers.',
+    'ebookwriters.us is an Iowa ghostwriting and publishing studio. We write, edit, design, and prepare books for Amazon KDP and IngramSpark — so you are not coordinating a dozen freelancers.',
   heroImage: '/assets/brand/page-hero-studio.png',
   heroImageAlt: 'Writing desk with manuscript pages and publishing tools',
   actions: [

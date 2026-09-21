@@ -359,7 +359,7 @@ export const contactIntro = {
 
 export const footerBrand = {
   blurb:
-    'EbookWriters Studio is a US book writing and ghostwriting studio helping authors write, edit, design, and publish books they are proud of.',
+    'ebookwriters.us is a US book writing and ghostwriting studio helping authors write, edit, design, and publish books they are proud of.',
   ctaTitle: 'Start something',
   ctaCopy: 'Your first chapter is one conversation away.',
   ctaLabel: 'Start Your Project',
