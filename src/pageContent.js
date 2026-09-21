@@ -1,8 +1,4 @@
-import { faqs, plans, siteContact } from './data.js';
-
-const packageSnapshotBullets = plans.map(
-  plan => `${plan.name} — $${plan.price} — ${plan.words} — ${plan.timeline}`,
-);
+import { books, comparisons, faqs, plans, siteContact } from './data.js';
 
 export const aboutPage = {
   eyebrow: 'The studio',
@@ -94,6 +90,33 @@ export const pricingPage = {
     'Every quote is fixed for the length and scope we agree. Rush timelines and specialist research can change the fee — you will see that before work starts.',
   closing:
     'Not sure which length you need? Tell us the job the book has to do — lead magnet, flagship business title, memoir — and we will recommend a package.',
+  why: {
+    heading: 'Why our pricing works',
+    lead:
+      'We operate as a focused writing studio, not a traditional publishing house. Packages are built around agreed word counts, interview load, revision rounds, and a named deliverable list — so the fee can stay fixed without hiding hours on a later invoice.',
+    paragraphs: [
+      'You are not buying “unlimited writing.” You are buying a scoped manuscript path: outline, sample chapter, drafted chapters on a dated schedule, the editorial passes listed for that package, and the files that package includes.',
+      'That is how a 15,000-word guide and a 50,000-word authority book can both be quoted up front. Length, research depth, and production support change the band — not an open hourly tab.',
+    ],
+    includedTitle: 'Included in the package you choose',
+    included: [
+      'Ghostwriting to the agreed word count',
+      'The editorial passes listed for that plan',
+      'Cover design at the level listed for that plan',
+      'Retailer-ready files named in the plan (EPUB/PDF, and print where listed)',
+      'KDP or IngramSpark setup where the plan includes it',
+      'NDA and rights-transfer paperwork — you own the book',
+    ],
+    excludedTitle: 'Not included unless we agree in writing',
+    excluded: [
+      'Extensive academic or original empirical research beyond the brief',
+      'Unlimited interviews or a second full rewrite of the approved outline',
+      'Complex custom illustration, photography, or infographic programs',
+      'Bulk print runs, warehousing, or paid advertising spend',
+      'Rush delivery shorter than the plan timeline',
+      'A public writer roster or putting the studio name on your cover',
+    ],
+  },
 };
 
 export const servicesPage = {
@@ -107,6 +130,29 @@ export const servicesPage = {
     { label: 'Get a writing quote', href: '/contact' },
     { label: 'View packages', href: '/pricing', variant: 'gold' },
   ],
+  chooser: {
+    heading: 'How to choose a starting page',
+    lead:
+      'Each service URL has a different job. Use this page to pick a path — not to re-read the same packages.',
+    items: [
+      {
+        title: 'You need the manuscript written',
+        copy: 'Start with ebook ghostwriting services if you want outline-to-manuscript in your voice, or hire an ebook writer if you are ready to brief a specialist on a fixed fee.',
+      },
+      {
+        title: 'You already have a draft',
+        copy: 'Start with ebook editing services. If the draft still needs large new chapters, we will say so and point you to ghostwriting instead of selling a polish that cannot fix a missing book.',
+      },
+      {
+        title: 'You are publishing on Amazon',
+        copy: 'Amazon KDP ebook writing covers manuscript work plus formatting, categories, keywords, and listing setup. You keep the KDP account and the royalties.',
+      },
+      {
+        title: 'You need the cover to work at thumbnail size',
+        copy: 'Ebook cover design is the visual brief — genre, typography, ebook front, and print wrap when scoped. Pair it with KDP setup when you want files and listing handled together.',
+      },
+    ],
+  },
 };
 
 export const serviceHrefs = {
@@ -125,6 +171,8 @@ export const landers = {
     title: 'Ebook ghostwriting services in your voice.',
     lead:
       'A professional ghostwriter researches, outlines, and writes the manuscript. You stay the author. NDA before you share anything, full rights transfer before writing begins, and your name on the cover.',
+    quickAnswer:
+      'Ebook ghostwriting means a specialist researches, outlines, and writes the manuscript in your voice while you remain the author of record. At ebookwriters.us that path includes an NDA, a rights-transfer agreement before writing begins, revision rounds in the package, and files that match the plan you approve.',
     heroImage: '/assets/brand/page-hero-studio.png',
     heroImageAlt: 'Author workspace for professional ebook ghostwriting',
     actions: [
@@ -162,11 +210,29 @@ export const landers = {
         ],
       },
       {
-        heading: 'Packages for ghostwriting',
+        heading: 'Research, interviews, and voice matching',
         paragraphs: [
-          'Fixed packages cover writing through retailer-ready files. See full feature lists on the pricing page — these are the length and timeline bands we quote against.',
+          'Voice is not a style filter applied at the end. We match it from recorded interviews, any writing samples you already have, and the reader you named in the brief. Most authors spend two to four hours in total across discovery, interviews, and chapter reviews.',
+          'Research stays inside the agreed brief: your frameworks, your stories, and publicly checkable facts in your niche. We will not invent lived detail you did not provide, and we will flag claims that need your sign-off before they go in the manuscript.',
         ],
-        bullets: packageSnapshotBullets,
+        bullets: [
+          'Discovery call and chemistry check',
+          'One or two voice-matching interviews',
+          'Chapter outline you approve before drafting',
+          'Sample chapter — rewritten at no cost if the voice misses',
+          'Chapter batches on a dated schedule',
+        ],
+      },
+      {
+        heading: 'Word counts and timelines we quote against',
+        paragraphs: [
+          'These are the length bands on the pricing page. Open that page for the full feature list — this page is the ghostwriting process, not a second rate card.',
+        ],
+        table: {
+          caption: 'Ghostwriting length bands',
+          columns: ['Package', 'Starting from', 'Typical length', 'Typical timeline'],
+          rows: plans.map(plan => [plan.name, `$${plan.price}`, plan.words, plan.timeline]),
+        },
       },
       {
         heading: 'Ownership, NDA, and royalties',
@@ -223,6 +289,8 @@ export const landers = {
     title: 'Hire an ebook writer on a fixed fee — not an open tab.',
     lead:
       'Tell us the idea, the length, and the deadline. We match you with a writer in that category and quote a package. Writing, edits, and files are in the number you approve — not billed by the hour.',
+    quickAnswer:
+      'Hiring an ebook writer here means a fixed quote, a genre-matched specialist introduced after NDA, and a dated chapter schedule. Compare the finished deliverable — manuscript, edits, files, and rights — not the lowest hourly draft rate.',
     heroImage: '/assets/brand/page-hero-studio.png',
     heroImageAlt: 'Desk setup for hiring a professional ebook writer',
     actions: [
@@ -256,24 +324,30 @@ export const landers = {
           'Hiring one freelancer for chapters, another for edits, and a third for a cover is how manuscripts stall. A studio quote includes the path to retailer-ready files. If you only need writing, say so — we will not pad the scope.',
           'Read our comparison of ghostwriting versus hiring a freelancer if you are weighing a low hourly bid against a fixed package.',
         ],
+        table: comparisons.studioVsFreelancer,
       },
       {
-        heading: 'Package snapshot',
+        heading: 'Questions to ask before you hire anyone',
         paragraphs: [
-          'These are the fixed bands on /pricing. Writing, editorial passes, cover work, and files scale with the package — open pricing for the full feature list.',
+          'Use the same four questions on every quote, including ours. Vague answers are the signal — not a slightly higher package price.',
         ],
-        bullets: packageSnapshotBullets,
-      },
-      {
-        heading: 'Timeline expectations',
-        paragraphs: [
-          'Starter guides are typically about three weeks. Professional manuscripts around five. Premium around eight. Elite up to twelve. You get a dated schedule with chapter delivery points before writing starts.',
+        bullets: [
+          'Who owns the copyright, and when does it transfer?',
+          'What files do I receive, and who holds the KDP login?',
+          'How many revision rounds are named in writing?',
+          'Can I see the assigned writer by name after NDA, and a sample chapter before the full draft?',
         ],
       },
       {
-        heading: 'How to brief us',
+        heading: 'Red flags',
         paragraphs: [
-          'The useful brief is short: who the book is for, what it should do for you (authority, leads, a story told properly), target length, and when you need files. Send that on the contact page. You hear back within one working day with a clear yes, no, or clarifying question.',
+          'A bid that never mentions NDA or assignment is not a bargain. Neither is a vendor who insists on publishing from their retailer account “for convenience,” or a promise of a full-length book with no outline, no sample, and no dated schedule.',
+        ],
+      },
+      {
+        heading: 'How to hire us',
+        paragraphs: [
+          'Send the audience, the job the book has to do, target length, and deadline on the contact page. You hear back within one working day with a clear yes, no, or clarifying question — then a fixed quote, not an hourly estimate.',
         ],
       },
     ],
@@ -305,6 +379,8 @@ export const landers = {
     title: 'Amazon KDP ebook writing and publishing, handled as one project.',
     lead:
       'We write the manuscript, format EPUB and print files, research categories and keywords, and walk you through KDP setup. You keep the Amazon account and 100% of the royalties.',
+    quickAnswer:
+      'Amazon KDP ebook writing here means the manuscript, retailer-ready files, category and keyword research, and guided listing setup on an account you own. You remain the publisher of record and keep 100% of the royalties.',
     heroImage: '/assets/brand/page-hero-brief.png',
     heroImageAlt: 'Publishing desk for Amazon KDP ebook setup',
     actions: [
@@ -333,11 +409,17 @@ export const landers = {
         ],
       },
       {
+        heading: 'KDP vs waiting on a traditional deal',
+        paragraphs: [
+          'KDP is the right path when you want the book out on a dated schedule, you want to keep the account, and you are writing for readers you can already name. Traditional publishing is a different product: an acquisition, a shared royalty, and a calendar you do not control.',
+        ],
+        table: comparisons.kdpVsTraditional,
+      },
+      {
         heading: 'Which packages include KDP setup',
         paragraphs: [
-          'Starter includes writing, an editorial pass, a standard cover, and EPUB/PDF files — without KDP listing setup in the package features. Professional adds KDP publishing setup. Premium adds KDP and IngramSpark. Elite includes broader global distribution and hardcover-ready files.',
+          'Starter includes writing, an editorial pass, a standard cover, and EPUB/PDF files — without KDP listing setup in the package features. Professional adds KDP publishing setup. Premium adds KDP and IngramSpark. Elite includes broader global distribution and hardcover-ready files. Full feature lists live on the pricing page.',
         ],
-        bullets: packageSnapshotBullets,
       },
       {
         heading: 'What you still own',
@@ -383,6 +465,8 @@ export const editingPage = {
   title: 'Ebook editing services for drafts that need a professional pass.',
   lead:
     'Already have a manuscript? Developmental, line and copy editing, and a final proofread — so the book is clear before cover and KDP files.',
+  quickAnswer:
+    'Ebook editing is a professional pass on a manuscript you already have. Developmental work fixes structure; line and copy editing fix readability and consistency; proofreading catches last errors before files go to design. If large chapters are still missing, start with ghostwriting instead.',
   heroImage: '/assets/brand/page-hero-covers.png',
   heroImageAlt: 'Manuscript pages and editing tools on a publishing desk',
   actions: [
@@ -395,23 +479,65 @@ export const editingPage = {
       paragraphs: [
         'We match the edit to the draft you have — not a one-size pass labeled “editing.”',
       ],
+      table: comparisons.editingTypes,
+    },
+    {
+      heading: 'What you receive',
+      paragraphs: [
+        'You receive an edited manuscript and clear notes on what changed. Revision rounds are quoted per manuscript length and edit depth — we confirm rounds in writing before work starts rather than inventing a blanket “unlimited” promise on this page.',
+      ],
       bullets: [
-        'Developmental edit — structure, argument, pacing, and chapter order',
-        'Line and copy edit — clarity, voice consistency, grammar, and flow',
-        'Final proofread — last pass before files go to design and retailers',
+        'Edited manuscript file',
+        'Editorial notes on structure or line issues, matching the pass you bought',
+        'A short summary of remaining risks (facts, repetition, chapters that still need author input)',
+        'Optional follow-on: cover, formatting, and KDP files if you ask for them in the quote',
+      ],
+    },
+    {
+      heading: 'Editing workflow and turnaround',
+      paragraphs: [
+        'We start with a sample pages review so the quote matches the draft, not a guess. Then the agreed pass, your questions, and a revision round named in the quote.',
+        'Typical turnaround tracks length and depth: a copyedit on a short guide can land in about a week; a developmental pass on a full-length manuscript needs a dated schedule, not a same-week promise.',
+      ],
+      bullets: [
+        'Sample pages and a written scope',
+        'The editorial pass you bought',
+        'Author questions on flagged sections',
+        'Named revision round',
+      ],
+    },
+    {
+      heading: 'Illustrative line edit',
+      paragraphs: [
+        'This is a teaching sample — not a client manuscript. It shows the difference between a first-draft sentence and a line-edited one.',
+      ],
+      sample: {
+        before: 'The thing is that there are a lot of leaders who don’t really know how to talk to their teams and this causes many problems in the company over time.',
+        after: 'Many first-time managers inherit a team they have never briefed clearly. The cost shows up later: missed handoffs, quiet resentment, and meetings that decide nothing.',
+      },
+    },
+    {
+      heading: 'What drives an editing quote',
+      paragraphs: [
+        'Length, how finished the draft is, and which pass you need. A developmental edit on an uneven 50,000-word memoir is a different product from a proofread on a stable 12,000-word guide.',
+      ],
+      bullets: [
+        'Word count and genre',
+        'Developmental vs line vs copy vs proof',
+        'How much of the argument still moves around',
+        'Whether cover and KDP files are in the same quote',
+      ],
+    },
+    {
+      heading: 'When editing is not enough',
+      paragraphs: [
+        'If whole chapters are missing, the voice is not there yet, or the author still needs interviews captured, a polish cannot manufacture the book. We will say so and point you to ghostwriting rather than selling an edit that leaves you with the same gap.',
       ],
     },
     {
       heading: 'Who this is for',
       paragraphs: [
         'Authors who drafted the book themselves and want a studio edit before publishing. Ghostwriting clients who want an extra editorial layer beyond the rounds in a writing package. Anyone who knows the manuscript is “almost there” but not retailer-ready.',
-      ],
-    },
-    {
-      heading: 'Deliverables and scope',
-      paragraphs: [
-        'You receive an edited manuscript and clear notes on what changed. Revision rounds are quoted per manuscript length and edit depth — we confirm rounds in writing before work starts rather than inventing a blanket “unlimited” promise on this page.',
-        'If the draft still needs substantial new chapters written, we will say so and point you to ghostwriting instead of selling a polish that cannot fix a missing book.',
       ],
     },
   ],
@@ -424,11 +550,16 @@ export const editingPage = {
       q: 'Can editing include a cover and KDP files?',
       a: 'Yes — say what you need on the contact form. Cover design and KDP setup can be scoped with editing or as a follow-on.',
     },
+    {
+      q: 'Do you show a before-and-after on my pages before I hire?',
+      a: 'On a paid sample or as part of discovery we can mark a short passage so you see the level of intervention. We do not publish client manuscripts.',
+    },
   ],
   links: [
     { label: 'Ebook ghostwriting', href: '/ebook-ghostwriting-services' },
     { label: 'Ebook cover design', href: '/ebook-cover-design' },
     { label: 'Amazon KDP publishing', href: '/amazon-kdp-ebook-writing' },
+    { label: 'Developmental editing vs copyediting', href: '/blog/developmental-editing-vs-copyediting' },
     { label: 'Pricing', href: '/pricing' },
   ],
 };
@@ -439,12 +570,20 @@ export const coverPage = {
   title: 'Ebook cover design built to read at thumbnail size.',
   lead:
     'Custom covers matched to your genre — front, spine, and back for print when you need them — so the title holds up on Amazon and bookstore shelves.',
+  quickAnswer:
+    'Ebook cover design here is thumbnail-first: genre cues, title readability at Amazon size, then a full ebook front and a print wrap when paperback is in scope. Writing packages include cover work at the level listed for that plan; standalone covers are quoted separately.',
   heroImage: '/assets/brand/page-hero-covers.png',
   heroImageAlt: 'Book covers and design materials on a sunlit writing desk',
   actions: [
     { label: 'Request a cover quote', href: '/contact' },
     { label: 'See portfolio covers', href: '/portfolio', variant: 'gold' },
   ],
+  covers: books.map(book => ({
+    title: book.title,
+    genre: book.genre,
+    image: book.image,
+    note: `Genre cue and title designed to read at Amazon thumbnail size in ${book.genre.toLowerCase()}.`,
+  })),
   sections: [
     {
       heading: 'What you get',
@@ -463,6 +602,7 @@ export const coverPage = {
       heading: 'Thumbnail-first on Amazon',
       paragraphs: [
         'Most readers meet your book as a small image. We design for title readability and genre cues at that size, then refine for full-size ebook and print wraps.',
+        'Typography has to work at roughly the size of a postage stamp: short title hierarchy, contrast against the art, and a genre signal you can name in one glance (business, memoir, wellness, parenting).',
       ],
     },
     {
@@ -521,6 +661,63 @@ export const faqPage = {
     { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
     { label: 'Amazon KDP publishing', href: '/amazon-kdp-ebook-writing' },
     { label: 'Pricing', href: '/pricing' },
+  ],
+};
+
+export const editorialPolicyPage = {
+  path: '/editorial-policy',
+  eyebrow: 'Editorial policy',
+  title: 'How ebookwriters.us researches, reviews, and updates publishing guides.',
+  lead:
+    'Our blog is written for authors making a hiring or publishing decision. This page explains how those articles are produced, how AI may be used in production, and how we correct them.',
+  updated: 'September 21, 2026',
+  heroImage: '/assets/brand/faq-editorial-v2.webp',
+  heroImageAlt: 'Editorial desk with manuscript notes — ebookwriters.us editorial policy',
+  actions: [
+    { label: 'Read the blog', href: '/blog' },
+    { label: 'About the studio', href: '/about', variant: 'gold' },
+  ],
+  sections: [
+    {
+      heading: 'Who this policy covers',
+      paragraphs: [
+        'It covers public articles on /blog and related explainers on service pages. Client manuscripts, quotes, and contracts follow the project agreement and NDA — not this page.',
+        'Articles currently publish under the studio editorial desk. Named author and reviewer bylines will appear here when those people are listed on the site. We do not invent public writer profiles.',
+      ],
+    },
+    {
+      heading: 'How articles are researched',
+      paragraphs: [
+        'Guides start from a real author question (cost, rights, hiring, KDP, editing). We write from studio process and, where a legal or platform rule matters, we point to primary sources such as the U.S. Copyright Office or Amazon KDP Help — not to a recycled blog claiming the same advice.',
+        'We do not publish invented enquiry statistics or fabricated case studies. If a number is a package price or a typical timeline from our plans, we say so. If a number is industry-range context, we label it as a planning benchmark, not a promise.',
+      ],
+    },
+    {
+      heading: 'How AI is used',
+      paragraphs: [
+        'Ordinary tools may support outlining, production admin, or a first pass on internal notes. Public articles are reviewed by the editorial desk before they go live.',
+        'We do not deliver an unedited AI-generated book as ghostwriting. Client prose is written and revised by the assigned human writer under studio editorial review. The same standard applies to advice we publish: the live article has to be something we will stand behind on a discovery call.',
+      ],
+    },
+    {
+      heading: 'Review, updates, and corrections',
+      paragraphs: [
+        'Each article shows a published date. When we materially change advice (pricing bands, KDP steps, rights language), we update the article and the date.',
+        'If you spot an error, email the studio. Factual corrections are made on the page. We do not silently swap a headline to chase a new keyword variation.',
+      ],
+    },
+    {
+      heading: 'Commercial pages vs guides',
+      paragraphs: [
+        'Service and pricing pages describe what we sell. Blog guides are for decisions before you hire — including checklists that apply to other writers, not only to us. Where a guide and a quote page could overlap, the guide says so (for example, the hiring checklist is not a second price list).',
+      ],
+    },
+  ],
+  links: [
+    { label: 'About', href: '/about' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'FAQ', href: '/faq' },
+    { label: 'Contact', href: '/contact' },
   ],
 };
 

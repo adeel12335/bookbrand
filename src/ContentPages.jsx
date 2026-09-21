@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import { IconArrow, IconCheck, serviceIcons } from './icons.jsx';
 import { plans, pricingIntro, services, servicesIntro } from './data.js';
 import { Contact } from './ContactSection.jsx';
+import { CompareTable, EditSample, QuickAnswer } from './CompareTable.jsx';
 import { headingId } from './blogPosts.js';
 import {
   aboutPage,
   coverPage,
   editingPage,
+  editorialPolicyPage,
   faqPage,
   landers,
   notFoundPage,
@@ -114,6 +116,8 @@ function ArticlePage({ page, children }) {
                         ))}
                       </ul>
                     ) : null}
+                    <CompareTable table={section.table} />
+                    <EditSample sample={section.sample} />
                   </div>
                 ))}
 
@@ -172,6 +176,7 @@ function ServiceDetail({ page, closeTitle, closeLead, closeCta, closeTo = '/cont
                 <p className="br-eyebrow br-eyebrow-light">{page.eyebrow}</p>
                 <h1 id="service-title" className="br-primary-heading">{page.title}</h1>
                 <p>{page.lead}</p>
+                <QuickAnswer text={page.quickAnswer} />
                 <div className="br_wrapper_buttons">
                   {page.actions?.map(action => (
                     <Link
@@ -215,10 +220,45 @@ function ServiceDetail({ page, closeTitle, closeLead, closeCta, closeTo = '/cont
                         ))}
                       </ul>
                     ) : null}
+                    <CompareTable table={section.table} />
+                    <EditSample sample={section.sample} />
                   </div>
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+      ) : null}
+
+      {page.covers?.length ? (
+        <section className="br_section br_section--paper" aria-labelledby="cover-proof-title">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="br_section_head">
+                  <div className="br_section_head_copy">
+                    <p className="br-eyebrow">Cover work</p>
+                    <h2 id="cover-proof-title">Covers designed to read at thumbnail size</h2>
+                    <p>Studio covers from the portfolio, with the genre cue each one had to land in a small Amazon image.</p>
+                  </div>
+                  <Link className="btn" to="/portfolio">View portfolio</Link>
+                </div>
+              </div>
+            </div>
+            <ul className="row br_grid br_cover_proof">
+              {page.covers.map(cover => (
+                <li className="col-md-4 col-lg-2" key={cover.title}>
+                  <figure className="br_cover_card">
+                    <img src={cover.image} alt={`${cover.title} — ${cover.genre} ebook cover`} loading="lazy" />
+                    <figcaption>
+                      <strong>{cover.title}</strong>
+                      <span>{cover.genre}</span>
+                      <p>{cover.note}</p>
+                    </figcaption>
+                  </figure>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       ) : null}
@@ -600,6 +640,51 @@ export function PricingPage() {
         </div>
       </section>
 
+      <section className="br_section br_section--paper" aria-labelledby="pricing-why-title">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_section_head">
+                <div className="br_section_head_copy">
+                  <p className="br-eyebrow">Pricing honesty</p>
+                  <h2 id="pricing-why-title">{page.why.heading}</h2>
+                  <p>{page.why.lead}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {page.why.paragraphs.map(paragraph => (
+            <div className="row" key={paragraph.slice(0, 40)}>
+              <div className="col-md-10">
+                <p className="br_price_why_copy">{paragraph}</p>
+              </div>
+            </div>
+          ))}
+          <div className="row br_grid">
+            <div className="col-md-6">
+              <article className="br_price_split">
+                <h3>{page.why.includedTitle}</h3>
+                <ul className="br_duo_list">
+                  {page.why.included.map(item => (
+                    <li key={item}><IconCheck aria-hidden="true" />{item}</li>
+                  ))}
+                </ul>
+              </article>
+            </div>
+            <div className="col-md-6">
+              <article className="br_price_split">
+                <h3>{page.why.excludedTitle}</h3>
+                <ul className="br_duo_list">
+                  {page.why.excluded.map(item => (
+                    <li key={item}><IconCheck aria-hidden="true" />{item}</li>
+                  ))}
+                </ul>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Contact />
 
       <section className="br_cta" aria-labelledby="pricing-cta-title">
@@ -698,6 +783,32 @@ export function ServicesPage() {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      <section className="br_section br_section--paper" aria-labelledby="services-chooser-title">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_section_head">
+                <div className="br_section_head_copy">
+                  <p className="br-eyebrow">Start in the right place</p>
+                  <h2 id="services-chooser-title">{page.chooser.heading}</h2>
+                  <p>{page.chooser.lead}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row br_grid">
+            {page.chooser.items.map(item => (
+              <div className="col-md-6" key={item.title}>
+                <article className="br_about_pillar">
+                  <h3>{item.title}</h3>
+                  <p>{item.copy}</p>
+                </article>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -806,6 +917,10 @@ export function FaqPage() {
 
 export function PrivacyPage() {
   return <ArticlePage page={privacyPage} />;
+}
+
+export function EditorialPolicyPage() {
+  return <ArticlePage page={editorialPolicyPage} />;
 }
 
 export function TermsPage() {

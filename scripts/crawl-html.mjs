@@ -8,15 +8,15 @@
  * gets its meta description here reads as a thin page to a crawler.
  */
 import {
-  books, contactIntro, faqs, footerBrand, footerLinks, hero, plans, portfolioPage, services,
+  books, benefits, contactIntro, faqs, footerBrand, footerLinks, hero, plans, portfolioPage, services,
   servicesIntro, siteContact,
 } from '../src/data.js';
 import {
-  aboutPage, coverPage, editingPage, faqPage, landers, notFoundPage,
+  aboutPage, coverPage, editingPage, editorialPolicyPage, faqPage, landers, notFoundPage,
   pricingPage, privacyPage, servicesPage, termsPage,
 } from '../src/pageContent.js';
 import { SITE_EMAIL, SITE_PHONE_DISPLAY } from '../src/site.js';
-import { blogIndex, blogPosts } from '../src/blogPosts.js';
+import { blogIndex, blogPosts, quickAnswerFor } from '../src/blogPosts.js';
 import { inlineHtml } from '../src/inlineMarkup.js';
 
 function esc(value) {
@@ -58,11 +58,26 @@ function list(items) {
   return `<ul>${items.map(item => `<li>${inlineHtml(item, esc)}</li>`).join('')}</ul>`;
 }
 
+function tableBlock(table) {
+  if (!table?.rows?.length) return '';
+  const columns = table.columns || [];
+  const head = columns.length
+    ? `<thead><tr>${columns.map(column => `<th>${esc(column)}</th>`).join('')}</tr></thead>`
+    : '';
+  const body = table.rows.map(row => `<tr>${row.map((cell, index) => (
+    index === 0 ? `<th scope="row">${esc(cell)}</th>` : `<td>${esc(cell)}</td>`
+  )).join('')}</tr>`).join('');
+  const caption = table.caption ? `<caption>${esc(table.caption)}</caption>` : '';
+  return `<table>${caption}${head}<tbody>${body}</tbody></table>`;
+}
+
 function sectionsBlock(sections = []) {
   return sections.map(section => `<section>
   <h2>${esc(section.heading)}</h2>
   ${(section.paragraphs || []).map(p => `<p>${inlineHtml(p, esc)}</p>`).join('\n  ')}
   ${list(section.bullets)}
+  ${tableBlock(section.table)}
+  ${section.sample?.before ? `<figure><figcaption>Before</figcaption><p>${esc(section.sample.before)}</p></figure><figure><figcaption>After</figcaption><p>${esc(section.sample.after)}</p></figure>` : ''}
 </section>`).join('\n');
 }
 
@@ -71,6 +86,24 @@ function linksBlock(links = [], label = 'Related pages') {
   return `<nav aria-label="${esc(label)}">
   ${links.map(link => `<a href="${esc(link.href)}">${esc(link.label)}</a>`).join('\n  ')}
 </nav>`;
+}
+
+function compactPackagesBlock() {
+  const rows = plans.map(plan => `<tr>
+  <th scope="row">${esc(plan.name)}</th>
+  <td>$${esc(plan.price)}</td>
+  <td>${esc(plan.words)}</td>
+  <td>${esc(plan.timeline)}</td>
+</tr>`).join('');
+  return `<section>
+  <h2>Ebook writing packages — starting prices</h2>
+  <p>Fixed starting prices by manuscript length. Full feature lists live on the <a href="/pricing">pricing</a> page.</p>
+  <table>
+    <thead><tr><th>Package</th><th>Starting from</th><th>Length</th><th>Timeline</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+  <p><a href="/pricing">View full pricing</a></p>
+</section>`;
 }
 
 function packagesBlock() {
@@ -112,18 +145,20 @@ function faqBlock(items = faqs, heading = 'Ebook writing & publishing FAQ') {
 }
 
 function contactBlock() {
-  const serviceLinks = footerLinks[0].links;
+  const page = contactIntro.page;
   return `<section>
-  <h2>${esc(joinTitle(contactIntro))}</h2>
   <p data-speakable="1">${esc(contactIntro.lead)}</p>
   ${list(contactIntro.points)}
+  <p>${esc(contactIntro.pricingNote)} <a href="${esc(contactIntro.pricingHref)}">${esc(contactIntro.pricingCta)}</a></p>
   <p>Email ${esc(SITE_EMAIL)} or call ${esc(SITE_PHONE_DISPLAY)}. ${esc(siteContact.address)}.</p>
+  <h2>${esc(page.howTitle)}</h2>
+  <p>${esc(page.howLead)}</p>
+  ${list(page.how)}
+  <h2>${esc(page.nextTitle)}</h2>
+  <p>${esc(page.nextLead)}</p>
+  ${list(page.next)}
+  ${page.extra.map(p => `<p>${esc(p)}</p>`).join('\n')}
   <p>Send an enquiry for a fixed ebook writing or ghostwriting quote. We typically reply within 1–2 business days.</p>
-  <p>Tell us about your book: who it is for, the job it has to do (authority, leads, memoir), target length, and when you need retailer-ready files. We come back with a clear yes, no, or clarifying question — and a fixed quote, not an hourly estimate.</p>
-  <p>Every project starts with a free 30-minute discovery call and an NDA before you share source material. Rights transfer before writing begins. You keep 100% of the copyright, royalties, and retailer accounts.</p>
-  ${faqBlock(faqs.slice(0, 4), 'Before you write')}
-  ${packagesBlock()}
-  ${linksBlock(serviceLinks, 'Writing and publishing services')}
   <form action="/contact" method="get">
     <label>Your name <input name="name" /></label>
     <label>Your email <input name="email" type="email" /></label>
@@ -146,8 +181,11 @@ function servicesIndexBlock() {
   <p>${esc(servicesPage.lead)}</p>
   ${landerList}
 </section>`,
-    packagesBlock(),
-    faqBlock(faqs.slice(0, 4)),
+    `<section>
+  <h2>${esc(servicesPage.chooser.heading)}</h2>
+  <p>${esc(servicesPage.chooser.lead)}</p>
+  ${servicesPage.chooser.items.map(item => `<article><h3>${esc(item.title)}</h3><p>${esc(item.copy)}</p></article>`).join('\n')}
+</section>`,
   ].join('\n');
 }
 
@@ -202,8 +240,19 @@ function portfolioBlock() {
 }
 
 function contentPageBlock(content) {
+  const quick = content.quickAnswer
+    ? `<section data-speakable="1"><h2>Quick answer</h2><p>${esc(content.quickAnswer)}</p></section>`
+    : '';
+  const covers = content.covers?.length
+    ? `<section>
+  <h2>Covers designed to read at thumbnail size</h2>
+  <ul>${content.covers.map(cover => `<li>${esc(cover.title)} — ${esc(cover.genre)}. ${esc(cover.note)}</li>`).join('')}</ul>
+</section>`
+    : '';
   return [
+    quick,
     sectionsBlock(content.sections),
+    covers,
     faqBlock(content.faqs, 'Frequently asked questions'),
     linksBlock(content.links),
   ].filter(Boolean).join('\n');
@@ -214,7 +263,16 @@ function contentPageBlock(content) {
  * body() is the rest of that page's copy.
  */
 const routes = {
-  '/': { h1: hero.h1, lead: hero.lead, body: () => [servicesBlock(), packagesBlock(), faqBlock()].join('\n') },
+  '/': {
+    h1: hero.h1,
+    lead: hero.lead,
+    body: () => [
+      `<ul>${hero.trust.map(item => `<li>${esc(item)}</li>`).join('')}${benefits.map(item => `<li><strong>${esc(item.title)}.</strong> ${esc(item.copy)}</li>`).join('')}</ul>`,
+      servicesBlock(),
+      compactPackagesBlock(),
+      `<p>Questions on rights, cost, and timelines: <a href="/faq">read the full FAQ</a>.</p>`,
+    ].join('\n'),
+  },
   '/about': { h1: joinTitle(aboutPage), lead: aboutPage.lead, body: aboutBlock },
   '/services': { h1: servicesPage.title, lead: servicesPage.lead, body: servicesIndexBlock },
   '/pricing': {
@@ -222,8 +280,16 @@ const routes = {
     lead: pricingPage.lead,
     body: () => [
       packagesBlock(),
+      `<section>
+  <h2>${esc(pricingPage.why.heading)}</h2>
+  <p>${esc(pricingPage.why.lead)}</p>
+  ${pricingPage.why.paragraphs.map(p => `<p>${esc(p)}</p>`).join('\n')}
+  <h3>${esc(pricingPage.why.includedTitle)}</h3>
+  ${list(pricingPage.why.included)}
+  <h3>${esc(pricingPage.why.excludedTitle)}</h3>
+  ${list(pricingPage.why.excluded)}
+</section>`,
       `<p>${esc(pricingPage.note)}</p>\n<p>${esc(pricingPage.closing)}</p>`,
-      faqBlock(faqs.slice(0, 4)),
     ].join('\n'),
   },
   '/portfolio': { h1: joinTitle(portfolioPage), lead: portfolioPage.lead, body: portfolioBlock },
@@ -238,6 +304,11 @@ const routes = {
     h1: privacyPage.title,
     lead: privacyPage.lead,
     body: () => `<p>Last updated ${esc(privacyPage.updated)}.</p>\n${sectionsBlock(privacyPage.sections)}`,
+  },
+  '/editorial-policy': {
+    h1: editorialPolicyPage.title,
+    lead: editorialPolicyPage.lead,
+    body: () => `<p>Last updated ${esc(editorialPolicyPage.updated)}.</p>\n${sectionsBlock(editorialPolicyPage.sections)}\n${linksBlock(editorialPolicyPage.links)}`,
   },
   '/terms': {
     h1: termsPage.title,
@@ -258,12 +329,22 @@ function blogPostRoute(slug) {
     h1: post.title,
     lead: post.lead || post.description,
     body: () => {
+      const answer = quickAnswerFor(post);
+      const quick = answer
+        ? `<section data-speakable="1"><h2>Quick answer</h2><p>${esc(answer)}</p></section>`
+        : '';
       const takeaways = post.takeaways?.length
         ? `<section><h2>Key takeaways</h2>${list(post.takeaways)}</section>`
         : '';
+      const sections = (post.sections || []).filter(section => {
+        if (!post.takeaways?.length) return true;
+        return !/^(key )?takeaways$/i.test(section.heading || '');
+      });
       return [
+        quick,
         takeaways,
-        sectionsBlock(post.sections),
+        sectionsBlock(sections),
+        `<p>Publishing guides follow the <a href="/editorial-policy">ebookwriters.us editorial policy</a>.</p>`,
         `<p><a href="/blog">All articles</a> · <a href="/contact">${esc(post.cta || 'Contact')}</a></p>`,
       ].join('\n');
     },

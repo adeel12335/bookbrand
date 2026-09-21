@@ -3,12 +3,16 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { IconBook, IconCheck } from './icons.jsx';
 import {
   BLOG_REDIRECTS,
+  articleSources,
   blogArticle,
   blogIndex,
   blogPosts,
   getPostBySlug,
   headingId,
+  quickAnswerFor,
 } from './blogPosts.js';
+import { CompareTable, QuickAnswer } from './CompareTable.jsx';
+import { comparisons } from './data.js';
 import { appPath, tokenizeInline } from './inlineMarkup.js';
 
 const STEP = 4;
@@ -236,10 +240,13 @@ export function BlogPostPage() {
               <h1 id="post-title" className="br-primary-heading">{post.title}</h1>
               <p className="br_post_intro"><RichText text={post.description} /></p>
               <p className="br_post_meta">
+                <span>{blogArticle.authorRole}</span>
+                <span aria-hidden="true">·</span>
                 <time dateTime={post.date}>{post.dateLabel}</time>
                 <span aria-hidden="true">·</span>
                 <span>{post.readTime}</span>
               </p>
+              <QuickAnswer text={quickAnswerFor(post)} />
             </div>
           </div>
         </div>
@@ -252,7 +259,10 @@ export function BlogPostPage() {
               <aside className="br_sidebar" aria-label={blogArticle.tocLabel}>
                 <h2 className="br_sidebar_eyebrow">{blogArticle.tocLabel}</h2>
                 <ol className="br_post_toc">
-                  {post.sections.map((section, index) => (
+                  {post.sections.filter(section => {
+                    if (!post.takeaways?.length) return true;
+                    return !/^(key )?takeaways$/i.test(section.heading || '');
+                  }).map((section, index) => (
                     <li key={section.heading}>
                       <a href={`#${headingId(section.heading)}`}>
                         <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
@@ -285,7 +295,24 @@ export function BlogPostPage() {
                   </div>
                 ) : null}
 
-                {post.sections.map(section => (
+                {post.slug === 'ghostwriting-vs-hiring-a-freelancer' ? (
+                  <div className="br_block br_border_top">
+                    <h2>Freelancer vs writing studio</h2>
+                    <CompareTable table={comparisons.studioVsFreelancer} />
+                  </div>
+                ) : null}
+
+                {post.slug === 'developmental-editing-vs-copyediting' ? (
+                  <div className="br_block br_border_top">
+                    <h2>Editing types at a glance</h2>
+                    <CompareTable table={comparisons.editingTypes} />
+                  </div>
+                ) : null}
+
+                {post.sections.filter(section => {
+                  if (!post.takeaways?.length) return true;
+                  return !/^(key )?takeaways$/i.test(section.heading || '');
+                }).map(section => (
                   <div
                     className="br_block br_border_top br_text_block"
                     id={headingId(section.heading)}
@@ -310,6 +337,24 @@ export function BlogPostPage() {
                   <p>{blogArticle.ctaLead}</p>
                   <Link className="btn" to="/contact">{post.cta}</Link>
                 </div>
+
+                {articleSources(post.slug).length ? (
+                  <div className="br_block br_border_top">
+                    <h2>Primary sources</h2>
+                    <ul>
+                      {articleSources(post.slug).map(source => (
+                        <li key={source.href}>
+                          <a href={source.href} rel="noopener noreferrer">{source.label}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+
+                <p className="br_post_policy">
+                  Publishing guides follow the{' '}
+                  <Link to="/editorial-policy">ebookwriters.us editorial policy</Link>.
+                </p>
               </div>
             </div>
           </div>

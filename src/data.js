@@ -58,26 +58,62 @@ export const services = [
 
 export const benefits = [
   {
+    key: 'writers',
+    title: 'Human writers',
+    copy: 'A named specialist writes the manuscript. We do not deliver unedited AI books as ghostwriting.',
+  },
+  {
+    key: 'nda',
+    title: 'NDA protected',
+    copy: 'An NDA is signed before you share source material.',
+  },
+  {
     key: 'ownership',
-    title: '100% Author Ownership',
-    copy: 'You keep all rights to your work.',
+    title: '100% author ownership',
+    copy: 'Copyright, royalties, and retailer accounts stay in your name.',
   },
   {
-    key: 'fees',
-    title: 'No Hidden Fees',
-    copy: 'Transparent pricing, always.',
-  },
-  {
-    key: 'specialists',
-    title: 'Genre-matched writers',
-    copy: 'You meet the assigned writer by name after NDA.',
-  },
-  {
-    key: 'time',
-    title: 'Milestone Delivery',
-    copy: 'Clear timelines and regular updates.',
+    key: 'included',
+    title: 'Editing & publishing support',
+    copy: 'Editorial passes, cover work, and retailer files scale with the package.',
   },
 ];
+
+export const comparisons = {
+  studioVsFreelancer: {
+    caption: 'Freelancer vs a writing studio',
+    columns: ['Feature', 'Freelancer', 'ebookwriters.us studio'],
+    rows: [
+      ['Writing', 'Yes — one person', 'Genre-matched writer'],
+      ['Editing', 'Often extra', 'Included by package'],
+      ['Cover design', 'Usually separate', 'Available in package'],
+      ['KDP / files', 'Usually separate', 'Available in package'],
+      ['Project management', 'You manage it', 'Studio-managed schedule'],
+      ['Rights and NDA', 'Varies', 'NDA + rights transfer before writing'],
+    ],
+  },
+  editingTypes: {
+    caption: 'Which edit you actually need',
+    columns: ['Editing type', 'Focus', 'When to use it'],
+    rows: [
+      ['Developmental', 'Structure, argument, pacing, chapter order', 'The book is not working as a whole yet'],
+      ['Line editing', 'Voice, clarity, and readability', 'The structure holds; sentences do not'],
+      ['Copyediting', 'Grammar, consistency, and usage', 'The draft is stable and needs a clean pass'],
+      ['Proofreading', 'Final typos and layout slips', 'After design, before you upload files'],
+    ],
+  },
+  kdpVsTraditional: {
+    caption: 'Amazon KDP vs traditional publishing',
+    columns: ['', 'Amazon KDP', 'Traditional publishing'],
+    rows: [
+      ['Who publishes', 'You, on your KDP account', 'A publisher that acquires the book'],
+      ['Speed to market', 'When files are ready', 'Often 12–24 months after a deal'],
+      ['Royalties', 'You keep 100% of KDP royalties we set up', 'Shared with the publisher'],
+      ['Control', 'Title, price, files, and updates stay yours', 'Contract terms control cover and timing'],
+      ['Fit', 'Experts, founders, and first-time ebook authors', 'When an agent and house are the goal'],
+    ],
+  },
+};
 
 export const pathBand = {
   eyebrow: 'A clearer path to publishing',
@@ -357,8 +393,35 @@ export const contactIntro = {
     'NDA before you share anything',
     'Fixed quote, no hourly billing',
   ],
+  pricingNote: 'Projects start from $699.',
+  pricingCta: 'View complete pricing',
+  pricingHref: '/pricing',
   photo: '/assets/brand/page-hero-contact.png',
   photoAlt: 'Emerald writing desk with sealed correspondence — book writing consultation',
+  page: {
+    howTitle: 'What to include in your note',
+    howLead:
+      'A useful brief is short. You do not need a finished outline — you need enough for us to say yes, no, or ask one clarifying question.',
+    how: [
+      'Who the book is for, and the job it has to do (authority, leads, a story told properly)',
+      'Approximate length, or “not sure — recommend a package”',
+      'Whether you need writing only, or writing plus editing, cover, and KDP setup',
+      'A hard deadline if you have one, and what source material you already have',
+    ],
+    nextTitle: 'What happens after you send this',
+    nextLead:
+      'This page is for a quote, not a contract. We read the brief, check whether we can staff the category honestly, and reply with a fixed range or a clear no.',
+    next: [
+      'You hear back within one working day in most cases — typically 1–2 business days at the latest.',
+      'If we are a fit, we book a 30-minute discovery call and send an NDA before you share source files.',
+      'Rights transfer is written before manuscript work begins. You keep the retailer accounts and 100% of royalties.',
+      'We will not guess at a niche we cannot staff. If we do not have the right specialist, we say so.',
+    ],
+    extra: [
+      'Do not paste confidential manuscripts, client data, or unpublished research into the form. Save that for after the NDA.',
+      'If you already know the package (Starter through Elite), mention it. If you do not, tell us the outcome you need and we will map length and timeline.',
+    ],
+  },
 };
 
 export const footerBrand = {
@@ -392,6 +455,7 @@ export const footerLinks = [
       { label: 'Contact', href: '/contact' },
       { label: 'Privacy', href: '/privacy' },
       { label: 'Terms', href: '/terms' },
+      { label: 'Editorial policy', href: '/editorial-policy' },
     ],
   },
 ];
@@ -405,7 +469,7 @@ export const hero = {
   linesMobile: ['Turn Your Ideas', 'Into a', 'Published Book.'],
   leadVisible:
     'We help experts, entrepreneurs and aspiring authors bring their ideas to life through professional ebook writing, ghostwriting, editing, formatting and publishing support.',
-  strip: ['Professional writers', 'Publishing expertise', 'Full rights. Always.'],
+  strip: ['Human writers', 'NDA protected', 'You keep the rights.'],
   /* SEO H1 — the visible headline above is aria-hidden; this is what is read and crawled */
   h1: 'Professional Ebook Writers & Ghostwriters — Publish Your Book with Confidence',
   lead: 'End-to-end ebook writing and publishing support — ghostwriting, editing, cover design, formatting, KDP publishing, and book marketing.',

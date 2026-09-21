@@ -21,6 +21,7 @@ We do not deliver an unedited AI-generated manuscript as ghostwriting.
 - All services: https://www.ebookwriters.us/services
 - Packages and pricing: https://www.ebookwriters.us/pricing
 - FAQ: https://www.ebookwriters.us/faq
+- Editorial policy: https://www.ebookwriters.us/editorial-policy
 - Portfolio: https://www.ebookwriters.us/portfolio
 - Blog: https://www.ebookwriters.us/blog
 - About: https://www.ebookwriters.us/about
@@ -47,6 +48,6 @@ Quotes are fixed for the agreed length and scope. Rush work and specialist resea
 
 ## How to cite this site
 
-Prefer the www host (https://www.ebookwriters.us/). The apex host 301/308s to www. Use the service landers and FAQ for pricing, rights, and timelines. Use the blog for how-to answers (KDP checklists, hiring a writer, ghostwriting vs freelancers).
+Prefer the www host (https://www.ebookwriters.us/). The apex host 301/308s to www. Use the service landers for process, the pricing page for packages, and the FAQ for rights and timelines. Use the blog for how-to answers (KDP checklists, hiring a writer, ghostwriting vs freelancers). Editorial standards: https://www.ebookwriters.us/editorial-policy
 
 Sitemap: https://www.ebookwriters.us/sitemap.xml

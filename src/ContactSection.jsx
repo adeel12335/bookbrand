@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { IconCheck, IconMail, IconMapPin, IconPhone } from './icons.jsx';
 import { contactIntro, siteContact } from './data.js';
 
@@ -80,7 +81,7 @@ export function Contact({ asPage = false }) {
   const resultRef = useRef(null);
   const formRef = useRef(null);
   const getRecaptchaToken = useRecaptcha();
-  const TitleTag = 'h2';
+  const TitleTag = asPage ? 'h1' : 'h2';
 
   useEffect(() => { if (status === 'sent') resultRef.current?.focus(); }, [status]);
 
@@ -140,7 +141,7 @@ export function Contact({ asPage = false }) {
             <div className="br_contact_info">
               <Eyebrow>{contactIntro.eyebrow}</Eyebrow>
               <TitleTag id="contact-title">
-                {contactIntro.title} <span>{contactIntro.titleEm}</span>
+                {asPage ? contactIntro.pageTitle : <>{contactIntro.title} <span>{contactIntro.titleEm}</span></>}
               </TitleTag>
               <p>{contactIntro.lead}</p>
               <ul className="br_contact_points">
@@ -148,6 +149,31 @@ export function Contact({ asPage = false }) {
                   <li key={point}><IconCheck aria-hidden="true" />{point}</li>
                 ))}
               </ul>
+              <p className="br_contact_pricing">
+                {contactIntro.pricingNote}{' '}
+                <Link to={contactIntro.pricingHref}>{contactIntro.pricingCta}</Link>
+              </p>
+              {asPage ? (
+                <div className="br_contact_brief">
+                  <h2>{contactIntro.page.howTitle}</h2>
+                  <p>{contactIntro.page.howLead}</p>
+                  <ul className="br_contact_points">
+                    {contactIntro.page.how.map(point => (
+                      <li key={point}><IconCheck aria-hidden="true" />{point}</li>
+                    ))}
+                  </ul>
+                  <h2>{contactIntro.page.nextTitle}</h2>
+                  <p>{contactIntro.page.nextLead}</p>
+                  <ul className="br_contact_points">
+                    {contactIntro.page.next.map(point => (
+                      <li key={point}><IconCheck aria-hidden="true" />{point}</li>
+                    ))}
+                  </ul>
+                  {contactIntro.page.extra.map(paragraph => (
+                    <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                  ))}
+                </div>
+              ) : null}
               <div className="br_contact_direct">
                 <a href={`mailto:${siteContact.email}`}><IconMail aria-hidden="true" /> {siteContact.email}</a>
                 <a href={siteContact.phoneHref}><IconPhone aria-hidden="true" /> {siteContact.phone}</a>

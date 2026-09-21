@@ -1,6 +1,6 @@
 import { blogArticle, blogIndex, blogPosts } from './blogPosts.js';
 import { books, faqs, plans, portfolioPage } from './data.js';
-import { coverPage, editingPage, faqPage, landers } from './pageContent.js';
+import { coverPage, editingPage, editorialPolicyPage, faqPage, landers } from './pageContent.js';
 import {
   DEFAULT_OG_ALT,
   DEFAULT_OG_PATH,
@@ -33,9 +33,10 @@ function clipPlain(text, max) {
 
 function organization() {
   return {
-    '@type': 'ProfessionalService',
+    '@type': ['Organization', 'ProfessionalService'],
     '@id': `${SITE_ORIGIN}/#organization`,
     name: SITE_NAME,
+    alternateName: 'Ebook Writers',
     url: absoluteUrl('/'),
     email: SITE_EMAIL,
     telephone: SITE_PHONE,
@@ -133,7 +134,7 @@ function webPageSchema({ type = 'WebPage', name, description, path, speakable = 
   if (speakable) {
     node.speakable = {
       '@type': 'SpeakableSpecification',
-      cssSelector: ['h1', '[data-speakable]'],
+      cssSelector: ['h1', '[data-speakable]', '.br_quick'],
     };
   }
   return node;
@@ -280,9 +281,6 @@ const staticPages = [
         path: '/',
         speakable: true,
       }),
-      {
-        ...faqPageSchema(faqs),
-      },
       webSite(),
     ],
   }),
@@ -405,7 +403,6 @@ const staticPages = [
         { name: 'Pricing', path: '/pricing' },
       ]),
       pricingOfferSchema(),
-      faqPageSchema(faqs.slice(0, 4)),
     ],
   }),
   page({
@@ -421,6 +418,25 @@ const staticPages = [
         description: 'Privacy policy for ebookwriters.us.',
         path: '/privacy',
       }),
+    ],
+  }),
+  page({
+    path: '/editorial-policy',
+    title: 'Editorial Policy | ebookwriters.us',
+    description: editorialPolicyPage.lead,
+    image: editorialPolicyPage.heroImage,
+    priority: 0.5,
+    changefreq: 'yearly',
+    jsonLd: [
+      webPageSchema({
+        name: 'Editorial Policy',
+        description: editorialPolicyPage.lead,
+        path: '/editorial-policy',
+      }),
+      breadcrumbs([
+        { name: 'Home', path: '/' },
+        { name: 'Editorial Policy', path: '/editorial-policy' },
+      ]),
     ],
   }),
   page({
@@ -644,7 +660,7 @@ function blogPostPage(post) {
     jsonLd: [
       {
         '@context': 'https://schema.org',
-        '@type': 'Article',
+        '@type': 'BlogPosting',
         headline: post.title,
         description,
         datePublished: post.date,
@@ -664,7 +680,7 @@ function blogPostPage(post) {
         keywords: post.keywords?.join(', '),
         speakable: {
           '@type': 'SpeakableSpecification',
-          cssSelector: ['h1', '[data-speakable]'],
+          cssSelector: ['h1', '[data-speakable]', '.br_quick'],
         },
       },
       breadcrumbs([

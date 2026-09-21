@@ -80,74 +80,18 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Who owns the rights to the finished book?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "You do, completely and permanently. Every project is covered by an NDA and a full rights-transfer agreement signed before writing begins. Your name goes on the cover; ours appears nowhere unless you want it to."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How much does it cost to hire an ebook writer?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Packages start at $699 for a focused 15,000-word guide and go up to $3,999 for a full-length authority book with launch support. Every quote is fixed up front — writing, editing, cover, and retailer-ready files are included in the package you choose."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How involved do I need to be?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Roughly two to four hours in total. That is a discovery call, one or two voice-matching interviews, and reviewing each chapter as it lands. Everything else is on us."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How long does a book actually take?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A 15,000-word guide takes about three weeks, a 30,000-word book around five, and a full-length 50,000-word manuscript around eight. You get a dated schedule before we start and weekly drafts against it."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What happens if I do not like the draft?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "You see a chapter outline and a sample chapter before the full manuscript is written, precisely so this does not happen. Every package includes revision rounds, and if the sample chapter misses your voice we rewrite it at no cost."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Do you help with publishing, or only the writing?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Both. We set up KDP and IngramSpark, research categories and keywords, prepare metadata and hand over every retailer-ready file. You keep the accounts and 100% of the royalties."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can you write in a specific niche or technical field?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. We match every project to a writer experienced in that area — finance, health, law, SaaS, memoir, and related nonfiction. If we do not have the right specialist, we will say so rather than guess."
-            }
-          }
-        ]
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "ebookwriters.us",
         "url": "https://www.ebookwriters.us/",
-        "description": "Professional ebook writers and ghostwriting studio for writing, editing, design, and publishing."
+        "description": "Professional ebook writers and ghostwriting studio for writing, editing, design, and publishing.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://www.ebookwriters.us/search?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
       }
     </script>
   </head>

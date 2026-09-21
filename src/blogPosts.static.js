@@ -550,3 +550,69 @@ export const staticBlogPosts = [
     ],
   },
 ];
+
+const ARTICLE_QUICK_ANSWERS = {
+  'how-much-does-an-ebook-ghostwriter-cost':
+    'Professional ebook ghostwriting ranges from short fixed-price guides to full-length books. Price tracks word count, interviews, research, editing, and whether cover and KDP files are bundled. Our studio packages run from $699 to $3,999 for agreed lengths — not an open hourly tab.',
+  'how-to-hire-an-ebook-writer':
+    'Before you hire an ebook writer, lock NDA and rights language, insist on a sample chapter, a fixed fee, dated milestones, and named revision rounds. Decide whether you need writing only or writing plus retailer-ready files. This checklist is the buying test — the hire page is the quote.',
+  'does-a-ghostwriter-own-your-book-rights':
+    'A ghostwriter should not own your book. In a professional engagement, copyright transfers to you in writing before or as work begins — typically as an assignment or work made for hire. Keep the retailer accounts and the royalties. Confirm that in the contract, not in a chat thread.',
+  'ai-ebook-writer-vs-human-ghostwriter':
+    'An AI drafting tool generates text you still have to own, edit, and stand behind. A human ghostwriter is hired to write in your voice, under NDA, with rights transfer. Speed is not the same product as a manuscript you can put your name on.',
+  'kdp-publishing-checklist-for-first-time-authors':
+    'Amazon KDP publishing works when the manuscript, cover, EPUB or print files, categories, keywords, and metadata already match. Keep the KDP account in your name. Do not upload a rough draft and hope the listing will fix it.',
+  'ghostwriting-vs-hiring-a-freelancer':
+    'A freelancer is one writer. A studio coordinates writing, editing, design, and often KDP setup under one agreement. Choose a freelancer when you already have the rest of the bench; choose a studio when you need one team accountable for the finish line.',
+  'developmental-editing-vs-copyediting':
+    'Developmental editing fixes structure, argument, and chapter order. Line editing fixes voice and readability. Copyediting fixes grammar and consistency. Proofreading catches last errors. Buy the pass that matches how unfinished the draft still is.',
+  'how-long-does-it-take-to-write-and-publish-a-book':
+    'A focused 15,000-word guide can be written in about three weeks on our Starter path; a ~30,000-word book around five; a ~50,000-word manuscript around eight. Interview delays and revision scope change the calendar more than typing speed.',
+  'what-is-included-in-a-professional-ebook-writing-package':
+    'A complete ebook writing package covers the manuscript, named revision rounds, an editorial pass, cover and retailer files, plus written rights transfer. A Word draft with no NDA, no edits, and no files is not a publishing product.',
+};
+
+const ARTICLE_SOURCES = {
+  'does-a-ghostwriter-own-your-book-rights': [
+    { label: 'U.S. Copyright Office: Works Made for Hire (Circular 30)', href: 'https://www.copyright.gov/circs/circ30.pdf' },
+    { label: 'U.S. Copyright Office: Copyright Basics (Circular 1)', href: 'https://www.copyright.gov/circs/circ01.pdf' },
+  ],
+  'kdp-publishing-checklist-for-first-time-authors': [
+    { label: 'Amazon KDP Help: Content Guidelines', href: 'https://kdp.amazon.com/en_US/help/topic/G200645680' },
+    { label: 'Amazon KDP Help: Title, subtitle, and description', href: 'https://kdp.amazon.com/en_US/help/topic/G200672390' },
+  ],
+  'ai-ebook-writer-vs-human-ghostwriter': [
+    { label: 'Amazon KDP Help: Content Guidelines', href: 'https://kdp.amazon.com/en_US/help/topic/G200645680' },
+  ],
+};
+
+function firstSentences(text, maxWords = 70) {
+  const raw = String(text || '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\*\*/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!raw) return '';
+  const parts = raw.match(/[^.!?]+[.!?]+(?:\s|$)/g);
+  if (!parts) {
+    const words = raw.split(/\s+/);
+    return words.length <= maxWords ? raw : `${words.slice(0, maxWords).join(' ')}.`;
+  }
+  let out = '';
+  for (const part of parts) {
+    const next = `${out} ${part}`.trim();
+    if (out && next.split(/\s+/).length > maxWords) return out;
+    out = next;
+    if (out.split(/\s+/).length >= 40) return out;
+  }
+  return out;
+}
+
+export function quickAnswerFor(post) {
+  if (!post) return '';
+  return post.quickAnswer || ARTICLE_QUICK_ANSWERS[post.slug] || firstSentences(post.lead || post.description);
+}
+
+export function articleSources(slug) {
+  return ARTICLE_SOURCES[slug] || [];
+}

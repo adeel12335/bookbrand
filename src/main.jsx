@@ -1,19 +1,19 @@
-import React, { Suspense, lazy, useEffect, useId, useRef, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import {
   IconArrow, IconArrowUpRight, IconBook, IconCheck, IconClose,
-  IconMenu, IconPlus, IconSearch,
+  IconConfidential, IconMenu, IconSearch,
   IconWriting, IconWriters, IconPublishing,
-  IconCoins, IconCalendar, IconLeaf, IconEditing, IconFormatting, IconBranding,
+  IconCalendar, IconLeaf, IconEditing, IconFormatting, IconBranding,
   serviceIcons,
 } from './icons.jsx';
 import {
-  books, faqs, footerLinks, navigation, plans,
+  books, footerLinks, navigation, plans,
   services, hero,
   siteContact,
   portfolioIntro, servicesIntro, benefits, pathBand, dualOffer,
-  pricingIntro, faqIntro, contactIntro, footerBrand,
+  pricingIntro, contactIntro, footerBrand,
 } from './data.js';
 import { blogPosts } from './blogPosts.js';
 import { Contact, Eyebrow, Reveal, reduceMotion, useRecaptcha } from './ContactSection.jsx';
@@ -38,6 +38,7 @@ const KdpPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.
 const NotFoundPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.NotFoundPage })));
 const PricingPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.PricingPage })));
 const PrivacyPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.PrivacyPage })));
+const EditorialPolicyPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.EditorialPolicyPage })));
 const ServicesPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.ServicesPage })));
 const TermsPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.TermsPage })));
 const SearchPage = lazy(() => import('./SearchPage.jsx'));
@@ -267,10 +268,10 @@ function Hero() {
 /* ----------------------------------------------------------------- services */
 
 const benefitIcons = {
+  writers: IconWriters,
+  nda: IconConfidential,
   ownership: IconBook,
-  fees: IconCoins,
-  specialists: IconWriters,
-  time: IconCalendar,
+  included: IconEditing,
 };
 
 const journeyIcons = [
@@ -631,9 +632,9 @@ function DualOffer() {
 
 /* ------------------------------------------------------------------ pricing */
 
-function Pricing() {
+function PricingPreview() {
   return (
-    <section className="br_pricing" id="pricing" aria-labelledby="pricing-title">
+    <section className="br_price_preview" id="pricing" aria-labelledby="pricing-title">
       <div className="container">
         <div className="row">
           <div className="col-md-12">
@@ -642,33 +643,38 @@ function Pricing() {
               <h2 id="pricing-title">
                 {pricingIntro.title} <span>{pricingIntro.titleEm}</span>
               </h2>
-              <p>{pricingIntro.lead}</p>
+              <p>Fixed starting prices by manuscript length. Full feature lists, revision rounds, and what is not included live on the pricing page.</p>
             </Reveal>
           </div>
         </div>
-        <div className="row br_grid" aria-label="Publishing packages">
-          {plans.map((plan, i) => (
-            <Reveal className="col-md-6 col-lg-3" key={plan.name} delay={i * 70}>
-              <article className={`br_price_card${plan.featured ? ' is-featured' : ''}`}>
-                {plan.featured ? <span className="br_price_badge">Most popular</span> : null}
-                <h3>{plan.name}</h3>
-                <p className="br_price_amount"><sup>$</sup>{plan.price}</p>
-                <p className="br_price_copy">{plan.copy}</p>
-                <dl className="br_price_meta">
-                  <div><dt>Length</dt><dd>{plan.words}</dd></div>
-                  <div><dt>Timeline</dt><dd>{plan.timeline}</dd></div>
-                </dl>
-                <ul className="br_price_features">
-                  {plan.features.slice(0, 4).map(feature => (
-                    <li key={feature}><IconCheck aria-hidden="true" />{feature}</li>
+        <div className="row">
+          <div className="col-md-10">
+            <div className="br_compare_scroll">
+              <table className="br_compare">
+                <thead>
+                  <tr>
+                    <th scope="col">Package</th>
+                    <th scope="col">Starting from</th>
+                    <th scope="col">Length</th>
+                    <th scope="col">Timeline</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {plans.map(plan => (
+                    <tr key={plan.name}>
+                      <th scope="row">{plan.name}</th>
+                      <td>${plan.price}</td>
+                      <td>{plan.words}</td>
+                      <td>{plan.timeline}</td>
+                    </tr>
                   ))}
-                </ul>
-                <a className={plan.featured ? 'btn' : 'btn-outline'} href="/contact">
-                  {plan.featured ? 'Get started' : `Choose ${plan.name}`}
-                </a>
-              </article>
-            </Reveal>
-          ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="br_price_preview_cta">
+              <Link className="btn" to="/pricing">View full pricing</Link>
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -717,78 +723,6 @@ function Latest() {
     </section>
   );
 }
-
-/* ---------------------------------------------------------------------- faq */
-
-function FaqItem({ item, index, open, onToggle }) {
-  const panelId = useId();
-  const buttonId = useId();
-  return (
-    <div className={`br_faq_item${open ? ' is-open' : ''}`}>
-      <h3>
-        <button
-          type="button"
-          className="br_faq_question"
-          id={buttonId}
-          aria-expanded={open}
-          aria-controls={panelId}
-          onClick={onToggle}
-        >
-          <span className="br_faq_num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-          <span className="br_faq_q">{item.q}</span>
-          <span className="br_faq_icon" aria-hidden="true">
-            {open ? <IconClose /> : <IconPlus />}
-          </span>
-        </button>
-      </h3>
-      <div id={panelId} role="region" aria-labelledby={buttonId} className="br_faq_answer" inert={!open}>
-        <div className="br_faq_answer_inner">
-          <p>{item.a}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Faq() {
-  const [open, setOpen] = useState(0);
-
-  return (
-    <section className="br_faq" id="faq" aria-labelledby="faq-title">
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <Reveal className="br_section_head br_faq_head">
-              <div className="br_section_head_copy">
-                <Eyebrow>{faqIntro.eyebrow}</Eyebrow>
-                <h2 id="faq-title">
-                  {faqIntro.title} <span>{faqIntro.titleEm}</span>
-                </h2>
-                <p>{faqIntro.lead}</p>
-              </div>
-              <a className="btn" href="/contact">{faqIntro.cta}</a>
-            </Reveal>
-
-            <Reveal className="br_faq_list" delay={90}>
-              {faqs.map((item, i) => (
-                <FaqItem
-                  key={item.q}
-                  item={item}
-                  index={i}
-                  open={open === i}
-                  onToggle={() => setOpen(current => (current === i ? -1 : i))}
-                />
-              ))}
-            </Reveal>
-
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ contact */
 
 /* ------------------------------------------------------------------- footer */
 
@@ -1059,6 +993,7 @@ function App() {
         <Route path="/ebook-cover-design" element={<BlogShell><CoverDesignPage /></BlogShell>} />
         <Route path="/faq" element={<BlogShell><FaqPage /></BlogShell>} />
         <Route path="/privacy" element={<BlogShell><PrivacyPage /></BlogShell>} />
+        <Route path="/editorial-policy" element={<BlogShell><EditorialPolicyPage /></BlogShell>} />
         <Route path="/terms" element={<BlogShell><TermsPage /></BlogShell>} />
         <Route path="/search" element={<BlogShell><SearchPage /></BlogShell>} />
         <Route path="*" element={<BlogShell><NotFoundPage /></BlogShell>} />
@@ -1152,9 +1087,8 @@ function HomePage() {
         <Services />
         <Portfolio />
         <DualOffer />
-        <Pricing />
+        <PricingPreview />
         <Latest />
-        <Faq />
         <Contact />
       </main>
       <Footer />
