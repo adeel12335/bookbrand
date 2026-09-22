@@ -1530,61 +1530,13 @@
   color: var(--ink-500);
 }
 
-.br_page_hero--split {
-  background: var(--emerald-900);
-}
 
-.br_page_hero--split .br_page_hero_content {
-  max-width: 28rem;
-}
 
-.br_page_hero--split .br-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.391506rem;
-}
 
-.br_page_hero--split .br-eyebrow svg {
-  width: 0.783012rem;
-  height: 0.783012rem;
-}
 
-.br_hero_rule {
-  display: block;
-  width: 3.132051rem;
-  height: 2px;
-  margin: 1.174518rem 0;
-  background: var(--gold-300);
-}
 
-.br_hero_media {
-  position: relative;
-  margin: 0;
-}
 
-.br_hero_media img {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: var(--radius-lg);
-}
 
-.br_hero_media::after {
-  content: '';
-  position: absolute;
-  top: -0.783012rem;
-  right: -0.783012rem;
-  width: 6.264102rem;
-  height: 6.264102rem;
-  background: var(--gold-300);
-  border-radius: var(--radius-lg);
-}
-
-.br_featured_band {
-  padding-bottom: 0;
-}
 
 .br_featured {
   position: relative;

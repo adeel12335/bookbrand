@@ -7,8 +7,13 @@
  */
 
 export const blogIndex = {
+  eyebrow: 'Guides & resources',
   title: 'Ebook writing & publishing',
   titleEm: 'guides.',
+  actions: [
+    { label: 'Start Your Project', href: '/contact' },
+    { label: 'View pricing', href: '/pricing', variant: 'gold' },
+  ],
   lead:
     'Practical guides on ebook writing, ghostwriting costs, timelines, and KDP publishing — written for authors who want clear answers before they hire a writer.',
   metaTitle: 'Ebook Writing & Ghostwriting Blog | ebookwriters.us',

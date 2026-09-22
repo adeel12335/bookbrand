@@ -90,18 +90,6 @@
     width: 50%;
   }
 
-  .br_page_hero--split .col-md-6 + .col-md-6 {
-    margin-top: 1.957529rem;
-  }
-
-  .br_hero_rule {
-    margin-inline: auto;
-  }
-
-  .br_hero_media::after {
-    display: none;
-  }
-
   .br_sidebar {
     position: static;
     margin-bottom: 1.957529rem;

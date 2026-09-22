@@ -77,22 +77,32 @@ export function BlogIndexPage() {
 
   return (
     <div className="blog-page">
-      <section className="br_page_hero br_page_hero--split" aria-labelledby="blog-index-title">
+      <section
+        className="br_page_hero"
+        aria-labelledby="blog-index-title"
+        style={{ '--bgImage': `url('${blogIndex.heroImage}')` }}
+      >
         <div className="container">
-          <div className="row align-items-center">
-            <div className="col-md-6">
+          <div className="row">
+            <div className="col-md-12">
               <div className="br_page_hero_content">
+                <p className="br-eyebrow br-eyebrow-light">{blogIndex.eyebrow}</p>
                 <h1 id="blog-index-title" className="br-primary-heading">
                   {blogIndex.title} <span>{blogIndex.titleEm}</span>
                 </h1>
-                <span className="br_hero_rule" aria-hidden="true" />
                 <p>{blogIndex.lead}</p>
+                <div className="br_wrapper_buttons">
+                  {blogIndex.actions?.map(action => (
+                    <Link
+                      key={action.href}
+                      className={action.variant === 'gold' ? 'btn-outline' : 'btn'}
+                      to={action.href}
+                    >
+                      {action.label}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="col-md-6">
-              <figure className="br_hero_media">
-                <img src={blogIndex.heroImage} alt={blogIndex.heroImageAlt} />
-              </figure>
             </div>
           </div>
         </div>
