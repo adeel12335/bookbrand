@@ -908,11 +908,14 @@
   color: var(--gold-300);
 }
 
+/* The contact page renders an h1 here, the home section an h2. */
+.br_contact_info h1,
 .br_contact_info h2 {
   margin-bottom: 0.783012rem;
   color: var(--white);
 }
 
+.br_contact_info h1 span,
 .br_contact_info h2 span {
   color: var(--gold-300);
 }
@@ -5617,5 +5620,105 @@ body {
 
   .br_about_intro_copy .br_duo_list li + li {
     margin-top: 0.704711rem;
+  }
+}
+
+/* ==========================================================================
+   Contact page — brief cards
+   The "what to include" / "what happens next" copy used to sit stacked under
+   the hero column; it reads better as two peer cards below the fold.
+   ========================================================================== */
+
+.br_brief_card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.566025rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+}
+
+.br_brief_card--gold {
+  background: rgba(212, 180, 131, 0.13);
+  border-color: rgba(212, 180, 131, 0.42);
+}
+
+.br_brief_card--emerald {
+  background: rgba(30, 91, 70, 0.07);
+  border-color: rgba(15, 61, 50, 0.16);
+}
+
+.br_brief_card--gold .br_duo_list {
+  border-top-color: rgba(150, 119, 58, 0.28);
+}
+
+.br_brief_card--emerald .br_duo_list {
+  border-top-color: rgba(15, 61, 50, 0.16);
+}
+
+.br_brief_card--gold .br_duo_list svg {
+  color: var(--gold-700);
+}
+
+.br_brief_card--emerald .br_duo_list svg {
+  color: var(--emerald-600);
+}
+
+.br_brief_card h2 {
+  margin-bottom: 0.587259rem;
+  font-size: 1.174518rem;
+  color: var(--emerald-900);
+}
+
+.br_brief_lead {
+  margin-bottom: 0;
+  color: var(--ink-500);
+}
+
+.br_brief_card .br_duo_list {
+  margin: 0;
+}
+
+.br_brief_card .br_duo_list li + li {
+  margin-top: 0.704711rem;
+}
+
+.br_brief_notes {
+  display: grid;
+  gap: 0.587259rem;
+  margin-top: 1.566025rem;
+  padding: 1.174518rem 1.566025rem;
+  background: var(--paper-warm);
+  border-left: 2px solid var(--gold-300);
+  border-radius: var(--radius);
+}
+
+.br_brief_notes li {
+  font-size: 0.783012rem;
+  line-height: 1.55;
+  color: var(--ink-700);
+}
+
+@media (max-width: 767px) {
+  .br_brief_card {
+    padding: 1.174518rem;
+  }
+
+  .br_brief_card h2 {
+    font-size: 1.017rem;
+  }
+
+  .br_brief_card .br_duo_list li,
+  .br_brief_lead {
+    font-size: 0.861313rem;
+    line-height: 1.55;
+  }
+
+  .br_brief_notes {
+    padding: 1.017rem 1.174518rem;
+  }
+
+  .br_brief_notes li {
+    font-size: 0.861313rem;
   }
 }

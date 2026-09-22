@@ -134,6 +134,7 @@ export function Contact({ asPage = false }) {
   }
 
   return (
+    <>
     <section className={`br_contact${asPage ? ' br_contact--page' : ''}`} id="contact" aria-labelledby="contact-title">
       <div className="container">
         <div className="row align-items-center">
@@ -153,27 +154,6 @@ export function Contact({ asPage = false }) {
                 {contactIntro.pricingNote}{' '}
                 <Link to={contactIntro.pricingHref}>{contactIntro.pricingCta}</Link>
               </p>
-              {asPage ? (
-                <div className="br_contact_brief">
-                  <h2>{contactIntro.page.howTitle}</h2>
-                  <p>{contactIntro.page.howLead}</p>
-                  <ul className="br_contact_points">
-                    {contactIntro.page.how.map(point => (
-                      <li key={point}><IconCheck aria-hidden="true" />{point}</li>
-                    ))}
-                  </ul>
-                  <h2>{contactIntro.page.nextTitle}</h2>
-                  <p>{contactIntro.page.nextLead}</p>
-                  <ul className="br_contact_points">
-                    {contactIntro.page.next.map(point => (
-                      <li key={point}><IconCheck aria-hidden="true" />{point}</li>
-                    ))}
-                  </ul>
-                  {contactIntro.page.extra.map(paragraph => (
-                    <p key={paragraph.slice(0, 48)}>{paragraph}</p>
-                  ))}
-                </div>
-              ) : null}
               <div className="br_contact_direct">
                 <a href={`mailto:${siteContact.email}`}><IconMail aria-hidden="true" /> {siteContact.email}</a>
                 <a href={siteContact.phoneHref}><IconPhone aria-hidden="true" /> {siteContact.phone}</a>
@@ -283,5 +263,40 @@ export function Contact({ asPage = false }) {
         </div>
       </div>
     </section>
+
+    {asPage ? (
+      <section className="br_section br_section--paper br_brief" aria-label="Before you send your brief">
+        <div className="container">
+          <div className="row br_grid">
+            {[
+              { tone: 'gold', title: contactIntro.page.howTitle, lead: contactIntro.page.howLead, points: contactIntro.page.how },
+              { tone: 'emerald', title: contactIntro.page.nextTitle, lead: contactIntro.page.nextLead, points: contactIntro.page.next },
+            ].map(card => (
+              <div className="col-md-6" key={card.title}>
+                <article className={`br_brief_card br_brief_card--${card.tone}`}>
+                  <h2>{card.title}</h2>
+                  <p className="br_brief_lead">{card.lead}</p>
+                  <ul className="br_duo_list">
+                    {card.points.map(point => (
+                      <li key={point}><IconCheck aria-hidden="true" />{point}</li>
+                    ))}
+                  </ul>
+                </article>
+              </div>
+            ))}
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <ul className="br_brief_notes">
+                {contactIntro.page.extra.map(paragraph => (
+                  <li key={paragraph.slice(0, 48)}>{paragraph}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    ) : null}
+    </>
   );
 }
