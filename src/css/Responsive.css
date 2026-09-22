@@ -45,31 +45,14 @@
     text-align: left;
   }
 
-  .br_path_steps {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    row-gap: 1.174518rem;
-  }
-
-  .br_path_steps::before {
-    display: none;
-  }
-
   .hero-section,
 .br_page_hero_content,
-.br_section_head,
-.br_duo_head,
-.br_pricing_head,
-.br_faq_head,
-.br_testimonials_head,
 .br_testimonial_card {
     text-align: center;
   }
 
   .br_wrapper_content_hero_home,
 .br_page_hero_content,
-.br_duo_head,
-.br_pricing_head,
-.br_testimonials_head,
 .br_testimonial_icon {
     margin-inline: auto;
   }
@@ -80,7 +63,7 @@
 
   .br_section_head {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .br_testimonial_card {
@@ -137,8 +120,22 @@
     padding: 1.566025rem 1.174518rem;
   }
 
+  .br_featured_media {
+    order: 1;
+  }
+
   .br_featured_media img {
     aspect-ratio: 16 / 10;
+  }
+
+  .br_posts_head,
+  .br_posts_filters {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .br_posts_search {
+    width: 100%;
   }
 }
 
@@ -462,74 +459,6 @@
 }
 
 @media (max-width: 560px) {
-  .ed-path-visual > img {
-    aspect-ratio: 5 / 4 !important;
-  }
-
-  .ed-path-card {
-    width: calc(100% - 1.6rem) !important;
-    margin-top: -2.85rem !important;
-    padding: 1.15rem 1rem 1.1rem !important;
-  }
-}
-
-@media (max-width: 560px) {
-  .ed-path-visual {
-    padding-bottom: 5.25rem !important;
-  }
-
-  .ed-path-card {
-    width: calc(100% - 1.6rem) !important;
-    bottom: 0.15rem !important;
-  }
-}
-
-@media (max-width: 560px) {
-  .ed-path-visual > img {
-    max-height: 11.25rem !important;
-    aspect-ratio: 16 / 9 !important;
-  }
-
-  .ed-path-card {
-    width: calc(100% - 1.5rem) !important;
-    margin-top: -2.35rem !important;
-  }
-}
-
-@media (max-width: 560px) {
-  .ed-path-card {
-    width: calc(100% - 1.35rem) !important;
-    bottom: 0.7rem !important;
-    padding: 0.85rem 0.85rem 0.8rem !important;
-  }
-}
-
-@media (max-width: 560px) {
-  .ed-path-visual > img {
-    max-height: 10.25rem !important;
-    aspect-ratio: 16 / 9 !important;
-    object-position: center 80% !important;
-  }
-
-  .ed-path-card {
-    width: calc(100% - 1.25rem) !important;
-    margin-top: -2.1rem !important;
-    padding: 0.75rem 0.8rem 0.7rem !important;
-  }
-}
-
-@media (max-width: 560px) {
-  .ed-path-visual > img {
-    max-height: 10.5rem !important;
-    aspect-ratio: 16 / 9 !important;
-    object-position: center 80% !important;
-  }
-
-  .ed-path-card {
-    width: calc(100% - 1.15rem) !important;
-    bottom: 0.55rem !important;
-    padding: 0.7rem 0.75rem 0.65rem !important;
-  }
 
   .ed-svc {
     padding-top: 1.85rem !important;

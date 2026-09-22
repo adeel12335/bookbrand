@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { IconBook, IconCheck } from './icons.jsx';
+import { IconArrow, IconBook, IconCheck, IconSearch } from './icons.jsx';
 import {
   BLOG_REDIRECTS,
   articleByline,
@@ -16,33 +16,44 @@ import {
   quickAnswerFor,
 } from './blogPosts.js';
 import { CompareTable, QuickAnswer } from './CompareTable.jsx';
+import { PostCard } from './PostCard.jsx';
 import { comparisons } from './data.js';
 import { appPath, tokenizeInline } from './inlineMarkup.js';
 
-const STEP = 4;
+const STEP = 6;
+const ALL = 'All';
 
 export function BlogIndexPage() {
   const [draft, setDraft] = useState('');
   const [query, setQuery] = useState('');
+  const [category, setCategory] = useState(ALL);
   const [count, setCount] = useState(STEP);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const [featured, ...rest] = blogPosts;
+  const [featured] = blogPosts;
+
+  const categories = useMemo(
+    () => [ALL, ...Array.from(new Set(blogPosts.map(post => post.category).filter(Boolean)))],
+    [],
+  );
+
+  const showFeatured = Boolean(featured) && !query && category === ALL;
 
   const results = useMemo(() => {
     const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
-    const pool = query ? blogPosts : rest;
-    if (!terms.length) return pool;
+    const pool = query || category !== ALL ? blogPosts : blogPosts.slice(1);
     return pool.filter(post => {
+      if (category !== ALL && post.category !== category) return false;
+      if (!terms.length) return true;
       const haystack = [post.title, post.description, post.category, ...(post.keywords || [])]
         .join(' ')
         .toLowerCase();
       return terms.every(term => haystack.includes(term));
     });
-  }, [query, rest]);
+  }, [query, category]);
 
   const visible = results.slice(0, count);
 
@@ -52,9 +63,15 @@ export function BlogIndexPage() {
     setCount(STEP);
   }
 
-  function clearSearch() {
+  function clearFilters() {
     setDraft('');
     setQuery('');
+    setCategory(ALL);
+    setCount(STEP);
+  }
+
+  function pickCategory(next) {
+    setCategory(next);
     setCount(STEP);
   }
 
@@ -81,21 +98,12 @@ export function BlogIndexPage() {
         </div>
       </section>
 
-      <section className="br_section br_all_posts" aria-label="All articles">
-        <div className="container">
-          {!query && featured ? (
+      {showFeatured ? (
+        <section className="br_section br_featured_band" aria-label="Featured guide">
+          <div className="container">
             <div className="row">
               <div className="col-md-12">
                 <Link className="br_featured" to={`/blog/${featured.slug}`}>
-                  <div className="br_featured_copy">
-                    <p className="br-eyebrow">Featured guide</p>
-                    <h2>{featured.title}</h2>
-                    <p>{featured.description}</p>
-                    <ul className="br_post_tags">
-                      <li>{featured.category}</li>
-                      <li>{featured.readTime}</li>
-                    </ul>
-                  </div>
                   {featured.image ? (
                     <div className="br_featured_media">
                       <img
@@ -106,90 +114,98 @@ export function BlogIndexPage() {
                       />
                     </div>
                   ) : null}
+                  <div className="br_featured_copy">
+                    <span className="br-eyebrow">Featured guide</span>
+                    <h2>{featured.title}</h2>
+                    <p>{featured.description}</p>
+                    <ul className="br_post_tags">
+                      <li>{featured.category}</li>
+                      <li>{featured.readTime}</li>
+                    </ul>
+                    <span className="br_featured_cue">
+                      Read the guide
+                      <IconArrow aria-hidden="true" />
+                    </span>
+                  </div>
                 </Link>
               </div>
             </div>
-          ) : null}
+          </div>
+        </section>
+      ) : null}
 
-          <div className="row">
-            <div className="col-md-8 br_all_posts_intro">
-              <h2 className="br_heading_icon">
+      <section className="br_section br_all_posts" aria-label="All articles">
+        <div className="container">
+          <div className="br_posts_head">
+            <div className="br_posts_head_copy">
+              <p className="br-eyebrow">
                 <IconBook aria-hidden="true" />
-                Our Guide
-              </h2>
-              <p>{blogIndex.lead}</p>
+                All guides
+              </p>
+              <h2>Our Guide</h2>
             </div>
+            <form className="br_posts_search" role="search" onSubmit={handleSearch}>
+              <label className="sr-only" htmlFor="blog-search">Search articles</label>
+              <IconSearch aria-hidden="true" />
+              <input
+                id="blog-search"
+                type="search"
+                name="k"
+                value={draft}
+                onChange={event => setDraft(event.target.value)}
+                placeholder="Search guides..."
+                autoComplete="off"
+              />
+              <button type="submit">Search</button>
+            </form>
           </div>
 
-          <hr className="br_separator" />
-
-          <div className="row">
-            <div className="col-md-3">
-              <aside className="br_sidebar">
-                <h3 className="br_sidebar_eyebrow">Search</h3>
-                <form className="br_sidebar_search" role="search" onSubmit={handleSearch}>
-                  <label className="sr-only" htmlFor="blog-search">Search articles</label>
-                  <input
-                    id="blog-search"
-                    type="search"
-                    name="k"
-                    value={draft}
-                    onChange={event => setDraft(event.target.value)}
-                    placeholder="Search..."
-                    autoComplete="off"
-                  />
-                  <button type="submit">Go</button>
-                </form>
-                {query ? (
-                  <button type="button" className="br_sidebar_clear" onClick={clearSearch}>
-                    Clear search
+          <div className="br_posts_filters">
+            <ul className="br_post_chips">
+              {categories.map(item => (
+                <li key={item}>
+                  <button
+                    type="button"
+                    className={item === category ? 'is-active' : undefined}
+                    aria-pressed={item === category}
+                    onClick={() => pickCategory(item)}
+                  >
+                    {item}
                   </button>
-                ) : null}
-              </aside>
-            </div>
-
-            <div className="col-md-9">
-              {query ? (
-                <p className="br_posts_count" role="status">
-                  {results.length
-                    ? `${results.length} article${results.length === 1 ? '' : 's'} for “${query}”`
-                    : `No articles match “${query}”.`}
-                </p>
-              ) : null}
-
-              <div className="row br_grid">
-                {visible.map(post => (
-                  <article className="col-md-6" key={post.slug}>
-                    <Link className="br_post_link" to={`/blog/${post.slug}`}>
-                      {post.image ? (
-                        <img
-                          className="br_post_thumb"
-                          src={post.image}
-                          alt={post.imageAlt || post.title}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      ) : null}
-                      <ul className="br_post_tags">
-                        <li>{post.category}</li>
-                      </ul>
-                      <h3>{post.title}</h3>
-                      <p>{post.description}</p>
-                      <time dateTime={post.date}>{post.dateLabel}</time>
-                    </Link>
-                  </article>
-                ))}
-              </div>
-
-              {visible.length < results.length ? (
-                <div className="br_posts_more">
-                  <button type="button" className="btn-outline br_load_more" onClick={() => setCount(n => n + STEP)}>
-                    Load More
-                  </button>
-                </div>
-              ) : null}
-            </div>
+                </li>
+              ))}
+            </ul>
+            <p className="br_posts_count" role="status">
+              {query
+                ? `${results.length} result${results.length === 1 ? '' : 's'} for “${query}”`
+                : `${results.length} article${results.length === 1 ? '' : 's'}`}
+            </p>
           </div>
+
+          {results.length ? (
+            <div className="row br_grid">
+              {visible.map(post => (
+                <article className="col-md-4" key={post.slug}>
+                  <PostCard post={post} />
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="br_posts_empty">
+              <p>No guides match that search yet.</p>
+              <button type="button" className="btn-outline" onClick={clearFilters}>
+                Clear filters
+              </button>
+            </div>
+          )}
+
+          {visible.length < results.length ? (
+            <div className="br_posts_more">
+              <button type="button" className="btn-outline br_load_more" onClick={() => setCount(n => n + STEP)}>
+                Load More
+              </button>
+            </div>
+          ) : null}
         </div>
       </section>
     </div>
@@ -405,23 +421,7 @@ export function BlogPostPage() {
             <div className="row br_grid">
               {latest.map(item => (
                 <article className="col-md-4" key={item.slug}>
-                  <Link className="br_post_link" to={`/blog/${item.slug}`}>
-                    {item.image ? (
-                      <img
-                        className="br_post_thumb"
-                        src={item.image}
-                        alt={item.imageAlt || item.title}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    ) : null}
-                    <ul className="br_post_tags">
-                      <li>{item.category}</li>
-                    </ul>
-                    <h3>{item.title}</h3>
-                    <p>{item.description}</p>
-                    <time dateTime={item.date}>{item.dateLabel}</time>
-                  </Link>
+                  <PostCard post={item} />
                 </article>
               ))}
             </div>

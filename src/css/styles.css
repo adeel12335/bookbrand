@@ -360,10 +360,6 @@
   }
 }
 
-.ed-path-copy .content {
-  max-width: 26rem;
-}
-
 .br_path_cta {
   margin-top: 1.174518rem;
 }
@@ -426,13 +422,6 @@
     background: var(--gold-300);
     border-color: var(--gold-300);
     color: var(--emerald-950);
-  }
-}
-
-@media (hover: hover) {
-  .ed-path .br_path_cta:hover {
-    background: var(--white);
-    color: var(--emerald-900);
   }
 }
 
@@ -1165,6 +1154,7 @@
 .br_footer_form .btn {
   flex: none;
   cursor: pointer;
+  border-radius: 0 4px 4px 0;
 }
 
 .br_footer_form .btn:disabled {
@@ -1589,186 +1579,312 @@
   border-radius: var(--radius-lg);
 }
 
+.br_featured_band {
+  padding-bottom: 0;
+}
+
 .br_featured {
+  position: relative;
+  text-decoration: none;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.05fr;
   align-items: stretch;
-  background: var(--paper);
-  border: 1px solid var(--line);
+  background: var(--emerald-900);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: background 0.35s var(--ease), border-color 0.35s var(--ease);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
 
 .br_featured:not(:has(.br_featured_media)) {
   grid-template-columns: 1fr;
 }
 
+.br_featured:not(:has(.br_featured_media)) .br_featured_copy {
+  max-width: 44rem;
+  padding-block: 2.740541rem;
+}
+
+.br_featured:not(:has(.br_featured_media))::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -6rem;
+  width: 15.6rem;
+  height: 15.6rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 180, 131, 0.22), transparent 70%);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
 .br_featured_copy {
-  padding: 2.349036rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   align-self: center;
+  padding: 2.349036rem;
+}
+
+.br_featured_copy .br-eyebrow {
+  color: var(--gold-300);
 }
 
 .br_featured_copy h2 {
   margin-bottom: 0.587259rem;
-  color: var(--emerald-900);
-  transition: color 0.35s var(--ease);
+  color: var(--white);
 }
 
 .br_featured_copy > p {
   margin-bottom: 1.174518rem;
-  color: var(--ink-500);
-  transition: color 0.35s var(--ease);
+  color: var(--paper-deep);
 }
 
 .br_featured_copy .br_post_tags {
-  margin-bottom: 0;
+  margin-bottom: 1.174518rem;
+}
+
+.br_featured_copy .br_post_tags li {
+  color: var(--paper);
+  border-color: rgba(247, 243, 234, 0.35);
+}
+
+.br_featured_cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.469807rem;
+  font-size: 0.626409rem;
+  font-weight: 600;
+  letter-spacing: 0.0644rem;
+  color: var(--gold-300);
+}
+
+.br_featured_cue svg {
+  width: 0.783012rem;
+  height: auto;
+  transition: transform 0.35s var(--ease);
+}
+
+.br_featured_media {
+  display: block;
+  order: 2;
+  overflow: hidden;
 }
 
 .br_featured_media img {
+  display: block;
   width: 100%;
   height: 100%;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
+  transition: transform 0.7s var(--ease);
 }
 
 @media (hover: hover) {
   .br_featured:hover {
-    background: var(--emerald-900);
-    border-color: var(--emerald-900);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
   }
 
-  .br_featured:hover .br_featured_copy h2,
-.br_featured:hover .br_featured_copy > p,
-.br_featured:hover .br_post_tags li {
-    color: var(--white);
+  .br_featured:hover .br_featured_media img {
+    transform: scale(1.04);
   }
 
-  .br_featured:hover .br_post_tags li {
-    border-color: rgba(247, 243, 234, 0.45);
-  }
-
-  .br_featured:hover .br-eyebrow {
-    color: var(--gold-300);
+  .br_featured:hover .br_featured_cue svg {
+    transform: translateX(0.234903rem);
   }
 }
 
-.br_all_posts_intro {
-  max-width: 32.320471rem;
-  margin-inline: auto;
-  margin-top: 2.740541rem;
-  text-align: center;
+/* ------------------------------------------------------- blog index toolbar */
+
+.br_all_posts {
+  background: var(--paper);
 }
 
-.br_heading_icon {
+.br_posts_head {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.587259rem;
-  margin-bottom: 0.891506rem;
-  color: var(--emerald-900);
-}
-
-.br_heading_icon svg {
-  width: 1.174518rem;
-  height: auto;
-  color: var(--gold-700);
-}
-
-.br_all_posts_intro > p {
-  margin-bottom: 0;
-  color: var(--ink-500);
-}
-
-.br_separator {
-  max-width: 53.87121rem;
-  margin: 1.626409rem auto 2.644325rem;
-  border: 0;
-  border-top: 1px solid var(--line);
-  opacity: 1;
-}
-
-.br_sidebar {
-  position: sticky;
-  top: 4.697614rem;
-}
-
-.br_sidebar_eyebrow {
-  padding-bottom: 0.34061rem;
-  margin-bottom: 0.927869rem;
-  font-size: 0.704711rem;
-  font-weight: 600;
-  color: var(--emerald-900);
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.174518rem;
+  padding-bottom: 1.174518rem;
+  margin-bottom: 1.174518rem;
   border-bottom: 1px solid var(--line);
 }
 
-.br_sidebar_search {
-  display: flex;
-  border: 1px solid var(--emerald-900);
-  border-radius: 4px;
-  overflow: hidden;
+.br_posts_head .br-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.391506rem;
+  margin-bottom: 0.391506rem;
 }
 
-.br_sidebar_search input {
+.br_posts_head .br-eyebrow svg {
+  width: 0.783012rem;
+  height: auto;
+}
+
+.br_posts_head h2 {
+  color: var(--emerald-900);
+}
+
+.br_posts_search {
+  display: flex;
+  align-items: center;
+  gap: 0.469807rem;
+  width: min(100%, 18rem);
+  padding: 0.195753rem 0.195753rem 0.195753rem 0.704711rem;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.3s var(--ease);
+}
+
+.br_posts_search:focus-within {
+  border-color: var(--gold-500);
+}
+
+.br_posts_search > svg {
+  flex: none;
+  width: 0.744rem;
+  height: auto;
+  color: var(--ink-400);
+}
+
+.br_posts_search input {
   flex: 1;
   min-width: 0;
-  height: 1.879228rem;
-  padding-inline: 0.626409rem;
-  font-size: 0.626409rem;
+  height: 1.644rem;
+  font-family: inherit;
+  font-size: 0.665rem;
   color: var(--emerald-900);
   background: transparent;
   border: 0;
 }
 
-.br_sidebar_search input::placeholder {
+.br_posts_search input::placeholder {
   color: var(--ink-400);
-  font-style: italic;
 }
 
-.br_sidebar_search input:focus {
+.br_posts_search input:focus {
   outline: none;
 }
 
-.br_sidebar_search button {
-  width: 2.231584rem;
-  height: 1.879228rem;
-  font-size: 0.704711rem;
+.br_posts_search button {
+  flex: none;
+  height: 1.644rem;
+  padding-inline: 0.861313rem;
+  font-family: inherit;
+  font-size: 0.626409rem;
   font-weight: 600;
   color: var(--white);
   background: var(--emerald-900);
   border: 0;
+  border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: background 0.3s var(--ease), color 0.3s var(--ease);
+  transition: background 0.3s var(--ease);
 }
 
-.br_sidebar_clear {
-  margin-top: 0.587259rem;
-  padding: 0;
+.br_posts_filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.783012rem;
+  margin-bottom: 1.566025rem;
+}
+
+.br_post_chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.391506rem 0.469807rem;
+}
+
+.br_post_chips button {
+  padding: 0.273718rem 0.704711rem;
+  font-family: inherit;
   font-size: 0.626409rem;
   font-weight: 600;
-  color: var(--gold-700);
-  background: none;
-  border: 0;
+  color: var(--ink-500);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
   cursor: pointer;
+  transition: color 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.br_post_chips button.is-active {
+  color: var(--white);
+  background: var(--emerald-900);
+  border-color: var(--emerald-900);
 }
 
 .br_posts_count {
-  margin-bottom: 1.174518rem;
-  font-size: 0.704711rem;
+  margin: 0;
+  font-size: 0.626409rem;
+  font-weight: 600;
+  letter-spacing: 0.0644rem;
+  color: var(--ink-400);
+}
+
+.br_posts_empty {
+  padding: 2.349036rem 1.174518rem;
+  text-align: center;
+  background: var(--white);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-lg);
+}
+
+.br_posts_empty p {
+  margin-bottom: 0.891506rem;
   color: var(--ink-500);
 }
 
+/* ---------------------------------------------------------- blog post cards */
+
 .br_post_link {
   display: flex;
+  text-decoration: none;
   flex-direction: column;
   height: 100%;
+  background: var(--white);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+}
+
+.br_post_media {
+  display: block;
+  overflow: hidden;
+}
+
+.br_post_media--blank {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 0.6;
+  background: linear-gradient(135deg, var(--emerald-900), var(--emerald-600));
+}
+
+.br_post_media--blank svg {
+  width: 1.957529rem;
+  height: auto;
+  color: var(--gold-300);
 }
 
 .br_post_thumb {
+  display: block;
   width: 100%;
-  aspect-ratio: 1 / 0.56;
+  aspect-ratio: 1 / 0.6;
   object-fit: cover;
-  border-radius: var(--radius-lg);
-  margin-bottom: 0.861313rem;
+  transition: transform 0.7s var(--ease);
+}
+
+.br_post_body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 1.096rem 1.057rem 1.174518rem;
 }
 
 .br_post_link h3 {
@@ -1785,28 +1901,51 @@
   color: var(--ink-500);
 }
 
-.br_post_link time {
+.br_post_foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.469807rem;
   margin-top: auto;
+  padding-top: 0.704711rem;
   font-size: 0.587259rem;
   font-weight: 600;
   letter-spacing: 0.0644rem;
   color: var(--ink-400);
+  border-top: 1px solid var(--line-soft);
+}
+
+.br_post_read {
+  color: var(--gold-700);
 }
 
 .br_posts_more {
+  display: flex;
+  justify-content: center;
   margin-top: 1.957529rem;
 }
 
 .br_load_more {
-  width: 100%;
+  min-width: 11.745179rem;
   justify-content: center;
-  border-radius: 4px;
 }
 
 @media (hover: hover) {
-  .br_sidebar_search button:hover {
+  .br_posts_search button:hover,
+.br_post_chips button:hover {
     background: var(--gold-700);
+    border-color: var(--gold-700);
     color: var(--white);
+  }
+
+  .br_post_link:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold-300);
+    box-shadow: var(--shadow-md);
+  }
+
+  .br_post_link:hover .br_post_thumb {
+    transform: scale(1.05);
   }
 
   .br_post_link:hover h3 {
@@ -1814,9 +1953,25 @@
   }
 
   .br_post_link:hover .br_post_tags li {
-    border-color: var(--gold-700);
+    border-color: var(--gold-500);
     color: var(--gold-700);
   }
+}
+
+/* ------------------------------------------------------- blog post sidebar */
+
+.br_sidebar {
+  position: sticky;
+  top: 4.697614rem;
+}
+
+.br_sidebar_eyebrow {
+  padding-bottom: 0.34061rem;
+  margin-bottom: 0.927869rem;
+  font-size: 0.704711rem;
+  font-weight: 600;
+  color: var(--emerald-900);
+  border-bottom: 1px solid var(--line);
 }
 
 .br_post_banner {
@@ -3237,99 +3392,6 @@ body {
   color: var(--ink-500);
 }
 
-.ed-path {
-  background: #071b16;
-}
-
-.ed-path-copy h2 {
-  margin: 0 0 1.15rem;
-  color: #f7f3ea;
-}
-
-.ed-path-copy h2 em {
-  color: #d4b483;
-  font-style: normal;
-}
-
-.ed-path-copy .content > p:not(.br-eyebrow) {
-  margin: 0 0 1.75rem;
-  max-width: 34rem;
-  color: rgba(247, 243, 234, 0.72);
-}
-
-.ed-path-visual {
-  position: relative;
-  min-height: 420px;
-  overflow: hidden;
-}
-
-.ed-path-visual > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.ed-path-card {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: min(86%, 20.5rem);
-  padding: 1.5rem 1.4rem 1.35rem;
-  background: #F8F8F6;
-  box-shadow: 0 28px 60px -28px rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(212, 180, 131, 0.35);
-}
-
-.ed-path-card-head {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  margin-bottom: 1.15rem;
-}
-
-.ed-path-card-head svg {
-  width: 1.35rem;
-  height: 1.35rem;
-  color: var(--gold-ink);
-  flex: none;
-}
-
-.ed-path-card-head h3 {
-  color: var(--emerald-ink);
-}
-
-.ed-path-card ol {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.75rem;
-}
-
-.ed-path-card li {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 0.92rem;
-  color: var(--ink-700);
-}
-
-.ed-path-card li span {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.65rem;
-  height: 1.65rem;
-  border-radius: 50%;
-  border: 1px solid rgba(130, 106, 60, 0.55);
-  color: var(--gold-ink);
-  font-size: 0.78rem;
-  font-weight: 600;
-  flex: none;
-}
-
 .ed-svc {
   background: var(--paper);
   padding-block: clamp(4rem, 7vw, 6.5rem);
@@ -3464,8 +3526,7 @@ body {
 .promise,
 .cta-banner,
 .stats,
-.process,
-.ed-path {
+.process {
   --_night: #071b16;
 }
 
@@ -3474,8 +3535,7 @@ body {
 .promise,
 .cta-banner,
 .footer,
-.stats,
-.ed-path {
+.stats {
   background-color: #071b16 !important;
   color: var(--body-on-dark);
 }
@@ -3588,30 +3648,6 @@ body {
   .ed-trust-item p {
   }
 
-  .ed-path-copy .eyebrow {
-    margin-bottom: 0.7rem;
-  }
-
-  .ed-path-copy h2 {
-    margin-bottom: 0.8rem;
-  }
-
-  .ed-path-copy .content > p:not(.br-eyebrow) {
-    margin-bottom: 1.05rem;
-    max-width: 38rem;
-  }
-
-  .ed-path-visual {
-    min-height: 532px;
-  }
-
-  .ed-path-card {
-    left: 7%;
-    top: 50%;
-    width: min(86%, 20rem);
-    transform: translateY(-50%);
-  }
-
   .ed-svc {
     padding-block: 3rem;
   }
@@ -3654,18 +3690,6 @@ body {
 .ed-trust-item:hover .ed-trust-icon {
   color: #071b16;
   transform: translateY(-2px);
-}
-
-.ed-path-card {
-  padding: 1.65rem;
-  background: rgba(248, 248, 246, 0.97);
-  border-color: rgba(130, 106, 60, 0.44);
-  box-shadow: 0 30px 70px -28px rgba(0, 0, 0, 0.7);
-}
-
-.ed-path-card-head {
-  padding-bottom: 0.9rem;
-  border-bottom: 1px solid rgba(130, 106, 60, 0.28);
 }
 
 .ed-svc-card {
@@ -4902,16 +4926,6 @@ body {
   }
 }
 
-.ed-path {
-  padding-block: 3.523554rem !important;
-}
-
-.ed-path-card li span {
-  background: var(--gold-300) !important;
-  border-color: var(--gold-300) !important;
-  color: var(--emerald-950) !important;
-}
-
 .ed-folio {
   padding-block: 3.523554rem !important;
 }
@@ -5208,5 +5222,400 @@ body {
 
   .br_compare tbody th {
     white-space: normal;
+  }
+}
+
+/* ==========================================================================
+   Path band — "A clearer path to publishing"
+   One definition per property. Desktop overlays the roadmap card on the
+   image; from 1020px down the card stacks under it so nothing is clipped.
+   ========================================================================== */
+
+.ed-path {
+  padding-block: 3.523554rem;
+  background-color: var(--emerald-950);
+  color: var(--body-on-dark);
+}
+
+.ed-path-copy .content {
+  max-width: 26rem;
+}
+
+.ed-path-copy h2 {
+  margin: 0 0 1.15rem;
+  color: var(--paper);
+}
+
+.ed-path-copy h2 em {
+  font-style: normal;
+  color: var(--gold-300);
+}
+
+.ed-path-copy .content > p:not(.br-eyebrow) {
+  max-width: 34rem;
+  margin: 0 0 1.75rem;
+  color: rgba(247, 243, 234, 0.72);
+}
+
+.ed-path-visual {
+  position: relative;
+}
+
+.ed-path-visual > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 22rem;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+.ed-path-card {
+  position: absolute;
+  left: 50%;
+  bottom: 1.174518rem;
+  width: calc(100% - 2.349036rem);
+  max-width: 21rem;
+  padding: 1.174518rem;
+  background: rgba(7, 27, 22, 0.72);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid rgba(212, 180, 131, 0.32);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.6);
+  transform: translateX(-50%);
+}
+
+.ed-path-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.587259rem;
+  padding-bottom: 0.783012rem;
+  margin-bottom: 0.783012rem;
+  border-bottom: 1px solid rgba(212, 180, 131, 0.25);
+}
+
+.ed-path-card-head svg {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  color: var(--gold-300);
+}
+
+.ed-path-card-head h3 {
+  font-size: 0.978765rem;
+  color: var(--paper);
+}
+
+.ed-path-card ol {
+  display: grid;
+  gap: 0.626409rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ed-path-card li {
+  display: flex;
+  align-items: center;
+  gap: 0.626409rem;
+  font-size: 0.783012rem;
+  line-height: 1.4;
+  color: rgba(247, 243, 234, 0.92);
+}
+
+.ed-path-card li span {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.44rem;
+  height: 1.44rem;
+  font-size: 0.626409rem;
+  font-weight: 600;
+  color: var(--emerald-950);
+  background: var(--gold-300);
+  border-radius: 50%;
+}
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .ed-path-card {
+    background: rgba(7, 27, 22, 0.92);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .ed-path-card {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: var(--emerald-800);
+  }
+}
+
+/* Narrow columns and single column: stack the card under the image. */
+@media (max-width: 1020px) {
+  .ed-path-visual {
+    margin-top: 1.566025rem;
+  }
+
+  .ed-path-visual > img {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+    object-position: center 72%;
+  }
+
+  .ed-path-card {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    z-index: 1;
+    width: calc(100% - 1.566025rem);
+    max-width: none;
+    margin: -2.349036rem auto 0;
+    padding: 1.017rem;
+    background: var(--emerald-800);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    transform: none;
+  }
+
+  .ed-path-card li {
+    font-size: 0.861313rem;
+  }
+
+  .br_path_cta {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* The bare circles read as unfinished on a dark page, so the rail becomes a
+     panel: 1px grid gaps over a gold hairline draw the dividers. */
+  .br_path_steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 1.566025rem;
+    background: rgba(212, 180, 131, 0.18);
+    border: 1px solid rgba(212, 180, 131, 0.18);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .br_path_steps::before {
+    display: none;
+  }
+
+  .br_path_steps li {
+    gap: 0.469807rem;
+    padding: 1.017rem 0.391506rem;
+    background: var(--emerald-950);
+  }
+
+  .br_path_step_icon {
+    width: 2.035rem;
+    height: 2.035rem;
+  }
+
+  .br_path_step_icon svg {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  .br_path_step_label {
+    font-size: 0.548rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ed-path-card {
+    width: calc(100% - 1.174518rem);
+    margin-top: -1.957529rem;
+    padding: 0.891506rem;
+  }
+
+  .ed-path-card-head h3 {
+    font-size: 0.891506rem;
+  }
+}
+
+/* Four columns are too tight once the viewport drops below ~900px. */
+@media (min-width: 768px) and (max-width: 900px) {
+  .ed-trust-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 0;
+  }
+
+  .ed-trust-item {
+    padding-bottom: 1.25rem;
+    border-right: 0;
+    border-bottom: 1px solid rgba(212, 180, 131, 0.28);
+  }
+
+  .ed-trust-item:nth-child(odd) {
+    border-right: 1px solid rgba(212, 180, 131, 0.28);
+  }
+
+  .ed-trust-item:nth-last-child(-n + 2) {
+    padding-bottom: 0.5rem;
+    border-bottom: 0;
+  }
+}
+
+/* ==========================================================================
+   Mobile legibility & tap targets
+   The fluid type scale only starts at 767px, so below it every rem collapses
+   to the 16px base and the small sizes land at 9-11px. These restore a
+   readable floor and bring buttons up to a 44px tap target.
+   ========================================================================== */
+
+/* Touch targets: 1.97rem lands at 32-34px below 900px, under the 44px floor. */
+@media (max-width: 900px) {
+  .btn,
+  .btn-outline {
+    min-height: 2.85rem;
+    font-size: 0.8rem;
+  }
+
+  .br_footer_form input,
+  .br_search_form input {
+    height: 2.85rem;
+    font-size: 0.8rem;
+  }
+
+  .btn,
+  .btn-outline {
+    padding-inline: 1.35rem;
+  }
+
+  .mobile-bar .mobile-bar-cta {
+    height: 2.65rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .ed-path-card li span {
+    font-size: 0.72rem;
+  }
+
+  .br_path_step_label {
+    font-size: 0.66rem;
+  }
+
+  .br_section_head .btn {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .ed-svc-body p,
+  .ed-trust-item p,
+  .br_post_link p {
+    font-size: 0.78rem;
+  }
+
+  .br_footer_menu a,
+  .br_footer_policy a,
+  .br_footer_bottom p,
+  .br_contact_note,
+  .br_duo_head > .br_duo_note,
+  .br_duo_kicker span,
+  .ed-folio-selected span,
+  .br_field span {
+    font-size: 0.75rem;
+  }
+
+  .br_footer_menu_title {
+    font-size: 0.8rem;
+  }
+
+  .br_post_tags li,
+  .br_post_date,
+  .br_post_link time,
+  .br_post_read,
+  .br_posts_count {
+    font-size: 0.72rem;
+  }
+
+  /* 167px columns left the copy wrapping to four ragged centred lines, so the
+     trust band reads as a list: icon left, text left, one row per item. */
+  .ed-trust-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ed-trust-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    column-gap: 0.85rem;
+    padding: 0.85rem 0;
+    text-align: left;
+    border-right: 0;
+    border-bottom: 1px solid rgba(212, 180, 131, 0.28);
+  }
+
+  .ed-trust-item:last-child {
+    border-bottom: 0;
+  }
+
+  .ed-trust-icon {
+    grid-row: span 2;
+    width: 1.7rem;
+    height: 1.7rem;
+    margin-bottom: 0;
+  }
+
+  .ed-trust-item p {
+    font-size: 0.78rem;
+  }
+}
+
+/* ==========================================================================
+   Sticky mobile bar clearance
+   The bar is fixed to the bottom of the viewport and renders only on the home
+   page, so the space it needs belongs to the footer it overlays — not to
+   #main, which sits above the footer and left a dead band on every page.
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  body:has(.mobile-bar) .br_footer {
+    padding-bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@supports not selector(:has(*)) {
+  @media (max-width: 900px) {
+    .br_footer {
+      padding-bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px));
+    }
+  }
+}
+
+/* ==========================================================================
+   About page
+   Body copy ran at three sizes (14.1 / 12.5 / 11.3px on mobile) for text of
+   the same rank, and the stacked intro columns had no gap at all.
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  .br_about_intro .col-md-6 + .col-md-6 {
+    margin-top: 1.957529rem;
+  }
+
+  .br_about_intro_copy .br_duo_list li,
+  .br_about_pillar p,
+  .br_about_stage p,
+  .br_about_offer .br_duo_lead {
+    font-size: 0.861313rem;
+    line-height: 1.55;
+  }
+
+  .br_about_image figcaption {
+    font-size: 0.783012rem;
+  }
+
+  .br_about_intro_copy .br_duo_list li + li {
+    margin-top: 0.704711rem;
   }
 }

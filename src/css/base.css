@@ -195,8 +195,15 @@ p {
 }
 
 a{
+  color: var(--gold-700);
   text-decoration: none;
   display: inline-block;
+}
+
+/* Only plain text links underline; a link a component styles keeps its own look. */
+a:not([class]):hover,
+a:not([class]):focus-visible {
+  text-decoration: underline;
 }
 
 @media (min-width: 768px) {
@@ -314,12 +321,15 @@ a{
     color: #ffff;
     font-size: 0.710673rem;
     font-weight: 600;
-    border-radius: 0 4px 4px 0;
+    border-radius: 4px;
     background: var(--gold-700);
     border: none;
-    height: 1.974092rem;
+    min-height: 1.974092rem;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-block: 0.3rem;
     padding-inline: 1.263419rem;
     transition: background 0.4s var(--ease), transform 0.4s var(--ease);
 }
@@ -330,12 +340,15 @@ a{
     color: var(--emerald-900);
     font-size: 0.710673rem;
     font-weight: 600;
-    border-radius: 0 4px 4px 0;
+    border-radius: 4px;
     background: transparent;
     border: 1px solid var(--emerald-900);
-    height: 1.974092rem;
+    min-height: 1.974092rem;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-block: 0.3rem;
     padding-inline: 1.263419rem;
     transition: background 0.4s var(--ease), transform 0.4s var(--ease);
 }

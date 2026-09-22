@@ -24,6 +24,8 @@ import './css/styles.css';
 import './css/Responsive.css';
 import './css/Tablet.css';
 
+import { PostCard } from './PostCard.jsx';
+
 const BlogIndexPage = lazy(() => import('./BlogPages.jsx').then(m => ({ default: m.BlogIndexPage })));
 const BlogPostPage = lazy(() => import('./BlogPages.jsx').then(m => ({ default: m.BlogPostPage })));
 const PortfolioPage = lazy(() => import('./PortfolioPage.jsx').then(m => ({ default: m.PortfolioPage })));
@@ -698,21 +700,8 @@ function Latest() {
         </div>
         <div className="row br_grid">
           {posts.map((post, i) => (
-            <Reveal className="col-md-4" key={post.slug} delay={i * 70}>
-              <article className="br_post_card">
-                <Link to={`/blog/${post.slug}`}>
-                  {post.image ? (
-                    <img src={post.image} alt={post.imageAlt || post.title} loading="lazy" />
-                  ) : null}
-                  <ul className="br_post_tags">
-                    <li>{post.category}</li>
-                    {post.eyebrow ? <li>{post.eyebrow}</li> : null}
-                  </ul>
-                  <h3>{post.title}</h3>
-                  <p>{post.description}</p>
-                  <time className="br_post_date" dateTime={post.date}>{post.dateLabel}</time>
-                </Link>
-              </article>
+            <Reveal as="article" className="col-md-4" key={post.slug} delay={i * 70}>
+              <PostCard post={post} />
             </Reveal>
           ))}
         </div>
