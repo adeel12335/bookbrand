@@ -194,16 +194,24 @@ p {
     /* margin-bottom: 1.174518rem; */
 }
 
-a{
-  color: var(--gold-700);
+a:link,
+a:visited {
+  color: var(--emerald-800);
+  text-decoration-color: var(--gold-500);
+}
+
+a {
+  color: var(--emerald-800);
   text-decoration: none;
   display: inline-block;
 }
 
-/* Only plain text links underline; a link a component styles keeps its own look. */
+/* Plain text links use the brand green. Component links keep their own color. */
 a:not([class]):hover,
 a:not([class]):focus-visible {
+  color: var(--gold-700);
   text-decoration: underline;
+  text-decoration-color: var(--gold-500);
 }
 
 @media (min-width: 768px) {
@@ -317,6 +325,8 @@ a:not([class]):focus-visible {
 
 /* Buttons */
 
+a.btn:link,
+a.btn:visited,
 .btn{
     color: #ffff;
     font-size: 0.710673rem;
@@ -333,9 +343,13 @@ a:not([class]):focus-visible {
     padding-inline: 1.263419rem;
     transition: background 0.4s var(--ease), transform 0.4s var(--ease);
 }
+a.btn:hover,
 .btn:hover{
     background: var( --emerald-900);
+    color: #ffff;
 }
+a.btn-outline:link,
+a.btn-outline:visited,
 .btn-outline{
     color: var(--emerald-900);
     font-size: 0.710673rem;
@@ -352,6 +366,7 @@ a:not([class]):focus-visible {
     padding-inline: 1.263419rem;
     transition: background 0.4s var(--ease), transform 0.4s var(--ease);
 }
+a.btn-outline:hover,
 .btn-outline:hover{
     background: var(--emerald-900);
     color: #ffff;
