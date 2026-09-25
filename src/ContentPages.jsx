@@ -240,7 +240,7 @@ function ServiceDetail({ page, closeTitle, closeLead, closeCta, closeTo = '/cont
                   <div className="br_section_head_copy">
                     <p className="br-eyebrow">Cover work</p>
                     <h2 id="cover-proof-title">Cover case studies from published titles</h2>
-                    <p>Six studio covers. Each note is the design brief, why the type was chosen, and what still reads at Amazon thumbnail size. Print wraps are quoted when paperback is in scope — these are the ebook fronts.</p>
+                    <p>The same jackets as the portfolio. Open a title for the brief, the format, and the Amazon listing.</p>
                   </div>
                   <Link className="btn" to="/portfolio">View portfolio</Link>
                 </div>
@@ -248,15 +248,20 @@ function ServiceDetail({ page, closeTitle, closeLead, closeCta, closeTo = '/cont
             </div>
             <ul className="row br_grid br_cover_proof">
               {page.covers.map(cover => (
-                <li className="col-md-6 col-lg-4" key={cover.title}>
+                <li className="col-md-6 col-lg-3" key={cover.title}>
                   <figure className="br_cover_card">
-                    <img src={cover.image} alt={`${cover.title} — ${cover.genre} ebook cover`} loading="lazy" />
+                    {cover.href ? (
+                      <Link to={cover.href}>
+                        <img src={cover.image} alt={`${cover.title} — ${cover.genre} ebook cover`} loading="lazy" />
+                      </Link>
+                    ) : (
+                      <img src={cover.image} alt={`${cover.title} — ${cover.genre} ebook cover`} loading="lazy" />
+                    )}
                     <figcaption>
-                      <strong>{cover.title}</strong>
                       <span>{cover.genre}</span>
-                      {cover.brief ? <p><strong>Brief.</strong> {cover.brief}</p> : null}
-                      {cover.type ? <p><strong>Typography.</strong> {cover.type}</p> : null}
-                      {cover.thumbnail ? <p><strong>Thumbnail.</strong> {cover.thumbnail}</p> : null}
+                      <strong>
+                        {cover.href ? <Link to={cover.href}>{cover.title}</Link> : cover.title}
+                      </strong>
                       {cover.note ? <p>{cover.note}</p> : null}
                     </figcaption>
                   </figure>

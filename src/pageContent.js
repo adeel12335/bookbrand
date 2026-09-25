@@ -1,4 +1,4 @@
-import { comparisons, faqs, plans, siteContact } from './data.js';
+import { books, comparisons, faqs, plans, siteContact } from './data.js';
 
 export const aboutPage = {
   eyebrow: 'The studio',
@@ -596,56 +596,13 @@ export const coverPage = {
     { label: 'Request a cover quote', href: '/contact' },
     { label: 'See portfolio covers', href: '/portfolio', variant: 'gold' },
   ],
-  covers: [
-    {
-      title: 'Higher Ground',
-      genre: 'Self-Development',
-      image: '/assets/brand/portfolio-shelf-book-1.webp',
-      brief: 'Mountain, forest, and still water as a progress metaphor — reflective self-development, not a business skyline.',
-      type: 'Cream serif title with a small gold peak mark so the name still holds when the landscape compresses.',
-      thumbnail: 'Pale type + mountain silhouette are the two cues that survive Amazon size.',
-    },
-    {
-      title: 'The Kindness Effect',
-      genre: 'Personal Growth',
-      image: '/assets/brand/portfolio-shelf-book-2.webp',
-      brief: 'Cream field and a botanical branch — gift-book personal growth rather than hard self-help.',
-      type: 'Centered forest-green serif, tracked so three short words stay even in a small tile.',
-      thumbnail: 'Cream-on-green contrast; the blossom spray still signals “soft growth” when type is tiny.',
-    },
-    {
-      title: 'Beyond the Stars',
-      genre: 'Parenting',
-      image: '/assets/brand/portfolio-shelf-book-3.webp',
-      brief: 'Night sky over water — wonder and scale for a parenting title, not a children’s cartoon.',
-      type: 'Wide-spaced white serif across the dark band so two lines stay readable on navy.',
-      thumbnail: 'Milky Way stripe plus white title; the landscape drops first, the type stays.',
-    },
-    {
-      title: 'The Second Chapter',
-      genre: 'Memoir',
-      image: '/assets/brand/portfolio-shelf-book-4.webp',
-      brief: 'Coastal terrace, cypress, olive pot — a life-in-place memoir cue, not a city skyline.',
-      type: 'Gold serif sitting on the light sky, above the view, so the three-word title is the first read.',
-      thumbnail: 'Warm stone + gold type; the sea is atmosphere, the title is the signal.',
-    },
-    {
-      title: 'Wealth with Purpose',
-      genre: 'Business & Finance',
-      image: '/assets/brand/portfolio-shelf-book-5.webp',
-      brief: 'Black cloth and a gold tree with roots — wealth as something grown, not a stock-chart cliché.',
-      type: 'Stacked gold serif in three lines with room so PURPOSE does not crash into the mark.',
-      thumbnail: 'Gold tree + gold type on black: contrast is the whole thumbnail strategy.',
-    },
-    {
-      title: 'A Healthier You',
-      genre: 'Health & Wellness',
-      image: '/assets/brand/portfolio-shelf-book-6.webp',
-      brief: 'Cream ground and layered leaves — wellness without medical stock photography.',
-      type: 'Centered deep-green serif; YOU is the word you catch first at stamp size.',
-      thumbnail: 'Leaf mass + dark type; no photo faces competing in the tile.',
-    },
-  ],
+  covers: books.map(book => ({
+    title: book.title,
+    genre: book.genre,
+    image: book.image,
+    href: `/portfolio/${book.slug}`,
+    note: book.author,
+  })),
   sections: [
     {
       heading: 'What you get',

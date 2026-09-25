@@ -6041,3 +6041,51 @@ body {
     transform: rotateY(-10deg);
   }
 }
+
+.br_cover_proof .br_cover_card {
+  height: 100%;
+  margin: 0;
+  padding: 0 0 1rem;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.br_cover_proof .br_cover_card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: contain;
+  object-position: center;
+  background: var(--paper);
+}
+
+.br_cover_proof .br_cover_card figcaption {
+  margin: 0;
+  padding: 0.85rem 0.95rem 0;
+}
+
+.br_cover_proof .br_cover_card span {
+  margin: 0 0 0.25rem;
+  color: var(--gold-700);
+}
+
+.br_cover_proof .br_cover_card strong {
+  font-size: 0.95rem;
+  color: var(--emerald-900);
+}
+
+.br_cover_proof .br_cover_card a:link,
+.br_cover_proof .br_cover_card a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+.br_cover_proof .br_cover_card p {
+  margin: 0.3rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--ink-500);
+}
