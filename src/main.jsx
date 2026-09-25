@@ -29,6 +29,7 @@ import { PostCard } from './PostCard.jsx';
 const BlogIndexPage = lazy(() => import('./BlogPages.jsx').then(m => ({ default: m.BlogIndexPage })));
 const BlogPostPage = lazy(() => import('./BlogPages.jsx').then(m => ({ default: m.BlogPostPage })));
 const PortfolioPage = lazy(() => import('./PortfolioPage.jsx').then(m => ({ default: m.PortfolioPage })));
+const PortfolioBookPage = lazy(() => import('./PortfolioPage.jsx').then(m => ({ default: m.PortfolioBookPage })));
 const AdminPage = lazy(() => import('./AdminPage.jsx'));
 const AboutPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.AboutPage })));
 const CoverDesignPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.CoverDesignPage })));
@@ -966,6 +967,7 @@ function App() {
         <Route path="/blog" element={<BlogShell><BlogIndexPage /></BlogShell>} />
         <Route path="/blog/:slug" element={<BlogShell><BlogPostPage /></BlogShell>} />
         <Route path="/portfolio" element={<BlogShell><PortfolioPage /></BlogShell>} />
+        <Route path="/portfolio/:slug" element={<BlogShell><PortfolioBookPage /></BlogShell>} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/about" element={<BlogShell><AboutPage /></BlogShell>} />

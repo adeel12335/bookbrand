@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { books, portfolioPage } from './data.js';
+import React, { useEffect, useState } from 'react';
+import { Link, Navigate, useParams } from 'react-router-dom';
+import { books, getBookBySlug, portfolioPage } from './data.js';
 
 export function PortfolioPage() {
   const page = portfolioPage;
+  const [genre, setGenre] = useState('All');
+  const genres = ['All', ...page.work.genres];
+  const visible = genre === 'All' ? books : books.filter(book => book.genre === genre);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -81,31 +84,44 @@ export function PortfolioPage() {
                 </div>
                 <Link className="btn" to="/contact">{page.cta}</Link>
               </div>
-              <ul className="br_post_tags" aria-label="Genres">
-                {page.work.genres.map(genre => (
-                  <li key={genre}>{genre}</li>
-                ))}
-              </ul>
+              <div className="br_cover_bar">
+                <ul className="br_post_tags" aria-label="Genres">
+                  {genres.map(item => (
+                    <li key={item}>
+                      <button
+                        type="button"
+                        className={item === genre ? 'is-on' : undefined}
+                        aria-pressed={item === genre}
+                        onClick={() => setGenre(item)}
+                      >
+                        {item}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                <p className="br_cover_count">{visible.length} {visible.length === 1 ? 'cover' : 'covers'}</p>
+              </div>
             </div>
           </div>
           <div className="row br_grid br_covers">
-            {books.map((book, index) => (
-              <div className="col-md-4 col-lg-2" key={book.title}>
+            {visible.map((book, index) => (
+              <div className="col-md-6 col-lg-3" key={book.slug}>
                 <article className="br_cover_card">
-                  <img
-                    src={book.image}
-                    alt={`${book.title} by ${book.author} — ${book.genre} book cover`}
-                    loading={index < 3 ? 'eager' : 'lazy'}
-                    decoding="async"
-                  />
-                  <span className="br_cover_genre">{book.genre}</span>
-                  <h3>{book.title}</h3>
-                  <p>{book.author}</p>
-                  {book.amazonUrl ? (
-                    <a href={book.amazonUrl} rel="noopener noreferrer">
-                      View on Amazon
-                    </a>
-                  ) : null}
+                  <Link className="br_cover_hit" to={`/portfolio/${book.slug}`}>
+                    <span className="br_cover_frame">
+                      <img
+                        src={book.image}
+                        alt={`${book.title} by ${book.author} — ${book.genre} cover`}
+                        loading={index < 4 ? 'eager' : 'lazy'}
+                        decoding="async"
+                      />
+                    </span>
+                    <span className="br_cover_meta">
+                      <span className="br_cover_genre">{book.genre}</span>
+                      <h3>{book.title}</h3>
+                      <p>{book.author}</p>
+                    </span>
+                  </Link>
                 </article>
               </div>
             ))}
@@ -160,6 +176,100 @@ export function PortfolioPage() {
           </div>
         </div>
       </section>
+    </div>
+  );
+}
+
+export function PortfolioBookPage() {
+  const { slug } = useParams();
+  const book = getBookBySlug(slug);
+  const others = books.filter(item => item.slug !== slug).slice(0, 3);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
+
+  if (!book) return <Navigate to="/portfolio" replace />;
+
+  return (
+    <div className="br_portfolio_page br_book_page">
+      <section className="br_section br_book_detail" aria-labelledby="book-title">
+        <div className="container">
+          <nav className="br_book_crumbs" aria-label="Breadcrumb">
+            <Link to="/">Home</Link>
+            <span aria-hidden="true">/</span>
+            <Link to="/portfolio">Portfolio</Link>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{book.title}</span>
+          </nav>
+          <div className="row br_book_layout">
+            <div className="col-md-5 col-lg-4">
+              <img
+                className="br_book_cover"
+                src={book.image}
+                alt={`${book.title} by ${book.author}`}
+              />
+            </div>
+            <div className="col-md-7 col-lg-8">
+              <p className="br-eyebrow">{book.genre}</p>
+              <h1 id="book-title" className="br-primary-heading">{book.title}</h1>
+              {book.subtitle ? <p className="br_book_sub">{book.subtitle}</p> : null}
+              <p className="br_book_by">By {book.author}</p>
+              <p className="br_book_lead">{book.summary}</p>
+              <dl className="br_book_facts">
+                <div>
+                  <dt>Studio role</dt>
+                  <dd>{book.role}</dd>
+                </div>
+                <div>
+                  <dt>Format</dt>
+                  <dd>{book.format}</dd>
+                </div>
+              </dl>
+              <div className="br_wrapper_buttons">
+                <a className="btn" href={book.amazonUrl} target="_blank" rel="noopener noreferrer">View on Amazon</a>
+                <Link className="btn-outline" to="/ebook-cover-design">Start a cover</Link>
+              </div>
+            </div>
+          </div>
+          <div className="br_book_note">
+            <h2>About this cover</h2>
+            <p>{book.detail}</p>
+          </div>
+        </div>
+      </section>
+
+      {others.length ? (
+        <section className="br_section br_section--paper" aria-labelledby="more-covers-title">
+          <div className="container">
+            <div className="br_section_head">
+              <div className="br_section_head_copy">
+                <p className="br-eyebrow">More covers</p>
+                <h2 id="more-covers-title">Other titles in the set</h2>
+              </div>
+              <Link className="btn" to="/portfolio">All covers</Link>
+            </div>
+            <div className="row br_grid">
+              {others.map(item => (
+                <div className="col-md-4" key={item.slug}>
+                  <article className="br_cover_card">
+                    <Link className="br_cover_hit" to={`/portfolio/${item.slug}`}>
+                      <span className="br_cover_frame">
+                        <img src={item.image} alt="" />
+                      </span>
+                      <span className="br_cover_meta">
+                        <span className="br_cover_genre">{item.genre}</span>
+                        <h3>{item.title}</h3>
+                        <p>{item.author}</p>
+                      </span>
+                    </Link>
+                  </article>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
     </div>
   );
 }

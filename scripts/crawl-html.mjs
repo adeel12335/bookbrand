@@ -397,8 +397,15 @@ function blogPostRoute(slug) {
 export function getCrawlMarkup(page) {
   const path = page.path;
   const slug = path.startsWith('/blog/') ? path.slice('/blog/'.length) : '';
+  const bookSlug = path.startsWith('/portfolio/') ? path.slice('/portfolio/'.length) : '';
+  const book = bookSlug ? books.find(item => item.slug === bookSlug) : null;
   const post = slug ? blogPosts.find(item => item.slug === slug) : null;
   const route = routes[path]
+    || (book && {
+      h1: book.title,
+      lead: book.summary,
+      body: () => `<p>By ${esc(book.author)}. ${esc(book.role)}. ${esc(book.format)}.</p><p>${esc(book.detail)}</p><p><a href="${esc(book.amazonUrl)}">View on Amazon</a></p>`,
+    })
     || (post && blogPostRoute(slug))
     || { h1: page.title.replace(/\s*[|—]\s*ebookwriters\.us$/, ''), lead: page.description, body: () => '' };
 

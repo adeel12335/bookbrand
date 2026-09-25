@@ -1,5 +1,5 @@
 import { blogArticle, blogIndex, blogPosts } from './blogPosts.js';
-import { books, faqs, plans, portfolioPage } from './data.js';
+import { books, faqs, getBookBySlug, plans, portfolioPage } from './data.js';
 import { coverPage, editingPage, editorialDeskPage, editorialPolicyPage, faqPage, landers } from './pageContent.js';
 import {
   DEFAULT_OG_ALT,
@@ -727,9 +727,43 @@ export function normalizePath(pathname) {
   return trimmed === '' ? '/' : trimmed;
 }
 
+function portfolioBookPage(book) {
+  const description = clipPlain(book.summary, DESC_MAX);
+  return page({
+    path: `/portfolio/${book.slug}`,
+    title: `${book.title} cover — ${book.author} | ebookwriters.us`,
+    description,
+    image: book.image,
+    imageAlt: `${book.title} by ${book.author}`,
+    type: 'article',
+    priority: 0.6,
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'CreativeWork',
+        name: book.title,
+        author: { '@type': 'Person', name: book.author },
+        description,
+        image: absoluteAsset(book.image),
+        url: absoluteUrl(`/portfolio/${book.slug}`),
+        genre: book.genre,
+      },
+      breadcrumbs([
+        { name: 'Home', path: '/' },
+        { name: 'Portfolio', path: '/portfolio' },
+        { name: book.title, path: `/portfolio/${book.slug}` },
+      ]),
+    ],
+  });
+}
+
 export function resolveSeo(pathname) {
   const path = normalizePath(pathname);
   if (byPath.has(path)) return byPath.get(path);
+  if (path.startsWith('/portfolio/')) {
+    const book = getBookBySlug(path.slice('/portfolio/'.length));
+    if (book) return portfolioBookPage(book);
+  }
   if (path.startsWith('/blog/')) {
     const slug = path.slice('/blog/'.length);
     const post = blogPosts.find(item => item.slug === slug);
@@ -739,7 +773,7 @@ export function resolveSeo(pathname) {
 }
 
 export function getPrerenderPages() {
-  return [...staticPages, ...blogPosts.map(blogPostPage), notFoundSeo];
+  return [...staticPages, ...books.map(portfolioBookPage), ...blogPosts.map(blogPostPage), notFoundSeo];
 }
 
 export function getSitemapEntries() {
