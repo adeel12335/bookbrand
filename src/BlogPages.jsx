@@ -344,7 +344,7 @@ export function BlogPostPage() {
                       {takeaways.map(item => (
                         <li key={item}>
                           <IconCheck aria-hidden="true" />
-                          <RichText text={item} />
+                          <span><RichText text={item} /></span>
                         </li>
                       ))}
                     </ul>

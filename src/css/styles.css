@@ -2061,7 +2061,7 @@ a.br_about_link:visited,
 .br_post_policy a:visited,
 .br_post_intro a:link,
 .br_post_intro a:visited {
-  color: var(--emerald-800);
+  color: var(--gold-300);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.15em;
@@ -2095,6 +2095,17 @@ a.br_about_link:visited,
 
 .br_wrapper_post_content .br_duo_list {
   margin-bottom: 0;
+}
+
+.br_wrapper_post_content .br_duo_list li > span {
+  flex: 1;
+  min-width: 0;
+}
+
+.br_wrapper_post_content a,
+.br_post_intro a,
+.br_byline a {
+  display: inline;
 }
 
 .br_post_cta p {
@@ -5184,6 +5195,19 @@ body {
   margin: 0.12rem 0 0;
   font-size: 0.95rem;
   color: rgba(247, 243, 234, 0.92);
+}
+
+.br_byline a:link,
+.br_byline a:visited {
+  color: rgba(247, 243, 234, 0.92);
+  text-decoration: none;
+}
+
+.br_byline a:hover,
+.br_byline a:focus-visible {
+  color: var(--gold-300);
+  text-decoration: underline;
+  text-decoration-color: var(--gold-500);
 }
 
 .br_edit_note {
