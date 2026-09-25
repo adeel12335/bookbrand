@@ -404,7 +404,7 @@ export function getCrawlMarkup(page) {
     || (book && {
       h1: book.title,
       lead: book.summary,
-      body: () => `<p>By ${esc(book.author)}. ${esc(book.role)}. ${esc(book.format)}.</p><p>${esc(book.detail)}</p><p><a href="${esc(book.amazonUrl)}">View on Amazon</a></p>`,
+      body: () => `<p>By ${esc(book.author)}. ${esc(book.genre)} ${esc(book.role).toLowerCase()}. ${esc(book.format)}.</p>${book.subtitle ? `<p>${esc(book.subtitle)}</p>` : ''}<p>${esc(book.detail)}</p><p><a href="${esc(book.amazonUrl)}">View ${esc(book.title)} on Amazon</a></p>`,
     })
     || (post && blogPostRoute(slug))
     || { h1: page.title.replace(/\s*[|—]\s*ebookwriters\.us$/, ''), lead: page.description, body: () => '' };

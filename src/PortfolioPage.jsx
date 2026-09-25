@@ -255,7 +255,7 @@ export function PortfolioBookPage() {
                   <article className="br_cover_card">
                     <Link className="br_cover_hit" to={`/portfolio/${item.slug}`}>
                       <span className="br_cover_frame">
-                        <img src={item.image} alt="" />
+                        <img src={item.image} alt={`${item.title} by ${item.author}`} />
                       </span>
                       <span className="br_cover_meta">
                         <span className="br_cover_genre">{item.genre}</span>

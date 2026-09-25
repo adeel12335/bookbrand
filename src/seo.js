@@ -727,11 +727,25 @@ export function normalizePath(pathname) {
   return trimmed === '' ? '/' : trimmed;
 }
 
+function bookPageTitle(book) {
+  const phrases = [`${book.title} cover design`, `${book.title} cover`, book.title];
+  for (const text of phrases) {
+    if (text.length + TITLE_SUFFIX.length <= TITLE_MAX) return `${text}${TITLE_SUFFIX}`;
+    if (text.length <= TITLE_MAX && text !== book.title) return text;
+  }
+  return clipPlain(book.title, TITLE_MAX);
+}
+
+function bookPageDescription(book) {
+  const subtitle = book.subtitle ? `${book.subtitle.replace(/\.+$/, '')}. ` : '';
+  return `${book.title} by ${book.author}. ${subtitle}${book.genre} ebook cover design. ${book.summary}`;
+}
+
 function portfolioBookPage(book) {
-  const description = clipPlain(book.summary, DESC_MAX);
+  const description = bookPageDescription(book);
   return page({
     path: `/portfolio/${book.slug}`,
-    title: `${book.title} cover — ${book.author} | ebookwriters.us`,
+    title: bookPageTitle(book),
     description,
     image: book.image,
     imageAlt: `${book.title} by ${book.author}`,
@@ -742,6 +756,7 @@ function portfolioBookPage(book) {
         '@context': 'https://schema.org',
         '@type': 'CreativeWork',
         name: book.title,
+        ...(book.subtitle ? { alternativeHeadline: book.subtitle } : {}),
         author: { '@type': 'Person', name: book.author },
         description,
         image: absoluteAsset(book.image),
