@@ -175,15 +175,23 @@
   color: var(--white);
 }
 
+.hero-section a.btn:link,
+.hero-section a.btn:visited,
+.hero-section a.btn-outline:link,
+.hero-section a.btn-outline:visited,
 .hero-section .btn,
 .hero-section .btn-outline {
   color: var(--white);
 }
 
+.hero-section a.btn-outline:link,
+.hero-section a.btn-outline:visited,
 .hero-section .btn-outline {
   border-color: var(--white);
 }
 
+.hero-section a.btn:hover,
+.hero-section a.btn-outline:hover,
 .hero-section .btn:hover,
 .hero-section .btn-outline:hover {
   background: var(--white);
@@ -1330,14 +1338,18 @@
   margin-top: 1.174518rem;
 }
 
+.br_page_hero a.btn-outline:link,
+.br_page_hero a.btn-outline:visited,
 .br_page_hero .btn-outline {
   color: var(--white);
-  border-color: var(--white);
+  border-color: rgba(247, 243, 234, 0.72);
 }
 
 @media (hover: hover) {
+  .br_page_hero a.btn:hover,
+  .br_page_hero a.btn-outline:hover,
   .br_page_hero .btn:hover,
-.br_page_hero .btn-outline:hover {
+  .br_page_hero .btn-outline:hover {
     background: var(--white);
     border-color: var(--white);
     color: var(--emerald-900);
