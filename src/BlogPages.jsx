@@ -27,7 +27,7 @@ export function BlogIndexPage() {
   const [draft, setDraft] = useState('');
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState(ALL);
-  const [count, setCount] = useState(STEP);
+  const [count, setCount] = useState(blogPosts.length);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -67,7 +67,7 @@ export function BlogIndexPage() {
     setDraft('');
     setQuery('');
     setCategory(ALL);
-    setCount(STEP);
+    setCount(blogPosts.length);
   }
 
   function pickCategory(next) {

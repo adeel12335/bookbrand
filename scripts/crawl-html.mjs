@@ -205,7 +205,7 @@ function servicesIndexBlock() {
 }
 
 function blogIndexBlock() {
-  const items = blogPosts.slice(0, 12).map(post => `<article>
+  const items = blogPosts.map(post => `<article>
   <h2><a href="/blog/${esc(post.slug)}">${esc(post.title)}</a></h2>
   <p>${esc(post.description)}</p>
 </article>`).join('\n');

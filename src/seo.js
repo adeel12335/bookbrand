@@ -383,7 +383,7 @@ const staticPages = [
     path: '/pricing',
     title: 'Ebook Writing Packages from $699 | ebookwriters.us',
     description:
-      'Fixed ebook writing and ghostwriting packages from $699 to $3,999. Writing, editing, cover design, and retailer-ready files included. Get a quote on /contact.',
+      'Fixed ebook writing and ghostwriting packages from $699 to $3,999. Writing, editing, cover design, and retailer-ready files included. Get a fixed quote today.',
     priority: 0.9,
     jsonLd: [
       webPageSchema({
