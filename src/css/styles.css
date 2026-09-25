@@ -5935,7 +5935,7 @@ body {
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .br_portfolio_page .br_cover_hit {
@@ -5947,27 +5947,40 @@ body {
 }
 
 .br_portfolio_page .br_cover_frame {
-  display: block;
-  aspect-ratio: 2 / 3;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  aspect-ratio: 4 / 5;
   height: auto;
-  padding: 0;
-  overflow: hidden;
-  background: var(--paper-deep);
+  padding: 0.85rem 1.15rem 1.25rem 0.7rem;
+  overflow: visible;
+  background:
+    radial-gradient(70% 28% at 50% 96%, rgba(15, 40, 32, 0.1), transparent 72%),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+  perspective: 900px;
 }
 
 .br_portfolio_page .br_cover_frame img {
   display: block;
-  width: 100%;
-  max-width: none;
-  height: 100%;
+  width: auto;
+  max-width: 84%;
+  height: 92%;
   aspect-ratio: auto;
-  object-fit: cover;
-  object-position: center center;
+  object-fit: contain;
+  object-position: center bottom;
   margin: 0;
-  border-radius: 0;
-  box-shadow: none;
-  background: transparent;
-  transition: transform 0.45s var(--ease);
+  border-radius: 1px;
+  background: var(--white);
+  transform: rotateY(-16deg);
+  transform-origin: left center;
+  box-shadow:
+    2px 0 0 #f7f3ea,
+    4px 0 0 #e4d9c8,
+    6px 0 0 #f3eee4,
+    -6px 0 0 var(--emerald-950),
+    14px 16px 22px rgba(15, 30, 24, 0.22);
+  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
 }
 
 .br_portfolio_page .br_cover_meta {
@@ -6013,6 +6026,18 @@ body {
   }
 
   .br_portfolio_page .br_cover_card:hover .br_cover_frame img {
-    transform: scale(1.03);
+    transform: rotateY(-6deg) translateY(-8px);
+    box-shadow:
+      2px 0 0 #f7f3ea,
+      4px 0 0 #e4d9c8,
+      6px 0 0 #f3eee4,
+      -6px 0 0 var(--emerald-950),
+      22px 26px 28px rgba(15, 30, 24, 0.28);
+  }
+}
+
+@media (max-width: 767px) {
+  .br_portfolio_page .br_cover_frame img {
+    transform: rotateY(-10deg);
   }
 }
