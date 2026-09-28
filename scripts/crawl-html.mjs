@@ -16,7 +16,7 @@ import {
   pricingPage, privacyPage, servicesPage, termsPage,
 } from '../src/pageContent.js';
 import { SITE_EMAIL, SITE_PHONE_DISPLAY } from '../src/site.js';
-import { articleByline, articleSectionParagraphs, articleSections, articleSources, articleTakeaways, blogIndex, blogPosts, quickAnswerFor } from '../src/blogPosts.js';
+import { articleByline, articleSectionParagraphs, articleSections, articleSources, articleTakeaways, blogIndex, blogPosts, quickAnswerFor, sectionBlocks } from '../src/blogPosts.js';
 import { inlineHtml } from '../src/inlineMarkup.js';
 
 function esc(value) {
@@ -85,8 +85,7 @@ function paragraphHtml(p) {
 function sectionsBlock(sections = []) {
   return sections.map(section => `<section>
   <h2>${esc(section.heading)}</h2>
-  ${(section.paragraphs || []).map(paragraphHtml).join('\n  ')}
-  ${list(section.bullets)}
+  ${sectionBlocks(section).map(block => (block.type === 'list' ? list(block.items) : paragraphHtml(block.text))).join('\n  ')}
   ${tableBlock(section.table)}
   ${section.sample?.before ? `<figure><figcaption>Before</figcaption><p>${esc(section.sample.before)}</p></figure><figure><figcaption>After</figcaption><p>${esc(section.sample.after)}</p></figure>${section.sample.note ? `<p><strong>Editor’s note.</strong> ${esc(section.sample.note)}</p>` : ''}` : ''}
 </section>`).join('\n');
@@ -184,12 +183,6 @@ function servicesIndexBlock() {
   const landerList = landerPages.map(item => `<li><a href="${esc(item.path)}">${esc(item.title)}</a></li>`).join('\n  ');
   return [
     servicesBlock(),
-    `<section>
-  <h2>${esc(servicesPage.briefing.heading)}</h2>
-  <p>${esc(servicesPage.briefing.lead)}</p>
-  ${servicesPage.briefing.paragraphs.map(p => `<p>${esc(p)}</p>`).join('\n  ')}
-  <p>${esc(servicesPage.pricingNote)} <a href="${esc(servicesPage.pricingHref)}">${esc(servicesPage.pricingCta)}</a></p>
-</section>`,
     `<section>
   <h2>Dedicated service pages</h2>
   <ul>

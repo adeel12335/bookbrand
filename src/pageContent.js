@@ -125,7 +125,7 @@ export const servicesPage = {
   eyebrow: 'Our services',
   title: 'Ebook writing, editing, design, and publishing — in one studio.',
   lead:
-    'Hire ebook writers and ghostwriters without stitching together a cover designer, formatter, and KDP specialist later. Start with a lander below, or request a quote and we will map the work.',
+    'Hire ebook writers and ghostwriters without stitching together a cover designer, formatter, and KDP specialist later. Start with a service below, or request a quote and we will map the work.',
   heroImage: '/assets/brand/page-hero-covers.png',
   heroImageAlt: 'Open manuscript and craft tools on a publishing production desk',
   actions: [
@@ -135,15 +135,6 @@ export const servicesPage = {
   pricingNote: 'Packages start at $699.',
   pricingCta: 'View pricing',
   pricingHref: '/pricing',
-  briefing: {
-    heading: 'What this page is for',
-    lead:
-      'Use /services to pick a starting URL. Full package features live on /pricing. General rights, timeline, and revision questions live on /faq. This index does not repeat those lists.',
-    paragraphs: [
-      'Authors land here when they know they need help and do not yet know whether the next click is ghostwriting, editing, cover design, or Amazon KDP setup. The six cards below are the studio menu. The dedicated pages are the deep briefs. Pricing is a separate commercial page so Google is not asked to rank the same four packages on three URLs.',
-      'If you already know the manuscript length and want a number, skip this page and open pricing. If you have a draft, start with editing. If you need the book written, start with ghostwriting or hire an ebook writer. If Amazon is the destination, start with KDP ebook writing so files and listing sit in one scope.',
-    ],
-  },
   chooser: {
     heading: 'How to choose a starting page',
     lead:
@@ -240,7 +231,7 @@ export const landers = {
       {
         heading: 'Word counts and timelines we quote against',
         paragraphs: [
-          'These are the length bands on the pricing page. Open that page for the full feature list — this page is the ghostwriting process, not a second rate card.',
+          'These are the length bands on the pricing page. Open that page for the full feature list.',
         ],
         table: {
           caption: 'Ghostwriting length bands',
@@ -759,7 +750,7 @@ export const editorialDeskPage = {
       heading: 'What the editorial desk is',
       paragraphs: [
         'The editorial desk is the studio function that commissions, reviews, and updates public articles on ebookwriters.us. It is an Organization byline, not a named public writer roster. Client ghostwriters are introduced after NDA; they are not listed here.',
-        'The desk writes for authors making a hiring or publishing decision: cost, rights, KDP, editing, hiring, and process. Commercial pages (/pricing, /contact, service landers) describe what we sell. Guides on /blog are for the decision before you hire.',
+        'The desk writes for authors making a hiring or publishing decision: cost, rights, KDP, editing, hiring, and process. Commercial pages (/pricing, /contact, service pages) describe what we sell. Guides on /blog are for the decision before you hire.',
       ],
     },
     {
