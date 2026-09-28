@@ -52,3 +52,9 @@ Quotes are fixed for the agreed length and scope. Rush work and specialist resea
 Prefer the www host (https://www.ebookwriters.us/). The apex host 301/308s to www. Use the service landers for process, the pricing page for packages, and the FAQ for rights and timelines. Use the blog for how-to answers (KDP checklists, hiring a writer, ghostwriting vs freelancers). Editorial standards: https://www.ebookwriters.us/editorial-policy
 
 Sitemap: https://www.ebookwriters.us/sitemap.xml
+Blog feed: https://www.ebookwriters.us/rss.xml
+
+## Official profiles
+
+- Instagram: https://www.instagram.com/ebookwriters.us/
+- Facebook: https://www.facebook.com/profile.php?id=61594163111206

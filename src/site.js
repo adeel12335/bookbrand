@@ -5,7 +5,10 @@ export const SITE_EMAIL = 'info@ebookwriters.us';
 export const SITE_PHONE = '+1-712-414-0542';
 export const SITE_PHONE_DISPLAY = '+1 712-414-0542';
 /** Official profiles only. Leave empty until the live URLs are pasted. */
-export const SITE_SAME_AS = [];
+export const SITE_SAME_AS = [
+  'https://www.instagram.com/ebookwriters.us/',
+  'https://www.facebook.com/profile.php?id=61594163111206',
+];
 export const DEFAULT_OG_PATH = '/assets/brand/hero-desk.jpg';
 export const DEFAULT_OG_ALT = 'ebookwriters.us publishing studio desk — Write. Publish. Grow.';
 
