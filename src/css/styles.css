@@ -1995,6 +1995,10 @@ a.br_about_link:visited,
   background: var(--line);
 }
 
+.br_col_post_content--solo::before {
+  content: none;
+}
+
 .br_post_toc {
   list-style: none;
   margin: 0;

@@ -22,6 +22,15 @@ if (!process.env.DATABASE_URL) {
 const force = process.argv.includes('--force');
 const sql = neon(process.env.DATABASE_URL);
 
+const columnRows = await sql`
+  select column_name
+  from information_schema.columns
+  where table_schema = 'public'
+    and table_name = 'posts'
+    and column_name in ('format', 'author')
+`;
+const columnSet = new Set(columnRows.map(row => row.column_name));
+
 let created = 0;
 let updated = 0;
 let skipped = 0;
@@ -40,6 +49,10 @@ for (const post of staticBlogPosts) {
     }
   }
 
+  const columns = [
+    'slug', 'title', 'description', 'published_on', 'read_time', 'category', 'eyebrow',
+    'lead', 'cta', 'image', 'image_alt', 'keywords', 'takeaways', 'sections', 'published',
+  ];
   const values = [
     post.slug,
     post.title,
@@ -55,19 +68,26 @@ for (const post of staticBlogPosts) {
     JSON.stringify(post.keywords || []),
     JSON.stringify(post.takeaways || []),
     JSON.stringify(post.sections || []),
+    true,
   ];
+  if (columnSet.has('format')) {
+    columns.push('format');
+    values.push(post.format === 'v2' ? 'v2' : '');
+  }
+  if (columnSet.has('author')) {
+    columns.push('author');
+    values.push(String(post.author || '').replace(/\s+/g, ' ').trim());
+  }
+  const placeholders = values.map((_, index) => `$${index + 1}`).join(',');
+  const updates = columns
+    .filter(name => name !== 'slug')
+    .map(name => `${name} = excluded.${name}`)
+    .join(', ');
 
   const result = await sql.query(
-    `insert into posts (slug, title, description, published_on, read_time, category, eyebrow,
-                        lead, cta, image, image_alt, keywords, takeaways, sections, published)
-     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14, true)
-     on conflict (slug) do update set
-       title = excluded.title, description = excluded.description,
-       published_on = excluded.published_on, read_time = excluded.read_time,
-       category = excluded.category, eyebrow = excluded.eyebrow, lead = excluded.lead,
-       cta = excluded.cta, image = excluded.image, image_alt = excluded.image_alt,
-       keywords = excluded.keywords, takeaways = excluded.takeaways,
-       sections = excluded.sections, published = true
+    `insert into posts (${columns.join(', ')})
+     values (${placeholders})
+     on conflict (slug) do update set ${updates}
      returning (xmax = 0) as inserted`,
     values,
   );

@@ -35,9 +35,17 @@ create table if not exists posts (
   takeaways     jsonb       not null default '[]'::jsonb,
   sections      jsonb       not null default '[]'::jsonb,
   published     boolean     not null default false,
+  -- Empty format is the classic template. 'v2' opts out of the stock chrome.
+  format        text        not null default '',
+  -- Empty author renders as the Editorial Desk byline.
+  author        text        not null default '',
   created_at    timestamptz not null default now(),
   updated_at    timestamptz not null default now()
 );
+
+-- Existing databases: CREATE TABLE IF NOT EXISTS will not add these.
+alter table posts add column if not exists format text not null default '';
+alter table posts add column if not exists author text not null default '';
 
 create index if not exists posts_published_idx on posts (published, published_on desc);
 

@@ -1,7 +1,7 @@
 import { sql } from '../_lib/db.js';
 import { json, methodNotAllowed, readJsonBody, guard } from '../_lib/http.js';
 import { isAuthed, requireAdmin } from '../_lib/auth.js';
-import { normalisePost, toPost } from '../_lib/posts.js';
+import { columnWarning, insertPostRow, normalisePost, toPost } from '../_lib/posts.js';
 import { triggerRebuild } from '../_lib/deploy.js';
 
 async function posts(req, res) {
@@ -31,18 +31,10 @@ async function posts(req, res) {
       return json(res, 409, { error: 'That slug is already taken.', errors: { slug: 'Already in use.' } });
     }
 
-    const rows = await db`
-      insert into posts (slug, title, description, published_on, read_time, category, eyebrow,
-                         lead, cta, image, image_alt, keywords, takeaways, sections, published)
-      values (${post.slug}, ${post.title}, ${post.description}, ${post.published_on},
-              ${post.read_time}, ${post.category}, ${post.eyebrow}, ${post.lead}, ${post.cta},
-              ${post.image}, ${post.image_alt}, ${JSON.stringify(post.keywords)},
-              ${JSON.stringify(post.takeaways)}, ${JSON.stringify(post.sections)}, ${post.published})
-      returning *
-    `;
-
+    const { row, skipped } = await insertPostRow(db, post);
     const rebuild = post.published ? await triggerRebuild() : { triggered: false, reason: 'draft' };
-    return json(res, 201, { post: toPost(rows[0]), rebuild });
+    const warning = columnWarning(skipped);
+    return json(res, 201, { post: toPost(row), rebuild, ...(warning ? { warning } : {}) });
   }
 
   return methodNotAllowed(res, ['GET', 'POST']);

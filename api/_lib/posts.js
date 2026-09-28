@@ -47,6 +47,8 @@ export function toPost(row) {
     sections: row.sections || [],
     published: row.published,
     updatedAt: row.updated_at,
+    format: row.format === 'v2' ? 'v2' : '',
+    author: str(row.author, 160),
   };
 }
 
@@ -128,6 +130,96 @@ export function normalisePost(body, { slugFallback = '' } = {}) {
       takeaways: stringList(body?.takeaways, 12, 400),
       sections,
       published: Boolean(body?.published),
+      format: str(body?.format, 16).toLowerCase() === 'v2' ? 'v2' : '',
+      author: str(body?.author, 160),
     },
   };
+}
+
+const OPTIONAL_POST_COLUMNS = ['format', 'author'];
+
+/** Which of the optional post columns exist. Missing columns must not break saves. */
+export async function postsColumnSet(db) {
+  const rows = await db`
+    select column_name
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'posts'
+      and column_name in ('format', 'author')
+  `;
+  return new Set(rows.map(row => row.column_name));
+}
+
+export function skippedPostFields(post, columnSet) {
+  return OPTIONAL_POST_COLUMNS.filter(name => post[name] && !columnSet.has(name));
+}
+
+export function columnWarning(skipped) {
+  if (!skipped?.length) return '';
+  return `Saved the article, but ${skipped.join(' and ')} could not be stored until the posts table has those columns.`;
+}
+
+function jsonb(value) {
+  return JSON.stringify(value);
+}
+
+function insertColumns(post, columnSet) {
+  const columns = [
+    'slug', 'title', 'description', 'published_on', 'read_time', 'category', 'eyebrow',
+    'lead', 'cta', 'image', 'image_alt', 'keywords', 'takeaways', 'sections', 'published',
+  ];
+  const values = [
+    post.slug, post.title, post.description, post.published_on, post.read_time,
+    post.category, post.eyebrow, post.lead, post.cta, post.image, post.image_alt,
+    jsonb(post.keywords), jsonb(post.takeaways), jsonb(post.sections), post.published,
+  ];
+  for (const name of OPTIONAL_POST_COLUMNS) {
+    if (!columnSet.has(name)) continue;
+    columns.push(name);
+    values.push(post[name] || '');
+  }
+  return { columns, values };
+}
+
+export async function insertPostRow(db, post) {
+  const columnSet = await postsColumnSet(db);
+  const { columns, values } = insertColumns(post, columnSet);
+  const placeholders = values.map((_, index) => `$${index + 1}`).join(', ');
+  const rows = await db.query(
+    `insert into posts (${columns.join(', ')}) values (${placeholders}) returning *`,
+    values,
+  );
+  return { row: rows[0], skipped: skippedPostFields(post, columnSet) };
+}
+
+export async function updatePostRow(db, post, whereSlug) {
+  const columnSet = await postsColumnSet(db);
+  const assignments = [
+    ['slug', post.slug],
+    ['title', post.title],
+    ['description', post.description],
+    ['published_on', post.published_on],
+    ['read_time', post.read_time],
+    ['category', post.category],
+    ['eyebrow', post.eyebrow],
+    ['lead', post.lead],
+    ['cta', post.cta],
+    ['image', post.image],
+    ['image_alt', post.image_alt],
+    ['keywords', jsonb(post.keywords)],
+    ['takeaways', jsonb(post.takeaways)],
+    ['sections', jsonb(post.sections)],
+    ['published', post.published],
+  ];
+  for (const name of OPTIONAL_POST_COLUMNS) {
+    if (columnSet.has(name)) assignments.push([name, post[name] || '']);
+  }
+  const values = assignments.map(([, value]) => value);
+  values.push(whereSlug);
+  const setSql = assignments.map(([name], index) => `${name} = $${index + 1}`).join(', ');
+  const rows = await db.query(
+    `update posts set ${setSql} where slug = $${values.length} returning *`,
+    values,
+  );
+  return { row: rows[0], skipped: skippedPostFields(post, columnSet) };
 }

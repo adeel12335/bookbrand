@@ -65,7 +65,7 @@ function isoDate(value) {
 
 function fromRow(row) {
   const date = isoDate(row.published_on);
-  return {
+  const post = {
     slug: row.slug,
     title: row.title,
     description: row.description,
@@ -82,6 +82,10 @@ function fromRow(row) {
     takeaways: row.takeaways || [],
     sections: row.sections || [],
   };
+  if (row.format === 'v2') post.format = 'v2';
+  const author = String(row.author || '').replace(/\s+/g, ' ').trim();
+  if (author) post.author = author;
+  return post;
 }
 
 async function load() {
