@@ -7,15 +7,21 @@
  * stamp-html) keeps importing from here and does not care which it got.
  */
 import { BLOG_REDIRECTS } from './blogRedirects.js';
+import { fixturePosts } from './blogPosts.fixtures.js';
 import { posts } from './generated/posts.js';
 
 export { BLOG_REDIRECTS } from './blogRedirects.js';
-export { articleByline, articleSectionParagraphs, articleSections, sectionBlocks, articleSources, articleTakeaways, blogIndex, blogArticle, EDITORIAL_DESK_PATH, quickAnswerFor } from './blogPosts.static.js';
+export { articleByline, articleSectionParagraphs, articleSections, sectionBlocks, articleSources, articleTakeaways, blogIndex, blogArticle, EDITORIAL_DESK_PATH, isV2Post, quickAnswerFor, slugInjectedTable } from './blogPosts.static.js';
 
 export const blogPosts = posts.filter(post => !BLOG_REDIRECTS[post.slug]);
 
+function previewPost(slug) {
+  if (!import.meta.env?.DEV) return null;
+  return fixturePosts.find(post => post.slug === slug) || null;
+}
+
 export function getPostBySlug(slug) {
-  return blogPosts.find(post => post.slug === slug) || null;
+  return blogPosts.find(post => post.slug === slug) || previewPost(slug);
 }
 
 export function headingId(heading) {

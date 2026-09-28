@@ -16,7 +16,7 @@ import {
   pricingPage, privacyPage, servicesPage, termsPage,
 } from '../src/pageContent.js';
 import { SITE_EMAIL, SITE_PHONE_DISPLAY } from '../src/site.js';
-import { articleByline, articleSectionParagraphs, articleSections, articleSources, articleTakeaways, blogIndex, blogPosts, quickAnswerFor, sectionBlocks } from '../src/blogPosts.js';
+import { articleByline, articleSectionParagraphs, articleSections, articleSources, articleTakeaways, blogIndex, blogPosts, isV2Post, quickAnswerFor, sectionBlocks } from '../src/blogPosts.js';
 import { inlineHtml } from '../src/inlineMarkup.js';
 
 function esc(value) {
@@ -346,7 +346,10 @@ function articleBylineHtml(post) {
   const updated = meta.updated
     ? ` Updated <time datetime="${esc(meta.updatedDate || meta.date)}">${esc(meta.updated)}</time>.`
     : '';
-  return `<p>Written by <a href="${esc(meta.href)}">${esc(meta.author)}</a>. Published <time datetime="${esc(meta.date)}">${esc(meta.published)}</time>.${updated} ${esc(meta.readTime)}</p>`;
+  const author = meta.href
+    ? `<a href="${esc(meta.href)}">${esc(meta.author)}</a>`
+    : esc(meta.author);
+  return `<p>Written by ${author}. Published <time datetime="${esc(meta.date)}">${esc(meta.published)}</time>.${updated} ${esc(meta.readTime)}</p>`;
 }
 
 function blogPostRoute(slug) {
@@ -368,17 +371,20 @@ function blogPostRoute(slug) {
         ...section,
         paragraphs: articleSectionParagraphs(post, section),
       }));
-      const sources = articleSources(post.slug);
+      const sources = articleSources(post);
       const sourceBlock = sources.length
         ? `<section><h2>Primary sources</h2><ul>${sources.map(source => `<li><a href="${esc(source.href)}">${esc(source.label)}</a></li>`).join('')}</ul></section>`
         : '';
+      const next = isV2Post(post)
+        ? `<p><a href="/blog">All articles</a></p>`
+        : `<p><a href="/blog">All articles</a> · <a href="/contact">${esc(post.cta || 'Contact')}</a></p>`;
       return [
         quick,
         takeawayBlock,
         sectionsBlock(sections),
         sourceBlock,
         `<p>Publishing guides follow the <a href="/editorial-policy">ebookwriters.us editorial policy</a>.</p>`,
-        `<p><a href="/blog">All articles</a> · <a href="/contact">${esc(post.cta || 'Contact')}</a></p>`,
+        next,
       ].join('\n');
     },
   };

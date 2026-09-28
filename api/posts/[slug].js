@@ -1,7 +1,7 @@
 import { sql } from '../_lib/db.js';
 import { json, methodNotAllowed, readJsonBody, str, guard } from '../_lib/http.js';
 import { isAuthed, requireAdmin } from '../_lib/auth.js';
-import { normalisePost, toPost } from '../_lib/posts.js';
+import { columnWarning, normalisePost, toPost, updatePostRow } from '../_lib/posts.js';
 import { triggerRebuild } from '../_lib/deploy.js';
 
 function slugFrom(req) {
@@ -41,23 +41,12 @@ async function post(req, res) {
       }
     }
 
-    const rows = await db`
-      update posts set
-        slug = ${post.slug}, title = ${post.title}, description = ${post.description},
-        published_on = ${post.published_on}, read_time = ${post.read_time},
-        category = ${post.category}, eyebrow = ${post.eyebrow}, lead = ${post.lead},
-        cta = ${post.cta}, image = ${post.image}, image_alt = ${post.image_alt},
-        keywords = ${JSON.stringify(post.keywords)},
-        takeaways = ${JSON.stringify(post.takeaways)},
-        sections = ${JSON.stringify(post.sections)},
-        published = ${post.published}
-      where slug = ${slug}
-      returning *
-    `;
-    if (!rows.length) return json(res, 404, { error: 'Not found.' });
+    const { row, skipped } = await updatePostRow(db, post, slug);
+    if (!row) return json(res, 404, { error: 'Not found.' });
 
     const rebuild = await triggerRebuild();
-    return json(res, 200, { post: toPost(rows[0]), rebuild });
+    const warning = columnWarning(skipped);
+    return json(res, 200, { post: toPost(row), rebuild, ...(warning ? { warning } : {}) });
   }
 
   if (req.method === 'DELETE') {

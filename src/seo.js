@@ -1,4 +1,4 @@
-import { blogArticle, blogIndex, blogPosts } from './blogPosts.js';
+import { articleByline, blogArticle, blogIndex, blogPosts, getPostBySlug, isV2Post } from './blogPosts.js';
 import { books, faqs, getBookBySlug, plans, portfolioPage } from './data.js';
 import { coverPage, editingPage, editorialDeskPage, editorialPolicyPage, faqPage, landers } from './pageContent.js';
 import {
@@ -75,6 +75,12 @@ function editorialDesk() {
     url: absoluteUrl('/authors/editorial-desk'),
     parentOrganization: { '@id': `${SITE_ORIGIN}/#organization` },
   };
+}
+
+function articleAuthor(post) {
+  const byline = articleByline(post);
+  if (byline.href) return editorialDesk();
+  return { '@type': 'Person', name: byline.author };
 }
 
 function webSite() {
@@ -683,7 +689,7 @@ function blogPostPage(post) {
         datePublished: post.date,
         dateModified: post.date,
         image: absoluteAsset(post.image || '/assets/brand/faq-editorial-v2.webp'),
-        author: editorialDesk(),
+        author: articleAuthor(post),
         publisher: {
           '@type': 'Organization',
           name: SITE_NAME,
@@ -697,7 +703,9 @@ function blogPostPage(post) {
         keywords: post.keywords?.join(', '),
         speakable: {
           '@type': 'SpeakableSpecification',
-          cssSelector: ['h1', '[data-speakable]', '.br_quick'],
+          cssSelector: isV2Post(post)
+            ? ['h1', '[data-speakable]', '.br_post_lead']
+            : ['h1', '[data-speakable]', '.br_quick'],
         },
       },
       breadcrumbs([
@@ -781,7 +789,7 @@ export function resolveSeo(pathname) {
   }
   if (path.startsWith('/blog/')) {
     const slug = path.slice('/blog/'.length);
-    const post = blogPosts.find(item => item.slug === slug);
+    const post = blogPosts.find(item => item.slug === slug) || getPostBySlug(slug);
     if (post) return blogPostPage(post);
   }
   return notFoundSeo;

@@ -627,13 +627,33 @@ function firstSentences(text, maxWords = 70) {
   return out;
 }
 
+/** Lean template: the body carries its own answer, CTA, and structure. */
+export function isV2Post(post) {
+  return post?.format === 'v2';
+}
+
 export function quickAnswerFor(post) {
-  if (!post) return '';
+  if (!post || isV2Post(post)) return '';
   return post.quickAnswer || ARTICLE_QUICK_ANSWERS[post.slug] || firstSentences(post.lead || post.description);
 }
 
-export function articleSources(slug) {
-  return ARTICLE_SOURCES[slug] || [];
+/**
+ * Slug-keyed comparison tables the classic template injects above the body.
+ * v2 posts render only the sections they store.
+ */
+export function slugInjectedTable(post) {
+  if (!post || isV2Post(post)) return null;
+  if (post.slug === 'ghostwriting-vs-hiring-a-freelancer') return 'studioVsFreelancer';
+  if (post.slug === 'developmental-editing-vs-copyediting') return 'editingTypes';
+  return null;
+}
+
+export function articleSources(postOrSlug) {
+  if (postOrSlug && typeof postOrSlug === 'object') {
+    if (isV2Post(postOrSlug)) return [];
+    return ARTICLE_SOURCES[postOrSlug.slug] || [];
+  }
+  return ARTICLE_SOURCES[postOrSlug] || [];
 }
 
 const ARTICLE_SECTION_PARAS = {
@@ -647,6 +667,7 @@ const ARTICLE_SECTION_PARAS = {
 };
 
 export function articleSectionParagraphs(post, section) {
+  if (isV2Post(post)) return section?.paragraphs || [];
   return ARTICLE_SECTION_PARAS[post?.slug]?.[section?.heading] || section.paragraphs || [];
 }
 
@@ -686,9 +707,10 @@ export function sectionBlocks(section, paragraphs = section?.paragraphs || []) {
 export const EDITORIAL_DESK_PATH = '/authors/editorial-desk';
 
 export function articleByline(post) {
+  const author = String(post?.author ?? '').replace(/\s+/g, ' ').trim();
   return {
-    author: blogArticle.authorRole,
-    href: EDITORIAL_DESK_PATH,
+    author: author || blogArticle.authorRole,
+    href: author ? '' : EDITORIAL_DESK_PATH,
     published: post?.dateLabel || post?.date || '',
     date: post?.date || '',
     updated: post?.updatedLabel || post?.updated || '',
@@ -707,6 +729,7 @@ const ARTICLE_TAKEAWAYS = {
 };
 
 export function articleTakeaways(post) {
+  if (isV2Post(post)) return post?.takeaways || [];
   return ARTICLE_TAKEAWAYS[post?.slug] || post?.takeaways || [];
 }
 
@@ -757,10 +780,13 @@ const ARTICLE_SECTION_SPLITS = {
 };
 
 export function articleSections(post) {
+  const v2 = isV2Post(post);
+  const takeawayOverride = v2 ? null : ARTICLE_TAKEAWAYS[post?.slug];
   const raw = (post?.sections || []).filter(section => {
-    if (!post?.takeaways?.length && !ARTICLE_TAKEAWAYS[post?.slug]) return true;
+    if (!post?.takeaways?.length && !takeawayOverride) return true;
     return !/^(key )?takeaways$/i.test(section.heading || '');
   });
+  if (v2) return raw;
   const splits = ARTICLE_SECTION_SPLITS[post?.slug];
   if (!splits) return raw;
   return raw.flatMap(section => splits[section.heading] || [section]);

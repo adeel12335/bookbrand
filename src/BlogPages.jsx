@@ -13,8 +13,10 @@ import {
   blogPosts,
   getPostBySlug,
   headingId,
+  isV2Post,
   quickAnswerFor,
   sectionBlocks,
+  slugInjectedTable,
 } from './blogPosts.js';
 import { CompareTable, QuickAnswer } from './CompareTable.jsx';
 import { PostCard } from './PostCard.jsx';
@@ -260,6 +262,8 @@ export function BlogPostPage() {
   const byline = post ? articleByline(post) : null;
   const takeaways = post ? articleTakeaways(post) : [];
   const sections = post ? articleSections(post) : [];
+  const v2 = post ? isV2Post(post) : false;
+  const injectedTable = post ? slugInjectedTable(post) : null;
 
   useEffect(() => {
     if (!post) return undefined;
@@ -287,7 +291,7 @@ export function BlogPostPage() {
               <dl className="br_byline">
                 <div>
                   <dt>{blogArticle.writtenLabel}</dt>
-                  <dd><Link to={byline.href}>{byline.author}</Link></dd>
+                  <dd>{byline.href ? <Link to={byline.href}>{byline.author}</Link> : byline.author}</dd>
                 </div>
                 <div>
                   <dt>{blogArticle.publishedLabel}</dt>
@@ -315,24 +319,26 @@ export function BlogPostPage() {
       <section className="br_section br_post_body">
         <div className="container">
           <div className="row">
-            <div className="col-md-3">
-              <aside className="br_sidebar" aria-label={blogArticle.tocLabel}>
-                <h2 className="br_sidebar_eyebrow">{blogArticle.tocLabel}</h2>
-                <ol className="br_post_toc">
-                  {sections.map((section, index) => (
-                    <li key={section.heading}>
-                      <a href={`#${headingId(section.heading)}`}>
-                        <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-                        {section.heading}
-                      </a>
-                    </li>
-                  ))}
-                </ol>
-                <Link className="btn-outline br_sidebar_cta" to="/contact">Get a quote</Link>
-              </aside>
-            </div>
+            {v2 ? null : (
+              <div className="col-md-3">
+                <aside className="br_sidebar" aria-label={blogArticle.tocLabel}>
+                  <h2 className="br_sidebar_eyebrow">{blogArticle.tocLabel}</h2>
+                  <ol className="br_post_toc">
+                    {sections.map((section, index) => (
+                      <li key={section.heading}>
+                        <a href={`#${headingId(section.heading)}`}>
+                          <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                          {section.heading}
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                  <Link className="btn-outline br_sidebar_cta" to="/contact">Get a quote</Link>
+                </aside>
+              </div>
+            )}
 
-            <div className="col-md-9 br_col_post_content">
+            <div className={v2 ? 'col-md-12 br_col_post_content br_col_post_content--solo' : 'col-md-9 br_col_post_content'}>
               <div className="br_wrapper_post_content">
                 <div className="br_block br_text_block">
                   <p className="br_post_lead"><RichText text={post.lead} /></p>
@@ -352,14 +358,14 @@ export function BlogPostPage() {
                   </div>
                 ) : null}
 
-                {post.slug === 'ghostwriting-vs-hiring-a-freelancer' ? (
+                {injectedTable === 'studioVsFreelancer' ? (
                   <div className="br_block br_border_top">
                     <h2>Freelancer vs writing studio</h2>
                     <CompareTable table={comparisons.studioVsFreelancer} />
                   </div>
                 ) : null}
 
-                {post.slug === 'developmental-editing-vs-copyediting' ? (
+                {injectedTable === 'editingTypes' ? (
                   <div className="br_block br_border_top">
                     <h2>Editing types at a glance</h2>
                     <CompareTable table={comparisons.editingTypes} />
@@ -387,17 +393,19 @@ export function BlogPostPage() {
                   </div>
                 ))}
 
-                <div className="br_block br_border_top br_post_cta">
-                  <h4>{blogArticle.ctaTitle} {blogArticle.ctaTitleEm}</h4>
-                  <p>{blogArticle.ctaLead}</p>
-                  <Link className="btn" to="/contact">{post.cta}</Link>
-                </div>
+                {v2 ? null : (
+                  <div className="br_block br_border_top br_post_cta">
+                    <h4>{blogArticle.ctaTitle} {blogArticle.ctaTitleEm}</h4>
+                    <p>{blogArticle.ctaLead}</p>
+                    <Link className="btn" to="/contact">{post.cta}</Link>
+                  </div>
+                )}
 
-                {articleSources(post.slug).length ? (
+                {articleSources(post).length ? (
                   <div className="br_block br_border_top">
                     <h2>Primary sources</h2>
                     <ul>
-                      {articleSources(post.slug).map(source => (
+                      {articleSources(post).map(source => (
                         <li key={source.href}>
                           <a href={source.href} rel="noopener noreferrer">{source.label}</a>
                         </li>

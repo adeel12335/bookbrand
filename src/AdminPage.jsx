@@ -22,6 +22,8 @@ const EMPTY_POST = {
   takeaways: [],
   sections: [{ ...EMPTY_SECTION }],
   published: false,
+  author: '',
+  format: '',
 };
 
 const lines = value => (Array.isArray(value) ? value.join('\n') : '');
@@ -218,6 +220,29 @@ function PostEditor({ initial, onCancel, onSaved }) {
           <input value={post.eyebrow} onChange={e => set('eyebrow', e.target.value)} />
         </label>
       </div>
+
+      <div className="adm-row">
+        <label className="adm-field">
+          <span>Author</span>
+          <input
+            value={post.author || ''}
+            autoComplete="off"
+            placeholder="Editorial Desk if blank"
+            onChange={e => set('author', e.target.value)}
+          />
+        </label>
+        <label className="adm-field">
+          <span>Format</span>
+          <select value={post.format === 'v2' ? 'v2' : ''} onChange={e => set('format', e.target.value)}>
+            <option value="">Classic</option>
+            <option value="v2">v2 — lean template</option>
+          </select>
+        </label>
+      </div>
+      <p className="adm-hint">
+        v2 hides the quick-answer box, automatic contents list, stock quote block, and injected comparison tables.
+        The byline uses Author when one is set.
+      </p>
 
       <label className="adm-field">
         <span>Lead paragraph</span>
@@ -515,13 +540,12 @@ export default function AdminPage() {
   function afterSave(result) {
     setEditing(null);
     setTab('posts');
-    setNotice(
-      result.rebuild?.triggered
-        ? 'Saved. A rebuild was triggered — the article will be live shortly.'
-        : `Saved. ${result.rebuild?.reason === 'draft'
-          ? 'Kept as a draft.'
-          : 'Set DEPLOY_HOOK_URL to rebuild automatically, or redeploy to publish it.'}`,
-    );
+    const saved = result.rebuild?.triggered
+      ? 'Saved. A rebuild was triggered — the article will be live shortly.'
+      : `Saved. ${result.rebuild?.reason === 'draft'
+        ? 'Kept as a draft.'
+        : 'Set DEPLOY_HOOK_URL to rebuild automatically, or redeploy to publish it.'}`;
+    setNotice(result.warning ? `${saved} ${result.warning}` : saved);
     refresh();
   }
 
