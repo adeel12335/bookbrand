@@ -258,7 +258,7 @@ export const staticBlogPosts = [
     slug: 'how-to-hire-an-ebook-writer',
     title: 'How to Hire an Ebook Writer: A Practical Checklist',
     description:
-      'Checklist before you hire an ebook writer: NDA, rights, sample chapter, milestones, revisions, KDP. Hire page is the quote; this is the questions.',
+      'Checklist before you hire an ebook writer: NDA, rights, sample chapter, milestones, revisions, KDP.',
     date: '2026-09-16',
     dateLabel: 'September 16, 2026',
     readTime: '8 min read',
@@ -500,13 +500,13 @@ export const staticBlogPosts = [
         heading: 'Ghostwriter cost vs “ebook writer” cost',
         paragraphs: [
           'People search both phrases. Ghostwriting specifically means someone else drafts the manuscript in your voice while you keep the byline. Hiring an “ebook writer” can mean the same thing — or a thinner draft-only gig.',
-          'Compare apples to apples: confidential process, voice matching, revision rounds, and rights transfer belong in a real ghostwriting fee. This page is the cost guide for both searches. The [how to hire an ebook writer](/blog/how-to-hire-an-ebook-writer) checklist is the questions to ask before you sign — not a second price list.',
+          'Compare apples to apples: confidential process, voice matching, revision rounds, and rights transfer belong in a real ghostwriting fee. The [how to hire an ebook writer](/blog/how-to-hire-an-ebook-writer) checklist is the questions to ask before you sign — not a second price list.',
         ],
       },
       {
         heading: 'What ghostwriters usually charge',
         paragraphs: [
-          'Public marketplace bids vary wildly because the listed scope is rarely comparable — a draft-only chapter is not the same product as a researched manuscript with edits, cover, and files. We do not publish a studio enquiry median here; that would require a numbered CRM extract we have not released.',
+          'Public marketplace bids vary wildly because the listed scope is rarely comparable — a draft-only chapter is not the same product as a researched manuscript with edits, cover, and files. We do not publish a studio enquiry median here.',
           'As a public market check, the Editorial Freelancers Association publishes member rate charts for editing and related services. Use those as planning context, not as our quote. Serious nonfiction ghostwriting for a short, tightly scoped guide can start in the high hundreds; full-length authority books with research, edits, and production support commonly reach several thousand dollars.',
           'Our fixed packages run from $699 (about 15,000 words) to $3,999 (up to about 100,000 words with deeper production support). Those totals include the studio path listed on [pricing](/pricing) — not an open hourly clock.',
         ],
@@ -564,7 +564,7 @@ const ARTICLE_QUICK_ANSWERS = {
   'how-much-does-an-ebook-ghostwriter-cost':
     'Our studio packages range from $699 to $3,999 for defined word counts and scopes. Broader professional ghostwriting market rates vary substantially by experience, length, interviews, research, and production requirements — that range is our menu, not an industry median.',
   'how-to-hire-an-ebook-writer':
-    'Before you hire an ebook writer, lock NDA and rights language, insist on a sample chapter, a fixed fee, dated milestones, and named revision rounds. Decide whether you need writing only or writing plus retailer-ready files. This checklist is the buying test — the hire page is the quote.',
+    'Before you hire an ebook writer, lock NDA and rights language, insist on a sample chapter, a fixed fee, dated milestones, and named revision rounds. Decide whether you need writing only or writing plus retailer-ready files.',
   'does-a-ghostwriter-own-your-book-rights':
     'A ghostwriter should not own your book. In a professional engagement, copyright transfers to you in writing before or as work begins — typically as an assignment or work made for hire. Keep the retailer accounts and the royalties. Confirm that in the contract, not in a chat thread.',
   'ai-ebook-writer-vs-human-ghostwriter':
@@ -605,19 +605,19 @@ const ARTICLE_SOURCES = {
 function firstSentences(text, maxWords = 70) {
   const raw = String(text || '')
     .replace(/<[^>]+>/g, ' ')
+    .replace(/\[([^\]]+)\]\((?:\/|https?:\/\/)[^)\s]*\)/g, '$1')
     .replace(/\*\*/g, '')
-    .replace(/^[“”"'\s]+/, '')
     .replace(/\s+/g, ' ')
     .trim();
   if (!raw) return '';
-  const parts = raw.match(/[^.!?]+[.!?]+(?:\s|$)/g);
+  const parts = raw.match(/[^.!?]+[.!?]+[”"’']*(?:\s|$)/g);
   if (!parts) {
     const words = raw.split(/\s+/);
     return words.length <= maxWords ? raw : `${words.slice(0, maxWords).join(' ')}.`;
   }
   let out = '';
   for (const part of parts) {
-    const clean = part.replace(/^[“”"']+/, '').trim();
+    const clean = part.trim();
     if (!clean) continue;
     const next = `${out} ${clean}`.trim();
     if (out && next.split(/\s+/).length > maxWords) return out;
@@ -639,7 +639,7 @@ export function articleSources(slug) {
 const ARTICLE_SECTION_PARAS = {
   'how-much-does-an-ebook-ghostwriter-cost': {
     'What ghostwriters usually charge': [
-      'Public marketplace bids vary wildly because the listed scope is rarely comparable — a draft-only chapter is not the same product as a researched manuscript with edits, cover, and files. We do not publish a studio enquiry median here; that would require a numbered CRM extract we have not released.',
+      'Public marketplace bids vary wildly because the listed scope is rarely comparable — a draft-only chapter is not the same product as a researched manuscript with edits, cover, and files. We do not publish a studio enquiry median here.',
       'As a public market check, the Editorial Freelancers Association publishes member rate charts for editing and related services. Use those as planning context, not as our quote. Serious nonfiction ghostwriting for a short, tightly scoped guide can start in the high hundreds; full-length authority books with research, edits, and production support commonly reach several thousand dollars.',
       'Our fixed packages run from $699 (about 15,000 words) to $3,999 (up to about 100,000 words with deeper production support). Those totals include the studio path listed on [pricing](/pricing) — not an open hourly clock.',
     ],
@@ -648,6 +648,39 @@ const ARTICLE_SECTION_PARAS = {
 
 export function articleSectionParagraphs(post, section) {
   return ARTICLE_SECTION_PARAS[post?.slug]?.[section?.heading] || section.paragraphs || [];
+}
+
+/**
+ * Orders a section's paragraphs and bullets for rendering.
+ *
+ * Sections store `paragraphs` and `bullets` separately. Without `bulletGroups`
+ * every bullet renders after every paragraph (the original layout). With
+ * `bulletGroups: [{ after, count }]` the next `count` bullets render right after
+ * paragraph index `after` (-1 = before the first paragraph), so a lead-in like
+ * "Include:" sits above its list and a follow-up sentence sits below it.
+ * Bullets not claimed by a group render at the end, so nothing is ever dropped.
+ */
+export function sectionBlocks(section, paragraphs = section?.paragraphs || []) {
+  const bullets = section?.bullets || [];
+  const groups = Array.isArray(section?.bulletGroups) ? section.bulletGroups : [];
+  const blocks = [];
+  let next = 0;
+  const take = after => {
+    for (const group of groups) {
+      if (Number(group?.after) !== after) continue;
+      const count = Math.max(0, Math.floor(Number(group?.count) || 0));
+      const items = bullets.slice(next, next + count);
+      next += items.length;
+      if (items.length) blocks.push({ type: 'list', items });
+    }
+  };
+  take(-1);
+  paragraphs.forEach((text, index) => {
+    blocks.push({ type: 'paragraph', text });
+    take(index);
+  });
+  if (next < bullets.length) blocks.push({ type: 'list', items: bullets.slice(next) });
+  return blocks;
 }
 
 export const EDITORIAL_DESK_PATH = '/authors/editorial-desk';

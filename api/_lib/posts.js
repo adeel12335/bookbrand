@@ -76,6 +76,14 @@ function sectionList(value) {
       bullets: Array.isArray(section?.bullets)
         ? section.bullets.map(b => str(b, 300)).filter(Boolean).slice(0, 20)
         : [],
+      ...(Array.isArray(section?.bulletGroups) && section.bulletGroups.length
+        ? {
+            bulletGroups: section.bulletGroups
+              .map(g => ({ after: Math.trunc(Number(g?.after)), count: Math.trunc(Number(g?.count)) }))
+              .filter(g => Number.isFinite(g.after) && g.after >= -1 && Number.isFinite(g.count) && g.count > 0)
+              .slice(0, 30),
+          }
+        : {}),
     }))
     .filter(section => section.heading || section.paragraphs.length)
     .slice(0, 30);

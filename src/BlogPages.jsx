@@ -14,6 +14,7 @@ import {
   getPostBySlug,
   headingId,
   quickAnswerFor,
+  sectionBlocks,
 } from './blogPosts.js';
 import { CompareTable, QuickAnswer } from './CompareTable.jsx';
 import { PostCard } from './PostCard.jsx';
@@ -372,16 +373,17 @@ export function BlogPostPage() {
                     key={section.heading}
                   >
                     <h2>{section.heading}</h2>
-                    {articleSectionParagraphs(post, section).map(paragraph => (
-                      <SectionCopy key={paragraph.slice(0, 48)} text={paragraph} />
+                    {sectionBlocks(section, articleSectionParagraphs(post, section)).map((block, index) => (
+                      block.type === 'list' ? (
+                        <ul key={`list-${index}`}>
+                          {block.items.map(item => (
+                            <li key={item}><RichText text={item} /></li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <SectionCopy key={`${index}-${block.text.slice(0, 48)}`} text={block.text} />
+                      )
                     ))}
-                    {section.bullets?.length ? (
-                      <ul>
-                        {section.bullets.map(item => (
-                          <li key={item}><RichText text={item} /></li>
-                        ))}
-                      </ul>
-                    ) : null}
                   </div>
                 ))}
 

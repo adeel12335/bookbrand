@@ -793,37 +793,6 @@ export function ServicesPage() {
         </div>
       </section>
 
-      <section className="br_section br_section--paper" aria-labelledby="services-brief-title">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="br_section_head">
-                <div className="br_section_head_copy">
-                  <p className="br-eyebrow">Page job</p>
-                  <h2 id="services-brief-title">{page.briefing.heading}</h2>
-                  <p>{page.briefing.lead}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          {page.briefing.paragraphs.map(paragraph => (
-            <div className="row" key={paragraph.slice(0, 40)}>
-              <div className="col-md-10">
-                <p>{paragraph}</p>
-              </div>
-            </div>
-          ))}
-          <div className="row">
-            <div className="col-md-12">
-              <p className="br_price_preview_cta">
-                {page.pricingNote}{' '}
-                <Link className="btn" to={page.pricingHref}>{page.pricingCta}</Link>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="br_section br_section--paper" aria-labelledby="services-chooser-title">
         <div className="container">
           <div className="row">
