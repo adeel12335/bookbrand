@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IconCheck, IconMail, IconMapPin, IconPhone } from './icons.jsx';
 import { contactIntro, siteContact } from './data.js';
+import { trackEvent } from './analytics.js';
 
 export const reduceMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -127,6 +128,10 @@ export function Contact({ asPage = false }) {
 
       form.reset();
       setStatus('sent');
+      trackEvent('generate_lead', {
+        lead_source: 'contact_form',
+        timeline: String(data.get('timeline') || ''),
+      });
     } catch {
       setFailure('We could not reach the server.');
       setStatus('error');
@@ -155,8 +160,14 @@ export function Contact({ asPage = false }) {
                 <Link to={contactIntro.pricingHref}>{contactIntro.pricingCta}</Link>
               </p>
               <div className="br_contact_direct">
-                <a href={`mailto:${siteContact.email}`}><IconMail aria-hidden="true" /> {siteContact.email}</a>
-                <a href={siteContact.phoneHref}><IconPhone aria-hidden="true" /> {siteContact.phone}</a>
+                <a
+                  href={`mailto:${siteContact.email}`}
+                  onClick={() => trackEvent('contact_click', { method: 'email', location: 'contact_section' })}
+                ><IconMail aria-hidden="true" /> {siteContact.email}</a>
+                <a
+                  href={siteContact.phoneHref}
+                  onClick={() => trackEvent('contact_click', { method: 'phone', location: 'contact_section' })}
+                ><IconPhone aria-hidden="true" /> {siteContact.phone}</a>
                 <span><IconMapPin aria-hidden="true" /> {siteContact.address}</span>
               </div>
             </div>

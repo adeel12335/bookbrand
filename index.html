@@ -42,6 +42,12 @@
     <style>.js [data-seo-crawl]{display:none}</style>
     <script>document.documentElement.classList.add('js');setTimeout(function(){if(document.querySelector('#root>[data-seo-crawl]'))document.documentElement.classList.remove('js')},6000)</script>
 
+    <!-- Google Analytics 4 (G-98SY0TH72S). Boots only on the production host, so
+         localhost, Vercel previews and the prerender browser never reach the reports,
+         and skips /admin. One line: vercel.json pins this script's CSP hash; run
+         `npm run qa:csp` after any edit here to recompute and verify it. -->
+    <script>(function(){if(location.hostname!=='www.ebookwriters.us'||location.pathname.indexOf('/admin')===0)return;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','G-98SY0TH72S');var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-98SY0TH72S';document.head.appendChild(s);})();</script>
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

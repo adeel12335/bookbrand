@@ -18,6 +18,7 @@ import {
 import { blogPosts } from './blogPosts.js';
 import { Contact, Eyebrow, Reveal, reduceMotion, useRecaptcha } from './ContactSection.jsx';
 import { SeoHead } from './SeoHead.jsx';
+import { trackEvent } from './analytics.js';
 import './css/fonts.css';
 import './css/base.css';
 import './css/styles.css';
@@ -736,6 +737,7 @@ function FooterSignup() {
         }),
       });
       setStatus(response.ok ? 'sent' : 'error');
+      if (response.ok) trackEvent('sign_up', { method: 'newsletter_footer' });
     } catch {
       setStatus('error');
     }
@@ -832,8 +834,18 @@ function Footer() {
           <div className="col-md-4">
             <ul className="br_footer_menu">
               <li className="br_footer_menu_title">Get in touch</li>
-              <li><a href={`mailto:${siteContact.email}`}>{siteContact.email}</a></li>
-              <li><a href={siteContact.phoneHref}>{siteContact.phone}</a></li>
+              <li>
+                <a
+                  href={`mailto:${siteContact.email}`}
+                  onClick={() => trackEvent('contact_click', { method: 'email', location: 'footer' })}
+                >{siteContact.email}</a>
+              </li>
+              <li>
+                <a
+                  href={siteContact.phoneHref}
+                  onClick={() => trackEvent('contact_click', { method: 'phone', location: 'footer' })}
+                >{siteContact.phone}</a>
+              </li>
               <li><Link to="/contact">{footerBrand.ctaLabel}</Link></li>
             </ul>
             <FooterSearch />

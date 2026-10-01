@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+import { trackPageView } from './analytics.js';
 
 function ensure(selector, create) {
   let node = document.querySelector(selector);
@@ -71,6 +72,9 @@ function applyHead({ absoluteAsset, absoluteUrl, resolveSeo }, pathname) {
 
 export function SeoHead() {
   const { pathname } = useLocation();
+  // The route the served HTML was for: its page_view already went out from the
+  // gtag config call in index.html, with the right title in <head>.
+  const lastTracked = useRef(pathname);
 
   useEffect(() => {
     let cancelled = false;
@@ -78,7 +82,16 @@ export function SeoHead() {
     // loaded on demand instead of riding in the main bundle. The served HTML
     // already carries the first route's head; only client-side navigations wait.
     import('./seo.js').then(seo => {
-      if (!cancelled) applyHead(seo, pathname);
+      if (cancelled) return;
+      applyHead(seo, pathname);
+      // Report client-side navigations only after the title has changed, so GA4
+      // never files the previous page's title under the new URL. Enhanced
+      // measurement's history-change page_view is switched off in the GA4
+      // stream for the same reason; this is the single source of SPA page_views.
+      if (pathname !== lastTracked.current) {
+        lastTracked.current = pathname;
+        trackPageView();
+      }
     });
     return () => {
       cancelled = true;

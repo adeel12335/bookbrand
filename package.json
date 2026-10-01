@@ -12,6 +12,7 @@
     "seo:sitemap": "node scripts/stamp-html.mjs --sitemap-only",
     "seo:prerender": "node scripts/prerender.mjs",
     "qa:seo-html": "node scripts/qa-seo-html.mjs",
+    "qa:csp": "node scripts/qa-csp-hashes.mjs",
     "preview": "vite preview",
     "posts:pull": "node scripts/fetch-posts.mjs",
     "fonts:pull": "node scripts/fetch-fonts.mjs --force",
