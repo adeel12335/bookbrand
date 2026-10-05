@@ -13,7 +13,7 @@ import {
 } from '../src/data.js';
 import {
   aboutPage, coverPage, editingPage, editorialDeskPage, editorialPolicyPage, faqPage, landers, notFoundPage,
-  pricingPage, privacyPage, servicesPage, termsPage,
+  pricingPage, privacyPage, servicesPage, teamPage, termsPage,
 } from '../src/pageContent.js';
 import { SITE_EMAIL, SITE_PHONE_DISPLAY } from '../src/site.js';
 import { articleByline, articleSectionParagraphs, articleSections, articleSources, articleTakeaways, blogIndex, blogPosts, isV2Post, quickAnswerFor, sectionBlocks } from '../src/blogPosts.js';
@@ -207,6 +207,16 @@ function blogIndexBlock() {
 </section>`;
 }
 
+function teamBlock() {
+  const members = teamPage.members.map(m => `<li><strong>${esc(m.name)}</strong> — ${esc(m.role)}. ${esc(m.bio)} <a href="mailto:${esc(m.email)}">${esc(m.email)}</a></li>`).join('');
+  return `<ul>${members}</ul>
+<p>${esc(teamPage.note)}</p>
+<section>
+  <h2>${esc(teamPage.closeTitle)}</h2>
+  <p>${esc(teamPage.closeLead)}</p>
+</section>`;
+}
+
 function aboutBlock() {
   const pillars = aboutPage.pillars.map(p => `<li><strong>${esc(p.label)}.</strong> ${esc(p.copy)}</li>`).join('');
   const stages = aboutPage.stages.map(s => `<li><strong>${esc(s.title)}.</strong> ${esc(s.copy)}</li>`).join('');
@@ -288,6 +298,7 @@ const routes = {
     ].join('\n'),
   },
   '/about': { h1: joinTitle(aboutPage), lead: aboutPage.lead, body: aboutBlock },
+  '/team': { h1: joinTitle(teamPage), lead: teamPage.lead, body: teamBlock },
   '/services': { h1: servicesPage.title, lead: servicesPage.lead, body: servicesIndexBlock },
   '/pricing': {
     h1: pricingPage.title,

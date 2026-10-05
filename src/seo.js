@@ -1,6 +1,6 @@
 import { articleByline, blogArticle, blogIndex, blogPosts, getPostBySlug, isV2Post } from './blogPosts.js';
 import { books, faqs, getBookBySlug, plans, portfolioPage } from './data.js';
-import { coverPage, editingPage, editorialDeskPage, editorialPolicyPage, faqPage, landers } from './pageContent.js';
+import { coverPage, editingPage, editorialDeskPage, editorialPolicyPage, faqPage, landers, teamPage } from './pageContent.js';
 import {
   DEFAULT_OG_ALT,
   DEFAULT_OG_PATH,
@@ -382,6 +382,26 @@ const staticPages = [
       breadcrumbs([
         { name: 'Home', path: '/' },
         { name: 'About', path: '/about' },
+      ]),
+    ],
+  }),
+  page({
+    path: '/team',
+    title: 'Our Team | ebookwriters.us',
+    description:
+      'Meet the ebookwriters.us studio team — editorial, project management, design, and KDP publishing leads who run every ebook from discovery call to final files.',
+    image: teamPage.heroImage,
+    priority: 0.6,
+    jsonLd: [
+      webPageSchema({
+        name: 'The ebookwriters.us Team',
+        description: teamPage.lead,
+        path: '/team',
+      }),
+      breadcrumbs([
+        { name: 'Home', path: '/' },
+        { name: 'About', path: '/about' },
+        { name: 'Our Team', path: '/team' },
       ]),
     ],
   }),

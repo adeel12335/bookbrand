@@ -42,7 +42,7 @@ export const aboutPage = {
       heading: 'How we work',
       paragraphs: [
         'Every project starts with a short discovery call and an NDA. We match you with a writer experienced in your category, introduce that writer by name, agree a chapter outline, and write against a dated schedule. You review as chapters land — typically a few hours of your time in total.',
-        'You keep 100% of the rights and royalties. Your name goes on the cover. We do not publish a public writer roster because most titles are confidential ghostwriting.',
+        'You keep 100% of the rights and royalties. Your name goes on the cover. The studio team is listed on the team page; the ghostwriters assigned to confidential titles are not, and you meet yours by name after the NDA.',
       ],
     },
     {
@@ -67,12 +67,94 @@ export const aboutPage = {
   },
   links: [
     { label: 'Ebook ghostwriting', href: '/ebook-ghostwriting-services' },
-    { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
+    { label: 'Meet the team', href: '/team' },
     { label: 'Amazon KDP publishing', href: '/amazon-kdp-ebook-writing' },
     { label: 'Writing packages', href: '/pricing' },
   ],
   closeTitle: 'Ready to talk through your book?',
   closeLead: 'A 30-minute discovery call, an NDA, and a fixed quote. No hourly billing.',
+};
+
+export const teamPage = {
+  path: '/team',
+  eyebrow: 'Our team',
+  title: 'The people behind',
+  titleEm: 'every book.',
+  lead:
+    'A small studio team runs every project — from the first call and the fixed quote to editing, cover design, and KDP upload. Write to any of us directly.',
+  heroImage: '/assets/brand/page-hero-studio.png',
+  heroImageAlt: 'Writing desk with manuscript pages and publishing tools',
+  note:
+    'Ghostwriters on confidential titles are not listed here. You meet yours by name after the NDA.',
+  closeTitle: 'Talk to the team about your book.',
+  closeLead: 'A 30-minute discovery call, an NDA, and a fixed quote. No hourly billing.',
+  // `image` stays null until the portrait is in public/assets/brand/team/;
+  // the card shows a monogram until then.
+  members: [
+    {
+      name: 'Reesha Jeff',
+      role: 'Chief Executive Officer',
+      email: 'reesha@authors.ebookwriters.us',
+      image: null,
+      bio: 'Leads the studio and signs off every project scope, quote, and author agreement. Reesha sets the standards on rights, fixed fees, and schedules that every book is held to.',
+    },
+    {
+      name: 'Sophia Parker',
+      role: 'Editorial Director',
+      email: 'sophia@authors.ebookwriters.us',
+      image: null,
+      bio: 'Owns editorial quality across the studio. Sophia matches each author with a writer for their category and reviews outlines and sample chapters before drafting begins.',
+    },
+    {
+      name: 'Mia Anderson',
+      role: 'Senior Publishing Consultant',
+      email: 'mia@authors.ebookwriters.us',
+      image: null,
+      bio: 'Runs discovery calls with new authors. Mia scopes length, audience, and package, and turns the conversation into a written fixed quote.',
+    },
+    {
+      name: 'Rachel Morgan',
+      role: 'Project Manager',
+      email: 'rachel@authors.ebookwriters.us',
+      image: null,
+      bio: 'Keeps every manuscript on its dated schedule. Rachel coordinates chapter reviews, revision rounds, and handoffs between writing, editing, and design.',
+    },
+    {
+      name: 'Hannah Collins',
+      role: 'Managing Editor',
+      email: 'hannah@writers.ebookwriters.us',
+      image: null,
+      bio: 'Leads developmental editing and copyediting. Hannah checks structure, argument, and voice chapter by chapter, then runs the final proofread.',
+    },
+    {
+      name: 'Jessica Marlowe',
+      role: 'Author Success Manager',
+      email: 'jessica@writers.ebookwriters.us',
+      image: null,
+      bio: 'The day-to-day contact for authors mid-project. Jessica collects feedback, answers questions on process and rights, and makes sure nothing waits on a reply.',
+    },
+    {
+      name: 'Vanessa Callahan',
+      role: 'Creative Director',
+      email: 'vanessa@writers.ebookwriters.us',
+      image: null,
+      bio: 'Directs cover design and interior layout. Vanessa briefs designers on genre and audience and approves every cover concept before it reaches the author.',
+    },
+    {
+      name: 'Allison Mercer',
+      role: 'Publishing Operations Manager',
+      email: 'allison@writers.ebookwriters.us',
+      image: null,
+      bio: 'Prepares retailer-ready files and handles Amazon KDP and IngramSpark setup — formatting checks, metadata, categories, and launch-day upload.',
+    },
+    {
+      name: 'Cole',
+      role: 'Client Partnerships Lead',
+      email: 'cole@authors.ebookwriters.us',
+      image: null,
+      bio: 'Works with businesses, coaches, and organizations commissioning books and lead-magnet ebooks, from first enquiry to signed scope.',
+    },
+  ],
 };
 
 export const pricingPage = {

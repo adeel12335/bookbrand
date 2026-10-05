@@ -5,6 +5,7 @@ import { plans, pricingIntro, services, servicesIntro } from './data.js';
 import { Contact } from './ContactSection.jsx';
 import { CompareTable, EditSample, QuickAnswer } from './CompareTable.jsx';
 import { headingId } from './blogPosts.js';
+import { trackEvent } from './analytics.js';
 import {
   aboutPage,
   coverPage,
@@ -18,6 +19,7 @@ import {
   privacyPage,
   serviceHrefs,
   servicesPage,
+  teamPage,
   termsPage,
 } from './pageContent.js';
 
@@ -363,6 +365,110 @@ function CloseBand({ title, lead, to = '/contact', cta = 'Start Your Project' })
         </div>
       </div>
     </section>
+  );
+}
+
+function initials(name) {
+  return name
+    .split(/\s+/)
+    .map(part => part[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+}
+
+function TeamPhoto({ member, size = 'card' }) {
+  return (
+    <div className={`br_team_photo br_team_photo--${size}`}>
+      {member.image ? (
+        <img
+          src={member.image}
+          alt={`${member.name}, ${member.role} at ebookwriters.us`}
+          width="480"
+          height="600"
+          loading={size === 'lead' ? 'eager' : 'lazy'}
+          decoding="async"
+        />
+      ) : (
+        <span className="br_team_monogram" aria-hidden="true">{initials(member.name)}</span>
+      )}
+    </div>
+  );
+}
+
+function TeamEmail({ email }) {
+  return (
+    <a
+      className="br_team_email"
+      href={`mailto:${email}`}
+      onClick={() => trackEvent('contact_click', { method: 'email', location: 'team_page' })}
+    >
+      {email}
+    </a>
+  );
+}
+
+export function TeamPage() {
+  const page = teamPage;
+  const [lead, ...members] = page.members;
+
+  return (
+    <div className="br_team_page">
+      <ScrollTop />
+
+      <section
+        className="br_page_hero"
+        aria-labelledby="team-title"
+        style={{ '--bgImage': `url('${page.heroImage}')` }}
+      >
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="br_page_hero_content">
+                <p className="br-eyebrow br-eyebrow-light">{page.eyebrow}</p>
+                <h1 id="team-title" className="br-primary-heading">
+                  {page.title} <span>{page.titleEm}</span>
+                </h1>
+                <p>{page.lead}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="br_section br_team" aria-label="Studio team">
+        <div className="container">
+          <article className="br_team_lead">
+            <TeamPhoto member={lead} size="lead" />
+            <div className="br_team_lead_copy">
+              <p className="br_team_role">{lead.role}</p>
+              <h2>{lead.name}</h2>
+              <p className="br_team_bio">{lead.bio}</p>
+              <TeamEmail email={lead.email} />
+            </div>
+          </article>
+
+          <ul className="br_team_grid">
+            {members.map(member => (
+              <li key={member.email}>
+                <article className="br_team_member">
+                  <TeamPhoto member={member} />
+                  <div className="br_team_member_copy">
+                    <h3>{member.name}</h3>
+                    <p className="br_team_role">{member.role}</p>
+                    <TeamEmail email={member.email} />
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ul>
+
+          <p className="br_team_note">{page.note}</p>
+        </div>
+      </section>
+
+      <CloseBand title={page.closeTitle} lead={page.closeLead} />
+    </div>
   );
 }
 

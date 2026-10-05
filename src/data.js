@@ -1,5 +1,13 @@
 export const navigation = [
-  { label: 'About', href: '/about' },
+  {
+    label: 'About',
+    href: '/about',
+    match: ['/about', '/team'],
+    children: [
+      { label: 'About us', href: '/about' },
+      { label: 'Our team', href: '/team' },
+    ],
+  },
   {
     label: 'Services',
     href: '/services',
@@ -589,6 +597,7 @@ export const footerLinks = [
     title: 'Company',
     links: [
       { label: 'About', href: '/about' },
+      { label: 'Our team', href: '/team' },
       { label: 'Portfolio', href: '/portfolio' },
       { label: 'Pricing', href: '/pricing' },
       { label: 'FAQ', href: '/faq' },

@@ -2,7 +2,7 @@ import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import {
-  IconArrow, IconArrowUpRight, IconBook, IconCheck, IconClose,
+  IconArrow, IconArrowUpRight, IconBook, IconCheck, IconChevronDown, IconClose,
   IconConfidential, IconMenu, IconSearch,
   IconWriting, IconWriters, IconPublishing,
   IconCalendar, IconLeaf, IconEditing, IconFormatting, IconBranding,
@@ -46,6 +46,7 @@ const EditorialPolicyPage = lazy(() => import('./ContentPages.jsx').then(m => ({
 const EditorialDeskPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.EditorialDeskPage })));
 const ServicesPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.ServicesPage })));
 const TermsPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.TermsPage })));
+const TeamPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.TeamPage })));
 const SearchPage = lazy(() => import('./SearchPage.jsx'));
 
 function RouteFallback() {
@@ -190,6 +191,34 @@ function Header() {
                     location.pathname === prefix
                     || (prefix !== '/' && location.pathname.startsWith(`${prefix}/`))
                   ));
+                  if (item.children) {
+                    return (
+                      <li key={item.href} className="has-sub">
+                        <Link
+                          to={href}
+                          className="nav-parent"
+                          onClick={() => setOpen(false)}
+                          aria-current={isCurrent ? 'page' : undefined}
+                        >
+                          {item.label}
+                          <IconChevronDown className="nav-caret" />
+                        </Link>
+                        <ul className="nav-sub" aria-label={`${item.label} pages`}>
+                          {item.children.map(child => (
+                            <li key={child.href}>
+                              <Link
+                                to={child.href}
+                                onClick={() => setOpen(false)}
+                                aria-current={location.pathname === child.href ? 'page' : undefined}
+                              >
+                                {child.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    );
+                  }
                   return (
                     <li key={item.href}>
                       {isRoute ? (
@@ -983,6 +1012,7 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/about" element={<BlogShell><AboutPage /></BlogShell>} />
+        <Route path="/team" element={<BlogShell><TeamPage /></BlogShell>} />
         <Route path="/pricing" element={<BlogShell><PricingPage /></BlogShell>} />
         <Route path="/services" element={<BlogShell><ServicesPage /></BlogShell>} />
         <Route path="/ebook-ghostwriting-services" element={<BlogShell><GhostwritingPage /></BlogShell>} />

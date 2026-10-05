@@ -178,6 +178,10 @@ export const IconChart = props => (
   </Svg>
 );
 
+export const IconChevronDown = props => (
+  <Svg {...props}><path d="m14 19 10 10 10-10" /></Svg>
+);
+
 export const IconMail = props => (
   <Svg {...props}><rect x="7" y="12" width="34" height="24" rx="3" /><path d="m7.8 14.5 15.1 10.6a2 2 0 0 0 2.2 0l15.1-10.6" /></Svg>
 );
