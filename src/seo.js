@@ -756,6 +756,10 @@ export function normalizePath(pathname) {
 }
 
 function bookPageTitle(book) {
+  if (book.seoTitle) {
+    const branded = `${book.seoTitle}${TITLE_SUFFIX}`;
+    return branded.length <= TITLE_MAX ? branded : clipPlain(book.seoTitle, TITLE_MAX);
+  }
   const phrases = [`${book.title} cover design`, `${book.title} cover`, book.title];
   for (const text of phrases) {
     if (text.length + TITLE_SUFFIX.length <= TITLE_MAX) return `${text}${TITLE_SUFFIX}`;
@@ -765,6 +769,7 @@ function bookPageTitle(book) {
 }
 
 function bookPageDescription(book) {
+  if (book.seoDescription) return book.seoDescription;
   const subtitle = book.subtitle ? `${book.subtitle.replace(/\.+$/, '')}. ` : '';
   return `${book.title} by ${book.author}. ${subtitle}${book.genre} ebook cover design. ${book.summary}`;
 }
@@ -776,7 +781,7 @@ function portfolioBookPage(book) {
     title: bookPageTitle(book),
     description,
     image: book.image,
-    imageAlt: `${book.title} by ${book.author}`,
+    imageAlt: book.coverAlt || `${book.title} by ${book.author}`,
     type: 'article',
     priority: 0.6,
     jsonLd: [
@@ -790,12 +795,14 @@ function portfolioBookPage(book) {
         image: absoluteAsset(book.image),
         url: absoluteUrl(`/portfolio/${book.slug}`),
         genre: book.genre,
+        sameAs: book.amazonUrl,
       },
       breadcrumbs([
         { name: 'Home', path: '/' },
         { name: 'Portfolio', path: '/portfolio' },
         { name: book.title, path: `/portfolio/${book.slug}` },
       ]),
+      ...(book.faqs ? [faqPageSchema(book.faqs)] : []),
     ],
   });
 }

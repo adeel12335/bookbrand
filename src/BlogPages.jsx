@@ -21,7 +21,7 @@ import {
 import { CompareTable, QuickAnswer } from './CompareTable.jsx';
 import { PostCard } from './PostCard.jsx';
 import { comparisons } from './data.js';
-import { appPath, tokenizeInline } from './inlineMarkup.js';
+import { RichText } from './RichText.jsx';
 
 const STEP = 6;
 const ALL = 'All';
@@ -223,24 +223,6 @@ export function BlogIndexPage() {
       </section>
     </div>
   );
-}
-
-function RichText({ text }) {
-  return tokenizeInline(text).map((token, i) => {
-    if (token.type === 'strong') return <strong key={i}>{token.value}</strong>;
-    if (token.type === 'link') {
-      const href = appPath(token.href);
-      if (href.startsWith('/')) {
-        return <Link key={i} to={href}>{token.value}</Link>;
-      }
-      return (
-        <a key={i} href={href} rel="noopener noreferrer">
-          {token.value}
-        </a>
-      );
-    }
-    return <React.Fragment key={i}>{token.value}</React.Fragment>;
-  });
 }
 
 function SectionCopy({ text }) {

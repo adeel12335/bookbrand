@@ -2541,6 +2541,11 @@ a.br_team_email:visited,
   align-items: flex-start;
 }
 
+/* .br-primary-heading is white for the dark page heroes; this page is light */
+.br_book_layout .br-primary-heading {
+  color: var(--emerald-900);
+}
+
 .br_book_cover {
   display: block;
   width: 100%;
@@ -2616,6 +2621,39 @@ a.br_team_email:visited,
   font-size: 1rem;
   line-height: 1.65;
   color: var(--ink-700);
+}
+
+.br_book_note p + p {
+  margin-top: 0.8rem;
+}
+
+.br_book_note + .br_book_note {
+  margin-top: 1.8rem;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.br_book_note a {
+  color: var(--emerald-700);
+  text-decoration: underline;
+  text-decoration-color: var(--gold-500);
+  text-underline-offset: 0.2em;
+}
+
+.br_book_note.br_book_faq {
+  margin-top: 2.2rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line);
+}
+
+.br_book_faq h3 {
+  margin: 1.1rem 0 0.35rem;
+  font-size: 1.05rem;
+  color: var(--emerald-900);
+}
+
+.br_book_faq h3 + p {
+  margin-top: 0;
 }
 
 .br_section--dark .br_section_head h2,

@@ -345,6 +345,231 @@ export const books = [
     summary: 'A self-help cover built around one figure: a samurai in watercolor armor, with the title in orange under the art.',
     detail: 'The illustration carries the genre before the words do. A bearded samurai with a topknot and sword sits on an off-white field, surrounded by loose splashes of teal, orange, and pink. “MODERN SAMURAI” is set large in orange beneath the figure, with the Italian subtitle in small type and the author name at the top. The contrast is what keeps the title readable in a Kindle grid.',
   },
+  {
+    slug: 'resilient-faith',
+    title: 'Resilient Faith',
+    subtitle: 'Standing Firm in a Fallen World',
+    author: 'Brian Fenn',
+    genre: 'Nonfiction',
+    format: 'Kindle',
+    role: 'Cover design',
+    image: '/assets/brand/covers/resilient-faith.jpg',
+    amazonUrl: 'https://www.amazon.com/dp/B0GM4TG1QV/',
+    summary: 'A Christian nonfiction book cover for Brian Fenn, an Army veteran and former SWAT officer. The cover has to read as conviction, not comfort.',
+    detail: 'The jacket is split in three: a red field with the faint lines of a cross and crosshair, a torn white band carrying the title, and a black base for the author name. “RESILIENT FAITH” is set in tall condensed capitals so it holds at thumbnail size, with the subtitle in small red letterspaced type underneath. The torn edges do the storytelling — a world under strain, and a message that stands in the middle of it.',
+    seoTitle: 'Resilient Faith: Christian Book Cover Design',
+    seoDescription: 'Christian book cover design for Resilient Faith by Brian Fenn — a bold red, white, and black Kindle cover built to read clearly at Amazon thumbnail size.',
+    coverAlt: 'Resilient Faith: Standing Firm in a Fallen World by Brian Fenn — Christian nonfiction book cover in red, white, and black',
+    published: 'February 4, 2026',
+    pages: '148 pages',
+    publisher: 'WestBow Press',
+    category: 'Christian Living · Spiritual Growth',
+    sections: [
+      {
+        heading: 'About the book',
+        paragraphs: [
+          'Resilient Faith: Standing Firm in a Fallen World is a Christian living book by Brian Fenn — an Army infantry veteran, former SWAT sniper, human trafficking investigator, and ministry leader. It draws on Scripture, history, science, and personal experience to help believers stand firm through artificial intelligence, pandemics, spiritual deception, and a hostile culture.',
+          'The Kindle edition runs 148 pages and was published by WestBow Press in February 2026. On Amazon it is shelved under Christian Living and Spiritual Growth.',
+        ],
+      },
+      {
+        heading: 'Christian book cover design with a clear message',
+        paragraphs: [
+          'The jacket is split in three: a red field with the faint lines of a cross and crosshair, a torn white band carrying the title, and a black base for the author name. The torn edges do the storytelling — a world under strain, and a message that stands in the middle of it.',
+          'Many Christian nonfiction covers lean on sunrise photography and soft light. This one does the opposite. The book is a call to stand firm, so the cover uses hard contrast and a heavy condensed title instead of stock imagery, and lets one quiet symbol carry the faith.',
+        ],
+      },
+      {
+        heading: 'Designed for Amazon Kindle and KDP',
+        paragraphs: [
+          'Most readers first meet a Kindle cover at the size of a postage stamp in search results. Three flat color blocks and a two-word title in tall capitals keep Resilient Faith recognizable at that size — on a phone, in a crowded category grid, and in grayscale on a Kindle device.',
+          'Preparing your own Christian or faith-based book? Our [ebook cover design](/ebook-cover-design) service starts from the same thumbnail-first test, and our [Amazon KDP publishing](/amazon-kdp-ebook-writing) team prepares the files and the listing.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'Who designed the Resilient Faith book cover?',
+        a: 'The Resilient Faith cover was designed by the ebookwriters.us studio for author Brian Fenn. It is part of our published cover portfolio.',
+      },
+      {
+        q: 'What makes a good Christian book cover?',
+        a: 'A good Christian book cover tells readers the tone of the message at a glance. Clear title type, a limited palette, and one strong symbol work better at Amazon thumbnail size than busy photography. Resilient Faith uses red, white, and black blocks and a subtle cross to signal a firm, urgent message.',
+      },
+      {
+        q: 'Where can I buy Resilient Faith?',
+        a: 'Resilient Faith: Standing Firm in a Fallen World by Brian Fenn is available as a Kindle ebook on Amazon. It was published by WestBow Press on February 4, 2026, and runs 148 pages.',
+      },
+    ],
+  },
+  {
+    slug: 'born-in-kansas-made-in-africa',
+    title: 'Born in Kansas but Made in Africa',
+    subtitle: 'An American Man’s Recollections of 50 Years in Africa',
+    author: 'Mark G. Wentling',
+    genre: 'Memoir',
+    format: 'Kindle',
+    role: 'Cover design',
+    image: '/assets/brand/covers/born-in-kansas-made-in-africa.jpg',
+    amazonUrl: 'https://www.amazon.com/dp/B0FH3BKWKD/',
+    summary: 'A travel memoir book cover for fifty years of service across Africa, from a Peace Corps volunteer who grew up on a Kansas farm. The map is the cover.',
+    detail: 'The book has one chapter per country, so the whole continent is the image: an old-map Africa in greens, golds, and reds on parchment. The two-part title sits above it in heavy green capitals — Kansas first, Africa second, the way the life ran. The subtitle and author name sit at the foot in gold and green, keeping the map clear in the middle of the frame.',
+    seoTitle: 'Born in Kansas but Made in Africa: Memoir Book Cover',
+    seoDescription: 'Memoir book cover design for Born in Kansas but Made in Africa by Mark G. Wentling — a vintage Africa map cover for a 50-year travel memoir on Kindle.',
+    coverAlt: 'Born in Kansas but Made in Africa by Mark G. Wentling — travel memoir book cover with a vintage map of Africa',
+    published: 'July 7, 2025',
+    pages: '463 pages',
+    category: 'Travel memoir · Adventurer & Explorer Biographies',
+    sections: [
+      {
+        heading: 'About the book',
+        paragraphs: [
+          'Born in Kansas but Made in Africa is a travel memoir by Mark G. Wentling. At 21 he left Wichita for the Peace Corps, and that first posting became five decades of development work and diplomacy across the African continent. The book gives one chapter to each country, from Togo and Gabon to Somalia, Angola, and the Democratic Republic of the Congo.',
+          'The Kindle edition runs 463 pages and was published in July 2025. On Amazon it ranks in Central Africa Travel and Adventurer & Explorer Biographies.',
+        ],
+      },
+      {
+        heading: 'A memoir book cover built around a map',
+        paragraphs: [
+          'Because the book moves country by country, the whole continent is the image: an old-map Africa in greens, golds, and reds on parchment. The two-part title sits above it in heavy green capitals — Kansas first, Africa second, the way the life ran.',
+          'A travel memoir cover has to promise a place before it promises a person. The map does that instantly, and the earthy palette keeps it warm and personal rather than academic.',
+        ],
+      },
+      {
+        heading: 'A long memoir title that still works on Kindle',
+        paragraphs: [
+          'Long memoir titles are common, and they are hard to fit on a small cover. Here the title is split across two lines of heavy outlined capitals so each word stays legible on the Amazon search page. The subtitle and author name move to the foot, where they read on the product page without crowding the thumbnail.',
+          'Writing your own memoir? See how our [memoir and ebook ghostwriting](/ebook-ghostwriting-services) works, or start with a [custom ebook cover](/ebook-cover-design).',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'What is Born in Kansas but Made in Africa about?',
+        a: 'It is Mark G. Wentling’s memoir of 50 years of work and travel in Africa — from Peace Corps service to development and diplomatic posts — with one chapter for each country he lived in or visited.',
+      },
+      {
+        q: 'Why use a map on a memoir book cover?',
+        a: 'For a travel memoir, the place is the hook. A map tells readers the setting before they read a word, and it stays recognizable at thumbnail size. It also suits a book organized country by country.',
+      },
+      {
+        q: 'Who designed the Born in Kansas but Made in Africa cover?',
+        a: 'The cover was designed by the ebookwriters.us studio for author Mark G. Wentling. It is part of our published cover portfolio.',
+      },
+    ],
+  },
+  {
+    slug: 'paranormal-connection',
+    title: 'Paranormal Connection',
+    subtitle: 'Nursing in the Realm of the Unseen',
+    author: 'Elaine Vizard & Mary Vizard Robinet',
+    genre: 'Memoir',
+    format: 'Kindle',
+    role: 'Cover design',
+    image: '/assets/brand/covers/paranormal-connection.jpg',
+    amazonUrl: 'https://www.amazon.com/dp/B0FJ6K7HQP/',
+    summary: 'An illustrated nursing memoir cover for a mother-and-daughter book about the unexplained moments at the bedside. Both authors are in the frame.',
+    detail: 'The authors are the story, so the painting shows two nurses in blue scrubs, hand in hand, in a dim hospital room with a faint figure behind them. The distressed white title runs across the top, with a teal tagline bar — “We know who you are.” — to set the tone. The cool, misty palette says paranormal without turning the book into horror, and both names sit together at the foot.',
+    seoTitle: 'Paranormal Connection: Nursing Memoir Book Cover',
+    seoDescription: 'Nursing memoir book cover design for Paranormal Connection by Elaine Vizard and Mary Vizard Robinet — an illustrated, atmospheric Kindle cover.',
+    coverAlt: 'Paranormal Connection by Elaine Vizard and Mary Vizard Robinet — nursing memoir book cover showing two nurses in a dim hospital room',
+    published: 'July 18, 2025',
+    pages: '125 pages',
+    category: 'Nursing · Memoir',
+    sections: [
+      {
+        heading: 'About the book',
+        paragraphs: [
+          'Paranormal Connection: Nursing in the Realm of the Unseen is a memoir by mother and daughter nurses Elaine Vizard and Mary Vizard Robinet. It collects first-hand accounts from decades of patient care — last breaths, late-night whispers, unexplained shadows — alongside the faith that carried them through.',
+          'The Kindle edition runs 125 pages and was published in July 2025. On Amazon it is listed under Nursing, with rankings in Mental Health Nursing and Nursing Issues, Trends & Roles.',
+        ],
+      },
+      {
+        heading: 'An illustrated nursing memoir cover',
+        paragraphs: [
+          'The authors are the story, so the painting shows two nurses in blue scrubs, hand in hand, in a dim hospital room with a faint figure behind them. The distressed white title runs across the top, with a teal tagline bar — “We know who you are.” — to set the tone.',
+          'Both names share one line at the foot, and both women stand side by side in the art, so neither reads as the secondary author on a co-written book.',
+        ],
+      },
+      {
+        heading: 'A paranormal memoir cover without the horror',
+        paragraphs: [
+          'Paranormal covers often borrow horror conventions: blood-red type, skulls, harsh contrast. That would have sold the wrong book. This is a gentle, spiritual memoir by working nurses, so the cover keeps a cool blue-green palette, soft light, and real-looking people, and lets the faint figure in the background carry the unexplained.',
+          'Publishing a co-authored memoir? Our [ebook cover design](/ebook-cover-design) service gives every author equal weight on the cover, and our [editing team](/ebook-editing-services) can shape two voices into one book.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'What is Paranormal Connection about?',
+        a: 'It is a memoir by two nurses, a mother and daughter, about the unexplained experiences they met at the bedside — encounters with the unseen, the realities of death and dying, and the faith that held them steady.',
+      },
+      {
+        q: 'How do you design a cover for a co-authored memoir?',
+        a: 'Give both authors equal weight. On Paranormal Connection the two nurses appear side by side in the illustration and both names share one line at the foot, so neither reads as the secondary author.',
+      },
+      {
+        q: 'Who designed the Paranormal Connection cover?',
+        a: 'The cover was designed by the ebookwriters.us studio for authors Elaine Vizard and Mary Vizard Robinet. It is part of our published cover portfolio.',
+      },
+    ],
+  },
+  {
+    slug: 'whispering-woods',
+    title: 'Whispering Woods',
+    subtitle: 'Tales of Courage and Connection',
+    author: 'Kerry Anderson',
+    genre: "Children's",
+    format: 'Kindle',
+    role: 'Cover design',
+    image: '/assets/brand/covers/whispering-woods.jpg',
+    amazonUrl: 'https://www.amazon.com/dp/B0FRSG9HK7/',
+    summary: 'A children’s book cover for short stories that help kids name their feelings: a child in silhouette against a wall of puzzle pieces.',
+    detail: 'The book is about emotions fitting together, so the background is a puzzle in warm reds, oranges, and blues, with a small boy in silhouette looking up at it. The title is set in playful hand-drawn lettering in yellow and red at the top, the author line in the same style at the foot. It reads as a children’s book at a glance, while the quiet figure in the middle signals the gentler subject inside.',
+    seoTitle: 'Whispering Woods: Children’s Book Cover Design',
+    seoDescription: 'Children’s book cover design for Whispering Woods by Kerry Anderson — a colorful puzzle-piece Kindle cover for stories about feelings and courage.',
+    coverAlt: 'Whispering Woods: Tales of Courage and Connection by Kerry Anderson — children’s book cover with a boy silhouetted against colorful puzzle pieces',
+    published: 'September 19, 2025',
+    pages: '76 pages',
+    category: 'Children’s · Inspirational & Personal Growth',
+    sections: [
+      {
+        heading: 'About the book',
+        paragraphs: [
+          'Whispering Woods: Tales of Courage and Connection is a children’s book by Kerry Anderson. Its short stories follow Abbigail the gentle deer, Benny Bear, Charlie the cheetah, and their friends as they learn about fear, sadness, bravery, and kindness. Small activities — drawing emotions, planting seeds, acting out feelings — help children name what they feel.',
+          'The Kindle edition runs 76 pages and was published in September 2025. On Amazon it is listed under Children’s Inspirational & Personal Growth.',
+        ],
+      },
+      {
+        heading: 'A children’s book cover with one big idea',
+        paragraphs: [
+          'The book is about emotions fitting together, so the background is a puzzle in warm reds, oranges, and blues, with a small boy in silhouette looking up at it. The title is set in playful hand-drawn lettering in yellow and red, and the author line repeats the same style at the foot.',
+          'It reads as a children’s book at a glance, while the quiet figure in the middle signals the gentler subject inside: feelings, not a straight adventure story.',
+        ],
+      },
+      {
+        heading: 'Designed for parents browsing on Amazon',
+        paragraphs: [
+          'Parents usually choose the book, and they scan quickly. Strong color, one clear focal figure, and a title that looks fun to read do the work in a few seconds. The palette holds at thumbnail size, which matters on the Kindle store, where many children’s ebooks are first seen in a search grid.',
+          'Publishing a children’s book? Our [ebook cover design](/ebook-cover-design) and [Amazon KDP publishing](/amazon-kdp-ebook-writing) services cover the artwork, the files, and the listing.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'What is Whispering Woods about?',
+        a: 'Whispering Woods is a collection of short animal stories that help children understand emotions like fear, sadness, and courage, with simple activities that turn each lesson into something to do.',
+      },
+      {
+        q: 'What makes a good children’s book cover?',
+        a: 'Warm, strong color, one clear focal character, and a title that looks fun to read. It also has to work at thumbnail size, because many parents first see a children’s ebook cover in an Amazon search grid.',
+      },
+      {
+        q: 'Who designed the Whispering Woods cover?',
+        a: 'The cover was designed by the ebookwriters.us studio for author Kerry Anderson. It is part of our published cover portfolio.',
+      },
+    ],
+  },
 ];
 
 export function getBookBySlug(slug) {
@@ -388,7 +613,7 @@ export const portfolioPage = {
     titleEm: 'recent projects.',
     lead:
       'Published covers, shown as they ship. Open a title for the brief, the format, and the Amazon listing.',
-    genres: ['Nonfiction', 'Memoir', 'Self-help', 'Lifestyle', 'Journal'],
+    genres: ['Nonfiction', 'Memoir', 'Self-help', 'Lifestyle', 'Journal', "Children's"],
   },
   offer: {
     eyebrow: 'What we offer',

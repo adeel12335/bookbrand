@@ -414,7 +414,13 @@ export function getCrawlMarkup(page) {
     || (book && {
       h1: book.title,
       lead: book.summary,
-      body: () => `<p>By ${esc(book.author)}. ${esc(book.genre)} ${esc(book.role).toLowerCase()}. ${esc(book.format)}.</p>${book.subtitle ? `<p>${esc(book.subtitle)}</p>` : ''}<p>${esc(book.detail)}</p><p><a href="${esc(book.amazonUrl)}">View ${esc(book.title)} on Amazon</a></p>`,
+      body: () => [
+        `<p>By ${esc(book.author)}. ${esc(book.genre)} ${esc(book.role).toLowerCase()}. ${esc(book.format)}.</p>`,
+        book.subtitle ? `<p>${esc(book.subtitle)}</p>` : '',
+        book.sections ? sectionsBlock(book.sections) : `<p>${esc(book.detail)}</p>`,
+        book.faqs ? faqBlock(book.faqs, 'Questions about this cover') : '',
+        `<p><a href="${esc(book.amazonUrl)}">View ${esc(book.title)} on Amazon</a></p>`,
+      ].filter(Boolean).join('\n'),
     })
     || (post && blogPostRoute(slug))
     || { h1: page.title.replace(/\s*[|—]\s*ebookwriters\.us$/, ''), lead: page.description, body: () => '' };

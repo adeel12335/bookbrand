@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { books, getBookBySlug, portfolioPage } from './data.js';
+import { RichText } from './RichText.jsx';
 
 export function PortfolioPage() {
   const page = portfolioPage;
@@ -207,7 +208,7 @@ export function PortfolioBookPage() {
               <img
                 className="br_book_cover"
                 src={book.image}
-                alt={`${book.title} by ${book.author}`}
+                alt={book.coverAlt || `${book.title} by ${book.author}`}
               />
             </div>
             <div className="col-md-7 col-lg-8">
@@ -225,6 +226,30 @@ export function PortfolioBookPage() {
                   <dt>Format</dt>
                   <dd>{book.format}</dd>
                 </div>
+                {book.published ? (
+                  <div>
+                    <dt>Published</dt>
+                    <dd>{book.published}</dd>
+                  </div>
+                ) : null}
+                {book.pages ? (
+                  <div>
+                    <dt>Length</dt>
+                    <dd>{book.pages}</dd>
+                  </div>
+                ) : null}
+                {book.publisher ? (
+                  <div>
+                    <dt>Publisher</dt>
+                    <dd>{book.publisher}</dd>
+                  </div>
+                ) : null}
+                {book.category ? (
+                  <div>
+                    <dt>Category</dt>
+                    <dd>{book.category}</dd>
+                  </div>
+                ) : null}
               </dl>
               <div className="br_wrapper_buttons">
                 <a className="btn" href={book.amazonUrl} target="_blank" rel="noopener noreferrer">View on Amazon</a>
@@ -232,10 +257,32 @@ export function PortfolioBookPage() {
               </div>
             </div>
           </div>
-          <div className="br_book_note">
-            <h2>About this cover</h2>
-            <p>{book.detail}</p>
-          </div>
+          {book.sections ? (
+            book.sections.map(section => (
+              <div className="br_book_note" key={section.heading}>
+                <h2>{section.heading}</h2>
+                {section.paragraphs.map(paragraph => (
+                  <p key={paragraph.slice(0, 40)}><RichText text={paragraph} /></p>
+                ))}
+              </div>
+            ))
+          ) : (
+            <div className="br_book_note">
+              <h2>About this cover</h2>
+              <p>{book.detail}</p>
+            </div>
+          )}
+          {book.faqs ? (
+            <div className="br_book_note br_book_faq">
+              <h2>Questions about this cover</h2>
+              {book.faqs.map(item => (
+                <div key={item.q}>
+                  <h3>{item.q}</h3>
+                  <p>{item.a}</p>
+                </div>
+              ))}
+            </div>
+          ) : null}
         </div>
       </section>
 
