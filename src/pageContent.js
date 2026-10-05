@@ -135,10 +135,10 @@ export const teamPage = {
     },
     {
       name: 'Vanessa Callahan',
-      role: 'Creative Director',
+      role: 'Writer and Publisher',
       email: 'vanessa@writers.ebookwriters.us',
       image: null,
-      bio: 'Directs cover design and interior layout. Vanessa briefs designers on genre and audience and approves every cover concept before it reaches the author.',
+      bio: 'Writes and publishes books with the studio. Vanessa takes manuscripts from first draft through final edits, layout, and release on Amazon KDP and IngramSpark.',
     },
     {
       name: 'Allison Mercer',
