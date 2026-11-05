@@ -13,7 +13,7 @@ import {
 } from '../src/data.js';
 import {
   aboutPage, coverPage, editingPage, editorialDeskPage, editorialPolicyPage, faqPage, landers, notFoundPage,
-  pricingPage, privacyPage, servicesPage, teamPage, termsPage,
+  pricingPage, privacyPage, reviewerFor, servicesPage, teamPage, termsPage,
 } from '../src/pageContent.js';
 import { SITE_EMAIL, SITE_PHONE_DISPLAY } from '../src/site.js';
 import { articleByline, articleSectionParagraphs, articleSections, articleSources, articleTakeaways, blogIndex, blogPosts, getRelatedPosts, isV2Post, quickAnswerFor, sectionBlocks } from '../src/blogPosts.js';
@@ -372,7 +372,9 @@ function articleBylineHtml(post) {
   const author = meta.href
     ? `<a href="${esc(meta.href)}">${esc(meta.author)}</a>`
     : esc(meta.author);
-  return `<p>Written by ${author}. Published <time datetime="${esc(meta.date)}">${esc(meta.published)}</time>.${updated} ${esc(meta.readTime)}</p>`;
+  const reviewer = reviewerFor(post.category);
+  const reviewed = reviewer ? ` Reviewed by <a href="/authors/editorial-desk">${esc(reviewer.name)}</a>, ${esc(reviewer.role)}.` : '';
+  return `<p>Written by ${author}.${reviewed} Published <time datetime="${esc(meta.date)}">${esc(meta.published)}</time>.${updated} ${esc(meta.readTime)}</p>`;
 }
 
 function deskBlock() {

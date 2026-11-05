@@ -22,6 +22,7 @@ import { CompareTable, QuickAnswer } from './CompareTable.jsx';
 import { PostCard } from './PostCard.jsx';
 import { comparisons } from './data.js';
 import { RichText } from './RichText.jsx';
+import { reviewerFor } from './pageContent.js';
 
 const STEP = 6;
 const ALL = 'All';
@@ -242,6 +243,7 @@ export function BlogPostPage() {
   const post = redirected ? null : getPostBySlug(slug);
   const latest = post ? blogPosts.filter(item => item.slug !== slug).slice(0, 3) : [];
   const byline = post ? articleByline(post) : null;
+  const reviewer = post ? reviewerFor(post.category) : null;
   const takeaways = post ? articleTakeaways(post) : [];
   const sections = post ? articleSections(post) : [];
   const v2 = post ? isV2Post(post) : false;
@@ -275,6 +277,14 @@ export function BlogPostPage() {
                   <dt>{blogArticle.writtenLabel}</dt>
                   <dd>{byline.href ? <Link to={byline.href}>{byline.author}</Link> : byline.author}</dd>
                 </div>
+                {reviewer ? (
+                  <div>
+                    <dt>Reviewed by</dt>
+                    <dd>
+                      <Link to="/authors/editorial-desk">{reviewer.name}</Link>, {reviewer.role}
+                    </dd>
+                  </div>
+                ) : null}
                 <div>
                   <dt>{blogArticle.publishedLabel}</dt>
                   <dd><time dateTime={post.date}>{post.dateLabel}</time></dd>

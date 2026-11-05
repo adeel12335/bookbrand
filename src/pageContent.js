@@ -166,6 +166,11 @@ export const teamPage = {
   ],
 };
 
+/** The editor who reviews a blog category (see editorialDeskPage.reviewers). */
+export function reviewerFor(category) {
+  return editorialDeskPage.reviewers.find(person => person.categories.includes(category)) || null;
+}
+
 export const pricingPage = {
   eyebrow: 'Investment',
   title: 'Ebook writing packages: $699 to $3,999.',

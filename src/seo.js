@@ -1,6 +1,6 @@
 import { articleByline, blogArticle, blogIndex, blogPosts, getPostBySlug, isV2Post } from './blogPosts.js';
 import { books, faqs, getBookBySlug, homeFaqs, plans, portfolioPage } from './data.js';
-import { coverPage, editingPage, editorialDeskPage, editorialPolicyPage, faqPage, landers, teamPage } from './pageContent.js';
+import { coverPage, editingPage, editorialDeskPage, editorialPolicyPage, faqPage, landers, reviewerFor, teamPage } from './pageContent.js';
 import {
   DEFAULT_OG_ALT,
   DEFAULT_OG_PATH,
@@ -834,6 +834,15 @@ function blogPostPage(post) {
         dateModified: post.updated || post.date,
         image: absoluteAsset(post.image || '/assets/brand/faq-editorial-v2.webp'),
         author: articleAuthor(post),
+        ...(reviewerFor(post.category) ? {
+          editor: {
+            '@type': 'Person',
+            name: reviewerFor(post.category).name,
+            jobTitle: reviewerFor(post.category).role,
+            url: absoluteUrl('/authors/editorial-desk'),
+            worksFor: { '@id': `${SITE_ORIGIN}/#organization` },
+          },
+        } : {}),
         publisher: {
           '@type': 'Organization',
           name: SITE_NAME,
