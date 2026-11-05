@@ -136,7 +136,7 @@ export const comparisons = {
 export const portfolioIntro = {
   eyebrow: 'Recent covers',
   title: 'Book covers from our studio.',
-  meta: "Memoir, nonfiction, self-help, and children's titles, each linked to its Amazon listing.",
+  meta: "Memoir, nonfiction, fiction, self-help, and children's titles, each linked to its Amazon listing.",
   linkLabel: 'View full portfolio',
   linkHref: '/portfolio',
   image: '/assets/brand/portfolio-shelf-v2.webp',
@@ -252,6 +252,50 @@ export const books = [
     amazonUrl: 'https://www.amazon.com/dp/B0FTLSMFFR/',
     summary: 'A nonfiction cover for a direct argument about profit, systems, and Black boys. The jacket has to carry a long title without softening the claim.',
     detail: 'The title does two jobs at once: a metaphor up front, and a plain-language thesis underneath. The cover keeps that order so a shopper can read the subject in one glance, then the author name as the authority line. It is built for a paperback listing, where the thumbnail is small and the subtitle still has to stay legible.',
+    seoTitle: 'Under the Dragon\'s Wings: Nonfiction Book Cover',
+    seoDescription: 'Nonfiction book cover design for Under the Dragon\'s Wings by William Capers, an education exposé on special education and Black boys, built for Amazon.',
+    coverAlt: 'Under the Dragon\'s Wings by William Capers, nonfiction book cover with a school building and a boy with his head on a desk',
+    published: 'September 25, 2025',
+    pages: '312 pages',
+    publisher: 'Independently published',
+    category: 'Education, Parent Participation',
+    sections: [
+      {
+        heading: 'About the book',
+        paragraphs: [
+          'Under the Dragon\'s Wings: The Profit-Driven Trap That Chains Black Boys is an education exposé by William Capers, M.Ed. in Special Education. It argues that special education labels, zero-tolerance discipline, and over-diagnosis work together as an industry that profits from Black boys, and it closes with a blueprint for parents and educators.',
+          'The paperback runs 312 pages and was published in September 2025. On Amazon it is shelved under Education & Teaching and Parent Participation.',
+        ],
+      },
+      {
+        heading: 'A nonfiction book cover that states the argument',
+        paragraphs: [
+          'The title is a metaphor, so the subtitle has to land the argument in plain words. The cover sets "Under the Dragon\'s Wings" in large orange and white capitals, then "The Profit-Driven Trap That Chains Black Boys" directly beneath it, so a shopper reads the claim in one glance.',
+          'The image does the rest: a large school building and a boy with his head down on a desk. The author line carries his credential, M.Ed. Special Education, because authority matters on a book that challenges a system.',
+        ],
+      },
+      {
+        heading: 'Part of a three-book series look',
+        paragraphs: [
+          'This is one of three William Capers titles in our portfolio, alongside [The Porch](/portfolio/the-porch) and [The Bond They Fear](/portfolio/the-bond-they-fear). All three share condensed capitals, a red, orange, and white palette, and the same author block, so readers can tell they belong together on an Amazon author page.',
+          'Planning a series of your own? Our [ebook cover design](/ebook-cover-design) service builds a cover system you can reuse for every title.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'What is Under the Dragon\'s Wings about?',
+        a: 'It is an exposé by educator William Capers on how special education labels, zero-tolerance policies, and over-diagnosis are used against Black boys in schools, with a blueprint for change.',
+      },
+      {
+        q: 'How do you design a cover for a nonfiction exposé?',
+        a: 'Lead with the claim. A clear subtitle that states the argument, a direct image of the subject, and the author credential do more for a serious nonfiction book than abstract art.',
+      },
+      {
+        q: 'Who designed the Under the Dragon\'s Wings cover?',
+        a: 'The cover was designed by the ebookwriters.us studio for author William Capers. It is part of our published cover portfolio.',
+      },
+    ],
   },
   {
     slug: 'the-porch',
@@ -265,6 +309,50 @@ export const books = [
     amazonUrl: 'https://www.amazon.com/dp/B0G6W2W1YR/',
     summary: 'A cover for a book about memory, mission, and a practical blueprint. The short title is the hook; the subtitle does the explaining.',
     detail: '"The Porch" is short enough to dominate a thumbnail. The subtitle is the part that tells a serious reader what kind of book this is, so the type hierarchy puts the title first and the blueprint language second. The author line stays quiet so the idea, not a logo, leads the listing.',
+    seoTitle: 'The Porch: Nonfiction Book Cover Design',
+    seoDescription: 'Nonfiction book cover design for The Porch by William Capers, a blueprint for community and Black sovereignty, with a warm porch scene built for Amazon.',
+    coverAlt: 'The Porch by William Capers, nonfiction book cover with a warmly lit porch and rocking chairs',
+    published: 'December 13, 2025',
+    pages: '348 pages',
+    publisher: 'Independently published',
+    category: 'Education, Parent Participation',
+    sections: [
+      {
+        heading: 'About the book',
+        paragraphs: [
+          'The Porch: Memory, Mission, and the Blueprint for Black Sovereignty is a practical nonfiction book by William Capers. It treats the front porch as a model for community life and lays out playbooks: porch hours, story circles, homework clinics, apprenticeships, and neighborhood health nights.',
+          'The paperback runs 348 pages and was published in December 2025, the third of his titles in our portfolio.',
+        ],
+      },
+      {
+        heading: 'A warm image for a practical book',
+        paragraphs: [
+          'The book is about memory turned into action, so the cover uses a warm, lit porch with empty rocking chairs instead of a protest image. It invites the reader in.',
+          '"The Porch" is short, so it is set very large in red with "The" above it, and the subtitle sits in white capitals underneath. The top line, "Author of The Bond They Fear," tells returning readers this comes from the same author.',
+        ],
+      },
+      {
+        heading: 'Series design across three covers',
+        paragraphs: [
+          'The Porch shares its type, palette, and author block with [Under the Dragon\'s Wings](/portfolio/under-the-dragons-wings) and [The Bond They Fear](/portfolio/the-bond-they-fear). A consistent series look helps every new title borrow attention from the last one.',
+          'Our [ebook cover design](/ebook-cover-design) service can set up the same kind of system for an author with more than one book.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'What is The Porch about?',
+        a: 'It is William Capers\' blueprint for rebuilding community, using the porch as a model, with practical programs for families, young people, and elders.',
+      },
+      {
+        q: 'Why put "Author of" on a book cover?',
+        a: 'It links a new title to a book readers may already know. For an author with a series, it is one of the simplest ways to carry readers from one book to the next.',
+      },
+      {
+        q: 'Who designed The Porch cover?',
+        a: 'The cover was designed by the ebookwriters.us studio for author William Capers. It is part of our published cover portfolio.',
+      },
+    ],
   },
   {
     slug: 'the-bond-they-fear',
@@ -278,18 +366,105 @@ export const books = [
     amazonUrl: 'https://www.amazon.com/dp/B0FWBRDQXQ/',
     summary: 'A long, specific subtitle on a confrontational title. The cover has to stay readable when Amazon crops it to a narrow column.',
     detail: 'This jacket is a type problem more than an illustration problem. The main title is the line people remember. The subtitle is a full argument, so it is set to wrap cleanly under the title instead of competing with it. Paperback proportion keeps the author name anchored at the bottom, where retailer grids expect it.',
+    seoTitle: 'The Bond They Fear: Nonfiction Book Cover Design',
+    seoDescription: 'Nonfiction book cover design for The Bond They Fear by William Capers, a book on mentorship between Black men and boys, with a long subtitle that stays readable.',
+    coverAlt: 'The Bond They Fear by William Capers, nonfiction book cover with two silhouetted figures in a bright doorway',
+    published: 'October 14, 2025',
+    pages: '199 pages',
+    publisher: 'Independently published',
+    category: 'Education, Parent Participation',
+    sections: [
+      {
+        heading: 'About the book',
+        paragraphs: [
+          'The Bond They Fear: Why Empowered Bonds Between Black Men and Black Males Undermine Systemic Control is by William Capers, M.Ed., a school security officer and special education advocate. Drawing on more than a decade in school hallways, it examines how mentorship between Black men and boys is treated with suspicion inside schools.',
+          'The paperback runs 199 pages and was published in October 2025.',
+        ],
+      },
+      {
+        heading: 'Two figures in a doorway',
+        paragraphs: [
+          'The book is about one relationship, so the cover shows exactly that: two figures side by side, silhouetted against a bright doorway in a cracked wall. It reads at thumbnail size because there is only one idea in the frame.',
+          'The title splits across two lines in white and red capitals. The long subtitle wraps under it in a smaller size, so it never competes with the title on an Amazon search page.',
+        ],
+      },
+      {
+        heading: 'Designing for a long subtitle',
+        paragraphs: [
+          'Long nonfiction subtitles help search and set expectations, but they can crowd a small cover. The answer is hierarchy: a short, large title, then the subtitle set narrow and tight, then the author line at the foot.',
+          'See the rest of the series: [Under the Dragon\'s Wings](/portfolio/under-the-dragons-wings) and [The Porch](/portfolio/the-porch).',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'What is The Bond They Fear about?',
+        a: 'It looks at why mentoring relationships between Black men and Black boys are viewed with suspicion in schools, and what that costs young people.',
+      },
+      {
+        q: 'How do you fit a long subtitle on a book cover?',
+        a: 'Keep the main title short and large, set the subtitle smaller and narrower beneath it, and keep the image simple so nothing fights the text at thumbnail size.',
+      },
+      {
+        q: 'Who designed The Bond They Fear cover?',
+        a: 'The cover was designed by the ebookwriters.us studio for author William Capers. It is part of our published cover portfolio.',
+      },
+    ],
   },
   {
     slug: 'not-fine',
     title: 'Not Fine',
     author: 'Evelyn Truex',
-    genre: 'Memoir',
+    genre: 'Fiction',
     format: 'Kindle',
     role: 'Cover design',
     image: '/assets/brand/covers/not-fine.jpg',
     amazonUrl: 'https://www.amazon.com/dp/B0FSN4CPHL/',
-    summary: 'A stark Kindle cover: black field, a crossed-out "not," and a single white ribbon. The whole idea is readable at postage-stamp size.',
+    summary: 'A stark Kindle cover for a literary novel about a doctor, a patient, and lung cancer: black field, a crossed-out "not," and a single white ribbon.',
     detail: 'The title is the design. "NOT" is struck through in a thin magenta bar so the words "FINE" still read first, and the contradiction lands a second later. A white awareness ribbon sits alone under the type, with the author name in small caps at the foot. Nothing else is on the jacket, which is what makes the thumbnail hold together on a phone.',
+    seoTitle: 'Not Fine: Literary Fiction Book Cover Design',
+    seoDescription: 'Minimalist literary fiction book cover for Not Fine by Evelyn Truex, a novel about a doctor, a farmer with lung cancer, and grief. Designed to read on Kindle.',
+    coverAlt: 'Not Fine by Evelyn Truex, minimalist black book cover with the word not crossed out and a white ribbon',
+    published: 'December 17, 2025',
+    pages: '335 pages',
+    category: 'Literary Fiction, Women\'s Fiction',
+    sections: [
+      {
+        heading: 'About the book',
+        paragraphs: [
+          'Not Fine is a novel by Evelyn Truex. Dr. Charlie Hope Moore fights a health insurance company to get lung cancer care for Frank, a farmer in Oklahoma, while her own life is upended. The story deals with gaslighting, grief, and imposter syndrome.',
+          'The Kindle edition runs 335 pages and was published in December 2025. On Amazon it is listed under Literary Fiction and Contemporary Women\'s Fiction.',
+        ],
+      },
+      {
+        heading: 'A minimalist cover for literary fiction',
+        paragraphs: [
+          'The title is the design. "NOT" is struck through with a thin magenta bar, so "FINE" reads first and the contradiction lands a second later. That is the whole novel in two words: people saying they are fine when they are not.',
+          'A single white ribbon, the awareness ribbon for lung cancer, sits alone under the type, with the author name in small caps at the foot. Nothing else is on the cover.',
+        ],
+      },
+      {
+        heading: 'Why minimal works on Kindle',
+        paragraphs: [
+          'Literary fiction competes on mood, not plot summary. A black field and two words stand out in a grid of busy covers, and they still read clearly on a phone at the size of a stamp.',
+          'Our [ebook cover design](/ebook-cover-design) service tests every concept at thumbnail size before it goes further.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'What is Not Fine by Evelyn Truex about?',
+        a: 'It follows Dr. Charlie Hope Moore as she fights an insurer to treat a farmer with lung cancer while her own life falls apart, dealing with gaslighting, grief, and imposter syndrome.',
+      },
+      {
+        q: 'What does the white ribbon on the cover mean?',
+        a: 'A white ribbon is used for lung cancer awareness. On this cover it points to the patient\'s illness at the center of the story without showing anything medical.',
+      },
+      {
+        q: 'Who designed the Not Fine cover?',
+        a: 'The cover was designed by the ebookwriters.us studio for author Evelyn Truex. It is part of our published cover portfolio.',
+      },
+    ],
   },
   {
     slug: 'mollo-tutto',
@@ -303,6 +478,50 @@ export const books = [
     amazonUrl: 'https://www.amazon.com/dp/B0D9BS9NCX/',
     summary: 'An Italian memoir cover about leaving ordinary life for a refuge in the Alps. The title is a decision, so the jacket treats it like one.',
     detail: 'The book is a first-person journey, not a travel guide. The cover leads with the outburst of the title, quitting, then going to live in a mountain refuge, and lets the Alpine subtitle explain the setting. It is designed for an Italian paperback listing, where the title has to survive both the grid thumbnail and the full product page.',
+    seoTitle: 'Mollo Tutto: Illustrated Memoir Book Cover',
+    seoDescription: 'Illustrated memoir book cover for Mollo Tutto! E Vado a Vivere in Rifugio by Luca Daisei Hiroki, an Italian story of leaving the city for an Alpine refuge.',
+    coverAlt: 'Mollo Tutto! E Vado a Vivere in Rifugio by Luca Daisei Hiroki, illustrated cover with a couple in front of a mountain cabin',
+    published: 'July 12, 2024',
+    pages: '112 pages',
+    publisher: 'Independently published',
+    category: 'Essays & Memoir, Italian edition',
+    sections: [
+      {
+        heading: 'About the book',
+        paragraphs: [
+          'Mollo Tutto! E Vado a Vivere in Rifugio (roughly, "I\'m quitting everything to live in a mountain refuge") is a first-person memoir by Luca Daisei Hiroki about leaving city life for an Alpine refuge: chopping wood, cooking over fire, and learning to live simply.',
+          'The Italian paperback runs 112 pages and was published in July 2024.',
+        ],
+      },
+      {
+        heading: 'An illustrated memoir cover',
+        paragraphs: [
+          'The title is a decision, said out loud, so it runs across the top in large red capitals. Below it, a bright illustration shows a couple in front of a stone cabin with mountains and a wood pile, which tells the reader the setting before they read the subtitle.',
+          'The subtitle, "Trasforma la tua vita," sits in small red type on white at the foot. The white space keeps the cover light, which fits a hopeful story rather than a survival guide.',
+        ],
+      },
+      {
+        heading: 'Designing for Italian readers on Amazon',
+        paragraphs: [
+          'Long Italian titles are common on Amazon.it. The cover keeps the full title readable by stacking it over three lines and leaving the illustration uncluttered.',
+          'This is one of six covers we designed for Luca Daisei Hiroki, alongside [Zen per Principianti](/portfolio/zen-per-principianti) and [Modern Samurai](/portfolio/modern-samurai).',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'What is Mollo Tutto about?',
+        a: 'It is Luca Daisei Hiroki\'s true story of leaving the city to live in an Alpine refuge, and what he learned about change, simplicity, and nature.',
+      },
+      {
+        q: 'Do you design covers for books in Italian?',
+        a: 'Yes. Six of the covers in our portfolio are Italian titles. We work from the text you provide and check every line of type with you before files are final.',
+      },
+      {
+        q: 'Who designed the Mollo Tutto cover?',
+        a: 'The cover was designed by the ebookwriters.us studio for author Luca Daisei Hiroki. It is part of our published cover portfolio.',
+      },
+    ],
   },
   {
     slug: 'zen-per-principianti',
@@ -316,6 +535,50 @@ export const books = [
     amazonUrl: 'https://www.amazon.com/dp/B0CXPM4XP2/',
     summary: 'A beginner Zen manual. The cover has to look calm and still tell a hurried reader that this is a step-by-step book, not a dense philosophy text.',
     detail: 'The Italian title is the category signal: Zen, for beginners. The subtitle promises a practical anti-stress path, so the jacket keeps the title large and the "start here" language secondary. Paperback format, aimed at readers who will judge the book from the Amazon thumbnail before they read a word of the description.',
+    seoTitle: 'Zen per Principianti: Self-Help Book Cover',
+    seoDescription: 'Illustrated self-help book cover for Zen per Principianti by Luca Daisei Hiroki, an Italian step-by-step guide to Zen and stress relief for beginners.',
+    coverAlt: 'Zen per Principianti by Luca Daisei Hiroki, illustrated cover with a meditating woman in a colorful kimono',
+    published: 'March 10, 2024',
+    pages: '136 pages',
+    publisher: 'Independently published',
+    category: 'Self-help, Italian edition',
+    sections: [
+      {
+        heading: 'About the book',
+        paragraphs: [
+          'Zen per Principianti is a practical guide to Zen for beginners by Luca Daisei Hiroki, written in Italian. It teaches basic techniques step by step, uses breathing to reduce stress, and shows how to bring mindfulness into daily life.',
+          'The paperback runs 136 pages and was published in March 2024.',
+        ],
+      },
+      {
+        heading: 'A calm cover for a practical guide',
+        paragraphs: [
+          'The title is the category signal, so "ZEN" is set huge in magenta, with "per principianti" beneath it. A reader knows in a second that this is a beginner\'s book.',
+          'The illustration is a woman meditating in a watercolor kimono under a conical hat, on soft pastel washes. It looks calm without looking like a dense philosophy text.',
+        ],
+      },
+      {
+        heading: 'The start of a series system',
+        paragraphs: [
+          'This cover set the pattern for the series: a pastel illustrated character in a conical hat, centered, with bold sans-serif type above. [Il Cane Zen](/portfolio/il-cane-zen) and [Il Gatto Zen](/portfolio/il-gatto-zen) reuse it with a dog and a cat.',
+          'A series system like this is part of our [ebook cover design](/ebook-cover-design) service.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'What is Zen per Principianti about?',
+        a: 'It is a beginner\'s guide to Zen in Italian, with step-by-step techniques, breathing exercises for stress, and ways to bring mindfulness into everyday life.',
+      },
+      {
+        q: 'How do you make a self-help cover look calm but practical?',
+        a: 'Use a soft palette and a single calm figure, then make the title large and plain so the reader still sees a practical, beginner-friendly book.',
+      },
+      {
+        q: 'Who designed the Zen per Principianti cover?',
+        a: 'The cover was designed by the ebookwriters.us studio for author Luca Daisei Hiroki. It is part of our published cover portfolio.',
+      },
+    ],
   },
   {
     slug: 'il-cane-zen',
@@ -329,6 +592,50 @@ export const books = [
     amazonUrl: 'https://www.amazon.com/dp/B0CVF5SQFF/',
     summary: 'A pet book that borrows Zen language. The cover has to welcome dog owners without looking like a training textbook.',
     detail: 'The subject is the relationship, not a breed guide. The title "Il Cane Zen" is short and ownable; the subtitle explains harmony, Japanese symbols, and daily life with a dog. The jacket is built so the title still reads when the cover is reduced to the size of a search result.',
+    seoTitle: 'Il Cane Zen: Pet Book Cover Design',
+    seoDescription: 'Illustrated pet book cover for Il Cane Zen by Luca Daisei Hiroki, an Italian guide to living in harmony with your dog through Zen ideas and meditation.',
+    coverAlt: 'Il Cane Zen by Luca Daisei Hiroki, illustrated cover with a smiling dog meditating in a conical hat',
+    published: 'February 9, 2024',
+    pages: '166 pages',
+    publisher: 'Independently published',
+    category: 'Pets & Animal Care, Italian edition',
+    sections: [
+      {
+        heading: 'About the book',
+        paragraphs: [
+          'Il Cane Zen is an Italian guide by Luca Daisei Hiroki to living in harmony with your dog. It brings Zen ideas into dog care: reading body language, gentle training, meditating with your dog, and keeping a calm home.',
+          'The paperback runs 166 pages and was published in February 2024.',
+        ],
+      },
+      {
+        heading: 'A friendly pet book cover',
+        paragraphs: [
+          'The cover had to welcome dog owners without looking like a training manual. A smiling dog sits in meditation, paws together, wearing a conical hat, against a teal and pink sky.',
+          '"IL CANE ZEN" is set in large white capitals across the top, so the title still reads when the cover shrinks to the size of a search result.',
+        ],
+      },
+      {
+        heading: 'One series, two animals',
+        paragraphs: [
+          'Il Cane Zen mirrors [Il Gatto Zen](/portfolio/il-gatto-zen): same pose, same hat, same type, a different animal and palette. Readers who bought one can spot the other immediately.',
+          'The pattern started with [Zen per Principianti](/portfolio/zen-per-principianti).',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'What is Il Cane Zen about?',
+        a: 'It is an Italian guide to a calmer life with your dog, combining Zen ideas with communication, gentle training, and meditation you can do together.',
+      },
+      {
+        q: 'How do you design covers for a book series?',
+        a: 'Fix a few elements, such as the character pose, the type, and the layout, and change one thing per title, such as the animal or the color. Readers learn the series at a glance.',
+      },
+      {
+        q: 'Who designed the Il Cane Zen cover?',
+        a: 'The cover was designed by the ebookwriters.us studio for author Luca Daisei Hiroki. It is part of our published cover portfolio.',
+      },
+    ],
   },
   {
     slug: 'diario-zen',
@@ -342,6 +649,49 @@ export const books = [
     amazonUrl: 'https://www.amazon.com/dp/B0CRL9H1ZF/',
     summary: 'A daily journal cover. Readers need to see that this is a twelve-month practice, not a one-sitting essay.',
     detail: 'The promise is small and specific: three minutes a day, for a year. The cover puts "Diario Zen" first so the format is obvious, then uses the subtitle for the time span. Kindle listings crop tightly, so the title, the daily promise, and the author name are the only elements asked to survive that crop.',
+    seoTitle: 'Diario Zen: Journal Cover Design',
+    seoDescription: 'Journal cover design for Diario Zen by Luca Daisei Hiroki, a 12-month Italian Zen journal for mindfulness and calm in three minutes a day, built for Kindle.',
+    coverAlt: 'Diario Zen by Luca Daisei Hiroki, journal cover with a red sun, a blossoming tree, and layered blue mountains',
+    published: 'January 4, 2024',
+    pages: '218 pages',
+    category: 'Religion, Italian Kindle',
+    sections: [
+      {
+        heading: 'About the book',
+        paragraphs: [
+          'Diario Zen is a 12-month guided journal by Luca Daisei Hiroki, written in Italian. Each month works on a different part of life with short Zen practices, quotes from Zen masters, and space for the reader\'s own notes, in about three minutes a day.',
+          'The Kindle edition runs 218 pages and was published in January 2024.',
+        ],
+      },
+      {
+        heading: 'A journal cover that says "daily practice"',
+        paragraphs: [
+          'A journal has to look like something you return to, not read once. The cover uses a cream background, a red sun with the Japanese character for Zen, a single blossoming tree, and layered blue mountains, like the first page of a notebook.',
+          '"DIARIO ZEN" is set in deep navy capitals at the top, with the promise underneath: twelve months, three minutes a day. The format is clear before the reader opens the listing.',
+        ],
+      },
+      {
+        heading: 'Different from the illustrated series',
+        paragraphs: [
+          'Unlike the character covers in the series, Diario Zen uses a quieter landscape, because it is a tool for the reader rather than a story or a guide.',
+          'See the other covers for this author: [Il Gatto Zen](/portfolio/il-gatto-zen), [Modern Samurai](/portfolio/modern-samurai).',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'What is Diario Zen?',
+        a: 'It is an Italian guided journal with a year of short daily Zen practices, each month focused on a different part of life, meant to take about three minutes a day.',
+      },
+      {
+        q: 'How should a journal cover differ from a book cover?',
+        a: 'It should feel calm and reusable, show the format and time commitment clearly, and avoid looking like a one-time read.',
+      },
+      {
+        q: 'Who designed the Diario Zen cover?',
+        a: 'The cover was designed by the ebookwriters.us studio for author Luca Daisei Hiroki. It is part of our published cover portfolio.',
+      },
+    ],
   },
   {
     slug: 'il-gatto-zen',
@@ -355,6 +705,49 @@ export const books = [
     amazonUrl: 'https://www.amazon.com/dp/B0CTJBC6ZT/',
     summary: 'A companion to the dog book, with its own subject: slowing down through the idea of a Zen cat.',
     detail: 'The series needs each cover to be recognizable and still distinct. "Il Gatto Zen" mirrors the dog title so returning readers know the shelf, while the illustration and subtitle belong to cats, meditation, and short Zen stories. The Kindle cover is composed for a tall thumbnail, with the title doing the selling.',
+    seoTitle: 'Il Gatto Zen: Illustrated Book Cover',
+    seoDescription: 'Illustrated book cover for Il Gatto Zen by Luca Daisei Hiroki, an Italian guide to slowing down and mindfulness through the calm of cats, built for Kindle.',
+    coverAlt: 'Il Gatto Zen by Luca Daisei Hiroki, illustrated cover with a smiling cat meditating in a conical hat',
+    published: 'January 29, 2024',
+    pages: '108 pages',
+    category: 'Personal Development, Italian Kindle',
+    sections: [
+      {
+        heading: 'About the book',
+        paragraphs: [
+          'Il Gatto Zen is an Italian book by Luca Daisei Hiroki about slowing down and living in the present, using the calm of cats as the model. It mixes mindfulness practice, Japanese symbolism, meditations, and short Zen stories.',
+          'The Kindle edition runs 108 pages and was published in January 2024.',
+        ],
+      },
+      {
+        heading: 'A cat cover in the same series',
+        paragraphs: [
+          'A smiling white cat meditates in a conical hat and a pink robe, against a rising sun and soft clouds. The pose and hat match [Il Cane Zen](/portfolio/il-cane-zen), so readers recognize the series.',
+          '"IL GATTO ZEN" is set large in white at the top, with the subtitle in small type underneath, composed for a tall Kindle thumbnail.',
+        ],
+      },
+      {
+        heading: 'Why series covers sell the next book',
+        paragraphs: [
+          'On Amazon, "customers also bought" places series titles side by side. When the covers clearly match, a reader who liked one book is more likely to pick up the next.',
+          'Our [ebook cover design](/ebook-cover-design) service plans series covers from the first title.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'What is Il Gatto Zen about?',
+        a: 'It is an Italian guide to mindfulness and calm that uses the way cats live in the present as a model, with meditations and short Zen stories.',
+      },
+      {
+        q: 'Why do series covers look alike?',
+        a: 'Matching covers help readers recognize a series in search results and recommendations, so one book leads to the next.',
+      },
+      {
+        q: 'Who designed the Il Gatto Zen cover?',
+        a: 'The cover was designed by the ebookwriters.us studio for author Luca Daisei Hiroki. It is part of our published cover portfolio.',
+      },
+    ],
   },
   {
     slug: 'modern-samurai',
@@ -368,6 +761,49 @@ export const books = [
     amazonUrl: 'https://www.amazon.com/dp/B0CYZXYP6N/',
     summary: 'A self-help cover built around one figure: a samurai in watercolor armor, with the title in orange under the art.',
     detail: 'The illustration carries the genre before the words do. A bearded samurai with a topknot and sword sits on an off-white field, surrounded by loose splashes of teal, orange, and pink. "MODERN SAMURAI" is set large in orange beneath the figure, with the Italian subtitle in small type and the author name at the top. The contrast is what keeps the title readable in a Kindle grid.',
+    seoTitle: 'Modern Samurai: Watercolor Book Cover Design',
+    seoDescription: 'Watercolor book cover for Modern Samurai by Luca Daisei Hiroki, an Italian self-help manual on discipline and focus inspired by the samurai, built for Kindle.',
+    coverAlt: 'Modern Samurai by Luca Daisei Hiroki, watercolor cover with a samurai holding a sword and splashes of teal, orange, and pink',
+    published: 'March 24, 2024',
+    pages: '116 pages',
+    category: 'Self-help, Italian Kindle',
+    sections: [
+      {
+        heading: 'About the book',
+        paragraphs: [
+          'Modern Samurai is an Italian self-help manual by Luca Daisei Hiroki on discipline, focus, and stress, built on samurai history, Bushido values, and meditation for self-control.',
+          'The Kindle edition runs 116 pages and was published in March 2024.',
+        ],
+      },
+      {
+        heading: 'A watercolor figure on a white field',
+        paragraphs: [
+          'A bearded samurai with a topknot and a raised sword stands on an off-white field, surrounded by loose splashes of teal, orange, and pink. The illustration tells readers the theme before they read a word.',
+          '"MODERN SAMURAI" is set large in orange beneath the figure, with the author name at the top and the Italian subtitle in small type at the foot.',
+        ],
+      },
+      {
+        heading: 'Strength without aggression',
+        paragraphs: [
+          'The book is about calm strength, so the cover avoids dark, violent imagery. The bright watercolor keeps it in self-help rather than action or history.',
+          'More covers for this author: [Zen per Principianti](/portfolio/zen-per-principianti), [Diario Zen](/portfolio/diario-zen).',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'What is Modern Samurai about?',
+        a: 'It is an Italian self-help manual that uses samurai history and Bushido values to build discipline, focus, and calm under stress.',
+      },
+      {
+        q: 'How do you keep a samurai cover from looking like an action book?',
+        a: 'Use a light background, soft watercolor color, and a still pose. Those signal self-help and reflection rather than combat.',
+      },
+      {
+        q: 'Who designed the Modern Samurai cover?',
+        a: 'The cover was designed by the ebookwriters.us studio for author Luca Daisei Hiroki. It is part of our published cover portfolio.',
+      },
+    ],
   },
   {
     slug: 'resilient-faith',
@@ -610,7 +1046,7 @@ export const portfolioPage = {
   title: "Books we've helped authors",
   titleEm: 'bring to life.',
   lead:
-    'Every book has a story behind it. This portfolio highlights covers and projects we have helped shape for authors across genres: from memoir and business to self-help, wellness, and personal development.',
+    "Every book has a story behind it. This portfolio shows covers we have designed for authors across genres: memoir, education nonfiction, literary fiction, self-help, and children's books, in English and Italian.",
   cta: 'Start your book journey',
   trustNote: 'Trusted by authors who want professional guidance, creative support, and reader-ready results.',
   pillars: [
@@ -637,7 +1073,7 @@ export const portfolioPage = {
     titleEm: 'recent projects.',
     lead:
       'Published covers, shown as they ship. Open a title for the brief, the format, and the Amazon listing.',
-    genres: ['Nonfiction', 'Memoir', 'Self-help', 'Lifestyle', 'Journal', "Children's"],
+    genres: ['Nonfiction', 'Memoir', 'Fiction', 'Self-help', 'Lifestyle', 'Journal', "Children's"],
   },
   offer: {
     eyebrow: 'What we offer',
