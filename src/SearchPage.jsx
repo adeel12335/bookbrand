@@ -53,10 +53,10 @@ function buildIndex() {
 function snippet(text, terms) {
   const lower = text.toLowerCase();
   const hit = terms.map(term => lower.indexOf(term)).filter(i => i >= 0).sort((a, b) => a - b)[0];
-  if (hit === undefined) return text.length > 180 ? `${text.slice(0, 180).trim()}…` : text;
+  if (hit === undefined) return text.length > 180 ? `${text.slice(0, 180).trim()}...` : text;
   const start = Math.max(0, hit - 70);
   const end = Math.min(text.length, hit + 130);
-  return `${start > 0 ? '…' : ''}${text.slice(start, end).trim()}${end < text.length ? '…' : ''}`;
+  return `${start > 0 ? '...' : ''}${text.slice(start, end).trim()}${end < text.length ? '...' : ''}`;
 }
 
 function search(index, query) {
@@ -99,7 +99,7 @@ export default function SearchPage() {
             <div className="br_search_head">
               <p className="br-eyebrow">Search</p>
               <h1 id="search-title">
-                {query ? <>Results for <span>“{query}”</span></> : 'Search the site'}
+                {query ? <>Results for <span>"{query}"</span></> : 'Search the site'}
               </h1>
               <form className="br_search_form" role="search" onSubmit={handleSubmit}>
                 <input
@@ -107,7 +107,7 @@ export default function SearchPage() {
                   name="q"
                   value={draft}
                   onChange={event => setDraft(event.target.value)}
-                  placeholder="Search services, pricing, articles…"
+                  placeholder="Search services, pricing, articles..."
                   aria-label="Search the site"
                   autoComplete="off"
                 />

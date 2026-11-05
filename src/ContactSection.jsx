@@ -177,10 +177,10 @@ export function Contact({ asPage = false }) {
             <div className="br_contact_card">
               {status === 'sent' ? (
                 <div className="br_contact_sent" ref={resultRef} tabIndex={-1}>
-                  <h3>Thank you — your enquiry is with us</h3>
+                  <h3>Thank you. Your enquiry is with us</h3>
                   <p>
-                    We have your project details and typically reply within 1–2 business days.
-                    If it is urgent, email <a href={`mailto:${siteContact.email}`}>{siteContact.email}</a> directly.
+ We have your project details and typically reply within 1-2 business days.
+ If it is urgent, email <a href={`mailto:${siteContact.email}`}>{siteContact.email}</a> directly.
                   </p>
                   <button type="button" className="btn-outline" onClick={() => setStatus('idle')}>
                     Send another enquiry
@@ -251,16 +251,16 @@ export function Contact({ asPage = false }) {
                       : null}
                   </label>
                   <button type="submit" className="btn br_contact_submit" disabled={status === 'sending'}>
-                    {status === 'sending' ? 'Sending…' : 'Send enquiry'}
+                    {status === 'sending' ? 'Sending...' : 'Send enquiry'}
                   </button>
                   <p className="br_contact_note" role="status">
                     {status === 'error'
                       ? `${failure} Please try again, or email ${siteContact.email}.`
-                      : 'We typically respond within 1–2 business days.'}
+                      : 'We typically respond within 1-2 business days.'}
                   </p>
                   {import.meta.env.VITE_RECAPTCHA_SITE_KEY ? (
                     <p className="br_contact_note">
-                      Protected by reCAPTCHA — the Google{' '}
+ Protected by reCAPTCHA: the Google{' '}
                       <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
                       {' '}and{' '}
                       <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a>

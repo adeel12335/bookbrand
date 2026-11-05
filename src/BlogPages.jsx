@@ -190,7 +190,7 @@ export function BlogIndexPage() {
             </ul>
             <p className="br_posts_count" role="status">
               {query
-                ? `${results.length} result${results.length === 1 ? '' : 's'} for “${query}”`
+                ? `${results.length} result${results.length === 1 ? '' : 's'} for "${query}"`
                 : `${results.length} article${results.length === 1 ? '' : 's'}`}
             </p>
           </div>

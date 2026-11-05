@@ -1,5 +1,5 @@
 import { articleByline, blogArticle, blogIndex, blogPosts, getPostBySlug, isV2Post } from './blogPosts.js';
-import { books, faqs, getBookBySlug, plans, portfolioPage } from './data.js';
+import { books, faqs, getBookBySlug, homeFaqs, plans, portfolioPage } from './data.js';
 import { coverPage, editingPage, editorialDeskPage, editorialPolicyPage, faqPage, landers, teamPage } from './pageContent.js';
 import {
   DEFAULT_OG_ALT,
@@ -254,9 +254,9 @@ function page({
 const staticPages = [
   page({
     path: '/',
-    title: 'Ebook Writers & Ghostwriting | ebookwriters.us',
+    title: 'Ebook Writing & Ghostwriting Services | ebookwriters.us',
     description:
-      'Hire ebook writers and ghostwriters for writing, editing, cover design, and KDP publishing. Packages from $699. You keep 100% of the rights.',
+      'Hire human ebook writers and ghostwriters for a fixed fee from $699. Editing, cover design, and Amazon KDP files included. NDA and 100% rights.',
     changefreq: 'weekly',
     priority: 1,
     jsonLd: [
@@ -280,13 +280,14 @@ const staticPages = [
         },
       },
       webPageSchema({
-        name: 'Ebook Writers and Ghostwriting Studio',
+        name: 'Ebook Writing & Ghostwriting Services',
         description:
-          'Hire ebook writers and ghostwriters for writing, editing, cover design, and KDP publishing. Packages from $699.',
+          'Hire human ebook writers and ghostwriters for a fixed fee from $699. Editing, cover design, and Amazon KDP files included.',
         path: '/',
         speakable: true,
       }),
       webSite(),
+      faqPageSchema(homeFaqs.items),
     ],
   }),
   page({
@@ -295,13 +296,13 @@ const staticPages = [
     description:
       'Contact ebookwriters.us for a fixed ebook writing or ghostwriting quote. Email info@ebookwriters.us or call +1 712-414-0542. Iowa, USA.',
     image: '/assets/brand/contact-consultation-v2.webp',
-    imageAlt: 'Author consultation — notebook and publishing notes on a warm desk',
+    imageAlt: 'Author consultation: notebook and publishing notes on a warm desk',
     changefreq: 'monthly',
     priority: 0.9,
     jsonLd: [
       webPageSchema({
         type: 'ContactPage',
-        name: 'Contact — Book Writing Quote',
+        name: 'Contact: Book Writing Quote',
         description:
           'Request a fixed ebook writing or ghostwriting quote from ebookwriters.us.',
         path: '/contact',
@@ -376,7 +377,7 @@ const staticPages = [
         type: 'AboutPage',
         name: 'About Our Ebook Writing Studio',
         description:
-          'Meet the ebookwriters.us studio — ghostwriting, editing, design, and KDP publishing under one roof.',
+          'Meet the ebookwriters.us studio: ghostwriting, editing, design, and KDP publishing under one roof.',
         path: '/about',
       }),
       breadcrumbs([
@@ -387,7 +388,7 @@ const staticPages = [
   }),
   page({
     path: '/team',
-    title: 'Our Team — Ebook Writing & Publishing Studio',
+    title: 'Our Team: Ebook Writing & Publishing Studio',
     description:
       'Meet the ebookwriters.us team: editors, writers, cover design, and Amazon KDP publishing staff who run every ebook ghostwriting project. Email any of us.',
     image: teamPage.heroImage,
@@ -479,23 +480,45 @@ const staticPages = [
   }),
   page({
     path: '/authors/editorial-desk',
-    title: 'Editorial Desk | ebookwriters.us',
-    description: editorialDeskPage.lead,
+    title: 'Editorial Team: Ebook Writing & Publishing Guides',
+    description:
+      'Meet the editors who review our ebook writing, ghostwriting, and Amazon KDP publishing guides, and browse every guide by topic.',
     image: editorialDeskPage.heroImage,
-    priority: 0.5,
-    changefreq: 'yearly',
+    priority: 0.6,
+    changefreq: 'monthly',
     jsonLd: [
       {
         '@context': 'https://schema.org',
         '@type': 'ProfilePage',
         name: editorialDeskPage.title,
         url: absoluteUrl('/authors/editorial-desk'),
-        mainEntity: editorialDesk(),
+        mainEntity: {
+          ...editorialDesk(),
+          member: editorialDeskPage.reviewers.map(person => ({
+            '@type': 'Person',
+            name: person.name,
+            jobTitle: person.role,
+            email: `mailto:${person.email}`,
+            url: absoluteUrl('/team'),
+            worksFor: { '@id': `${SITE_ORIGIN}/#organization` },
+          })),
+        },
         isPartOf: { '@type': 'WebSite', name: SITE_NAME, url: absoluteUrl('/') },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        name: 'ebookwriters.us guides',
+        itemListElement: blogPosts.map((post, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          url: absoluteUrl(`/blog/${post.slug}`),
+          name: post.title,
+        })),
       },
       breadcrumbs([
         { name: 'Home', path: '/' },
-        { name: 'Editorial Desk', path: '/authors/editorial-desk' },
+        { name: 'Editorial Team', path: '/authors/editorial-desk' },
       ]),
     ],
   }),
@@ -518,7 +541,7 @@ const staticPages = [
     path: '/services',
     title: 'Ebook Writing & Publishing Services | ebookwriters.us',
     description:
-      'Ghostwriting, editing, cover design, Amazon KDP formatting, ISBN support, and book marketing — one studio from outline to published ebook.',
+      'Ghostwriting, editing, cover design, Amazon KDP formatting, ISBN support, and book marketing, one studio from outline to published ebook.',
     priority: 0.9,
     jsonLd: [
       webPageSchema({
@@ -534,7 +557,7 @@ const staticPages = [
   }),
   page({
     path: '/ebook-ghostwriting-services',
-    title: 'Ebook Ghostwriting Services — Human Writers, from $699',
+    title: 'Ebook Ghostwriting Services: Human Writers, from $699',
     description:
       'Hire ebook ghostwriters on a fixed fee. Outline to manuscript, revisions, NDA, and 100% ownership. Packages from $699.',
     priority: 0.9,
@@ -555,9 +578,9 @@ const staticPages = [
   }),
   page({
     path: '/hire-ebook-writer',
-    title: 'Hire an Ebook Writer — Flat Fee, NDA, 100% Ownership',
+    title: 'Hire an Ebook Writer: Flat Fee, NDA, 100% Ownership',
     description:
-      'Hire an ebook writer for a fixed-fee manuscript — not hourly guesswork. Matched genre specialists, revision rounds, and KDP-ready files. Packages from $699.',
+      'Hire an ebook writer for a fixed-fee manuscript, not hourly guesswork. Matched genre specialists, revision rounds, and KDP-ready files. Packages from $699.',
     priority: 0.9,
     jsonLd: [
       serviceSchema({
@@ -597,7 +620,7 @@ const staticPages = [
   }),
   page({
     path: '/lead-magnet-ebook-writing',
-    title: 'Lead Magnet Ebook Writing Service — Fixed Fee from $699',
+    title: 'Lead Magnet Ebook Writing Service: Fixed Fee from $699',
     description:
       'Lead magnet ebook writing by human writers: up to 15,000 words, editing, cover, and EPUB/PDF for a fixed $699. NDA, 100% ownership, about three weeks.',
     image: landers.leadMagnet.heroImage,
@@ -618,7 +641,7 @@ const staticPages = [
   }),
   page({
     path: '/ebook-ghostwriter-for-coaches',
-    title: 'Ebook Ghostwriter for Coaches — Fixed Fee from $699',
+    title: 'Ebook Ghostwriter for Coaches: Fixed Fee from $699',
     description:
       'An ebook ghostwriter for coaches: we turn your method, courses, and sessions into a book in your voice. Fixed fee from $699, NDA, and 100% ownership.',
     image: landers.coaches.heroImage,
@@ -659,7 +682,7 @@ const staticPages = [
   }),
   page({
     path: '/ai-policy',
-    title: 'AI Policy — Human Writers | ebookwriters.us',
+    title: 'AI Policy: Human Writers | ebookwriters.us',
     description:
       'Our AI policy: client manuscripts are written and revised by human writers. Where tools may help, what we never do, and how to ban AI tools on your project.',
     image: landers.aiPolicy.heroImage,
@@ -751,7 +774,7 @@ const staticPages = [
   // home page's meta.
   page({
     path: '/admin',
-    title: 'Studio admin — ebookwriters.us',
+    title: 'Studio admin: ebookwriters.us',
     description: 'Private studio tools.',
     robots: 'noindex, nofollow',
     sitemap: false,

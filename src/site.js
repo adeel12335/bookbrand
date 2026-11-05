@@ -10,7 +10,7 @@ export const SITE_SAME_AS = [
   'https://www.facebook.com/profile.php?id=61594163111206',
 ];
 export const DEFAULT_OG_PATH = '/assets/brand/hero-desk.jpg';
-export const DEFAULT_OG_ALT = 'ebookwriters.us publishing studio desk — Write. Publish. Grow.';
+export const DEFAULT_OG_ALT = 'ebookwriters.us publishing studio desk: Write. Publish. Grow.';
 
 export function absoluteUrl(path = '/') {
   if (!path || path === '/') return `${SITE_ORIGIN}/`;

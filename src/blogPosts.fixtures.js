@@ -21,7 +21,7 @@ export const fixturePosts = [
       'Hire developmental editing before copyediting when chapters might still move. The opening paragraph is the answer, so this guide does not repeat it in a box.',
     cta: 'This stock label must not render',
     image: '/assets/brand/page-hero-blog.png',
-    imageAlt: 'Notebook on a desk — v2 template preview',
+    imageAlt: 'Notebook on a desk: v2 template preview',
     takeaways: [],
     sections: [
       {

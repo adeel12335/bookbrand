@@ -35,13 +35,13 @@ const items = posts
 
 const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Ebook Writing &amp; Ghostwriting Blog — ebookwriters.us</title>
-    <link>${SITE_ORIGIN}/blog</link>
+ <channel>
+ <title>Ebook Writing &amp; Ghostwriting Blog, ebookwriters.us</title>
+ <link>${SITE_ORIGIN}/blog</link>
     <atom:link href="${SITE_ORIGIN}/rss.xml" rel="self" type="application/rss+xml"/>
-    <description>Guides on ghostwriting, ebook writing costs, Amazon KDP publishing, and hiring writers — from the ebookwriters.us studio.</description>
-    <language>en-us</language>
-    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+ <description>Guides on ghostwriting, ebook writing costs, Amazon KDP publishing, and hiring writers, from the ebookwriters.us studio.</description>
+ <language>en-us</language>
+ <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
 ${items}
   </channel>
 </rss>
@@ -49,7 +49,7 @@ ${items}
 
 const distDir = join(root, 'dist');
 if (!existsSync(distDir)) {
-  console.error('[feed] dist/ not found — run after `vite build`.');
+  console.error('[feed] dist/ not found, run after `vite build`.');
   process.exit(1);
 }
 writeFileSync(join(distDir, 'rss.xml'), feed, 'utf8');

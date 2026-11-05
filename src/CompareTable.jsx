@@ -58,7 +58,7 @@ export function EditSample({ sample }) {
       </figure>
       {sample.note ? (
         <p className="br_edit_note">
-          <strong>Editor’s note.</strong> {sample.note}
+          <strong>Editor's note.</strong> {sample.note}
         </p>
       ) : null}
     </div>

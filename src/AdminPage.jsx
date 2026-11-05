@@ -45,7 +45,7 @@ async function api(path, options = {}) {
 }
 
 function formatWhen(value) {
-  if (!value) return '—';
+  if (!value) return '-';
   return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value));
 }
 
@@ -109,7 +109,7 @@ function SignIn({ onDone, missing }) {
           />
         </label>
         <button className="adm-btn" type="submit" disabled={busy}>
-          {busy ? 'Signing in…' : 'Sign in'}
+          {busy ? 'Signing in...' : 'Sign in'}
         </button>
       </form>
     </div>
@@ -162,7 +162,7 @@ function PostEditor({ initial, onCancel, onSaved }) {
           Save draft
         </button>
         <button className="adm-btn" type="button" disabled={busy} onClick={() => save(true)}>
-          {busy ? 'Saving…' : 'Publish'}
+          {busy ? 'Saving...' : 'Publish'}
         </button>
       </div>
 
@@ -185,7 +185,7 @@ function PostEditor({ initial, onCancel, onSaved }) {
           <span>Slug</span>
           <input
             value={post.slug}
-            placeholder="generated-from-the-title…"
+            placeholder="generated-from-the-title..."
             autoComplete="off"
             spellCheck={false}
             aria-invalid={fields.slug ? 'true' : undefined}
@@ -200,7 +200,7 @@ function PostEditor({ initial, onCancel, onSaved }) {
         <textarea rows={2} value={post.description} onChange={e => set('description', e.target.value)} />
         {fields.description ? <em className="field-error">{fields.description}</em> : null}
       </label>
-      <p className="adm-hint">Google snippet — about 150–160 characters.</p>
+      <p className="adm-hint">Google snippet, about 150-160 characters.</p>
 
       <div className="adm-row">
         <label className="adm-field">
@@ -235,7 +235,7 @@ function PostEditor({ initial, onCancel, onSaved }) {
           <span>Format</span>
           <select value={post.format === 'v2' ? 'v2' : ''} onChange={e => set('format', e.target.value)}>
             <option value="">Classic</option>
-            <option value="v2">v2 — lean template</option>
+            <option value="v2">v2: lean template</option>
           </select>
         </label>
       </div>
@@ -266,11 +266,11 @@ function PostEditor({ initial, onCancel, onSaved }) {
 
       <div className="adm-row">
         <label className="adm-field">
-          <span>Keywords — one per line</span>
+          <span>Keywords: one per line</span>
           <textarea rows={4} value={lines(post.keywords)} onChange={e => set('keywords', toLines(e.target.value))} />
         </label>
         <label className="adm-field">
-          <span>Key takeaways — one per line</span>
+          <span>Key takeaways: one per line</span>
           <textarea rows={4} value={lines(post.takeaways)} onChange={e => set('takeaways', toLines(e.target.value))} />
         </label>
       </div>
@@ -295,7 +295,7 @@ function PostEditor({ initial, onCancel, onSaved }) {
             <input value={section.heading} onChange={e => setSection(index, 'heading', e.target.value)} />
           </label>
           <label className="adm-field">
-            <span>Paragraphs — blank line between each</span>
+            <span>Paragraphs: blank line between each</span>
             <textarea
               rows={6}
               value={(section.paragraphs || []).join('\n\n')}
@@ -303,7 +303,7 @@ function PostEditor({ initial, onCancel, onSaved }) {
             />
           </label>
           <label className="adm-field">
-            <span>Bullets — one per line (optional)</span>
+            <span>Bullets: one per line (optional)</span>
             <textarea
               rows={3}
               value={lines(section.bullets)}
@@ -327,7 +327,7 @@ function PostEditor({ initial, onCancel, onSaved }) {
 /* ---------------------------------------------------------------- overview */
 
 function Overview({ stats, onOpenPosts, onOpenLeads, onNewPost }) {
-  if (!stats) return <p className="adm-empty">Loading overview…</p>;
+  if (!stats) return <p className="adm-empty">Loading overview...</p>;
   const cards = [
     { label: 'Published articles', value: stats.posts?.published ?? 0, hint: `${stats.posts?.drafts ?? 0} drafts` },
     { label: 'Total articles', value: stats.posts?.total ?? 0, hint: 'In Neon' },
@@ -451,7 +451,7 @@ function LeadList({ leads }) {
             <li key={lead.id}>
               <div className="adm-list-main">
                 <span className="adm-title">
-                  {lead.name} — <a href={`mailto:${lead.email}`}>{lead.email}</a>
+                  {lead.name} - <a href={`mailto:${lead.email}`}>{lead.email}</a>
                 </span>
                 <span className="adm-meta">{formatWhen(lead.created_at)}</span>
                 {lead.source_path ? <span className="adm-meta">{lead.source_path}</span> : null}
@@ -483,7 +483,7 @@ export default function AdminPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    document.title = 'Studio admin — ebookwriters.us';
+    document.title = 'Studio admin: ebookwriters.us';
     const meta = document.querySelector('meta[name="robots"]');
     if (meta) meta.setAttribute('content', 'noindex, nofollow');
   }, []);
@@ -527,10 +527,10 @@ export default function AdminPage() {
 
   async function remove(post) {
     // eslint-disable-next-line no-alert
-    if (!window.confirm(`Delete “${post.title}”? This cannot be undone.`)) return;
+    if (!window.confirm(`Delete "${post.title}"? This cannot be undone.`)) return;
     try {
       await api(`/api/posts/${encodeURIComponent(post.slug)}`, { method: 'DELETE' });
-      setNotice(`Deleted “${post.title}”.`);
+      setNotice(`Deleted "${post.title}".`);
       refresh();
     } catch (err) {
       setError(err.message);
@@ -541,7 +541,7 @@ export default function AdminPage() {
     setEditing(null);
     setTab('posts');
     const saved = result.rebuild?.triggered
-      ? 'Saved. A rebuild was triggered — the article will be live shortly.'
+      ? 'Saved. A rebuild was triggered, the article will be live shortly.'
       : `Saved. ${result.rebuild?.reason === 'draft'
         ? 'Kept as a draft.'
         : 'Set DEPLOY_HOOK_URL to rebuild automatically, or redeploy to publish it.'}`;
@@ -550,7 +550,7 @@ export default function AdminPage() {
   }
 
   if (state === 'checking') {
-    return <div className="adm"><div className="adm-shell"><p className="adm-empty">Loading…</p></div></div>;
+    return <div className="adm"><div className="adm-shell"><p className="adm-empty">Loading...</p></div></div>;
   }
 
   if (state === 'out') {

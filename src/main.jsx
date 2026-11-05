@@ -6,13 +6,14 @@ import {
   IconConfidential, IconMenu, IconSearch,
   IconWriting, IconWriters, IconPublishing,
   IconCalendar, IconLeaf, IconEditing, IconFormatting, IconBranding,
+  IconFeather, IconStar, IconGlobe, IconCoins, IconShield, IconPlus,
   serviceIcons,
 } from './icons.jsx';
 import {
   books, footerLinks, navigation, plans,
   services, hero,
   siteContact,
-  portfolioIntro, servicesIntro, benefits, pathBand, dualOffer,
+  portfolioIntro, servicesIntro, benefits, howItWorks, audiences, homeFaqs,
   pricingIntro, contactIntro, footerBrand,
 } from './data.js';
 import { blogPosts } from './blogPosts.js';
@@ -54,7 +55,7 @@ const TeamPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m
 const SearchPage = lazy(() => import('./SearchPage.jsx'));
 
 function RouteFallback() {
-  return <div className="container" style={{ padding: '4rem 0' }} aria-busy="true">Loading…</div>;
+  return <div className="container" style={{ padding: '4rem 0' }} aria-busy="true">Loading...</div>;
 }
 
 /*
@@ -118,10 +119,10 @@ function Cta({ href = '/contact', variant = 'solid', className = '', children, o
 
 function Wordmark({ light = false, className = '' }) {
   return (
-    <Link className={`wordmark ${className}`.trim()} to="/" aria-label="ebookwriters.us — home">
+    <Link className={`wordmark ${className}`.trim()} to="/" aria-label="ebookwriters.us: home">
       <img
         src={light ? '/assets/brand/logo-light.png' : '/assets/brand/logo-dark-new.png'}
-        alt="ebookwriters.us — Write. Publish. Grow."
+        alt="ebookwriters.us: Write. Publish. Grow."
       />
     </Link>
   );
@@ -165,8 +166,8 @@ function Header() {
     <>
       <div className="alert-bar">
         <div className="container">
-          Fixed packages from $699 — you keep 100% of the rights and royalties.
-        </div>
+ Fixed packages from $699. You keep 100% of the rights and royalties.
+ </div>
       </div>
       <header
         className={`site-header${onHome ? ' site-header--home' : ''}${stuck ? ' is-stuck' : ''}${open ? ' is-open' : ''}`}
@@ -346,54 +347,135 @@ function TrustBar() {
   );
 }
 
-function PathBand() {
+function HowItWorks() {
   return (
-    <section className="ed-path" id="why" aria-labelledby="why-title">
+    <section className="br_section br_home_steps" id="how-it-works" aria-labelledby="how-title">
       <div className="container">
-        <div className="row">
-          <Reveal className="col-md-6 ed-path-copy">
-            <div className="content">
-              <Eyebrow tone="light">{pathBand.eyebrow}</Eyebrow>
-              <h2 id="why-title">
-                {pathBand.title}{' '}
-                <em>{pathBand.titleEm}</em>
-              </h2>
-              <p>{pathBand.lead}</p>
-              <a className="btn br_path_cta" href="/contact">{pathBand.cta}</a>
-              <ol className="br_path_steps">
-                {pathBand.journey.map((label, i) => {
-                  const Icon = journeyIcons[i] || IconCheck;
-                  return (
-                    <li key={label}>
-                      <span className="br_path_step_icon" aria-hidden="true"><Icon /></span>
-                      <span className="br_path_step_label">{label}</span>
-                    </li>
-                  );
-                })}
-              </ol>
-            </div>
+        <Reveal className="br_section_head">
+          <div className="br_section_head_copy">
+            <Eyebrow>{howItWorks.eyebrow}</Eyebrow>
+            <h2 id="how-title">{howItWorks.title}</h2>
+            <p>{howItWorks.lead}</p>
+          </div>
+          <Link className="btn" to="/contact">{howItWorks.cta}</Link>
+        </Reveal>
+        <ol className="br_home_steps_list">
+          {howItWorks.steps.map((step, i) => (
+            <li className="br_home_step" key={step.title}>
+              <span className="br_home_step_n" aria-hidden="true">{i + 1}</span>
+              <h3>{step.title}</h3>
+              <p>{step.copy}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+function Audiences() {
+  return (
+    <section className="br_section br_section--paper br_home_audiences" aria-labelledby="audiences-title">
+      <div className="container">
+        <Reveal className="br_section_head">
+          <div className="br_section_head_copy">
+            <Eyebrow>{audiences.eyebrow}</Eyebrow>
+            <h2 id="audiences-title">{audiences.title}</h2>
+          </div>
+        </Reveal>
+        <ul className="br_home_audience_grid">
+          {audiences.items.map(item => (
+            <li key={item.title}>
+              <Link className="br_home_audience" to={item.href}>
+                <h3>{item.title}</h3>
+                <p>{item.copy}</p>
+                <span className="br_home_audience_link">
+                  {item.linkLabel}
+                  <IconArrow aria-hidden="true" />
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/* One answer open at a time. The summary click is handled here so the closing
+   answer can animate before <details> drops its content. */
+function setFaqOpen(details, open) {
+  const body = details.querySelector('.br_home_faq_body');
+  details.classList.toggle('is-open', open);
+  if (reduceMotion()) {
+    details.open = open;
+    return;
+  }
+  loadMotion().then(({ gsap }) => {
+    gsap.killTweensOf(body);
+    if (open) {
+      details.open = true;
+      gsap.fromTo(body, { height: 0, opacity: 0 }, {
+        height: 'auto', opacity: 1, duration: 0.4, ease: 'power2.out', clearProps: 'height,opacity',
+      });
+    } else {
+      gsap.to(body, {
+        height: 0, opacity: 0, duration: 0.3, ease: 'power2.inOut',
+        onComplete: () => {
+          details.open = false;
+          gsap.set(body, { clearProps: 'height,opacity' });
+        },
+      });
+    }
+  });
+}
+
+function HomeFaq() {
+  const listRef = useRef(null);
+
+  const onSummaryClick = event => {
+    event.preventDefault();
+    const details = event.currentTarget.parentElement;
+    const opening = !details.classList.contains('is-open');
+    if (opening) {
+      listRef.current
+        .querySelectorAll('.br_home_faq_item.is-open')
+        .forEach(other => { if (other !== details) setFaqOpen(other, false); });
+    }
+    setFaqOpen(details, opening);
+  };
+
+  return (
+    <section className="br_section br_home_faq" id="faq" aria-labelledby="home-faq-title">
+      <div className="container">
+        <div className="br_home_faq_layout">
+          <Reveal className="br_home_faq_head">
+            <Eyebrow>{homeFaqs.eyebrow}</Eyebrow>
+            <h2 id="home-faq-title">{homeFaqs.title}</h2>
+            <p>{homeFaqs.lead}</p>
+            <Link className="btn" to="/faq">Read the full FAQ</Link>
+            <p className="br_home_faq_more">
+              {homeFaqs.more}{' '}
+              <a href={`mailto:${siteContact.email}`}>{siteContact.email}</a>
+            </p>
           </Reveal>
-          <Reveal className="col-md-6 ed-path-visual" delay={100}>
-            <img
-              src={pathBand.image}
-              alt={pathBand.imageAlt}
-              loading="lazy"
-            />
-            <aside className="ed-path-card">
-              <div className="ed-path-card-head">
-                <IconLeaf aria-hidden="true" />
-                <h3>{pathBand.roadmap.title}</h3>
-              </div>
-              <ol>
-                {pathBand.roadmap.steps.map((step, i) => (
-                  <li key={step}>
-                    <span aria-hidden="true">{i + 1}</span>
-                    {step}
-                  </li>
-                ))}
-              </ol>
-            </aside>
-          </Reveal>
+          <div className="br_home_faq_list" ref={listRef}>
+            {homeFaqs.items.map((item, i) => (
+              <details
+                className={`br_home_faq_item${i === 0 ? ' is-open' : ''}`}
+                key={item.q}
+                open={i === 0}
+              >
+                <summary onClick={onSummaryClick}>
+                  <h3>{item.q}</h3>
+                  <span className="br_home_faq_icon" aria-hidden="true"><IconPlus /></span>
+                </summary>
+                <div className="br_home_faq_body">
+                  <p>{item.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -561,7 +643,7 @@ function Portfolio() {
                         <span className="ed-folio-book-spine" aria-hidden="true" />
                         <img
                           src={book.cover}
-                          alt={`${book.title} by ${book.author} — ${book.genre} book cover`}
+                          alt={`${book.title} by ${book.author}: ${book.genre} book cover`}
                           loading={abs <= 1 ? 'eager' : 'lazy'}
                           draggable="false"
                         />
@@ -590,7 +672,7 @@ function Portfolio() {
                   <div className="ed-folio-selected">
                     <span>{selected.genre}</span>
                     <h3>{selected.title}</h3>
-                    <p>Written by {selected.author}</p>
+                    <p>By {selected.author}</p>
                   </div>
                   <div className="ed-folio-actions">
                     <div className="ed-folio-arrows">
@@ -616,98 +698,69 @@ function Portfolio() {
   );
 }
 
-/* ---------------------------------------------------------------- dual offer */
-
-function DualCard({ offer, tone }) {
-  return (
-    <article className={`br_duo_card br_duo_card--${tone}`}>
-      <p className="br_duo_kicker">
-        <span>{offer.index}</span>
-        {offer.tag}
-      </p>
-      <h3>{offer.title}</h3>
-      <p className="br_duo_lead">{offer.lead}</p>
-      <ul className="br_duo_list">
-        {offer.checklist.map(item => (
-          <li key={item}><IconCheck aria-hidden="true" />{item}</li>
-        ))}
-      </ul>
-      <a className={tone === 'dark' ? 'btn' : 'btn-outline'} href={offer.href}>{offer.cta}</a>
-    </article>
-  );
-}
-
-function DualOffer() {
-  const { intro, publish, market } = dualOffer;
-
-  return (
-    <section className="br_duo" id="publish" aria-labelledby="ed-duo-title">
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <Reveal className="br_duo_head">
-              <Eyebrow>{intro.eyebrow}</Eyebrow>
-              <h2 id="ed-duo-title">
-                {intro.title} <span>{intro.titleEm}</span>
-              </h2>
-              <p>{intro.lead}</p>
-              <p className="br_duo_note">{intro.note}</p>
-            </Reveal>
-          </div>
-        </div>
-        <div className="row br_grid">
-          <Reveal className="col-md-6">
-            <DualCard offer={publish} tone="dark" />
-          </Reveal>
-          <Reveal className="col-md-6" delay={100}>
-            <DualCard offer={market} tone="light" />
-          </Reveal>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ------------------------------------------------------------------ pricing */
+
+const planIcons = {
+  Starter: IconFeather,
+  Professional: IconBook,
+  Premium: IconStar,
+  Elite: IconGlobe,
+};
+
+const planTrustIcons = [IconCoins, IconConfidential, IconShield];
 
 function PricingPreview() {
   return (
-    <section className="br_price_preview" id="pricing" aria-labelledby="pricing-title">
+    <section className="br_plans" id="pricing" aria-labelledby="pricing-title">
       <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <Reveal className="br_pricing_head">
-              <Eyebrow>{pricingIntro.eyebrow}</Eyebrow>
-              <h2 id="pricing-title">{pricingIntro.previewTitle}</h2>
-              <p>{pricingIntro.previewLead}</p>
-            </Reveal>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-10">
-            <div className="br_compare_scroll">
-              <table className="br_compare">
-                <thead>
-                  <tr>
-                    <th scope="col">Package</th>
-                    <th scope="col">Words</th>
-                    <th scope="col">Starting</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {plans.map(plan => (
-                    <tr key={plan.name}>
-                      <th scope="row">{plan.name}</th>
-                      <td>{plan.words}</td>
-                      <td>${plan.price}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <p className="br_price_preview_cta">
-              <Link className="btn" to="/pricing">{pricingIntro.previewCta}</Link>
-            </p>
+        <div className="br_plans_layout">
+          <Reveal className="br_plans_head">
+            <Eyebrow tone="light">{pricingIntro.eyebrow}</Eyebrow>
+            <h2 id="pricing-title">
+              {pricingIntro.previewTitle} <span>{pricingIntro.previewTitleEm}</span>
+            </h2>
+            <p>{pricingIntro.previewLead}</p>
+            <p className="br_plans_note">{pricingIntro.previewNote}</p>
+            <Link className="btn" to="/pricing">{pricingIntro.previewCta}</Link>
+          </Reveal>
+
+          <div className="br_plans_side">
+            <ul className="br_plans_list">
+              {plans.map(plan => {
+                const Icon = planIcons[plan.name] || IconBook;
+                return (
+                  <li key={plan.name}>
+                    <Link
+                      className={`br_plan_row${plan.featured ? ' is-featured' : ''}`}
+                      to="/pricing"
+                      aria-label={`${plan.name} package: $${plan.price}, ${plan.words.toLowerCase()}`}
+                    >
+                      <span className="br_plan_icon" aria-hidden="true"><Icon /></span>
+                      <span className="br_plan_copy">
+                        <span className="br_plan_name">{plan.name}</span>
+                        <span className="br_plan_desc">{plan.copy}</span>
+                        <span className="br_plan_meta">{plan.words}, about {plan.timeline}</span>
+                      </span>
+                      <span className="br_plan_price">
+                        <span className="br_plan_from">from</span>
+                        <strong>${plan.price}</strong>
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+            <ul className="br_plans_trust">
+              {pricingIntro.previewTrust.map((item, i) => {
+                const Icon = planTrustIcons[i] || IconCheck;
+                return (
+                  <li key={item}>
+                    <Icon aria-hidden="true" />
+                    {item}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
       </div>
@@ -779,8 +832,8 @@ function FooterSignup() {
   if (status === 'sent') {
     return (
       <p className="br_footer_thanks" role="status">
-        Thanks for signing up — we will send you our latest publishing tips.
-      </p>
+ Thanks for signing up. We will send you our latest publishing tips.
+ </p>
     );
   }
 
@@ -798,7 +851,7 @@ function FooterSignup() {
           autoComplete="email"
         />
         <button type="submit" className="btn" disabled={status === 'sending'}>
-          {status === 'sending' ? 'Sending…' : 'Subscribe'}
+          {status === 'sending' ? 'Sending...' : 'Subscribe'}
         </button>
       </form>
       {status === 'error' ? (
@@ -1072,6 +1125,59 @@ function ContactPage() {
   );
 }
 
+/* Scroll-in motion for the lower home sections. Content is visible in the HTML;
+   these only animate it in once, and are skipped under reduced motion. */
+function homeMotion(gsap) {
+  const once = trigger => ({ trigger, start: 'top 82%', once: true });
+
+  const steps = document.querySelector('.br_home_steps_list');
+  if (steps) {
+    gsap.from(steps.querySelectorAll('.br_home_step'), {
+      y: 40, opacity: 0, duration: 0.7, ease: 'power3.out', stagger: 0.12,
+      clearProps: 'transform,opacity', scrollTrigger: once(steps),
+    });
+    gsap.from(steps.querySelectorAll('.br_home_step_n'), {
+      scale: 0.4, opacity: 0, duration: 0.6, ease: 'back.out(2.2)', stagger: 0.12, delay: 0.25,
+      clearProps: 'transform,opacity', scrollTrigger: once(steps),
+    });
+    gsap.fromTo(steps, { '--draw': 0 }, {
+      '--draw': 1, duration: 1.4, delay: 0.3, ease: 'power2.inOut',
+      scrollTrigger: once(steps),
+    });
+  }
+
+  const audiences = document.querySelector('.br_home_audience_grid');
+  if (audiences) {
+    gsap.from(audiences.querySelectorAll('.br_home_audience'), {
+      y: 32, opacity: 0, duration: 0.65, ease: 'power3.out', stagger: 0.1,
+      clearProps: 'transform,opacity', scrollTrigger: once(audiences),
+    });
+  }
+
+  const plans = document.querySelector('.br_plans');
+  if (plans) {
+    gsap.fromTo(plans.querySelector('.br_plans_head'), { '--bar': 0 }, {
+      '--bar': 1, duration: 1.1, ease: 'power2.out', scrollTrigger: once(plans),
+    });
+    gsap.from(plans.querySelectorAll('.br_plan_row'), {
+      x: 60, opacity: 0, duration: 0.7, ease: 'power3.out', stagger: 0.12,
+      clearProps: 'transform,opacity', scrollTrigger: once(plans.querySelector('.br_plans_list')),
+    });
+    gsap.from(plans.querySelector('.br_plans_trust'), {
+      y: 20, opacity: 0, duration: 0.6, delay: 0.5, ease: 'power2.out',
+      clearProps: 'transform,opacity', scrollTrigger: once(plans.querySelector('.br_plans_list')),
+    });
+  }
+
+  const faq = document.querySelector('.br_home_faq_list');
+  if (faq) {
+    gsap.from(faq.querySelectorAll('.br_home_faq_item'), {
+      y: 24, opacity: 0, duration: 0.55, ease: 'power2.out', stagger: 0.08,
+      clearProps: 'transform,opacity', scrollTrigger: once(faq),
+    });
+  }
+}
+
 function HomePage() {
   const progressRef = useRef(null);
 
@@ -1101,7 +1207,9 @@ function HomePage() {
       lenis.on('scroll', ScrollTrigger.update);
       gsap.ticker.add(tick);
       gsap.ticker.lagSmoothing(0);
+      const motion = gsap.context(() => homeMotion(gsap));
       teardown = () => {
+        motion.revert();
         progress.kill();
         gsap.ticker.remove(tick);
         lenis.destroy();
@@ -1122,11 +1230,12 @@ function HomePage() {
       <main id="main">
         <Hero />
         <TrustBar />
-        <PathBand />
+        <HowItWorks />
         <Services />
+        <Audiences />
         <Portfolio />
-        <DualOffer />
         <PricingPreview />
+        <HomeFaq />
         <Latest />
         <Contact />
       </main>

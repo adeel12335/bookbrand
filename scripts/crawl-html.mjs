@@ -9,14 +9,14 @@
  */
 import {
   books, benefits, contactIntro, faqs, footerBrand, footerLinks, hero, plans, portfolioPage, pricingIntro, services,
-  servicesIntro, siteContact,
+  servicesIntro, siteContact, howItWorks, audiences, homeFaqs,
 } from '../src/data.js';
 import {
   aboutPage, coverPage, editingPage, editorialDeskPage, editorialPolicyPage, faqPage, landers, notFoundPage,
   pricingPage, privacyPage, servicesPage, teamPage, termsPage,
 } from '../src/pageContent.js';
 import { SITE_EMAIL, SITE_PHONE_DISPLAY } from '../src/site.js';
-import { articleByline, articleSectionParagraphs, articleSections, articleSources, articleTakeaways, blogIndex, blogPosts, isV2Post, quickAnswerFor, sectionBlocks } from '../src/blogPosts.js';
+import { articleByline, articleSectionParagraphs, articleSections, articleSources, articleTakeaways, blogIndex, blogPosts, getRelatedPosts, isV2Post, quickAnswerFor, sectionBlocks } from '../src/blogPosts.js';
 import { inlineHtml } from '../src/inlineMarkup.js';
 
 function esc(value) {
@@ -48,7 +48,7 @@ function footer() {
   return `<footer data-seo-crawl="1">
   <p>${esc(footerBrand.blurb)}</p>
   <p>${esc(footerBrand.ctaCopy)} <a href="/contact">${esc(footerBrand.ctaLabel)}</a></p>
-  <p>Email <a href="mailto:${esc(SITE_EMAIL)}">${esc(SITE_EMAIL)}</a> · ${esc(SITE_PHONE_DISPLAY)} · ${esc(siteContact.address)}</p>
+  <p>Email <a href="mailto:${esc(SITE_EMAIL)}">${esc(SITE_EMAIL)}</a>, ${esc(SITE_PHONE_DISPLAY)}, ${esc(siteContact.address)}</p>
   ${columns}
 </footer>`;
 }
@@ -87,7 +87,7 @@ function sectionsBlock(sections = []) {
   <h2>${esc(section.heading)}</h2>
   ${sectionBlocks(section).map(block => (block.type === 'list' ? list(block.items) : paragraphHtml(block.text))).join('\n  ')}
   ${tableBlock(section.table)}
-  ${section.sample?.before ? `<figure><figcaption>Before</figcaption><p>${esc(section.sample.before)}</p></figure><figure><figcaption>After</figcaption><p>${esc(section.sample.after)}</p></figure>${section.sample.note ? `<p><strong>Editor’s note.</strong> ${esc(section.sample.note)}</p>` : ''}` : ''}
+  ${section.sample?.before ? `<figure><figcaption>Before</figcaption><p>${esc(section.sample.before)}</p></figure><figure><figcaption>After</figcaption><p>${esc(section.sample.after)}</p></figure>${section.sample.note ? `<p><strong>Editor's note.</strong> ${esc(section.sample.note)}</p>` : ''}` : ''}
 </section>`).join('\n');
 }
 
@@ -117,20 +117,20 @@ function compactPackagesBlock() {
 
 function packagesBlock() {
   const items = plans.map(plan => `<article>
-  <h3>${esc(plan.name)} — $${esc(plan.price)}</h3>
+  <h3>${esc(plan.name)}: $${esc(plan.price)}</h3>
   <p>${esc(plan.words)}. ${esc(plan.copy)} Timeline: ${esc(plan.timeline)}.</p>
   ${list(plan.features)}
 </article>`).join('\n');
   return `<section>
   <h2>${esc(pricingPage.plansHeading || "What's included in each package")}</h2>
-  <p>Ghostwriting packages with editing, cover design, and retailer-ready files included. Fixed quotes — no surprise invoices.</p>
-  ${items}
+ <p>Ghostwriting packages with editing, cover design, and retailer-ready files included. Fixed quotes, no surprise invoices.</p>
+ ${items}
 </section>`;
 }
 
 function servicesBlock() {
   const items = services.map(s => `<article>
-  <h3>${esc(s.title || s.name)}</h3>
+  <h3>${s.href ? `<a href="${esc(s.href)}">${esc(s.title || s.name)}</a>` : esc(s.title || s.name)}</h3>
   <p>${esc(s.copy || s.lead || '')}</p>
   ${list(s.points)}
 </article>`).join('\n');
@@ -168,13 +168,13 @@ function contactBlock() {
   <p>${esc(page.nextLead)}</p>
   ${list(page.next)}
   ${page.extra.map(p => `<p>${esc(p)}</p>`).join('\n')}
-  <p>Send an enquiry for a fixed ebook writing or ghostwriting quote. We typically reply within 1–2 business days.</p>
-  <form action="/contact" method="get">
-    <label>Your name <input name="name" /></label>
-    <label>Your email <input name="email" type="email" /></label>
-    <label>Tell us about your book or project <textarea name="message"></textarea></label>
-    <button type="submit">Send enquiry</button>
-  </form>
+ <p>Send an enquiry for a fixed ebook writing or ghostwriting quote. We typically reply within 1-2 business days.</p>
+ <form action="/contact" method="get">
+ <label>Your name <input name="name" /></label>
+ <label>Your email <input name="email" type="email" /></label>
+ <label>Tell us about your book or project <textarea name="message"></textarea></label>
+ <button type="submit">Send enquiry</button>
+ </form>
 </section>`;
 }
 
@@ -208,7 +208,7 @@ function blogIndexBlock() {
 }
 
 function teamBlock() {
-  const members = teamPage.members.map(m => `<li><strong>${esc(m.name)}</strong> — ${esc(m.role)}. ${esc(m.bio)} <a href="mailto:${esc(m.email)}">${esc(m.email)}</a></li>`).join('');
+  const members = teamPage.members.map(m => `<li><strong>${esc(m.name)}</strong>: ${esc(m.role)}. ${esc(m.bio)} <a href="mailto:${esc(m.email)}">${esc(m.email)}</a></li>`).join('');
   return `<ul>${members}</ul>
 <p>${esc(teamPage.note)}</p>
 <section>
@@ -236,7 +236,7 @@ ${linksBlock(aboutPage.links)}`;
 
 function portfolioBlock() {
   const { pillars, work, process, closing } = portfolioPage;
-  const titles = books.map(book => `<li>${esc(book.title)} by ${esc(book.author)} — ${esc(book.genre)}</li>`).join('');
+  const titles = books.map(book => `<li><a href="/portfolio/${esc(book.slug)}">${esc(book.title)}</a> by ${esc(book.author)}: ${esc(book.genre)}</li>`).join('');
   const steps = process.steps.map(s => `<li><strong>${esc(s.title)}.</strong> ${esc(s.copy)}</li>`).join('');
   return `<p>${esc(portfolioPage.trustNote)}</p>
 <ul>${pillars.map(p => `<li><strong>${esc(p.title)}.</strong> ${esc(p.copy)}</li>`).join('')}</ul>
@@ -265,7 +265,7 @@ function contentPageBlock(content) {
     ? `<section>
   <h2>Cover case studies from published titles</h2>
   <ul>${content.covers.map(cover => `<li>
-    <strong>${esc(cover.title)}</strong> — ${esc(cover.genre)}.
+    <strong>${esc(cover.title)}</strong>: ${esc(cover.genre)}.
     ${cover.brief ? ` Brief: ${esc(cover.brief)}` : ''}
     ${cover.type ? ` Typography: ${esc(cover.type)}` : ''}
     ${cover.thumbnail ? ` Thumbnail: ${esc(cover.thumbnail)}` : ''}
@@ -292,8 +292,20 @@ const routes = {
     lead: hero.lead,
     body: () => [
       `<ul>${hero.trust.map(item => `<li>${esc(item)}</li>`).join('')}${benefits.map(item => `<li><strong>${esc(item.title)}.</strong> ${esc(item.copy)}</li>`).join('')}</ul>`,
+      `<section>
+  <h2>${esc(howItWorks.title)}</h2>
+  <p>${esc(howItWorks.lead)}</p>
+  <ol>${howItWorks.steps.map(step => `<li><strong>${esc(step.title)}.</strong> ${esc(step.copy)}</li>`).join('')}</ol>
+</section>`,
       servicesBlock(),
+      `<section>
+  <h2>${esc(audiences.title)}</h2>
+  <ul>${audiences.items.map(item => `<li><a href="${esc(item.href)}">${esc(item.title)}</a>: ${esc(item.copy)}</li>`).join('')}</ul>
+</section>`,
       compactPackagesBlock(),
+      coversBlock(books.slice(0, 6), 'Book covers from our studio'),
+      faqBlock(homeFaqs.items, homeFaqs.title),
+      latestPostsBlock(6),
       `<p>Questions on rights, cost, and timelines: <a href="/faq">read the full FAQ</a>.</p>`,
     ].join('\n'),
   },
@@ -338,7 +350,7 @@ const routes = {
   '/authors/editorial-desk': {
     h1: editorialDeskPage.title,
     lead: editorialDeskPage.lead,
-    body: () => `<p>Last updated ${esc(editorialDeskPage.updated)}.</p>\n${sectionsBlock(editorialDeskPage.sections)}\n${linksBlock(editorialDeskPage.links)}`,
+    body: deskBlock,
   },
   '/terms': {
     h1: termsPage.title,
@@ -361,6 +373,54 @@ function articleBylineHtml(post) {
     ? `<a href="${esc(meta.href)}">${esc(meta.author)}</a>`
     : esc(meta.author);
   return `<p>Written by ${author}. Published <time datetime="${esc(meta.date)}">${esc(meta.published)}</time>.${updated} ${esc(meta.readTime)}</p>`;
+}
+
+function deskBlock() {
+  const d = editorialDeskPage;
+  const reviewers = d.reviewers.map(r => `<li><strong>${esc(r.name)}</strong>, ${esc(r.role)}. ${esc(r.bio)} Reviews: ${esc(r.categories.join(', '))}. <a href="mailto:${esc(r.email)}">${esc(r.email)}</a></li>`).join('');
+  const groups = ['Ghostwriting', 'Pricing & Hiring', 'Publishing', 'Writing & Strategy'].map(cat => {
+    const posts = blogPosts.filter(p => p.category === cat);
+    if (!posts.length) return '';
+    const reviewer = d.reviewers.find(r => r.categories.includes(cat));
+    return `<h3>${esc(cat)}${reviewer ? `, reviewed by ${esc(reviewer.name)}` : ''}</h3>
+  <ul>${posts.map(p => `<li><a href="/blog/${esc(p.slug)}">${esc(p.title)}</a></li>`).join('')}</ul>`;
+  }).join('\n');
+  return `<p>Last updated ${esc(d.updated)}.</p>
+<section>
+  <h2>${esc(d.reviewersHeading)}</h2>
+  <ul>${reviewers}</ul>
+</section>
+<section>
+  <h2>${esc(d.guidesHeading)}</h2>
+  ${groups}
+</section>
+${sectionsBlock(d.sections)}
+${linksBlock(d.links)}`;
+}
+
+function relatedPostsBlock(post) {
+  const related = getRelatedPosts(post, 3);
+  if (!related.length) return '';
+  return `<section>
+  <h2>Related articles</h2>
+  <ul>${related.map(item => `<li><a href="/blog/${esc(item.slug)}">${esc(item.title)}</a></li>`).join('')}</ul>
+</section>`;
+}
+
+function latestPostsBlock(limit = 6) {
+  return `<section>
+  <h2>Latest guides</h2>
+  <ul>${blogPosts.slice(0, limit).map(item => `<li><a href="/blog/${esc(item.slug)}">${esc(item.title)}</a></li>`).join('')}</ul>
+  <p><a href="/blog">All articles</a></p>
+</section>`;
+}
+
+function coversBlock(items, heading) {
+  return `<section>
+  <h2>${esc(heading)}</h2>
+  <ul>${items.map(book => `<li><a href="/portfolio/${esc(book.slug)}">${esc(book.title)}</a> by ${esc(book.author)}</li>`).join('')}</ul>
+  <p><a href="/portfolio">Full portfolio</a></p>
+</section>`;
 }
 
 function blogPostRoute(slug) {
@@ -388,12 +448,13 @@ function blogPostRoute(slug) {
         : '';
       const next = isV2Post(post)
         ? `<p><a href="/blog">All articles</a></p>`
-        : `<p><a href="/blog">All articles</a> · <a href="/contact">${esc(post.cta || 'Contact')}</a></p>`;
+        : `<p><a href="/blog">All articles</a>, <a href="/contact">${esc(post.cta || 'Contact')}</a></p>`;
       return [
         quick,
         takeawayBlock,
         sectionsBlock(sections),
         sourceBlock,
+        relatedPostsBlock(post),
         `<p>Publishing guides follow the <a href="/editorial-policy">ebookwriters.us editorial policy</a>.</p>`,
         next,
       ].join('\n');
@@ -420,6 +481,9 @@ export function getCrawlMarkup(page) {
         book.sections ? sectionsBlock(book.sections) : `<p>${esc(book.detail)}</p>`,
         book.faqs ? faqBlock(book.faqs, 'Questions about this cover') : '',
         `<p><a href="${esc(book.amazonUrl)}">View ${esc(book.title)} on Amazon</a></p>`,
+        // the next three titles, wrapping round, so every cover page is linked from three others
+        coversBlock([1, 2, 3].map(step => books[(books.indexOf(book) + step) % books.length]), 'More covers'),
+        '<p><a href="/ebook-cover-design">Ebook cover design service</a></p>',
       ].filter(Boolean).join('\n'),
     })
     || (post && blogPostRoute(slug))

@@ -4,7 +4,7 @@ import { IconArrow, IconCheck, serviceIcons } from './icons.jsx';
 import { plans, pricingIntro, services, servicesIntro } from './data.js';
 import { Contact } from './ContactSection.jsx';
 import { CompareTable, EditSample, QuickAnswer } from './CompareTable.jsx';
-import { headingId } from './blogPosts.js';
+import { blogPosts, headingId } from './blogPosts.js';
 import { trackEvent } from './analytics.js';
 import { RichText } from './RichText.jsx';
 import {
@@ -34,6 +34,7 @@ function ScrollTop() {
 function ArticlePage({ page, children, hideFaqHeading = false }) {
   const sections = page.sections || [];
   const tocItems = [
+    ...(page.toc || []),
     ...sections.map(section => ({ id: headingId(section.heading), label: section.heading })),
     ...(page.faqs?.length && !hideFaqHeading ? [{ id: 'page-faqs', label: 'Frequently asked questions' }] : []),
     ...(page.links?.length ? [{ id: 'page-links', label: 'Keep reading' }] : []),
@@ -255,10 +256,10 @@ function ServiceDetail({ page, closeTitle, closeLead, closeCta, closeTo = '/cont
                   <figure className="br_cover_card">
                     {cover.href ? (
                       <Link to={cover.href}>
-                        <img src={cover.image} alt={`${cover.title} — ${cover.genre} ebook cover`} loading="lazy" />
+                        <img src={cover.image} alt={`${cover.title}: ${cover.genre} ebook cover`} loading="lazy" />
                       </Link>
                     ) : (
-                      <img src={cover.image} alt={`${cover.title} — ${cover.genre} ebook cover`} loading="lazy" />
+                      <img src={cover.image} alt={`${cover.title}: ${cover.genre} ebook cover`} loading="lazy" />
                     )}
                     <figcaption>
                       <span>{cover.genre}</span>
@@ -1042,7 +1043,7 @@ export function FaqPage() {
       <ArticlePage page={faqPage} hideFaqHeading />
       <CloseBand
         title="Still have a question?"
-        lead="Ask about your manuscript, timeline, or package — we reply within one working day."
+        lead="Ask about your manuscript, timeline, or package. We reply within one working day."
         cta="Contact the studio"
       />
     </>
@@ -1057,8 +1058,64 @@ export function EditorialPolicyPage() {
   return <ArticlePage page={editorialPolicyPage} />;
 }
 
+const GUIDE_CATEGORIES = ['Ghostwriting', 'Pricing & Hiring', 'Publishing', 'Writing & Strategy'];
+
 export function EditorialDeskPage() {
-  return <ArticlePage page={editorialDeskPage} />;
+  const page = editorialDeskPage;
+  const reviewerFor = category => page.reviewers.find(r => r.categories.includes(category));
+  const groups = GUIDE_CATEGORIES
+    .map(category => ({ category, posts: blogPosts.filter(post => post.category === category) }))
+    .filter(group => group.posts.length);
+
+  return (
+    <ArticlePage page={page}>
+      <div className="br_block br_text_block" id="reviewers">
+        <h2>{page.reviewersHeading}</h2>
+        <div className="br_desk_reviewers">
+          {page.reviewers.map(person => (
+            <article className="br_desk_reviewer" key={person.email}>
+              <span className="br_desk_avatar" aria-hidden="true">
+                {person.name.split(' ').map(part => part[0]).join('')}
+              </span>
+              <div>
+                <h3>{person.name}</h3>
+                <p className="br_desk_role">{person.role}</p>
+                <p>{person.bio}</p>
+                <p className="br_desk_covers">Reviews: {person.categories.join(', ')}</p>
+                <p className="br_desk_contact">
+                  <a href={`mailto:${person.email}`}>Email {person.name.split(' ')[0]}</a>
+                  {' '}<Link to="/team">Profile</Link>
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <div className="br_block br_text_block br_border_top" id="guides">
+        <h2>{page.guidesHeading}</h2>
+        {groups.map(group => {
+          const reviewer = reviewerFor(group.category);
+          return (
+            <div className="br_desk_group" key={group.category}>
+              <h3>
+                {group.category}
+                {reviewer ? <span> Reviewed by {reviewer.name}</span> : null}
+              </h3>
+              <ul>
+                {group.posts.map(post => (
+                  <li key={post.slug}>
+                    <Link to={`/blog/${post.slug}`}>{post.title}</Link>
+                    <time dateTime={post.date}>{post.dateLabel}</time>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        })}
+      </div>
+    </ArticlePage>
+  );
 }
 
 export function TermsPage() {

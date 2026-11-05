@@ -112,7 +112,7 @@ export function PortfolioPage() {
                     <span className="br_cover_frame">
                       <img
                         src={book.image}
-                        alt={`${book.title} by ${book.author} — ${book.genre} cover`}
+                        alt={`${book.title} by ${book.author}: ${book.genre} cover`}
                         loading={index < 4 ? 'eager' : 'lazy'}
                         decoding="async"
                       />

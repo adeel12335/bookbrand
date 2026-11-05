@@ -15,12 +15,12 @@ export const blogIndex = {
     { label: 'View pricing', href: '/pricing', variant: 'gold' },
   ],
   lead:
-    'Practical guides on ebook writing, ghostwriting costs, timelines, and KDP publishing — written for authors who want clear answers before they hire a writer.',
+    'Practical guides on ebook writing, ghostwriting costs, timelines, and KDP publishing, written for authors who want clear answers before they hire a writer.',
   metaTitle: 'Ebook Writing & Ghostwriting Blog | ebookwriters.us',
   metaDescription:
     'Guides on hiring ebook writers, KDP publishing checklists, ghostwriting vs freelancers, package pricing, and how long it takes to write and publish a book.',
   heroImage: '/assets/brand/page-hero-blog.png',
-  heroImageAlt: 'Emerald study desk with notebook and brass lamp — ebook writing guides',
+  heroImageAlt: 'Emerald study desk with notebook and brass lamp: ebook writing guides',
 };
 
 export const blogArticle = {
@@ -42,7 +42,7 @@ export const blogArticle = {
   ctaTitle: 'Ready for a clear',
   ctaTitleEm: 'quote?',
   ctaLead:
-    'Tell us your idea, target length, and timeline. We will come back with a fixed ebook writing package — no hourly surprises.',
+    'Tell us your idea, target length, and timeline. We will come back with a fixed ebook writing package, no hourly surprises.',
 };
 
 export const staticBlogPosts = [
@@ -50,7 +50,7 @@ export const staticBlogPosts = [
     slug: 'what-is-included-in-a-professional-ebook-writing-package',
     title: 'What Is Included in a Professional Ebook Writing Package?',
     description:
-      'A clear checklist of what serious ebook writing and ghostwriting packages should include — writing, editing, design, files, rights, and publishing support.',
+      'A clear checklist of what serious ebook writing and ghostwriting packages should include: writing, editing, design, files, rights, and publishing support.',
     date: '2026-09-15',
     dateLabel: 'September 15, 2026',
     readTime: '6 min read',
@@ -58,12 +58,12 @@ export const staticBlogPosts = [
     eyebrow: 'Package guide',
     keywords: ['ebook writing package', 'ghostwriting deliverables', 'KDP publishing package', 'book cover and formatting'],
     lead:
-      '“Writing included” is not enough. Before you hire ebook writers or a ghostwriting studio, use this checklist to see what a complete package should cover — and what usually gets left out of cheap quotes.',
+      '"Writing included" is not enough. Before you hire ebook writers or a ghostwriting studio, use this checklist to see what a complete package should cover, and what usually gets left out of cheap quotes.',
     cta: 'Choose a writing package',
     image: '/assets/brand/faq-editorial-v2.webp',
     imageAlt: 'Stack of clothbound books and a fountain pen on a marble desk',
     takeaways: [
-      'A complete package covers writing, editing, cover, retailer files, and rights — not only a first draft.',
+      'A complete package covers writing, editing, cover, retailer files, and rights, not only a first draft.',
       'Named revision rounds and a rights-transfer agreement belong in writing, before work starts.',
       'EPUB and print-ready files are publishing deliverables; a Word document is not.',
       'You should keep the retailer accounts and 100% of royalties.',
@@ -72,8 +72,8 @@ export const staticBlogPosts = [
       {
         heading: 'The core: manuscript production',
         paragraphs: [
-          'A professional package starts with discovery, an outline, and a full manuscript written in your voice. You should see a sample chapter early, then chapter drafts on a dated schedule — not a silent black box for eight weeks.',
-          'Revision rounds must be named in writing. Two or three editorial passes is common; “unlimited revisions” should still sit inside a clear approval process so the project does not drift forever.',
+          'A professional package starts with discovery, an outline, and a full manuscript written in your voice. You should see a sample chapter early, then chapter drafts on a dated schedule, not a silent black box for eight weeks.',
+          'Revision rounds must be named in writing. Two or three editorial passes is common; "unlimited revisions" should still sit inside a clear approval process so the project does not drift forever.',
         ],
         bullets: [
           'Discovery call and project brief',
@@ -87,28 +87,28 @@ export const staticBlogPosts = [
         heading: 'Editing and quality control',
         paragraphs: [
           'Writing and editing are different skills. Strong packages include developmental or line editing plus a final proofread so the book reads clean on Kindle and in print.',
-          'If a quote only says “writing,” ask who edits the draft and how many passes are included. Skipping this stage is how rushed books lose reviews.',
+          'If a quote only says "writing," ask who edits the draft and how many passes are included. Skipping this stage is how rushed books lose reviews.',
         ],
       },
       {
         heading: 'Cover, formatting, and retailer files',
         paragraphs: [
           'Readers judge a book in a second. A market-ready cover (front, spine, and back when print is included) belongs in a serious package, along with EPUB and print-ready PDF files.',
-          'Ask what formats you receive and whether they are built for KDP, IngramSpark, or both. “A Word doc” is not a publishing deliverable.',
+          'Ask what formats you receive and whether they are built for KDP, IngramSpark, or both. "A Word doc" is not a publishing deliverable.',
         ],
       },
       {
         heading: 'Publishing and launch support',
         paragraphs: [
           'Full-service ebook writing packages often include KDP setup, category and keyword research, and basic launch messaging. Higher tiers may add IngramSpark, hardcover files, or author-brand copy.',
-          'You should keep the retailer accounts and 100% of royalties. The studio helps you publish — it should not quietly own your book.',
+          'You should keep the retailer accounts and 100% of royalties. The studio helps you publish. It should not quietly own your book.',
         ],
       },
       {
         heading: 'How our packages map to this checklist',
         paragraphs: [
           'Starter focuses on a short guide with writing, an edit pass, a standard cover, and EPUB/PDF. Professional adds deeper research, a custom cover, retailer formats, and KDP setup. Premium and Elite expand length, editorial depth, distribution, and launch support.',
-          'Compare any outside quote against the same checklist. If three of these pillars are missing, the price is not actually lower — the work has simply been deferred to you.',
+          'Compare any outside quote against the same checklist. If three of these pillars are missing, the price is not actually lower, the work has simply been deferred to you.',
         ],
       },
     ],
@@ -117,7 +117,7 @@ export const staticBlogPosts = [
     slug: 'how-long-does-it-take-to-write-and-publish-a-book',
     title: 'How Long Does It Take to Write and Publish a Book?',
     description:
-      'Realistic timelines for ghostwriting and ebook publishing — from a 15,000-word guide to a full-length manuscript — plus what speeds a project up or slows it down.',
+      'Realistic timelines for ghostwriting and ebook publishing, from a 15,000-word guide to a full-length manuscript, plus what speeds a project up or slows it down.',
     date: '2026-09-15',
     dateLabel: 'September 15, 2026',
     readTime: '6 min read',
@@ -151,27 +151,27 @@ export const staticBlogPosts = [
       {
         heading: 'What is happening during that time',
         paragraphs: [
-          'Week one is usually discovery, voice matching, and outlining. Drafting follows in chapters so you can course-correct early. Editing, cover design, and formatting often overlap the later writing weeks instead of starting only after “the book is done.”',
-          'Publishing setup — KDP metadata, categories, and file upload — typically adds a few days once files are approved, not another full month, unless distribution or hardcover extras are in scope.',
+          'Week one is usually discovery, voice matching, and outlining. Drafting follows in chapters so you can course-correct early. Editing, cover design, and formatting often overlap the later writing weeks instead of starting only after "the book is done."',
+          'Publishing setup, KDP metadata, categories, and file upload, typically adds a few days once files are approved, not another full month, unless distribution or hardcover extras are in scope.',
         ],
       },
       {
         heading: 'What speeds a book up',
         paragraphs: [
-          'Clear positioning (“who it is for” and “what it should achieve”), fast chapter approvals, and existing notes or interviews all compress the calendar. Authors who block two to four hours total across the project rarely become the bottleneck.',
+          'Clear positioning ("who it is for" and "what it should achieve"), fast chapter approvals, and existing notes or interviews all compress the calendar. Authors who block two to four hours total across the project rarely become the bottleneck.',
         ],
       },
       {
         heading: 'What slows a book down',
         paragraphs: [
-          'Changing the audience mid-draft, holding chapters for weeks, or adding major new sections after the outline is locked will extend delivery. Rush fees exist for a reason: quality ghostwriting still needs research, voice matching, and editing — not just more late nights.',
+          'Changing the audience mid-draft, holding chapters for weeks, or adding major new sections after the outline is locked will extend delivery. Rush fees exist for a reason: quality ghostwriting still needs research, voice matching, and editing, not just more late nights.',
           'Be wary of anyone promising a polished 50,000-word book in a few days. That timeline usually skips the stages readers notice.',
         ],
       },
       {
         heading: 'How our packages map to the calendar',
         paragraphs: [
-          'These are the same bands on our pricing page — useful when you want package names, not only word counts:',
+          'These are the same bands on our pricing page, useful when you want package names, not only word counts:',
         ],
         bullets: [
           'Starter (~15,000 words): about 3 weeks',
@@ -183,7 +183,7 @@ export const staticBlogPosts = [
       {
         heading: 'How to get a date you can trust',
         paragraphs: [
-          'Ask for a written schedule before work starts: outline date, sample chapter date, weekly draft cadence, and final-files date. A studio that can publish that calendar is more reliable than one that only says “as soon as possible.”',
+          'Ask for a written schedule before work starts: outline date, sample chapter date, weekly draft cadence, and final-files date. A studio that can publish that calendar is more reliable than one that only says "as soon as possible."',
         ],
       },
     ],
@@ -192,7 +192,7 @@ export const staticBlogPosts = [
     slug: 'ghostwriting-vs-hiring-a-freelancer',
     title: 'Ghostwriting vs Hiring a Freelancer: Which Is Right for Your Book?',
     description:
-      'Compare a professional ghostwriting studio with a solo freelancer — cost, process, rights, editing, and publishing support — so you can hire with clear eyes.',
+      'Compare a professional ghostwriting studio with a solo freelancer, cost, process, rights, editing, and publishing support, so you can hire with clear eyes.',
     date: '2026-09-15',
     dateLabel: 'September 15, 2026',
     readTime: '8 min read',
@@ -200,14 +200,14 @@ export const staticBlogPosts = [
     eyebrow: 'Hiring guide',
     keywords: ['ghostwriting vs freelancer', 'hire a ghostwriter', 'ebook writers', 'book writing service'],
     lead:
-      'Both paths can produce a manuscript. They are not the same product. If you are choosing between a ghostwriting studio and a solo freelancer, compare process, accountability, and what you receive after the draft — not only the headline price.',
+      'Both paths can produce a manuscript. They are not the same product. If you are choosing between a ghostwriting studio and a solo freelancer, compare process, accountability, and what you receive after the draft, not only the headline price.',
     cta: 'Talk to a ghostwriting specialist',
     image: '/assets/brand/hero-concept-photo.webp',
-    imageAlt: 'Clothbound hardcover standing on a writer’s desk beside manuscript pages and a fountain pen',
+    imageAlt: "Clothbound hardcover standing on a writer's desk beside manuscript pages and a fountain pen",
     takeaways: [
       'A studio coordinates writing, editing, design, and often publishing under one agreement.',
       'A freelancer fits when you already have an editor, designer, and publishing plan.',
-      'Compare rights paperwork, revision rules, and files — not only the headline fee.',
+      'Compare rights paperwork, revision rules, and files, not only the headline fee.',
       'A sample chapter, rights language, and a dated schedule protect you more than a portfolio screenshot.',
     ],
     sections: [
@@ -215,7 +215,7 @@ export const staticBlogPosts = [
         heading: 'What a ghostwriting studio is built to do',
         paragraphs: [
           'A studio coordinates writing, editing, design, and often publishing support under one agreement. You get a project manager (or clear point of contact), a dated schedule, revision rules, and paperwork that transfers rights to you.',
-          'That structure costs more than a single freelancer’s first draft — and it exists so your book does not stall when one person gets busy, stuck, or disappears.',
+          "That structure costs more than a single freelancer's first draft, and it exists so your book does not stall when one person gets busy, stuck, or disappears.",
         ],
       },
       {
@@ -231,11 +231,11 @@ export const staticBlogPosts = [
           'Use this comparison when you evaluate ebook writers and ghostwriting quotes:',
         ],
         bullets: [
-          'Accountability: studio schedule vs. one person’s availability',
+          "Accountability: studio schedule vs. One person's availability",
           'Editing: included passes vs. often billed separately',
           'Design & files: cover + EPUB/print vs. manuscript-only',
           'Rights: written transfer + NDA vs. vague message threads',
-          'Publishing: KDP help vs. “here is a Google Doc”',
+          'Publishing: KDP help vs. "here is a Google Doc"',
           'Price: higher fixed package vs. lower hourly that can climb',
         ],
       },
@@ -249,7 +249,7 @@ export const staticBlogPosts = [
       {
         heading: 'A simple hiring test',
         paragraphs: [
-          'Ask every candidate to explain your audience in one paragraph, show a similar finished book, state a fixed fee and delivery date, and confirm you own the work. Vague answers are the red flag — not a slightly higher package price.',
+          'Ask every candidate to explain your audience in one paragraph, show a similar finished book, state a fixed fee and delivery date, and confirm you own the work. Vague answers are the red flag, not a slightly higher package price.',
         ],
       },
     ],
@@ -271,7 +271,7 @@ export const staticBlogPosts = [
       'ghostwriting rights',
     ],
     lead:
-      'This is the buyer checklist, not a quote page. Use it before you sign — so voice, ownership, timeline, and publishing are clear. When you are ready to hire on a fixed fee, use the hire-an-ebook-writer page.',
+      'This is the buyer checklist, not a quote page. Use it before you sign, so voice, ownership, timeline, and publishing are clear. When you are ready to hire on a fixed fee, use the hire-an-ebook-writer page.',
     cta: 'Hire an ebook writer',
     image: '/assets/brand/hero-desk.jpg',
     imageAlt: 'Writing desk ready for briefing a professional ebook writer',
@@ -286,7 +286,7 @@ export const staticBlogPosts = [
         heading: '1. Write a short brief first',
         paragraphs: [
           'Before you talk to ebook writers, put one page on paper: who the book is for, what it should do (authority, leads, memoir), target length, deadline, and whether you already have notes or interviews.',
-          'A clear brief filters unserious bids. Vague “write my book” requests attract vague quotes.',
+          'A clear brief filters unserious bids. Vague "write my book" requests attract vague quotes.',
         ],
         bullets: [
           'Audience and promise of the book',
@@ -303,7 +303,7 @@ export const staticBlogPosts = [
         ],
       },
       {
-        heading: '3. Confirm you own the rights — in writing',
+        heading: '3. Confirm you own the rights: in writing',
         paragraphs: [
           'You should keep copyright, royalties, and retailer accounts. Ask for a rights-transfer agreement before manuscript work begins. Your name on the cover; theirs nowhere unless you ask.',
           'Skip anyone who is fuzzy about ownership or wants ongoing royalties for ghostwriting without that being an explicit, separate deal you want.',
@@ -320,27 +320,27 @@ export const staticBlogPosts = [
         heading: '5. Get a fixed fee and dated milestones',
         paragraphs: [
           'Prefer a fixed package over an open hourly tab. You should see outline approval, sample chapter, chapter delivery dates, and final files on a calendar before you pay for the full manuscript.',
-          'Typical studio bands run from a short ~15,000-word guide in about three weeks to longer manuscripts over eight to twelve weeks — always confirm the schedule in writing for your scope.',
+          'Typical studio bands run from a short ~15,000-word guide in about three weeks to longer manuscripts over eight to twelve weeks, always confirm the schedule in writing for your scope.',
         ],
       },
       {
         heading: '6. Name the revision rounds',
         paragraphs: [
-          '“Unlimited revisions” without process becomes endless. Ask how many editorial passes are included, what counts as a revision, and what happens if the sample chapter misses your voice.',
+          '"Unlimited revisions" without process becomes endless. Ask how many editorial passes are included, what counts as a revision, and what happens if the sample chapter misses your voice.',
           'Strong packages rewrite a missed sample chapter at no cost before the rest of the book is written.',
         ],
       },
       {
         heading: '7. Decide on KDP and files before you start',
         paragraphs: [
-          'If you need Amazon KDP setup, say so in the brief. Writing-only quotes that dump a Word file leave you to buy editing, cover, formatting, and listing help later — often at a higher total cost.',
+          'If you need Amazon KDP setup, say so in the brief. Writing-only quotes that dump a Word file leave you to buy editing, cover, formatting, and listing help later, often at a higher total cost.',
           'Ask what you receive: EPUB, print PDF, cover files, category/keyword research, and whether KDP setup is included for your package tier.',
         ],
       },
       {
         heading: 'Hiring checklist (copy this)',
         paragraphs: [
-          'Use this as a yes/no gate. If three or more answers are “no” or “we will see,” keep looking.',
+          'Use this as a yes/no gate. If three or more answers are "no" or "we will see," keep looking.',
         ],
         bullets: [
           'Short written brief prepared',
@@ -349,7 +349,7 @@ export const staticBlogPosts = [
           'Genre-matched writer (not lowest bid only)',
           'Sample chapter or close portfolio proof',
           'Fixed total price for agreed scope',
-          'Dated outline → chapters → files schedule',
+          'Dated outline to chapters to files schedule',
           'Revision rounds named in writing',
           'Deliverables listed (manuscript, edits, cover, EPUB/PDF, KDP if needed)',
         ],
@@ -357,7 +357,7 @@ export const staticBlogPosts = [
       {
         heading: 'Next step',
         paragraphs: [
-          'If you want a studio that works this way — fixed fee, NDA, rights, and a dated schedule — start on [hire an ebook writer](/hire-ebook-writer) or send the brief on [contact](/contact). For package bands, see [how much an ebook ghostwriter costs](/blog/how-much-does-an-ebook-ghostwriter-cost) and [pricing](/pricing). You should hear back within one working day with a clear yes, no, or clarifying question.',
+          'If you want a studio that works this way, fixed fee, NDA, rights, and a dated schedule, start on [hire an ebook writer](/hire-ebook-writer) or send the brief on [contact](/contact). For package bands, see [how much an ebook ghostwriter costs](/blog/how-much-does-an-ebook-ghostwriter-cost) and [pricing](/pricing). You should hear back within one working day with a clear yes, no, or clarifying question.',
         ],
       },
     ],
@@ -366,7 +366,7 @@ export const staticBlogPosts = [
     slug: 'kdp-publishing-checklist-for-first-time-authors',
     title: 'KDP Publishing Checklist for First-Time Authors',
     description:
-      'A practical Amazon KDP checklist for first-time authors — manuscript, cover, EPUB/print files, categories, keywords, metadata, and account ownership.',
+      'A practical Amazon KDP checklist for first-time authors: manuscript, cover, EPUB/print files, categories, keywords, metadata, and account ownership.',
     date: '2026-09-16',
     dateLabel: 'September 16, 2026',
     readTime: '7 min read',
@@ -379,7 +379,7 @@ export const staticBlogPosts = [
       'first-time KDP author',
     ],
     lead:
-      'Amazon KDP is straightforward once the pieces are ready — and messy if you upload an unfinished draft. Use this checklist so manuscript, cover, files, and listing details match before you hit publish.',
+      'Amazon KDP is straightforward once the pieces are ready, and messy if you upload an unfinished draft. Use this checklist so manuscript, cover, files, and listing details match before you hit publish.',
     cta: 'Plan KDP publishing',
     image: '/assets/brand/path-roadmap-desk.png',
     imageAlt: 'Publishing roadmap desk for Amazon KDP ebook setup',
@@ -387,14 +387,14 @@ export const staticBlogPosts = [
       'Finish the manuscript and edit pass before you obsess over keywords.',
       'Upload retailer-ready EPUB/print files and a cover that reads at thumbnail size.',
       'Categories, keywords, title, subtitle, and description must match the book you wrote.',
-      'Keep the KDP account in your name — you should remain publisher of record and keep royalties.',
+      'Keep the KDP account in your name. You should remain publisher of record and keep royalties.',
     ],
     sections: [
       {
         heading: 'Before you open KDP',
         paragraphs: [
           'KDP cannot fix a weak manuscript. Lock the text first: outline approved, chapters complete, edit and proofread done, and a final file you are willing to put your name on.',
-          'If you still need the book written, start with ghostwriting or hiring a writer — then return to this checklist for publishing setup.',
+          'If you still need the book written, start with ghostwriting or hiring a writer, then return to this checklist for publishing setup.',
         ],
         bullets: [
           'Final manuscript (not a rough draft)',
@@ -406,8 +406,8 @@ export const staticBlogPosts = [
       {
         heading: 'Cover and interior files',
         paragraphs: [
-          'Readers meet your book as a small Amazon thumbnail. The cover must read at that size, fit the genre, and meet KDP’s ebook and print specs when you offer paperback.',
-          'Interior files should be EPUB for Kindle and a print-ready PDF if you want paperback. A Word doc is a working file — not the end of the publishing path.',
+          "Readers meet your book as a small Amazon thumbnail. The cover must read at that size, fit the genre, and meet KDP's ebook and print specs when you offer paperback.",
+          'Interior files should be EPUB for Kindle and a print-ready PDF if you want paperback. A Word doc is a working file, not the end of the publishing path.',
         ],
         bullets: [
           'Ebook cover (thumbnail-readable)',
@@ -419,15 +419,15 @@ export const staticBlogPosts = [
       {
         heading: 'Metadata that matches the book',
         paragraphs: [
-          'Title, subtitle, description, and categories should describe the book you actually wrote — not a keyword pile that confuses readers. Write a description that states the promise and who it is for.',
+          'Title, subtitle, description, and categories should describe the book you actually wrote, not a keyword pile that confuses readers. Write a description that states the promise and who it is for.',
           'Categories and keywords help discovery, but they cannot rescue a mismatch between cover promise and chapter one.',
         ],
       },
       {
         heading: 'Categories, keywords, and pricing',
         paragraphs: [
-          'Research categories where your book honestly belongs. Choose keywords readers would type — problems, outcomes, and genre phrases — not stuffed nonsense.',
-          'Set a price that fits your goal (lead magnet vs paid authority title). You can change price later; you cannot easily undo a rushed, error-filled first upload in readers’ minds.',
+          'Research categories where your book honestly belongs. Choose keywords readers would type, problems, outcomes, and genre phrases, not stuffed nonsense.',
+          "Set a price that fits your goal (lead magnet vs paid authority title). You can change price later; you cannot easily undo a rushed, error-filled first upload in readers' minds.",
         ],
       },
       {
@@ -455,7 +455,7 @@ export const staticBlogPosts = [
         heading: 'When a studio should handle KDP with writing',
         paragraphs: [
           'If you are buying a full writing package, confirm whether KDP setup is included. At ebookwriters.us, Professional packages include KDP setup; Premium adds IngramSpark; Starter delivers files without the KDP setup line item.',
-          'One project for manuscript through listing details prevents the “now what?” gap after the draft lands.',
+          'One project for manuscript through listing details prevents the "now what?" gap after the draft lands.',
         ],
       },
       {
@@ -470,7 +470,7 @@ export const staticBlogPosts = [
     slug: 'how-much-does-an-ebook-ghostwriter-cost',
     title: 'How Much Does an Ebook Ghostwriter Cost?',
     description:
-      'Ebook ghostwriter and ebook-writer costs in one place — market ranges, what drives fees, and fixed studio packages from $699 to $3,999.',
+      'Ebook ghostwriter and ebook-writer costs in one place: market ranges, what drives fees, and fixed studio packages from $699 to $3,999.',
     date: '2026-09-16',
     dateLabel: 'September 16, 2026',
     readTime: '7 min read',
@@ -485,37 +485,37 @@ export const staticBlogPosts = [
       'ebook ghostwriting price',
     ],
     lead:
-      '“How much does a ghostwriter cost?” and “how much does it cost to hire an ebook writer” are the same buying question. Here is one clear breakdown: market ranges, what the fee should include, and how our fixed packages from $699 to $3,999 compare.',
+      '"How much does a ghostwriter cost?" and "how much does it cost to hire an ebook writer" are the same buying question. Here is one clear breakdown: market ranges, what the fee should include, and how our fixed packages from $699 to $3,999 compare.',
     cta: 'Request a ghostwriting quote',
     image: '/assets/brand/hero-concept-photo.webp',
-    imageAlt: 'Manuscript pages and pen on a desk — ebook ghostwriting cost guide',
+    imageAlt: 'Manuscript pages and pen on a desk: ebook ghostwriting cost guide',
     takeaways: [
       'Ghostwriting fees track length, research, voice work, and whether edits and files are bundled.',
       'Studio packages for nonfiction often land between $699 and $3,999 for agreed word counts.',
-      'A low per-word draft without NDA, rights, or revisions is unfinished risk — not a bargain.',
-      'Budget to the book’s job, then demand a fixed total and written ownership.',
+      'A low per-word draft without NDA, rights, or revisions is unfinished risk, not a bargain.',
+      "Budget to the book's job, then demand a fixed total and written ownership.",
     ],
     sections: [
       {
-        heading: 'Ghostwriter cost vs “ebook writer” cost',
+        heading: 'Ghostwriter cost vs "ebook writer" cost',
         paragraphs: [
-          'People search both phrases. Ghostwriting specifically means someone else drafts the manuscript in your voice while you keep the byline. Hiring an “ebook writer” can mean the same thing — or a thinner draft-only gig.',
-          'Compare apples to apples: confidential process, voice matching, revision rounds, and rights transfer belong in a real ghostwriting fee. The [how to hire an ebook writer](/blog/how-to-hire-an-ebook-writer) checklist is the questions to ask before you sign — not a second price list.',
+          'People search both phrases. Ghostwriting specifically means someone else drafts the manuscript in your voice while you keep the byline. Hiring an "ebook writer" can mean the same thing, or a thinner draft-only gig.',
+          'Compare apples to apples: confidential process, voice matching, revision rounds, and rights transfer belong in a real ghostwriting fee. The [how to hire an ebook writer](/blog/how-to-hire-an-ebook-writer) checklist is the questions to ask before you sign, not a second price list.',
         ],
       },
       {
         heading: 'What ghostwriters usually charge',
         paragraphs: [
-          'Public marketplace bids vary wildly because the listed scope is rarely comparable — a draft-only chapter is not the same product as a researched manuscript with edits, cover, and files. We do not publish a studio enquiry median here.',
+          'Public marketplace bids vary wildly because the listed scope is rarely comparable: a draft-only chapter is not the same product as a researched manuscript with edits, cover, and files. We do not publish a studio enquiry median here.',
           'As a public market check, the Editorial Freelancers Association publishes member rate charts for editing and related services. Use those as planning context, not as our quote. Serious nonfiction ghostwriting for a short, tightly scoped guide can start in the high hundreds; full-length authority books with research, edits, and production support commonly reach several thousand dollars.',
-          'Our fixed packages run from $699 (about 15,000 words) to $3,999 (up to about 100,000 words with deeper production support). Those totals include the studio path listed on [pricing](/pricing) — not an open hourly clock.',
+          'Our fixed packages run from $699 (about 15,000 words) to $3,999 (up to about 100,000 words with deeper production support). Those totals include the studio path listed on [pricing](/pricing), not an open hourly clock.',
         ],
       },
       {
         heading: 'What drives a ghostwriting fee',
         paragraphs: [
           'Length and research depth matter most. A memoir with heavy interview work is priced differently from a short lead magnet. Specialist niches (finance, health, law) need writers who already know the lane.',
-          'Also price the invisible work: NDA, outline, sample chapter, revision rounds, and — if bundled — editing, cover, and retailer files. Ghostwriting that stops at a rough Word doc leaves those costs for later.',
+          'Also price the invisible work: NDA, outline, sample chapter, revision rounds, and, if bundled, editing, cover, and retailer files. Ghostwriting that stops at a rough Word doc leaves those costs for later.',
         ],
         bullets: [
           'Word count and interview load',
@@ -531,10 +531,10 @@ export const staticBlogPosts = [
           'We quote fixed bands so you can plan without guessing an hourly total. Feature lists live on [pricing](/pricing):',
         ],
         bullets: [
-          'Starter — from $699 — ~15k words, ~3 weeks — writing, one edit pass, standard cover, EPUB/PDF, 2 revision rounds',
-          'Professional — from $1,499 — ~30k words, ~5 weeks — outline, two edit passes, custom cover, retailer formats, KDP setup',
-          'Premium — from $2,499 — ~50k words, ~8 weeks — senior writer, print-ready interior, KDP + IngramSpark, unlimited revisions within agreed scope',
-          'Elite — from $3,999 — up to ~100k words, ~12 weeks — dedicated team, premium design, global distribution setup, author brand copy',
+          'Starter, from $699, ~15k words, ~3 weeks, writing, one edit pass, standard cover, EPUB/PDF, 2 revision rounds',
+          'Professional, from $1,499, ~30k words, ~5 weeks, outline, two edit passes, custom cover, retailer formats, KDP setup',
+          'Premium, from $2,499, ~50k words, ~8 weeks, senior writer, print-ready interior, KDP + IngramSpark, unlimited revisions within agreed scope',
+          'Elite, from $3,999, up to ~100k words, ~12 weeks, dedicated team, premium design, global distribution setup, author brand copy',
         ],
       },
       {
@@ -547,7 +547,7 @@ export const staticBlogPosts = [
       {
         heading: 'Red flags in cheap ghostwriting quotes',
         paragraphs: [
-          'No NDA. No rights language. No sample chapter. No revision policy. “Done in a weekend” for a full-length book. Those are not bargains — they are how manuscripts stall or end up unusable under your name. A $200 chapter from an unverified freelancer can stall for weeks, miss your voice, or arrive without rights paperwork.',
+          'No NDA. No rights language. No sample chapter. No revision policy. "Done in a weekend" for a full-length book. Those are not bargains. They are how manuscripts stall or end up unusable under your name. A $200 chapter from an unverified freelancer can stall for weeks, miss your voice, or arrive without rights paperwork.',
         ],
       },
       {
@@ -562,11 +562,11 @@ export const staticBlogPosts = [
 
 const ARTICLE_QUICK_ANSWERS = {
   'how-much-does-an-ebook-ghostwriter-cost':
-    'Our studio packages range from $699 to $3,999 for defined word counts and scopes. Broader professional ghostwriting market rates vary substantially by experience, length, interviews, research, and production requirements — that range is our menu, not an industry median.',
+    'Our studio packages range from $699 to $3,999 for defined word counts and scopes. Broader professional ghostwriting market rates vary substantially by experience, length, interviews, research, and production requirements. That range is our menu, not an industry median.',
   'how-to-hire-an-ebook-writer':
     'Before you hire an ebook writer, lock NDA and rights language, insist on a sample chapter, a fixed fee, dated milestones, and named revision rounds. Decide whether you need writing only or writing plus retailer-ready files.',
   'does-a-ghostwriter-own-your-book-rights':
-    'A ghostwriter should not own your book. In a professional engagement, copyright transfers to you in writing before or as work begins — typically as an assignment or work made for hire. Keep the retailer accounts and the royalties. Confirm that in the contract, not in a chat thread.',
+    'A ghostwriter should not own your book. In a professional engagement, copyright transfers to you in writing before or as work begins, typically as an assignment or work made for hire. Keep the retailer accounts and the royalties. Confirm that in the contract, not in a chat thread.',
   'ai-ebook-writer-vs-human-ghostwriter':
     'An AI drafting tool generates text you still have to own, edit, and stand behind. A human ghostwriter is hired to write in your voice, under NDA, with rights transfer. Speed is not the same product as a manuscript you can put your name on.',
   'kdp-publishing-checklist-for-first-time-authors':
@@ -659,9 +659,9 @@ export function articleSources(postOrSlug) {
 const ARTICLE_SECTION_PARAS = {
   'how-much-does-an-ebook-ghostwriter-cost': {
     'What ghostwriters usually charge': [
-      'Public marketplace bids vary wildly because the listed scope is rarely comparable — a draft-only chapter is not the same product as a researched manuscript with edits, cover, and files. We do not publish a studio enquiry median here.',
+      'Public marketplace bids vary wildly because the listed scope is rarely comparable: a draft-only chapter is not the same product as a researched manuscript with edits, cover, and files. We do not publish a studio enquiry median here.',
       'As a public market check, the Editorial Freelancers Association publishes member rate charts for editing and related services. Use those as planning context, not as our quote. Serious nonfiction ghostwriting for a short, tightly scoped guide can start in the high hundreds; full-length authority books with research, edits, and production support commonly reach several thousand dollars.',
-      'Our fixed packages run from $699 (about 15,000 words) to $3,999 (up to about 100,000 words with deeper production support). Those totals include the studio path listed on [pricing](/pricing) — not an open hourly clock.',
+      'Our fixed packages run from $699 (about 15,000 words) to $3,999 (up to about 100,000 words with deeper production support). Those totals include the studio path listed on [pricing](/pricing), not an open hourly clock.',
     ],
   },
 };
@@ -722,9 +722,9 @@ export function articleByline(post) {
 const ARTICLE_TAKEAWAYS = {
   'how-much-does-an-ebook-ghostwriter-cost': [
     'Ghostwriting fees track length, research, voice work, and whether edits and files are bundled.',
-    'Our studio packages range from $699 to $3,999 for defined word counts and scopes — that is our menu, not an industry median.',
-    'A low per-word draft without NDA, rights, or revisions is unfinished risk — not a bargain.',
-    'Budget to the book’s job, then demand a fixed total and written ownership.',
+    'Our studio packages range from $699 to $3,999 for defined word counts and scopes. That is our menu, not an industry median.',
+    'A low per-word draft without NDA, rights, or revisions is unfinished risk, not a bargain.',
+    "Budget to the book's job, then demand a fixed total and written ownership.",
   ],
 };
 
@@ -745,7 +745,7 @@ const ARTICLE_SECTION_SPLITS = {
         bullets: [
           'Fiction: stakes, pacing, subplot balance, character motivation, scene necessity, opening and ending strength.',
           'Nonfiction / memoir: thesis clarity, chapter logic, evidence gaps, repetition, reader journey, promise vs delivery.',
-          'Either: audience fit — does this book serve the reader you say you want?',
+          'Either: audience fit, does this book serve the reader you say you want?',
         ],
       },
       {
@@ -757,16 +757,16 @@ const ARTICLE_SECTION_SPLITS = {
         bullets: [
           'Beta readers love your voice but bounce in the middle.',
           'You keep rewriting Chapter 1 because you are unsure what the book is.',
-          'Agents or contest feedback keep saying “structure” or “focus,” not “typos.”',
+          'Agents or contest feedback keep saying "structure" or "focus," not "typos."',
           'Your nonfiction outline looked solid, but the draft wanders or repeats.',
-          'You suspect entire chapters should move, merge, or die — and you want a professional second brain before you burn months guessing.',
+          'You suspect entire chapters should move, merge, or die, and you want a professional second brain before you burn months guessing.',
         ],
       },
       {
         heading: 'Copyediting (the consistency and correctness pass)',
         paragraphs: [
           'A copyeditor works sentence by sentence once the content and structure are stable.',
-          'Copyediting protects reader trust. It does not invent a new plot or restructure your argument for you — and you should not expect it to.',
+          'Copyediting protects reader trust. It does not invent a new plot or restructure your argument for you, and you should not expect it to.',
         ],
         bullets: [
           'Grammar, usage, spelling, punctuation',
