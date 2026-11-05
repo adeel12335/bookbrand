@@ -3,22 +3,22 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 
+# AI search and answer engines: allowed so the studio can be cited.
 User-agent: GPTBot
-Allow: /
-
+User-agent: OAI-SearchBot
 User-agent: ChatGPT-User
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
 User-agent: ClaudeBot
-Allow: /
-
+User-agent: Claude-SearchBot
+User-agent: Claude-User
 User-agent: anthropic-ai
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Bingbot
+User-agent: CCBot
 Allow: /
+Disallow: /admin
+Disallow: /api/
 
 Sitemap: https://www.ebookwriters.us/sitemap.xml
