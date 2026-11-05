@@ -160,7 +160,7 @@ function contactBlock() {
   <p data-speakable="1">${esc(contactIntro.lead)}</p>
   ${list(contactIntro.points)}
   <p>${esc(contactIntro.pricingNote)} <a href="${esc(contactIntro.pricingHref)}">${esc(contactIntro.pricingCta)}</a></p>
-  <p>Email ${esc(SITE_EMAIL)} or call ${esc(SITE_PHONE_DISPLAY)}. ${esc(siteContact.address)}.</p>
+  <p>Email <a href="mailto:${esc(SITE_EMAIL)}">${esc(SITE_EMAIL)}</a> or call <a href="${esc(siteContact.phoneHref)}">${esc(SITE_PHONE_DISPLAY)}</a>. ${esc(siteContact.address)}.</p>
   <h2>${esc(page.howTitle)}</h2>
   <p>${esc(page.howLead)}</p>
   ${list(page.how)}
@@ -168,14 +168,9 @@ function contactBlock() {
   <p>${esc(page.nextLead)}</p>
   ${list(page.next)}
   ${page.extra.map(p => `<p>${esc(p)}</p>`).join('\n')}
- <p>Send an enquiry for a fixed ebook writing or ghostwriting quote. We typically reply within 1-2 business days.</p>
- <form action="/contact" method="get">
- <label>Your name <input name="name" /></label>
- <label>Your email <input name="email" type="email" /></label>
- <label>Tell us about your book or project <textarea name="message"></textarea></label>
- <button type="submit">Send enquiry</button>
- </form>
+ <p>For a fixed ebook writing or ghostwriting quote, email <a href="mailto:${esc(SITE_EMAIL)}?subject=Book%20quote">${esc(SITE_EMAIL)}</a> with your idea, target length, and deadline. We typically reply within 1-2 business days.</p>
 </section>`;
+// The live enquiry form needs JavaScript (JSON + reCAPTCHA), so the crawl HTML offers email instead of a dead form.
 }
 
 function servicesIndexBlock() {
