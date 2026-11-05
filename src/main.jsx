@@ -280,8 +280,8 @@ function Hero() {
       className="hero-section"
       id="top"
       style={{
-        '--bgDesktop': "url('/assets/brand/hero-desktop.png')",
-        '--bgMobile': "url('/assets/brand/hero-mob.png')",
+        '--bgDesktop': "url('/assets/brand/hero-desktop.webp')",
+        '--bgMobile': "url('/assets/brand/hero-mob.webp')",
       }}
     >
       <div className="container">

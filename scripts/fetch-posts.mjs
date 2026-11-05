@@ -82,6 +82,9 @@ function fromRow(row) {
     takeaways: row.takeaways || [],
     sections: row.sections || [],
   };
+  // last real edit, for sitemap lastmod and Article dateModified
+  const updated = row.updated_at ? isoDate(new Date(row.updated_at)) : '';
+  if (updated && updated > date) post.updated = updated;
   if (row.format === 'v2') post.format = 'v2';
   const author = String(row.author || '').replace(/\s+/g, ' ').trim();
   if (author) post.author = author;

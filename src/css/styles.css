@@ -7215,3 +7215,19 @@ a.br_plan_row.is-featured:visited,
 .br_wrapper_post_content .br_desk_group ul {
   padding-left: 0;
 }
+
+/* Article links: gold-300 on white was 1.97:1. Emerald reads at ~9:1. */
+.br_wrapper_post_content a:link:not(.btn):not(.btn-outline),
+.br_wrapper_post_content a:visited:not(.btn):not(.btn-outline),
+.br_post_policy a:link,
+.br_post_policy a:visited {
+  color: var(--emerald-700);
+  text-decoration-color: var(--gold-500);
+}
+
+.br_wrapper_post_content a:hover:not(.btn):not(.btn-outline),
+.br_wrapper_post_content a:focus-visible:not(.btn):not(.btn-outline),
+.br_post_policy a:hover,
+.br_post_policy a:focus-visible {
+  color: var(--gold-700);
+}

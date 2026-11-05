@@ -15,7 +15,8 @@ import {
 
 export { SITE_ORIGIN, absoluteUrl, absoluteAsset } from './site.js';
 
-const LASTMOD = '2026-09-21';
+// Static pages: bump when site-wide copy or layout changes (last: 2026-11-05).
+const LASTMOD = '2026-11-05';
 const DEFAULT_ROBOTS = 'index, follow, max-image-preview:large';
 const ORG_LOGO = '/assets/brand/logo-dark.png';
 const TITLE_MAX = 60;
@@ -822,7 +823,7 @@ function blogPostPage(post) {
     type: 'article',
     changefreq: 'monthly',
     priority: 0.7,
-    lastmod: post.date || LASTMOD,
+    lastmod: post.updated || post.date || LASTMOD,
     jsonLd: [
       {
         '@context': 'https://schema.org',
@@ -830,7 +831,7 @@ function blogPostPage(post) {
         headline: post.title,
         description,
         datePublished: post.date,
-        dateModified: post.date,
+        dateModified: post.updated || post.date,
         image: absoluteAsset(post.image || '/assets/brand/faq-editorial-v2.webp'),
         author: articleAuthor(post),
         publisher: {
