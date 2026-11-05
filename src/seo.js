@@ -387,9 +387,9 @@ const staticPages = [
   }),
   page({
     path: '/team',
-    title: 'Our Team | ebookwriters.us',
+    title: 'Our Team — Ebook Writing & Publishing Studio',
     description:
-      'Meet the ebookwriters.us studio team — editorial, project management, design, and KDP publishing leads who run every ebook from discovery call to final files.',
+      'Meet the ebookwriters.us team: editors, writers, cover design, and Amazon KDP publishing staff who run every ebook ghostwriting project. Email any of us.',
     image: teamPage.heroImage,
     priority: 0.6,
     jsonLd: [
@@ -398,6 +398,23 @@ const staticPages = [
         description: teamPage.lead,
         path: '/team',
       }),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        name: 'ebookwriters.us team',
+        itemListElement: teamPage.members.map((member, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'Person',
+            name: member.name,
+            jobTitle: member.role,
+            email: `mailto:${member.email}`,
+            description: member.bio,
+            worksFor: { '@type': 'Organization', name: SITE_NAME, url: absoluteUrl('/') },
+          },
+        })),
+      },
       breadcrumbs([
         { name: 'Home', path: '/' },
         { name: 'About', path: '/about' },
@@ -517,7 +534,7 @@ const staticPages = [
   }),
   page({
     path: '/ebook-ghostwriting-services',
-    title: 'Ebook Ghostwriting Services | ebookwriters.us',
+    title: 'Ebook Ghostwriting Services — Human Writers, from $699',
     description:
       'Hire ebook ghostwriters on a fixed fee. Outline to manuscript, revisions, NDA, and 100% ownership. Packages from $699.',
     priority: 0.9,
@@ -538,7 +555,7 @@ const staticPages = [
   }),
   page({
     path: '/hire-ebook-writer',
-    title: 'Hire an Ebook Writer | ebookwriters.us',
+    title: 'Hire an Ebook Writer — Flat Fee, NDA, 100% Ownership',
     description:
       'Hire an ebook writer for a fixed-fee manuscript — not hourly guesswork. Matched genre specialists, revision rounds, and KDP-ready files. Packages from $699.',
     priority: 0.9,
@@ -576,6 +593,89 @@ const staticPages = [
         { name: 'Amazon KDP Publishing', path: '/amazon-kdp-ebook-writing' },
       ]),
       faqPageSchema(landers.kdp.faqs),
+    ],
+  }),
+  page({
+    path: '/lead-magnet-ebook-writing',
+    title: 'Lead Magnet Ebook Writing Service — Fixed Fee from $699',
+    description:
+      'Lead magnet ebook writing by human writers: up to 15,000 words, editing, cover, and EPUB/PDF for a fixed $699. NDA, 100% ownership, about three weeks.',
+    image: landers.leadMagnet.heroImage,
+    priority: 0.8,
+    jsonLd: [
+      serviceSchema({
+        name: 'Lead Magnet Ebook Writing',
+        description: landers.leadMagnet.quickAnswer,
+        path: '/lead-magnet-ebook-writing',
+      }),
+      breadcrumbs([
+        { name: 'Home', path: '/' },
+        { name: 'Services', path: '/services' },
+        { name: 'Lead Magnet Ebook Writing', path: '/lead-magnet-ebook-writing' },
+      ]),
+      faqPageSchema(landers.leadMagnet.faqs),
+    ],
+  }),
+  page({
+    path: '/ebook-ghostwriter-for-coaches',
+    title: 'Ebook Ghostwriter for Coaches — Fixed Fee from $699',
+    description:
+      'An ebook ghostwriter for coaches: we turn your method, courses, and sessions into a book in your voice. Fixed fee from $699, NDA, and 100% ownership.',
+    image: landers.coaches.heroImage,
+    priority: 0.8,
+    jsonLd: [
+      serviceSchema({
+        name: 'Ebook Ghostwriting for Coaches',
+        description: landers.coaches.quickAnswer,
+        path: '/ebook-ghostwriter-for-coaches',
+      }),
+      breadcrumbs([
+        { name: 'Home', path: '/' },
+        { name: 'Services', path: '/services' },
+        { name: 'Ebook Ghostwriter for Coaches', path: '/ebook-ghostwriter-for-coaches' },
+      ]),
+      faqPageSchema(landers.coaches.faqs),
+    ],
+  }),
+  page({
+    path: '/how-to-choose-a-ghostwriter',
+    title: 'How to Choose a Ghostwriter and Spot a Scam',
+    description:
+      'How to choose a ghostwriter safely: red flags, a vetting checklist, and what a fair contract includes. With our own answer to every question.',
+    image: landers.chooseGhostwriter.heroImage,
+    priority: 0.7,
+    jsonLd: [
+      webPageSchema({
+        name: 'How to Choose a Ghostwriter',
+        description: landers.chooseGhostwriter.quickAnswer,
+        path: '/how-to-choose-a-ghostwriter',
+      }),
+      breadcrumbs([
+        { name: 'Home', path: '/' },
+        { name: 'How to Choose a Ghostwriter', path: '/how-to-choose-a-ghostwriter' },
+      ]),
+      faqPageSchema(landers.chooseGhostwriter.faqs),
+    ],
+  }),
+  page({
+    path: '/ai-policy',
+    title: 'AI Policy — Human Writers | ebookwriters.us',
+    description:
+      'Our AI policy: client manuscripts are written and revised by human writers. Where tools may help, what we never do, and how to ban AI tools on your project.',
+    image: landers.aiPolicy.heroImage,
+    priority: 0.5,
+    changefreq: 'yearly',
+    jsonLd: [
+      webPageSchema({
+        name: 'AI Policy',
+        description: landers.aiPolicy.quickAnswer,
+        path: '/ai-policy',
+      }),
+      breadcrumbs([
+        { name: 'Home', path: '/' },
+        { name: 'AI Policy', path: '/ai-policy' },
+      ]),
+      faqPageSchema(landers.aiPolicy.faqs),
     ],
   }),
   page({

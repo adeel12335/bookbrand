@@ -6,6 +6,7 @@ import { Contact } from './ContactSection.jsx';
 import { CompareTable, EditSample, QuickAnswer } from './CompareTable.jsx';
 import { headingId } from './blogPosts.js';
 import { trackEvent } from './analytics.js';
+import { RichText } from './RichText.jsx';
 import {
   aboutPage,
   coverPage,
@@ -107,7 +108,7 @@ function ArticlePage({ page, children, hideFaqHeading = false }) {
                   >
                     <h2>{section.heading}</h2>
                     {section.paragraphs?.map(paragraph => (
-                      <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                      <p key={paragraph.slice(0, 48)}><RichText text={paragraph} /></p>
                     ))}
                     {section.bullets?.length ? (
                       <ul className="br_duo_list">
@@ -211,7 +212,7 @@ function ServiceDetail({ page, closeTitle, closeLead, closeCta, closeTo = '/cont
                 <div className="col-md-8">
                   <div className="br_service_block_copy">
                     {section.paragraphs?.map(paragraph => (
-                      <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                      <p key={paragraph.slice(0, 48)}><RichText text={paragraph} /></p>
                     ))}
                     {section.bullets?.length ? (
                       <ul className="br_duo_list">
@@ -448,6 +449,7 @@ export function TeamPage() {
             </div>
           </article>
 
+          <h2 className="br_team_grid_title">{page.gridHeading}</h2>
           <ul className="br_team_grid">
             {members.map(member => (
               <li key={member.email}>
@@ -456,6 +458,7 @@ export function TeamPage() {
                   <div className="br_team_member_copy">
                     <h3>{member.name}</h3>
                     <p className="br_team_role">{member.role}</p>
+                    <p className="br_team_member_bio">{member.bio}</p>
                     <TeamEmail email={member.email} />
                   </div>
                 </article>
@@ -993,6 +996,22 @@ export function HireWriterPage() {
 
 export function KdpPage() {
   return <Lander page={landers.kdp} />;
+}
+
+export function LeadMagnetPage() {
+  return <Lander page={landers.leadMagnet} />;
+}
+
+export function CoachesPage() {
+  return <Lander page={landers.coaches} />;
+}
+
+export function ChooseGhostwriterPage() {
+  return <Lander page={landers.chooseGhostwriter} />;
+}
+
+export function AiPolicyPage() {
+  return <Lander page={landers.aiPolicy} />;
 }
 
 export function EditingPage() {

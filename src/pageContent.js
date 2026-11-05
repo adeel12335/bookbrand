@@ -35,6 +35,7 @@ export const aboutPage = {
       paragraphs: [
         'We help experts, entrepreneurs, and first-time authors turn a clear idea into a manuscript they are proud to put their name on. The work happens under one roof: ghostwriting, editing, cover design, formatting, and retailer setup.',
         `Based in ${siteContact.address}. Reach us at ${siteContact.email} or ${siteContact.phone}. Authors across the US — and remotely worldwide.`,
+        'ebookwriters.us is an independent studio. We are not affiliated with similarly named companies such as Ebook Writers USA.',
       ],
     },
     {
@@ -78,12 +79,13 @@ export const aboutPage = {
 export const teamPage = {
   path: '/team',
   eyebrow: 'Our team',
-  title: 'The people behind',
+  title: 'The ebook writing and publishing team behind',
   titleEm: 'every book.',
   lead:
-    'A small studio team runs every project — from the first call and the fixed quote to editing, cover design, and KDP upload. Write to any of us directly.',
+    'A small US studio team runs every ebook ghostwriting project — from the discovery call and fixed quote to editing, cover design, and Amazon KDP publishing. Write to any of us directly.',
   heroImage: '/assets/brand/page-hero-studio.png',
-  heroImageAlt: 'Writing desk with manuscript pages and publishing tools',
+  heroImageAlt: 'Writing desk with manuscript pages and publishing tools — the ebookwriters.us team',
+  gridHeading: 'Editorial, production, and author support',
   note:
     'Ghostwriters on confidential titles are not listed here. You meet yours by name after the NDA.',
   closeTitle: 'Talk to the team about your book.',
@@ -96,63 +98,70 @@ export const teamPage = {
       role: 'Chief Executive Officer',
       email: 'reesha@authors.ebookwriters.us',
       image: null,
-      bio: 'Leads the studio and signs off every project scope, quote, and author agreement. Reesha sets the standards on rights, fixed fees, and schedules that every book is held to.',
+      bio: 'Reesha leads ebookwriters.us and signs off every ghostwriting scope, fixed quote, and author agreement. Reesha also sets the standards every book is held to: an NDA before you share material, 100% author ownership and royalties, and a dated schedule for every manuscript.',
     },
     {
       name: 'Sophia Parker',
       role: 'Editorial Director',
       email: 'sophia@authors.ebookwriters.us',
       image: null,
-      bio: 'Owns editorial quality across the studio. Sophia matches each author with a writer for their category and reviews outlines and sample chapters before drafting begins.',
+      bio: 'Oversees editorial quality on every ebook ghostwriting project. Sophia matches each author with a writer for their category and reviews every outline and sample chapter before drafting begins.',
     },
     {
       name: 'Mia Anderson',
       role: 'Senior Publishing Consultant',
       email: 'mia@authors.ebookwriters.us',
       image: null,
-      bio: 'Runs discovery calls with new authors. Mia scopes length, audience, and package, and turns the conversation into a written fixed quote.',
+      bio: 'Runs discovery calls with new authors and turns each brief into a fixed-fee ebook writing quote — length, audience, package, and timeline in writing.',
     },
     {
       name: 'Rachel Morgan',
       role: 'Project Manager',
       email: 'rachel@authors.ebookwriters.us',
       image: null,
-      bio: 'Keeps every manuscript on its dated schedule. Rachel coordinates chapter reviews, revision rounds, and handoffs between writing, editing, and design.',
+      bio: 'Keeps every manuscript on its dated schedule, coordinating chapter reviews, revision rounds, and handoffs between ghostwriting, editing, and cover design.',
     },
     {
       name: 'Hannah Collins',
       role: 'Managing Editor',
       email: 'hannah@writers.ebookwriters.us',
       image: null,
-      bio: 'Leads developmental editing and copyediting. Hannah checks structure, argument, and voice chapter by chapter, then runs the final proofread.',
-    },
-    {
-      name: 'Jessica Marlowe',
-      role: 'Author Success Manager',
-      email: 'jessica@writers.ebookwriters.us',
-      image: null,
-      bio: 'The day-to-day contact for authors mid-project. Jessica collects feedback, answers questions on process and rights, and makes sure nothing waits on a reply.',
+      bio: 'Leads developmental editing, line editing, and copyediting. Hannah checks structure, argument, and voice chapter by chapter, then runs the final proofread.',
     },
     {
       name: 'Vanessa Callahan',
       role: 'Writer and Publisher',
       email: 'vanessa@writers.ebookwriters.us',
       image: null,
-      bio: 'Writes and publishes books with the studio. Vanessa takes manuscripts from first draft through final edits, layout, and release on Amazon KDP and IngramSpark.',
+      bio: 'Writes and publishes nonfiction ebooks with the studio, taking manuscripts from first draft through final edits, layout, and release on Amazon KDP and IngramSpark.',
+    },
+    {
+      name: 'Brooke',
+      role: 'Creative Director',
+      email: 'brooke@writers.ebookwriters.us',
+      image: null,
+      bio: 'Directs ebook cover design and interior layout. Brooke briefs designers on genre and audience and approves every cover so the title still reads at Amazon thumbnail size.',
     },
     {
       name: 'Allison Mercer',
       role: 'Publishing Operations Manager',
       email: 'allison@writers.ebookwriters.us',
       image: null,
-      bio: 'Prepares retailer-ready files and handles Amazon KDP and IngramSpark setup — formatting checks, metadata, categories, and launch-day upload.',
+      bio: 'Prepares retailer-ready EPUB, PDF, and print files and handles Amazon KDP and IngramSpark setup — formatting checks, metadata, categories, and launch-day upload.',
+    },
+    {
+      name: 'Jessica Marlowe',
+      role: 'Author Success Manager',
+      email: 'jessica@writers.ebookwriters.us',
+      image: null,
+      bio: 'The day-to-day contact for authors mid-project. Jessica answers questions on process, rights, and royalties, and collects chapter feedback so nothing waits on a reply.',
     },
     {
       name: 'Cole',
       role: 'Client Partnerships Lead',
       email: 'cole@authors.ebookwriters.us',
       image: null,
-      bio: 'Works with businesses, coaches, and organizations commissioning books and lead-magnet ebooks, from first enquiry to signed scope.',
+      bio: 'Works with coaches, consultants, and small businesses commissioning lead magnet ebooks and authority books, from first enquiry to signed scope.',
     },
   ],
 };
@@ -180,6 +189,8 @@ export const pricingPage = {
     paragraphs: [
       'You are not buying “unlimited writing.” You are buying a scoped manuscript path: outline, sample chapter, drafted chapters on a dated schedule, the editorial passes listed for that package, and the files that package includes.',
       'That is how a 15,000-word guide and a 50,000-word authority book can both be quoted up front. Length, research depth, and production support change the band — not an open hourly tab.',
+      'At full length, Starter works out to under five cents a word ($699 for 15,000 words) and Elite to about four ($3,999 for 100,000 words) — with editing, a cover, and files included. That is below what many independent senior ghostwriters charge per word, because the scope is fixed and the studio handles editing, design, and files as one project.',
+      'The price on the page is the price. No inflated “was” prices, no coupon codes, and no countdown timers.',
       'Standard package timelines apply to projects with a defined brief and typical interview or research load. Interview-heavy memoirs, technical books, extensive original research, or complex source material may need a custom timeline and quote — including Elite’s word-count band, which is not a 9–18 month life-story memoir unless we say so in writing.',
     ],
     includedTitle: 'Included in the package you choose',
@@ -360,6 +371,34 @@ export const landers = {
         q: 'Is the work confidential?',
         a: 'Yes. NDA before source material. We do not put the studio name on your cover unless you request it.',
       },
+      {
+        q: 'How much does an ebook ghostwriter cost?',
+        a: 'Our packages run from $699 for up to 15,000 words to $3,999 for up to 100,000 words, with editing, a cover, and files included. At full length that is roughly four to five cents a word. Independent senior ghostwriters often charge much more per word; very low prices for a full book are a warning sign.',
+      },
+      {
+        q: 'Where can I hire an ebook ghostwriter?',
+        a: 'Marketplaces such as Upwork, Fiverr, and Reedsy connect you with individual freelancers, priced per hour or per word, and you manage editing, design, and publishing yourself. A studio like ours quotes one fixed fee for the writer, editing, cover, and files. Compare the finished deliverable, not the first draft rate.',
+      },
+      {
+        q: 'Can I see a sample before the whole book is written?',
+        a: 'Yes. A sample chapter is part of every project, written after you approve the outline. If it misses your voice, we rewrite it at no cost before the rest of the manuscript is written.',
+      },
+      {
+        q: 'Will you make my book a bestseller?',
+        a: 'No one can honestly promise that. Bestseller lists depend on sales and choices nobody controls. We promise a well-written book on the agreed schedule, and we do not use bestseller claims to sell packages.',
+      },
+      {
+        q: 'Is ghostwriting legal and ethical?',
+        a: 'Yes. Ghostwriting is a long-standing, legal arrangement: you supply the ideas and stories, a professional writes, and a contract transfers the rights to you. Many business books and memoirs are written this way.',
+      },
+      {
+        q: 'Do you write fiction?',
+        a: 'Our writers focus on nonfiction: self-development, memoir, business and finance, health and wellness, and parenting. Fiction is considered when we have the right specialist, and we will say so if we do not.',
+      },
+      {
+        q: 'Do you offer discounts or coupon codes?',
+        a: 'No. Our packages are fixed fees for an agreed scope. We do not use inflated “was” prices, coupon codes, or countdown timers.',
+      },
     ],
     links: [
       { label: 'Hire an ebook writer', href: '/hire-ebook-writer' },
@@ -367,6 +406,10 @@ export const landers = {
       { label: 'How much does an ebook ghostwriter cost?', href: '/blog/how-much-does-an-ebook-ghostwriter-cost' },
       { label: 'How to hire an ebook writer (checklist)', href: '/blog/how-to-hire-an-ebook-writer' },
       { label: 'Ghostwriting vs a freelancer', href: '/blog/ghostwriting-vs-hiring-a-freelancer' },
+      { label: 'Lead magnet ebook writing', href: '/lead-magnet-ebook-writing' },
+      { label: 'Ebook ghostwriter for coaches', href: '/ebook-ghostwriter-for-coaches' },
+      { label: 'How to choose a ghostwriter', href: '/how-to-choose-a-ghostwriter' },
+      { label: 'Our AI policy', href: '/ai-policy' },
       { label: 'All services', href: '/services' },
     ],
   },
@@ -451,12 +494,33 @@ export const landers = {
         q: 'When do I pay?',
         a: 'After you approve a written scope and quote. We do not start manuscript work on an open hourly tab.',
       },
+      {
+        q: 'How do I hire an ebook writer from ebookwriters.us?',
+        a: 'Send the idea, target length, and deadline on the contact form. We reply within one working day, hold a discovery call, sign an NDA, and send a fixed quote and dated schedule. Writing starts after you approve the scope.',
+      },
+      {
+        q: 'Do I get to know who is writing my book?',
+        a: 'Yes. After the NDA, we introduce the writer matched to your category by name. We do not publish a public roster because most of our titles are confidential ghostwriting.',
+      },
+      {
+        q: 'What if the writing does not sound like me?',
+        a: 'The sample chapter is the checkpoint. If it misses your voice, we rewrite it at no cost before the rest of the manuscript is written, and every package includes revision rounds after that.',
+      },
+      {
+        q: 'Can I hire a writer for a short lead magnet ebook?',
+        a: 'Yes. The Starter package covers up to 15,000 words for $699, which suits most lead magnets and short guides.',
+      },
+      {
+        q: 'Who owns the ebook when it is finished?',
+        a: 'You do. Rights transfer to you before writing begins. You keep 100% of royalties and your retailer accounts, and your name goes on the cover.',
+      },
     ],
     links: [
       { label: 'Ebook ghostwriting services', href: '/ebook-ghostwriting-services' },
       { label: 'How to hire an ebook writer (checklist)', href: '/blog/how-to-hire-an-ebook-writer' },
       { label: 'How much does an ebook ghostwriter cost?', href: '/blog/how-much-does-an-ebook-ghostwriter-cost' },
       { label: 'Amazon KDP publishing', href: '/amazon-kdp-ebook-writing' },
+      { label: 'How to choose a ghostwriter', href: '/how-to-choose-a-ghostwriter' },
       { label: 'Contact the studio', href: '/contact' },
     ],
   },
@@ -534,6 +598,18 @@ export const landers = {
         q: 'Can you help if I already have a manuscript?',
         a: 'Yes — editing, cover design, formatting, and KDP support can be scoped without full ghostwriting. Tell us what you already have on the contact form.',
       },
+      {
+        q: 'Which file formats do I get?',
+        a: 'Every package includes EPUB and PDF. Professional adds files for all retailers, Premium adds a print-ready interior, and Elite adds hardcover-ready files.',
+      },
+      {
+        q: 'Can you publish on IngramSpark as well as KDP?',
+        a: 'Yes. The Premium package includes both KDP and IngramSpark setup, so your book can reach bookstores and libraries as well as Amazon.',
+      },
+      {
+        q: 'Who keeps the royalties?',
+        a: 'You do — 100%. The book is published on your own account, and Amazon pays royalties to you directly.',
+      },
     ],
     links: [
       { label: 'Ebook ghostwriting', href: '/ebook-ghostwriting-services' },
@@ -542,6 +618,423 @@ export const landers = {
       { label: 'KDP publishing checklist', href: '/blog/kdp-publishing-checklist-for-first-time-authors' },
       { label: 'How long writing and publishing take', href: '/blog/how-long-does-it-take-to-write-and-publish-a-book' },
       { label: 'Pricing', href: '/pricing' },
+    ],
+  },
+  leadMagnet: {
+    path: '/lead-magnet-ebook-writing',
+    eyebrow: 'Lead magnet ebooks',
+    title: 'Lead magnet ebook writing service — human-written, fixed fee from $699.',
+    lead:
+      'A short, useful ebook that earns an email address and a sales conversation. Written by a human writer in your voice, edited, designed, and delivered as EPUB and PDF — for one fixed fee.',
+    quickAnswer:
+      'A lead magnet ebook is a short guide (usually 5,000–15,000 words) that you give away in exchange for an email address. Our Starter package covers up to 15,000 words for $699 in about three weeks: outline, writing, one editorial pass, a standard cover, EPUB and PDF files, and two revision rounds. You own every word.',
+    heroImage: '/assets/brand/page-hero-studio.png',
+    heroImageAlt: 'Desk with a short business guide being drafted — lead magnet ebook writing',
+    actions: [
+      { label: 'Get a lead magnet quote', href: '/contact' },
+      { label: 'See the Starter package', href: '/pricing', variant: 'gold' },
+    ],
+    sections: [
+      {
+        heading: 'What a lead magnet ebook has to do',
+        paragraphs: [
+          'A lead magnet is not a smaller version of your book. It has one job: solve one specific problem well enough that the reader trusts you with the next one. That is what turns a download into an opened email, and an opened email into a call.',
+          'So the brief starts with the reader and the next step, not the page count. Who downloads it, what they are stuck on, what quick win they get in the first chapter, and which offer the last page points to.',
+        ],
+        bullets: [
+          'One reader and one problem, named in the title',
+          'A quick win in the first few pages',
+          'Your method or framework, not generic advice',
+          'A clear next step to your offer, call, or course',
+        ],
+      },
+      {
+        heading: 'Who this is for',
+        paragraphs: [
+          'Coaches and consultants who explain the same method on every call. Agencies and SaaS teams that need a guide worth trading an email for. Financial advisors, therapists, and other experts who want something more useful than a checklist. Small businesses building an email list from scratch.',
+          'If you can talk through your expertise for an hour, we can turn it into a lead magnet that sounds like you.',
+        ],
+      },
+      {
+        heading: 'What you get',
+        paragraphs: [
+          'The Starter package is built for lead magnets and short guides. If your guide needs more depth, research, or KDP publishing setup, the Professional package covers up to 30,000 words.',
+        ],
+        bullets: [
+          'Discovery call and NDA before you share material',
+          'Chapter outline you approve before drafting',
+          'Up to 15,000 words written in your voice',
+          'One editorial pass',
+          'Standard cover design',
+          'EPUB and PDF files',
+          'Two revision rounds',
+          'Full rights — the ebook is yours to give away or sell',
+        ],
+      },
+      {
+        heading: 'Price, length, and timeline',
+        paragraphs: [
+          'Lead magnets fit the first two packages. Fees are fixed for the agreed length and scope, with no inflated “was” prices and no countdown timers.',
+        ],
+        table: {
+          caption: 'Lead magnet ebook packages',
+          columns: ['Package', 'Fixed fee', 'Length', 'Typical timeline'],
+          rows: plans.slice(0, 2).map(plan => [plan.name, `$${plan.price}`, plan.words, plan.timeline]),
+        },
+      },
+      {
+        heading: 'How a lead magnet project runs',
+        paragraphs: [
+          'We agree the reader, the promise, and the next step on a discovery call, then send a fixed quote and a dated schedule. You approve a chapter outline, the writer drafts, and you review as chapters land.',
+          'If the sample chapter misses your voice, we rewrite it at no cost before the rest is written. Most short projects take a few hours of your time in total.',
+        ],
+      },
+      {
+        heading: 'Freelancer, AI tool, or studio?',
+        paragraphs: [
+          'Each route can work. The difference is what you still have to do yourself after the draft arrives.',
+        ],
+        table: {
+          caption: 'Ways to get a lead magnet ebook written',
+          columns: ['', 'Marketplace freelancer', 'AI writing tool', 'ebookwriters.us'],
+          rows: [
+            ['Who writes it', 'One freelancer', 'Software; you edit', 'A human writer matched to your field'],
+            ['Your voice', 'Depends on the writer', 'Generic unless you rewrite it', 'Matched from interviews and samples'],
+            ['Editing and cover', 'Usually extra', 'Not included', 'Included in the package'],
+            ['Price', 'Hourly or per word', 'Subscription', 'Fixed fee from $699'],
+            ['Ownership', 'Check the contract', 'Check the tool’s terms', '100% yours, in writing'],
+          ],
+        },
+      },
+    ],
+    faqs: [
+      {
+        q: 'How long should a lead magnet ebook be?',
+        a: 'Most lead magnet ebooks run 5,000 to 15,000 words. Long enough to solve one problem properly, short enough to finish in one sitting. Our Starter package covers up to 15,000 words.',
+      },
+      {
+        q: 'How much does a lead magnet ebook cost?',
+        a: 'Our Starter package is $699 for up to 15,000 words, including writing, one editorial pass, a standard cover, EPUB and PDF files, and two revision rounds. Longer guides fit the Professional package at $1,499.',
+      },
+      {
+        q: 'How long does it take?',
+        a: 'About three weeks for a Starter guide of up to 15,000 words, once the brief is agreed. A Professional guide of up to 30,000 words takes about five weeks.',
+      },
+      {
+        q: 'Who owns the lead magnet?',
+        a: 'You do. Rights transfer to you before writing begins, so you can give the ebook away, sell it, or turn it into a course without asking us.',
+      },
+      {
+        q: 'Do you use AI to write it?',
+        a: 'No. Your lead magnet is written and revised by a human writer under studio editorial review. Ordinary tools may support research or admin, but the prose is written for your voice.',
+      },
+      {
+        q: 'What do I need to provide?',
+        a: 'A short brief: who the reader is, the problem the guide solves, and the offer it should lead to. Then one interview or a few recorded calls, plus feedback as chapters arrive.',
+      },
+      {
+        q: 'Can you write a workbook or checklist instead?',
+        a: 'Yes. Tell us the format on the contact form. We quote workbooks and guides the same way: by agreed length, revision rounds, and the files you need.',
+      },
+    ],
+    links: [
+      { label: 'Ebook ghostwriter for coaches', href: '/ebook-ghostwriter-for-coaches' },
+      { label: 'Ebook ghostwriting services', href: '/ebook-ghostwriting-services' },
+      { label: 'Writing packages and prices', href: '/pricing' },
+      { label: 'How to write a lead magnet ebook that gets emails', href: '/blog/how-to-write-a-lead-magnet-ebook-that-gets-emails' },
+      { label: 'Lead magnet ebook vs authority book', href: '/blog/lead-magnet-ebook-vs-authority-book' },
+      { label: 'How to choose a ghostwriter', href: '/how-to-choose-a-ghostwriter' },
+    ],
+  },
+  coaches: {
+    path: '/ebook-ghostwriter-for-coaches',
+    eyebrow: 'For coaches',
+    title: 'Ebook ghostwriter for coaches — turn your method into a book clients read.',
+    lead:
+      'You already teach the material on every call. We interview you, capture your method in your voice, and deliver an ebook you can use as a lead magnet, a course companion, or an authority book.',
+    quickAnswer:
+      'An ebook ghostwriter for coaches turns your sessions, courses, and frameworks into a finished ebook under your name. At ebookwriters.us that starts at $699 for a lead magnet of up to 15,000 words and runs to full authority books, with an NDA, a fixed fee, and 100% ownership.',
+    heroImage: '/assets/brand/page-hero-studio.png',
+    heroImageAlt: 'Coach’s notebook and session notes being turned into an ebook',
+    actions: [
+      { label: 'Request a quote', href: '/contact' },
+      { label: 'See packages', href: '/pricing', variant: 'gold' },
+    ],
+    sections: [
+      {
+        heading: 'Three books coaches need',
+        paragraphs: [
+          'Most coaching books fall into one of three jobs. Naming the job first decides the length, the package, and what the last chapter asks the reader to do.',
+        ],
+        table: {
+          caption: 'Coaching books by job',
+          columns: ['Book', 'What it does', 'Typical length', 'Package'],
+          rows: [
+            ['Lead magnet', 'Wins an email address and a discovery call', 'Up to 15,000 words', 'Starter — $699'],
+            ['Signature-method ebook', 'Teaches your framework step by step; sells or supports a course', 'Up to 30,000 words', 'Professional — $1,499'],
+            ['Authority book', 'Positions you for speaking, media, and higher-ticket clients', 'Up to 50,000 words', 'Premium — $2,499'],
+          ],
+        },
+      },
+      {
+        heading: 'How we capture your voice',
+        paragraphs: [
+          'Coaches rarely need to write. You need to talk. We build the manuscript from voice-matching interviews, and from whatever you already have: course modules, webinar recordings, session notes you are allowed to share, emails, and posts.',
+          'You approve a chapter outline before drafting, and the sample chapter is rewritten at no cost if it does not sound like you. Short and standard projects usually take a few hours of your time in total.',
+        ],
+        bullets: [
+          'Discovery call and NDA',
+          'Interviews on your method and your best client stories',
+          'Outline you approve',
+          'Sample chapter in your voice',
+          'Chapters on a dated schedule',
+        ],
+      },
+      {
+        heading: 'Client stories, handled carefully',
+        paragraphs: [
+          'Coaching books work best with real examples, and real examples belong to your clients. We use composite or anonymized stories unless you have a client’s permission, and we flag any detail that could identify someone before it reaches the manuscript.',
+          'We will not invent results or testimonials. If a number goes in the book, it comes from you.',
+        ],
+      },
+      {
+        heading: 'Coaching niches we write for',
+        paragraphs: [
+          'Business and executive coaching, life and personal-growth coaching, health and wellness, career coaching, and parenting. These match the nonfiction categories our writers already cover. If we cannot staff your niche well, we will say so rather than assign a generalist.',
+        ],
+      },
+      {
+        heading: 'What it costs',
+        paragraphs: [
+          'Every package is a fixed fee for an agreed length, with editing, a cover, and files included. There are no “was” prices, coupons, or countdown timers on our pricing.',
+        ],
+        table: {
+          caption: 'Packages for coaching books',
+          columns: ['Package', 'Fixed fee', 'Length', 'Typical timeline'],
+          rows: plans.map(plan => [plan.name, `$${plan.price}`, plan.words, plan.timeline]),
+        },
+      },
+    ],
+    faqs: [
+      {
+        q: 'Will the book sound like me?',
+        a: 'That is the point of the interviews. We match your voice from recorded conversations and your existing material, and the sample chapter is rewritten at no cost if it misses.',
+      },
+      {
+        q: 'Can you use my course or webinar content?',
+        a: 'Yes. Course modules, webinar recordings, and notes are often the fastest route to a strong outline. Share them after the NDA is signed.',
+      },
+      {
+        q: 'Who owns the book and the framework?',
+        a: 'You do. Rights transfer to you before writing begins, and your name goes on the cover. Your framework stays yours.',
+      },
+      {
+        q: 'How much time do I need to give?',
+        a: 'Usually a few hours across the discovery call, interviews, and chapter reviews for short and standard books. Authority books with many interviews take more, and we name that in the quote.',
+      },
+      {
+        q: 'Can the ebook be published on Amazon?',
+        a: 'Yes. Professional and higher packages include KDP publishing setup. You stay the account holder and keep 100% of royalties.',
+      },
+      {
+        q: 'Do you promise bestseller status?',
+        a: 'No. Nobody can honestly guarantee a bestseller. We promise a well-written book delivered on the agreed schedule, and we tell you what a launch needs.',
+      },
+    ],
+    links: [
+      { label: 'Lead magnet ebook writing', href: '/lead-magnet-ebook-writing' },
+      { label: 'Ebook ghostwriting services', href: '/ebook-ghostwriting-services' },
+      { label: 'Amazon KDP publishing', href: '/amazon-kdp-ebook-writing' },
+      { label: 'How to hire a business book ghostwriter', href: '/blog/how-to-hire-a-business-book-ghostwriter' },
+      { label: 'Book coach vs ghostwriter', href: '/blog/book-coach-vs-ghostwriter' },
+      { label: 'Writing packages', href: '/pricing' },
+    ],
+  },
+  chooseGhostwriter: {
+    path: '/how-to-choose-a-ghostwriter',
+    eyebrow: 'Hiring guide',
+    title: 'How to choose a ghostwriter — and spot a ghostwriting scam.',
+    lead:
+      'Ghostwriting scams are common enough that author groups track them. Use this checklist on any company before you pay, including us. Every question below has our own answer next to it.',
+    quickAnswer:
+      'To choose a ghostwriter safely: get a written scope and fixed fee, an NDA and a rights-transfer agreement before writing starts, a sample in your voice, and proof the people are real. Walk away from permanent “50% off” prices, bestseller promises, unlinked publisher logos, and anyone who wants to own your KDP account.',
+    heroImage: '/assets/brand/page-hero-brief.png',
+    heroImageAlt: 'Checklist and contract on a desk — how to choose a ghostwriter',
+    actions: [
+      { label: 'Ask us these questions', href: '/contact' },
+      { label: 'See our pricing', href: '/pricing', variant: 'gold' },
+    ],
+    sections: [
+      {
+        heading: 'Why vetting matters in ghostwriting',
+        paragraphs: [
+          'Writers’ watchdogs have documented ghostwriting and “publishing services” companies that take large payments and deliver little, use famous publishers’ names, or resell the same template to every client. [Writer Beware](https://writerbeware.blog/) and the [Authors Guild](https://authorsguild.org/) both publish scam warnings for authors.',
+          'The good news: most scams fail a few simple checks. You can run them in an afternoon, before you send any money.',
+        ],
+      },
+      {
+        heading: 'Red flags to walk away from',
+        paragraphs: [
+          'One of these alone is a reason to ask hard questions. Two or more is a reason to leave.',
+        ],
+        bullets: [
+          'Permanent “50% off” or “70% off” prices and countdown timers',
+          'A promise of bestseller status, or a New York Times list placement',
+          'Big-publisher or media logos with no link to a real article or deal',
+          'A full book plus publishing and marketing for a few hundred dollars',
+          'No written scope, NDA, or rights agreement before you share material',
+          'Pressure to pay everything up front before the scope is agreed',
+          'They want to publish under their own KDP account, or hold your royalties',
+          'No way to check who runs the company or where it is based',
+        ],
+      },
+      {
+        heading: 'Questions to ask before you hire',
+        paragraphs: [
+          'Ask these on the first call and get the answers in writing. A good ghostwriter will not mind.',
+        ],
+        table: {
+          caption: 'Ghostwriter vetting checklist',
+          columns: ['Ask', 'A good answer', 'Our answer'],
+          rows: [
+            ['What exactly is the price, and what does it include?', 'A fixed fee tied to length, revisions, and deliverables', 'Fixed packages from $699 to $3,999, listed on /pricing'],
+            ['Who owns the book and the royalties?', 'You do, in a signed rights-transfer agreement', 'You do — rights transfer before writing begins'],
+            ['When is the NDA signed?', 'Before you share any material', 'Before you share source material'],
+            ['Can I see writing in my voice before committing to the whole book?', 'A sample chapter, with a fix if it misses', 'Sample chapter rewritten at no cost if the voice misses'],
+            ['Whose KDP account will the book be on?', 'Yours — you are the publisher', 'Yours; we support setup, you stay the account holder'],
+            ['Do you use AI to write?', 'A clear policy, in writing', 'Human writers; see our AI policy'],
+            ['Will you guarantee sales or bestseller status?', 'No', 'No — nobody honestly can'],
+            ['Who are you and where are you based?', 'A real address, phone, and named people', 'Iowa, USA — info@ebookwriters.us, +1 712-414-0542'],
+          ],
+        },
+      },
+      {
+        heading: 'What a fair ghostwriting contract includes',
+        paragraphs: [
+          'Read the contract before the first payment. It should name the word count, the number of revision rounds, the schedule, what happens if the voice is wrong, and who owns the manuscript, the cover, and the retailer accounts.',
+          'Our [ghostwriter contract checklist](/blog/ghostwriter-contract-checklist-nda-and-rights) walks through each clause, and our list of [questions to ask a ghostwriter](/blog/what-questions-to-ask-a-ghostwriter-before-hiring) covers the first call.',
+        ],
+      },
+      {
+        heading: 'Fair prices look fair',
+        paragraphs: [
+          'Very low prices for a full book usually mean the writing is outsourced, generated, or never finished. Very high prices are normal for celebrity and traditional-publishing ghostwriters. In between, the question is whether the price is written down and tied to a scope.',
+          'Our packages are fixed for an agreed length, with no inflated “was” prices or countdown timers. See [what an ebook ghostwriter costs](/blog/how-much-does-an-ebook-ghostwriter-cost) for the wider market.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'How do I know if a ghostwriting company is legitimate?',
+        a: 'Check for a written scope and fixed price, an NDA and rights-transfer agreement before writing, a sample in your voice, a real address and phone number, and people you can verify. Search the company name with the word scam, and check author watchdogs such as Writer Beware.',
+      },
+      {
+        q: 'Is it normal to pay a ghostwriter up front?',
+        a: 'Paying after a written scope and quote is normal. Paying the full fee before any scope, outline, or contract exists is a warning sign.',
+      },
+      {
+        q: 'Are 50% off ghostwriting deals real?',
+        a: 'A permanent discount with a countdown timer is a sales tactic, not a sale. It is one of the most common signs of a low-quality or scam operation in this niche.',
+      },
+      {
+        q: 'Should a ghostwriter publish my book on their account?',
+        a: 'No. You should be the publisher of record on your own KDP account and receive royalties directly. A ghostwriter can help with setup without owning the account.',
+      },
+      {
+        q: 'Can a ghostwriter guarantee a bestseller?',
+        a: 'No. Bestseller lists depend on sales and editorial choices nobody controls. A promise of bestseller status is a red flag.',
+      },
+    ],
+    links: [
+      { label: 'Questions to ask a ghostwriter', href: '/blog/what-questions-to-ask-a-ghostwriter-before-hiring' },
+      { label: 'Ghostwriter contract checklist', href: '/blog/ghostwriter-contract-checklist-nda-and-rights' },
+      { label: 'Is ghostwriting illegal?', href: '/blog/is-ghostwriting-illegal' },
+      { label: 'Our AI policy', href: '/ai-policy' },
+      { label: 'Ebook ghostwriting services', href: '/ebook-ghostwriting-services' },
+      { label: 'Writing packages', href: '/pricing' },
+    ],
+  },
+  aiPolicy: {
+    path: '/ai-policy',
+    eyebrow: 'AI policy',
+    title: 'Our AI policy: human writers, written down.',
+    lead:
+      'Client manuscripts at ebookwriters.us are written and revised by human writers. This page explains where ordinary software tools may help, what we never do, and how to get stricter terms in your agreement.',
+    quickAnswer:
+      'ebookwriters.us does not deliver AI-generated books as ghostwriting. Your manuscript is written and revised by the assigned human writer under studio editorial review. Ordinary tools may support research, outlining, or production admin. If you want no AI tools used on your project at all, we can write that into your agreement.',
+    heroImage: '/assets/brand/faq-editorial-v2.webp',
+    heroImageAlt: 'Editor reviewing manuscript pages by hand — ebookwriters.us AI policy',
+    actions: [
+      { label: 'Ask about your project', href: '/contact' },
+      { label: 'Editorial policy', href: '/editorial-policy', variant: 'gold' },
+    ],
+    sections: [
+      {
+        heading: 'The short version',
+        paragraphs: [
+          'A human writer writes your book. A human editor reviews it. We do not hand you an unedited AI draft and call it ghostwriting, and we do not charge ghostwriting prices for generated text.',
+        ],
+      },
+      {
+        heading: 'Where tools may help',
+        paragraphs: [
+          'Like most studios, we use ordinary software. Some of it now includes AI features. These may support work around the manuscript, not the prose you publish.',
+        ],
+        bullets: [
+          'Research support and fact-finding, checked against primary sources',
+          'Outlining support and organizing interview notes',
+          'Production admin: scheduling, file conversion, formatting checks',
+          'Spelling and grammar checks during editing',
+        ],
+      },
+      {
+        heading: 'What we never do',
+        paragraphs: [
+          'We will not invent lived detail, client stories, results, or quotes you did not provide. We do not publish fabricated statistics or case studies on this site.',
+        ],
+        bullets: [
+          'Deliver AI-generated prose as a ghostwritten manuscript',
+          'Invent experiences, testimonials, or numbers for your book',
+          'Present generated text as a writer’s original work',
+        ],
+      },
+      {
+        heading: 'Why it matters for your book',
+        paragraphs: [
+          'Amazon KDP asks publishers to disclose AI-generated content when they publish, and the [U.S. Copyright Office](https://www.copyright.gov/ai/) has said that material generated by AI without human authorship is not protected by copyright. A human-written manuscript keeps both questions simple.',
+          'It also keeps the book yours in a practical sense: your stories, your method, and your voice, written by someone who interviewed you.',
+        ],
+      },
+      {
+        heading: 'Stricter terms on request',
+        paragraphs: [
+          'If you need language that goes further — for example, no AI tools of any kind on your material — say so on the discovery call. We will write it into your agreement before you share anything.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: 'Is my ebook written by AI?',
+        a: 'No. Your manuscript is written and revised by the assigned human writer under studio editorial review.',
+      },
+      {
+        q: 'Do you use any AI tools at all?',
+        a: 'Ordinary software tools may support research, outlining, or production admin. They do not write the prose you publish.',
+      },
+      {
+        q: 'Can I ban AI tools on my project?',
+        a: 'Yes. Ask on the discovery call and we will put that restriction in your agreement before you share material.',
+      },
+      {
+        q: 'Do I need to disclose AI use on Amazon KDP?',
+        a: 'KDP asks you to disclose AI-generated content when you publish. Because your manuscript is human-written, that disclosure is not about the writing we deliver. Check KDP’s current content guidelines when you publish.',
+      },
+    ],
+    links: [
+      { label: 'Editorial policy', href: '/editorial-policy' },
+      { label: 'How to choose a ghostwriter', href: '/how-to-choose-a-ghostwriter' },
+      { label: 'AI ebook writer vs human ghostwriter', href: '/blog/ai-ebook-writer-vs-human-ghostwriter' },
+      { label: 'Ebook ghostwriting services', href: '/ebook-ghostwriting-services' },
     ],
   },
 };
@@ -644,6 +1137,22 @@ export const editingPage = {
     {
       q: 'Can editing include a cover and KDP files?',
       a: 'Yes — say what you need on the contact form. Cover design and KDP setup can be scoped with editing or as a follow-on.',
+    },
+    {
+      q: 'Are your editors human?',
+      a: 'Yes. Every pass is done by a human editor. Spelling and grammar software may help catch typos, but the structural, line, and copy decisions are made by a person.',
+    },
+    {
+      q: 'How long does ebook editing take?',
+      a: 'A copyedit on a short guide can land in about a week. A developmental edit on a full-length manuscript runs on a dated schedule we set in the quote, after reviewing sample pages.',
+    },
+    {
+      q: 'How is an editing quote worked out?',
+      a: 'From word count, genre, how finished the draft is, and which pass you need — developmental, line, copy, or proofreading. We review sample pages first so the quote matches your draft, not a guess.',
+    },
+    {
+      q: 'What is the difference between copyediting and proofreading?',
+      a: 'Copyediting fixes grammar, consistency, names, and facts across the manuscript. Proofreading is the last check for typos and formatting slips on a draft that is otherwise stable.',
     },
   ],
   links: [

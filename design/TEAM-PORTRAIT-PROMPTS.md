@@ -36,5 +36,6 @@ Fill in `[APPEARANCE]` for each before generating.
 | `hannah-collins.webp` | Hannah Collins | Managing Editor | knit sweater, cream or charcoal |
 | `jessica-marlowe.webp` | Jessica Marlowe | Author Success Manager | soft blazer |
 | `vanessa-callahan.webp` | Vanessa Callahan | Writer and Publisher | dark knit or soft blazer |
+| `brooke.webp` | Brooke | Creative Director | black, slightly more design-led |
 | `allison-mercer.webp` | Allison Mercer | Publishing Operations Manager | shirt or blouse |
 | `cole.webp` | Cole | Client Partnerships Lead | dark blazer, open collar |

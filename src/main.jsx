@@ -39,6 +39,10 @@ const FaqPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.
 const GhostwritingPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.GhostwritingPage })));
 const HireWriterPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.HireWriterPage })));
 const KdpPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.KdpPage })));
+const LeadMagnetPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.LeadMagnetPage })));
+const CoachesPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.CoachesPage })));
+const ChooseGhostwriterPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.ChooseGhostwriterPage })));
+const AiPolicyPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.AiPolicyPage })));
 const NotFoundPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.NotFoundPage })));
 const PricingPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.PricingPage })));
 const PrivacyPage = lazy(() => import('./ContentPages.jsx').then(m => ({ default: m.PrivacyPage })));
@@ -1019,6 +1023,10 @@ function App() {
         <Route path="/ghostwriting" element={<Navigate to="/ebook-ghostwriting-services" replace />} />
         <Route path="/hire-ebook-writer" element={<BlogShell><HireWriterPage /></BlogShell>} />
         <Route path="/amazon-kdp-ebook-writing" element={<BlogShell><KdpPage /></BlogShell>} />
+        <Route path="/lead-magnet-ebook-writing" element={<BlogShell><LeadMagnetPage /></BlogShell>} />
+        <Route path="/ebook-ghostwriter-for-coaches" element={<BlogShell><CoachesPage /></BlogShell>} />
+        <Route path="/how-to-choose-a-ghostwriter" element={<BlogShell><ChooseGhostwriterPage /></BlogShell>} />
+        <Route path="/ai-policy" element={<BlogShell><AiPolicyPage /></BlogShell>} />
         <Route path="/ebook-editing-services" element={<BlogShell><EditingPage /></BlogShell>} />
         <Route path="/ebook-cover-design" element={<BlogShell><CoverDesignPage /></BlogShell>} />
         <Route path="/faq" element={<BlogShell><FaqPage /></BlogShell>} />

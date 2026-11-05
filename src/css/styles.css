@@ -1601,10 +1601,22 @@ a.br_team_email:visited,
   transition: color 0.3s var(--ease), text-decoration-color 0.3s var(--ease);
 }
 
+.br_team_grid_title {
+  margin: 0 0 1.566025rem;
+  color: var(--emerald-900);
+}
+
 .br_team_grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 2.349036rem 1.566025rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.740541rem 1.957529rem;
+}
+
+.br_team_member_bio {
+  margin: 0 0 0.783012rem;
+  font-size: 0.704711rem;
+  line-height: 1.55;
+  color: var(--ink-500);
 }
 
 .br_team_member_copy {
@@ -1654,9 +1666,13 @@ a.br_team_email:visited,
   .br_team_member {
     display: grid;
     grid-template-columns: 4.5rem minmax(0, 1fr);
-    align-items: center;
+    align-items: start;
     gap: 1.174518rem;
     padding-block: 1.174518rem;
+  }
+
+  .br_team_member_bio {
+    font-size: 0.783012rem;
   }
 
   .br_team_member .br_team_monogram {
@@ -5533,9 +5549,9 @@ body {
 }
 
 .br_compare tbody th {
+  min-width: 7.5rem;
   font-weight: 500;
   color: var(--emerald-900);
-  white-space: nowrap;
 }
 
 .br_compare tbody tr:last-child th,
